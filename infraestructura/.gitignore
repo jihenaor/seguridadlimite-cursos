@@ -1,4 +1,22 @@
-# Variables de entorno — NUNCA commitear
+# ─────────────────────────────────────────────
+#  .gitignore — Infraestructura / Docker
+# ─────────────────────────────────────────────
+
+# ══ ARCHIVOS SENSIBLES — NUNCA subir ══════════
 .env
 .env.*
 !.env.example
+set_env.bat
+
+# ══ LOGS ══════════════════════════════════════
+*.log
+*.log.*.gz
+logs/
+
+# ══ CERTIFICADOS SSL (generados por certbot) ══
+nginx/certs/
+letsencrypt/
+
+# ══ SISTEMA OPERATIVO ══════════════════════════
+.DS_Store
+Thumbs.db

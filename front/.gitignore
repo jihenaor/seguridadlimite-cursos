@@ -1,3 +1,34 @@
-/.angular/cache
-node_modules
-dist
+# ─────────────────────────────────────────────
+#  .gitignore — Front-End Angular
+# ─────────────────────────────────────────────
+
+# ══ DEPENDENCIAS ══════════════════════════════
+node_modules/
+
+# ══ BUILD / DIST ══════════════════════════════
+dist/
+.angular/
+.angular/cache/
+
+# ══ ARCHIVOS SENSIBLES ════════════════════════
+.env
+.env.local
+.env.production
+
+# ══ LOGS ══════════════════════════════════════
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ══ COBERTURA DE TESTS ════════════════════════
+coverage/
+
+# ══ IDEs ══════════════════════════════════════
+.idea/
+.vscode/
+*.iml
+
+# ══ SISTEMA OPERATIVO ══════════════════════════
+.DS_Store
+Thumbs.db

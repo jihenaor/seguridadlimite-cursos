@@ -1,0 +1,78 @@
+@use "sass:color";
+@use "sass:map";
+@use "variables";
+
+  
+  //
+// components.scss
+//
+
+@each $name,
+$value in variables.$colors {
+    .bg-#{$name} {
+        background-color: #{$value} !important;
+    }
+
+    .bg-soft-#{$name} {
+        background-color: rgba(($value), 0.1) !important;
+    }
+    .text-#{$name} {
+        color: #{$value} !important;
+    }
+
+    // Icons
+    .icon-dual-#{$name} {
+        color: $value;
+        fill: rgba($value, 0.2);
+    }
+
+    .btn-soft-#{$name} {
+        background-color: rgba(($value), 0.25) !important;
+        color: #{$value} !important;
+        &:hover, &:focus, &:active,
+        &.active, &.focus, &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled):active:focus,
+        .open > .dropdown-toggle.btn-primary {
+            background: color.adjust($value, $lightness: -4%);
+        }
+    }
+    
+    .btn-#{$name} {
+        background: #{$value} !important;
+        border-color: #{$value} !important;
+        color: map.get(variables.$text-colors, $name) !important; // Establece el color del texto
+
+       
+        &:hover, &:focus, &:active,
+        &.active, &.focus, &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled):active:focus,
+        .open > .dropdown-toggle.btn-primary {
+            background: color.adjust($value, $lightness: -4%);
+            border-color: color.adjust($value, $lightness: -4%);
+        }
+    }
+
+    .btn-outline-#{$name} {
+        color: #{$value};
+        border-color: #{$value};
+        &:hover, &:focus, &:active,
+        &.active, &.focus, &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled):active:focus,
+        .open > .dropdown-toggle.btn-primary {
+            background: $value;
+            border-color:$value;
+    
+        }
+    }
+
+    .amarillo {
+        background-color: variables.$primary;
+        color: variables.$dark;
+    }
+
+    .negro {
+        background-color: variables.$dark;
+        color:variables.$primary;
+    }
+}
+
+
+
+

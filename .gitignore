@@ -1,50 +1,59 @@
-# ─────────────────────────────────────────────
-#  .gitignore — Seguridad Al Límite (monorepo)
-# ─────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
+#  .gitignore — Seguridad Al Límite (monorepo raíz)
+# ─────────────────────────────────────────────────────────────
 
-# ══ ARCHIVOS SENSIBLES — NUNCA subir ══════════
+# ══ ARCHIVOS SENSIBLES — NUNCA subir ══════════════════════════
 **/.env
 **/.env.local
 **/.env.production
 **/set_env.bat
-**/application-prod.yml
+# NOTA: application-prod.yml SÍ se commitea (usa ${ENV_VAR}, sin credenciales)
+# NOTA: application.yml SÍ se commitea (usa valores de desarrollo seguros)
 
-# ══ BACK-END (Maven / Java) ═══════════════════
+# ══ BACK-END (Maven / Java) ═══════════════════════════════════
 back/target/
-back/.mvn/wrapper/maven-wrapper.jar
+!back/.mvn/wrapper/maven-wrapper.jar
 **/*.class
-**/*.jar
-**/*.war
 
-# ══ FRONT-END (Angular / Node) ════════════════
+# ══ FRONT-END (Angular / Node) ════════════════════════════════
 front/node_modules/
 front/dist/
 front/.angular/
-**/node_modules/
+front/coverage/
 
-# ══ MICROFRONTENDS (obsoleto) ════════════════
+# ══ LANDING PAGE ══════════════════════════════════════════════
+landingpage/node_modules/
+landingpage/dist/
+landingpage/.angular/
+
+# ══ MICROFRONTENDS (obsoleto — eliminado del proyecto) ════════
 microfrontends/
 
-# ══ LOGS ══════════════════════════════════════
+# ══ LOGS ══════════════════════════════════════════════════════
 *.log
 *.log.*.gz
 logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# ══ IDEs ══════════════════════════════════════
+# ══ IDEs ══════════════════════════════════════════════════════
 .idea/
 .vscode/
 *.iml
 *.suo
 *.user
+*.swp
 
-# ══ SISTEMA OPERATIVO ══════════════════════════
+# ══ SISTEMA OPERATIVO ══════════════════════════════════════════
 .DS_Store
 Thumbs.db
 nul
+desktop.ini
 
-# ══ DOCKER (imágenes locales) ══════════════════
+# ══ DOCKER (artefactos locales) ════════════════════════════════
 **/.docker/
 
-# ══ DOCUMENTOS DE ANÁLISIS (no son código) ════
+# ══ DOCUMENTOS DE ANÁLISIS (no son código fuente) ═════════════
 *.docx
 *.pdf

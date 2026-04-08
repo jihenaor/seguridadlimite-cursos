@@ -1,11 +1,32 @@
-HELP.md
+# ─────────────────────────────────────────────
+#  .gitignore — Back-End Spring Boot / Maven
+# ─────────────────────────────────────────────
+
+# ══ DOCKER — datos de BD (nunca commitear volúmenes de MySQL) ══
+docker/db/data/
+
+# ══ BUILD / MAVEN ═════════════════════════════
 target/
-docker/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-### STS ###
+# ══ ARCHIVOS SENSIBLES — NUNCA subir ══════════
+.env
+.env.*
+!.env.example
+# NOTA: application-prod.yml SÍ se commitea (usa ${ENV_VAR})
+# NOTA: application.yml SÍ se commitea
+
+# ══ LOGS ══════════════════════════════════════
+*.log
+*.log.*
+logs/
+
+# ══ IDEs — Spring Tool Suite ══════════════════
 .apt_generated
 .classpath
 .factorypath
@@ -14,32 +35,22 @@ docker/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# ══ IDEs — IntelliJ IDEA ══════════════════════
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# ══ IDEs — NetBeans ═══════════════════════════
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# ══ IDEs — VS Code ════════════════════════════
 .vscode/
 
-# Ignorar todos los archivos .log
-*.log
-*.log.*
-
-# Ignorar todos los archivos .png
-
-# Variables de entorno — NUNCA commitear
-.env
-.env.*
-!.env.example
+# ══ SISTEMA OPERATIVO ══════════════════════════
+.DS_Store
+Thumbs.db

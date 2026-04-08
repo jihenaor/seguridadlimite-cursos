@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────
+#  .gitignore — Landing Page (React/Node)
+# ─────────────────────────────────────────────
+
+# ══ DEPENDENCIAS ══════════════════════════════
+node_modules/
+
+# ══ BUILD ══════════════════════════════════════
+build/
+dist/
+
+# ══ ARCHIVOS SENSIBLES ════════════════════════
+.env
+.env.local
+.env.production
+.env.*
+!.env.example
+
+# ══ LOGS ══════════════════════════════════════
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ══ IDEs ══════════════════════════════════════
+.vscode/
+.idea/
+*.iml
+
+# ══ SISTEMA OPERATIVO ══════════════════════════
+.DS_Store
+Thumbs.db
