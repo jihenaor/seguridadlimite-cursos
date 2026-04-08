@@ -19,6 +19,7 @@
 name: Backend CI/CD
 
 on:
+  workflow_dispatch:  # permite ejecución manual desde GitHub Actions
   push:
     branches: [main]
     paths:
