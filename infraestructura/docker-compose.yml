@@ -15,8 +15,6 @@
 #    docker compose up -d
 # ══════════════════════════════════════════════════════════════
 
-version: "3.9"
-
 services:
 
   # ────────────────────────────────────────────────────────────
@@ -65,7 +63,7 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: "0"
     ports:
-      - "127.0.0.1:8180:80"
+      - "8180:80"
     networks:
       - backend_net
 
@@ -165,42 +163,4 @@ services:
 
   # ────────────────────────────────────────────────────────────
   #  Backup automático semanal (domingo 2:00 AM)
-  # ────────────────────────────────────────────────────────────
-  backup:
-    image: alpine:3.19
-    container_name: seguridad-backup
-    volumes:
-      - ./backup:/scripts:ro
-      - backup_data:/backups
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: mysql
-    entrypoint: >
-      /bin/sh -c "apk add --no-cache docker-cli mysql-client tzdata && \
-      cp /usr/share/zoneinfo/America/Mexico_City /etc/localtime && \
-      echo '0 2 * * 0 /bin/sh /scripts/backup.sh' | crontab - && \
-      crond -f -l 2"
-    networks:
-      - backend_net
-
-# ════════════════════════════════════════════════════════════
-networks:
-  backend_net:
-    driver: bridge
-  gateway_net:
-    driver: bridge
-
-volumes:
-  mysql_data:
-    driver: local
-  backend_logs:
-    driver: local
-  certbot_www:
-    driver: local
-  certbot_conf:
-    driver: local
-  backup_data:
-    driver: local
+  # ──────────────────────────────────────────────────────
