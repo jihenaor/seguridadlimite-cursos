@@ -57,3 +57,6 @@ desktop.ini
 # ══ DOCUMENTOS DE ANÁLISIS (no son código fuente) ═════════════
 *.docx
 *.pdf
+
+# Landing page � proyecto independiente
+landingpage/
