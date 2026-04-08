@@ -138,8 +138,11 @@ jobs:
             echo "📦 Pulling nueva imagen del frontend..."
             docker compose pull frontend
 
-            echo "🔄 Reiniciando contenedor frontend..."
-            docker compose up -d --no-deps frontend
+            echo "🔄 Reiniciando contenedor frontend y gateway..."
+            docker compose up -d frontend
+
+            echo "🔄 Asegurando que gateway esté corriendo..."
+            docker compose up -d gateway
 
             echo "🔄 Recargando nginx gateway..."
             docker compose exec gateway nginx -s reload
