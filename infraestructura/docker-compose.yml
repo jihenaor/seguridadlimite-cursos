@@ -138,8 +138,8 @@ services:
       - backend
       - frontend
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - ./nginx/gateway.conf:/etc/nginx/conf.d/default.conf:ro
       - certbot_www:/var/www/certbot:ro
@@ -153,6 +153,9 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: seguridad-certbot
+    ports:
+      - "8080:80"
+      - "8443:443"
     volumes:
       - certbot_www:/var/www/certbot
       - certbot_conf:/etc/letsencrypt
