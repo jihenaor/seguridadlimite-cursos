@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────
+#  Perfil PRODUCCIÓN  — todas las credenciales vienen de
+#  variables de entorno definidas en docker-compose / el servidor
+# ─────────────────────────────────────────────────────────────
+
+spring:
+
+  # ── Base de datos (solo usuario de aplicación; nunca root) ─
+  datasource:
+    url: jdbc:mysql://${DB_HOST:mysql}:${DB_PORT:3306}/${DB_NAME:wwsegu_cursos}?zeroDateTimeBehavior=convertToNull&serverTimezone=America/Bogota&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  # ── Correo ─────────────────────────────────────────────────
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USER}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+  # ── Upload límites ──────────────────────────────────────────
+  servlet:
+    multipart:
+      max-file-size: 180MB
+      max-request-size: 180MB
+
+# ── Servidor ──────────────────────────────────────────────────
+server:
+  port: 8090
+  servlet:
+    context-path: /cursosback
+
+# ── Seguridad / JWT ───────────────────────────────────────────
+security:
+  jwt:
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:30}
+    # Obligatorio en producción (docker-compose / servidor)
+    secret-key: ${JWT_SECRET}
+
+# ── Logging ───────────────────────────────────────────────────
+logging:
+  level:
+    root: WARN
+    com.seguridadlimite: INFO
+  file:
+    name: /app/logs/seguridadallimite.log
