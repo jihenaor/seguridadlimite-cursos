@@ -1,0 +1,21 @@
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dialog-content {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 80vh; // This will make the dialog take up to 80% of the viewport height
+  padding-right: 8px; // Add some padding for the scrollbar
+}
+
+.modalHeader {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}

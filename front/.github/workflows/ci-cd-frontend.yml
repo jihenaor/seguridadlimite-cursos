@@ -1,0 +1,158 @@
+# ══════════════════════════════════════════════════════════════
+#  CI/CD — Microservicio Frontend (Angular 19)
+#
+#  Flujo:
+#    1. Build Angular en modo producción
+#    2. Construir imagen Docker (Nginx + artefactos)
+#    3. Publicar en GitHub Container Registry (GHCR)
+#    4. SSH al servidor → pull + restart del contenedor
+#
+#  Secrets requeridos en GitHub (Settings → Secrets):
+#    GHCR_TOKEN         → Personal Access Token con permisos write:packages
+#    SERVER_HOST        → IP o dominio del servidor VPS
+#    SERVER_USER        → Usuario SSH del servidor (ej: ubuntu, deploy)
+#    SERVER_SSH_KEY     → Clave privada SSH (contenido del archivo id_rsa)
+#    SERVER_DEPLOY_PATH → Ruta al docker-compose en el servidor (ej: /home/ubuntu/app)
+# ══════════════════════════════════════════════════════════════
+
+name: Frontend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'angular.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'Dockerfile'
+      - 'nginx.conf'
+      - '.github/workflows/ci-cd-frontend.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'package.json'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/seguridad-frontend
+
+jobs:
+
+  # ──────────────────────────────────────────
+  #  JOB 1: Build Angular
+  # ──────────────────────────────────────────
+  build:
+    name: Build Angular
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci --legacy-peer-deps
+
+      - name: Build producción
+        run: npm run build
+
+      - name: Guardar artefacto de build (solo en push a main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+          retention-days: 1
+
+  # ──────────────────────────────────────────
+  #  JOB 2: Construir y publicar imagen Docker
+  # ──────────────────────────────────────────
+  docker-publish:
+    name: Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    outputs:
+      short_sha: ${{ steps.vars.outputs.sha_short }}
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Short SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Login en GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Metadatos de la imagen
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=,suffix=,format=short
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Construir y publicar imagen
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ──────────────────────────────────────────
+  #  JOB 3: Deploy al servidor vía SSH
+  # ──────────────────────────────────────────
+  deploy:
+    name: Deploy al Servidor
+    runs-on: ubuntu-latest
+    needs: docker-publish
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Conectar y desplegar vía SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.SERVER_DEPLOY_PATH }}
+
+            echo "📦 Pulling nueva imagen del frontend..."
+            docker compose pull frontend
+
+            echo "🔄 Reiniciando contenedor frontend..."
+            docker compose up -d --no-deps frontend
+
+            echo "🔄 Recargando gateway sin downtime..."
+            docker compose exec gateway nginx -s reload
+
+            echo "🧹 Limpiando imágenes antiguas..."
+            docker image prune -f
+
+            echo "✅ Deploy del frontend completado."
+            docker compose ps frontend

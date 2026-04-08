@@ -1,0 +1,65 @@
+<div class="auth-container">
+    <div class="row auth-main">
+        <div class="col-sm-6 auth-form-section">
+            <div class="form-section">
+                <div class="auth-wrapper">
+                    <div class="box">
+                        <img src="assets/images/logo_sticky.jpeg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="login-title">Validar certificado</h2>
+
+
+            <div *ngIf="aprendiz" class="contact-details">
+                <div class="modalHeader">
+                  <div class="editRowModal">
+                    <div class="modalHeader clearfix">
+                      <div class="modal-about contact-header">
+<!--
+    <div class="contact-details-img">
+      <img [src]='contacts.img' alt="avatar">
+    </div>
+-->
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div mat-dialog-content>
+                  <mat-card-content>
+                    <div class="contact-details-field">
+                      <i class="material-icons-two-tone color-icon">account_box</i>
+                      <div class="contact-detail-info"> 
+                        Nombre: <strong>{{ aprendiz.trabajador.nombrecompleto }}</strong>
+                      </div>
+                    </div>
+                    <div class="contact-details-field">
+                      <i class="material-icons-two-tone color-icon">view_compact</i>
+                      <div class="contact-detail-info"> 
+                        Documento: <strong>{{ aprendiz.trabajador.tipodocumento }} {{ aprendiz.trabajador.numerodocumento }}</strong>
+                      </div>
+                    </div>
+                    <div class="contact-details-field">
+                      <i class="material-icons-two-tone color-icon">bookmark_added</i>
+                      <div class="contact-detail-info"> Codigo: <strong>{{aprendiz.codigoverificacion }}</strong>
+                      </div>
+                    </div>
+                    <div class="contact-details-field">
+                        <i class="material-icons-two-tone color-icon">calendar_today</i>
+                        <div class="contact-detail-info"> Fecha de emisión: <strong>{{aprendiz.fechafinal | date: 'MMMM d, yyyy'}}</strong>
+                        </div>
+                    </div>
+                    <div class="contact-details-field">
+                        <i class="material-icons-two-tone color-icon">query_builder</i>
+                        <div class="contact-detail-info"> Intensidad horaria: <strong>{{ aprendiz.nivel.duraciontotal }}</strong>
+                        </div>
+                    </div>
+                  </mat-card-content>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

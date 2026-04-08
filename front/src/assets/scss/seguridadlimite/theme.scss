@@ -1,0 +1,96 @@
+@use '@angular/material' as mat;
+
+@include mat.elevation-classes();
+@include mat.app-background();
+
+$dark-primary-text: rgba(black, 0.87);
+
+$light-primary-text: white;
+
+$mat-primary: (
+        50: #FAFAFA,
+        100: #F5F5F5,
+        200: #EEEEEE,
+        300: #E0E0E0,
+        400: #BDBDBD,
+        500: #9E9E9E,
+        600: #757575,
+        700: #616161,
+        800: #424242,
+        900: #212121,
+
+        A100: #8c9eff,
+        A200: #536dfe,
+        A400: #3d5afe,
+        A700: #304ffe,
+        contrast: (
+                50: $dark-primary-text,
+                100: $dark-primary-text,
+                200: $dark-primary-text,
+                300: $light-primary-text,
+                400: $light-primary-text,
+                500: $light-primary-text,
+                600: $light-primary-text,
+                700: $light-primary-text,
+                800: $light-primary-text,
+                900: $light-primary-text,
+                A100: $dark-primary-text,
+                A200: $light-primary-text,
+                A400: $light-primary-text,
+                A700: $light-primary-text,
+        )
+);
+
+$mat-accent: (
+        50: #fce4ec,
+        100: #f8bbd0,
+        200: #f48fb1,
+        300: #f06292,
+        400: #ec407a,
+        500: #e91e63,
+        600: #d81b60,
+        700: #c2185b,
+        800: #ad1457,
+        900: #880e4f,
+        A100: #ff80ab,
+        A200: #ff4081,
+        A400: #f50057,
+        A700: #c51162,
+        contrast: (
+                50: $dark-primary-text,
+                100: $dark-primary-text,
+                200: $dark-primary-text,
+                300: $dark-primary-text,
+                400: $dark-primary-text,
+                500: $light-primary-text,
+                600: $light-primary-text,
+                700: $light-primary-text,
+                800: $light-primary-text,
+                900: $light-primary-text,
+                A100: $dark-primary-text,
+                A200: $light-primary-text,
+                A400: $light-primary-text,
+                A700: $light-primary-text,
+        )
+);
+
+
+
+$primary: mat.m2-define-palette($mat-primary, 900);
+
+$accent: mat.m2-define-palette($mat-accent, A200, A100, A400);
+
+$theme: mat.m2-define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+//@include mat.all-component-themes($theme);
+@include mat.button-theme($theme);
+
+
+

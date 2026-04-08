@@ -1,0 +1,6 @@
+.text-danger {
+    color: red;
+    font-size: 1.25rem;
+    padding: 20px;
+    display: inline-block; /* para que el padding funcione correctamente en elementos inline */
+}

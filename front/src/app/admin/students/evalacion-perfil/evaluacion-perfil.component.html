@@ -1,0 +1,617 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Student Profile</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/dashboard/main">
+                <i class="fas fa-home"></i> Inicio</a>
+            </li>
+            <li class="breadcrumb-item bcrumb-2">
+              <a routerLink="/students/all-students">
+                <i class="fas fa-home"></i> Apredices</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Your content goes here  -->
+    <div class="row clearfix" *ngIf="aprendiz">
+      <div class="col-lg-4 col-md-12">
+        <div class="card">
+          <div class="m-b-20">
+            <div class="contact-grid">
+              <div class="profile-header bg-dark">
+                <div class="user-name">{{ student.nombrecompleto }}</div>
+                <!--
+                                <div class="name-center">Trabajo en alturas</div>
+                              -->
+              </div>
+              <!--
+                          <img src="assets/images/user/usrbig4.jpg" class="user-img" alt="">
+                          -->
+              <ng-container *ngIf="student.foto === 'S'">
+                <img src="http://3.16.43.222:82/F{{student.id}}.jpeg" class="user-img" alt="">
+              </ng-container>
+              <ng-container *ngIf="student.foto === 'N'">
+                <img src="assets/images/user/usrbig4.jpg" class="user-img" alt="">
+              </ng-container>
+              <p>
+                {{ student.tipodocumento }} {{ student.numerodocumento }}
+              </p>
+              <div>
+                <span class="mail">
+                  <i class="material-icons">mail</i>{{ student.correoelectronico }}</span>
+              </div>
+              <div>
+                <span class="phone">
+                  <i class="material-icons">phone</i>{{ student.celular }}</span>
+              </div>
+              <div class="row" *ngIf="false">
+                <div class="col-4">
+                  <h5>564</h5>
+                  <small>Following</small>
+                </div>
+                <div class="col-4">
+                  <h5>18k</h5>
+                  <small>Followers</small>
+                </div>
+                <div class="col-4">
+                  <h5>565</h5>
+                  <small>Post</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <div class="card">
+          <div class="body">
+            <mat-tab-group>
+              <mat-tab label="Ficha de inscripción">
+                <div class="card">
+                  <div class="header">
+                    <h2>
+                      <strong>Programas</strong>
+                    </h2>
+                  </div>
+                  <div class="body">
+                    <form (ngSubmit)="updateAprendiz()" [formGroup]="secondFormGroup">
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          id: {{ aprendiz.id }} {{ aprendiz.grupo?.programa.nombre }} {{ aprendiz.nivel.nombre }}
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>Cumple horas</mat-label>
+
+                            <mat-select formControlName="cumplehoras">
+                              <mat-option [value]="'S'">
+                                SI
+                              </mat-option>
+                              <mat-option [value]="'N'">
+                                NO
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+
+                      <button mat-raised-button color="primary">Guardar</button>
+                    </form>
+                  </div>
+
+                  <div class="card">
+                    <div class="header">
+                      <h2>
+                        <strong>Evaluación</strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+
+                      <div class="table-responsive">
+                        <table class="table table-hover dashboard-task-infos">
+                          <thead>
+                            <tr>
+                              <th>Tipo</th>
+                              <th>Nota 1</th>
+                              <th>Nota 2</th>
+                              <th>Definitiva</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a routerLink="/students/main">
+                                  <i class="fas fa-home"></i> Teórica</a>
+                              </td>
+                              <td>
+                                <span [className]="aprendiz.eteorica1 < 3 ? 'badge col-red' : 'badge col-green'">{{
+                                  aprendiz.eteorica1 | number }}</span>
+                              </td>
+                              <td>
+                                <span [className]="aprendiz.eteorica2 < 3 ? 'badge col-red' : 'badge col-green'">{{
+                                  aprendiz.eteorica2 | number }}</span>
+                              </td>
+                              <td></td>
+
+                            </tr>
+                            <tr>
+                              <td>Práctica</td>
+                              <td>
+                                <span [className]="aprendiz.epractica < 3 ? 'badge col-red' : 'badge col-green'">{{
+                                  aprendiz.epractica | number }}</span>
+                              </td>
+                              <td></td>
+                              <td></td>
+
+                            </tr>
+                            <tr>
+                              <td>Énfasis</td>
+                              <td><span class="badge col-purple"></span></td>
+                              <td></td>
+                              <td></td>
+
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </mat-tab>
+              <mat-tab label="Información personal">
+                <form [formGroup]="firstFormGroup">
+
+                  <!---->
+                  <div class="body">
+                    <mat-accordion>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            DATOS DEL APRENDIZ EN FORMACION (T {{ student.id }})
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Primer apellido</mat-label>
+                              <input matInput formControlName="primerapellido">
+                              <mat-icon matSuffix>face</mat-icon>
+                              <div
+                                *ngIf="firstFormGroup.get('primerapellido').errors && firstFormGroup.get('primerapellido').touched">
+                                <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('required')">
+                                  El primer apellido es requerido
+                                </mat-error>
+                                <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('maxlength')">
+                                  La longitud del campo supera los 20 caracteres
+                                </mat-error>
+                              </div>
+
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Segundo apellido</mat-label>
+                              <input matInput formControlName="segundoapellido">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Primer nombre</mat-label>
+                              <input matInput formControlName="primernombre">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Segundo nombre</mat-label>
+                              <input matInput formControlName="segundonombre">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Genero</mat-label>
+                              <mat-select formControlName="genero">
+                                <mat-option value="M">Masculino</mat-option>
+                                <mat-option value="F">Femenino</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Tipo Documento</mat-label>
+                              <mat-select formControlName="tipodocumento">
+                                <mat-option value="CC">Cédula de ciudadania</mat-option>
+                                <mat-option value="CE">Cédula de extranjeria</mat-option>
+                                <mat-option value="PA">Pasaporte</mat-option>
+                                <mat-option value="PE">Permiso especial de permanencia</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Nro documento</mat-label>
+                              <input matInput formControlName="numerodocumento">
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Tipo sangre</mat-label>
+                              <mat-select formControlName="tiposangre">
+                                <mat-option value="O-">O-</mat-option>
+                                <mat-option value="O+">O+</mat-option>
+                                <mat-option value="A-">A-</mat-option>
+                                <mat-option value="A+">A+</mat-option>
+                                <mat-option value="B-">B-</mat-option>
+                                <mat-option value="B+">B+</mat-option>
+                                <mat-option value="AB-">AB-</mat-option>
+                                <mat-option value="AB+">AB+</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Ocupación</mat-label>
+                              <input matInput formControlName="ocupacion">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Dirección de domicilio</mat-label>
+                              <input matInput formControlName="direcciondomicilio">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Dpto domicilio</mat-label>
+                              <mat-select formControlName="departamentodomicilio">
+                                <mat-option *ngFor="let departamento of departamentos" [value]="departamento.cod">{{
+                                  departamento.nombre }}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Celular</mat-label>
+                              <input matInput formControlName="celular">
+                              <mat-icon matSuffix>phone_android</mat-icon>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Email</mat-label>
+                              <input matInput formControlName="correoelectronico">
+                              <mat-icon matSuffix>email</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>EPS</mat-label>
+                              <mat-select formControlName="eps">
+                                <mat-option *ngFor="let eps of epss" [value]="eps.nombre">
+                                  {{ eps.nombre }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>ARL</mat-label>
+                              <mat-select formControlName="arl">
+                                <mat-option *ngFor="let arl of arls" [value]="arl.nombre">
+                                  {{ arl.nombre }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+
+                      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            ULTIMO NIVEL DE FORMACION ACADEMICA
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Nivel</mat-label>
+                              <mat-select formControlName="niveleducativo">
+                                <mat-option value="1">Primaria</mat-option>
+                                <mat-option value="2">Bachillerato</mat-option>
+                                <mat-option value="3">Técnico</mat-option>
+                                <mat-option value="4">Tecnólogo</mat-option>
+                                <mat-option value="5">Universitaria</mat-option>
+                                <mat-option value="6">Tecnólogo</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Presenta dificultad de lecto escritura</mat-label>
+                              <mat-select formControlName="sabeleerescribir">
+                                <mat-option value="S">SI</mat-option>
+                                <mat-option value="N">NO</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                        </div>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            EXPERIENCIA TRABAJO EN ALTURAS
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                          <div class="col-xl-8 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Labor que desarrolla</mat-label>
+                              <input matInput formControlName="labordesarrolla">
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Operativas</mat-label>
+                              <input matInput formControlName="operativa">
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Administrativas</mat-label>
+                              <input matInput formControlName="administrativa">
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Otras</mat-label>
+                              <input matInput formControlName="otralabor">
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            AUTOREPORTE DE CONDICIONES DE SALUD
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Sufre de algun tipo de alergia/cual: </mat-label>
+                              <input matInput formControlName="alergias">
+                            </mat-form-field>
+
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Consume algún tipo de medicamento actualmente/ cual: </mat-label>
+                              <input matInput formControlName="medicamentos">
+                            </mat-form-field>
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Sufre algún tipo de enfermedad actualmente/ cual:</mat-label>
+                              <input matInput formControlName="enfermedades">
+                            </mat-form-field>
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Ha tenido alguna lesion o cirugia recientemente/ cual:</mat-label>
+                              <input matInput formControlName="lesiones">
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Esta bajo efectos de alcohol o sustencias psicoactivas</mat-label>
+                              <input matInput formControlName="drogas">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            PERSONA DE CONTACTO EN CASO DE EMERGENCIA
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Nombre y apellido</mat-label>
+                              <input matInput formControlName="nombrecontacto">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Telefono</mat-label>
+                              <input matInput formControlName="telefonocontacto">
+                            </mat-form-field>
+
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Parentesco</mat-label>
+                              <input matInput formControlName="parentescocontacto">
+                            </mat-form-field>
+
+                          </div>
+                        </div>
+
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </div>
+                </form>
+
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="project" aria-expanded="true">
+                    <div class="row clearfix">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="card project_widget">
+
+                          <div class="card">
+                            <div class="header">
+                              <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                  <a href="#" onClick="return false;" data-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                  </a>
+                                  <ul class="dropdown-menu pull-right">
+                                    <li>
+                                      <button mat-raised-button color="primary"
+                                        (click)="showPdfFormatoinscripcion()">Formato de inscripción</button>
+                                    </li>
+                                    <li>
+                                      <button mat-raised-button color="primary" (click)="showPdfPerfilingreso()">Perfil
+                                        ingreso</button>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <div class="card">
+                            <div class="header">
+                              <h2>Documento del trabajador <b>Lado A</b></h2>
+                            </div>
+                            <div class="body">
+                              <div class="example-container">
+
+                                <form [formGroup]="fileUploadForm">
+                                  <div class="row">
+                                    <div class="col-4"
+                                      *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf'">
+                                      <ng-container>
+                                        <button mat-raised-button color="primary"
+                                          (click)="showPdf(student.base64a)">PDF</button>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                  <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S'">
+                                    <div class="col-12">
+                                      <ng-container *ngIf="student !== undefined">
+                                        <img [src]="'data:image/jpeg;base64,' + student.base64a"/>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card">
+                            <div class="header">
+                              <h2><b>Lado B</b></h2>
+                            </div>
+                            <div class="body">
+                              <div class="example-container">
+                                <form [formGroup]="fileUploadForm">
+                                  <div class="row">
+                                    <div class="col-4"
+                                      *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf'">
+                                      <ng-container>
+                                        <button mat-raised-button color="primary"
+                                          (click)="showPdf(student.base64b)">PDF</button>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                  <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S'">
+                                    <div class="col-12">
+                                      @if ("student !== undefined") {
+                                        <ng-container>
+                                          <img [src]="'data:image/jpeg;base64,' + student.base64b"/>
+                                        </ng-container>
+                                      }
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="timeline" aria-expanded="false">
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="usersettings" aria-expanded="false">
+
+                  </div>
+                </div>
+              </mat-tab>
+
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

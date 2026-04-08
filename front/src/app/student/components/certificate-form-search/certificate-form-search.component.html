@@ -1,0 +1,62 @@
+<mat-card class="certificate-card">
+  <h4 class="login-title">Descarga tu certificado</h4>
+
+  <!-- Informative Text -->
+  <div class="row justify-content-center mb-3">
+    <div *ngIf="tipoUsuario === null" class="col-xl-8 col-lg-8 col-md-10 col-sm-12">
+      <p class="info-text">
+        Por favor, selecciona si eres un <strong>aprendiz</strong> o una <strong>empresa</strong>.
+        Si eres un aprendiz, ingresa tu número de documento para descargar tu certificado.
+        Si eres una empresa, podrás buscar certificados de aprendices patrocinados ingresando tu NIT y un rango de fechas.
+      </p>
+    </div>
+  </div>
+
+  <!-- User Type Selection with Radio Buttons -->
+  <div class="row justify-content-center mb-3">
+    <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12">
+      <mat-radio-group [(ngModel)]="tipoUsuario" (ngModelChange)="onUserTypeChange()">
+        <mat-radio-button value="aprendiz">Aprendiz</mat-radio-button>
+        <mat-radio-button value="empresa">Empresa</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <!-- Form Fields Based on User Type -->
+  <div class="row justify-content-center" *ngIf="tipoUsuario === 'aprendiz'">
+    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 mb-2">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput [formControl]="searchField" id="searchField" placeholder="Número de documento" maxlength="20" autofocus>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row justify-content-center" *ngIf="tipoUsuario === 'empresa'">
+    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 mb-2">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput placeholder="NIT de la empresa" maxlength="20" [formControl]="empresaNit">
+      </mat-form-field>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 mb-2">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput [matDatepicker]="pickerStart" placeholder="Fecha expedido desde" [formControl]="fechaInicial">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 mb-2">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput [matDatepicker]="pickerEnd" placeholder="Fecha expedido hasta" [formControl]="fechaFinal">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="row justify-content-center">
+    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12">
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isFormValid()">Consultar</button>
+    </div>
+  </div>
+</mat-card>

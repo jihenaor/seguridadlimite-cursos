@@ -1,0 +1,68 @@
+{{ error }}
+<mat-card class="custom-card">
+  <mat-card-content>
+    <mat-toolbar class="flex justify-between p-3">
+      <div class="quiz-header mt-2">
+        <span>Aprendiz {{ numerodocumento }} - {{ nombreaprendiz }} </span>
+      </div>
+    </mat-toolbar>
+  </mat-card-content>
+
+  <ng-container *ngIf="!isQuizCompleted">
+
+    <table>
+      <tbody>
+        <tr *ngFor="let question of questionList; let i = index">
+          <td>
+            <div class="question mt-6">
+              <mat-card [ngStyle]="{ 'background-color': '#c8c8c8' }" class="px-3 py-4 border rounded-xl border-slate-300 w-full">
+                {{ question.grupo.tipoevaluacion == 'E' ? 'PREGUNTA ESPECIFICA DEL ENFASIS' : ''}}
+                <h3 class="login-title font-bold">{{i + 1}} - {{ question.pregunta }} </h3>
+                
+                <!-- Imagen de la pregunta si existe base64 -->
+                <div *ngIf="question.base64" class="mt-3 text-center">
+                  <img [src]="transformFotoPregunta(question)" 
+                       style="max-width: 300px; max-height: 200px; border-radius: 8px;" 
+                       alt="Imagen de la pregunta"
+                       class="border border-gray-300">
+                </div>
+              </mat-card>
+            </div>
+
+            <div class="options mt-2">
+              <!-- Layout para preguntas con dificultad de lectura (lado a lado) -->
+              <div *ngIf="question.diflectura == 'S'" class="grid grid-cols-2 gap-4">
+                <div *ngFor="let option of question.respuestas; let i = index" 
+                     (click)="answer(question, option)"
+                     [ngStyle]="{ 'background-color': option.respondida ? '#ADD8E6' : '' }" 
+                     class="px-3 py-4 border rounded-xl border-slate-300 cursor-pointer duration-300 ease-in-out hover:transition-all hover:duration-500 text-lg font-semibold">
+                  <div class="text-center">
+                    <span class="font-bold">{{i + 1}}.</span> {{ option.respuesta }}
+                    <img *ngIf="option.tieneimagen=='S'" style="width: 150px; height: 150px; margin-top: 8px;" [src]="transformFoto(option)">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Layout normal para otras preguntas (lista vertical) -->
+              <div *ngIf="question.diflectura != 'S'">
+                <ol class="list-decimal ml-5">
+                  <li *ngFor="let option of question.respuestas; let i = index" class="mt-2" (click)="answer(question, option)">
+                    <div [ngStyle]="{ 'background-color': option.respondida ? '#ADD8E6' : '' }" class="px-3 py-4 border rounded-xl border-slate-300 w-full  cursor-pointer duration-300 ease-in-out hover:transition-all hover:duration-500 text-lg font-semibold">
+                      {{ option.respuesta }}
+                      <img *ngIf="option.tieneimagen=='S'" style="width: 150px; height: 150px;" [src]="transformFoto(option)">
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="flex justify-between mt-10" >
+        <button mat-raised-button color="primary" (click)="guardarEvaluacion()" class="w-100">Guardar evaluación</button>
+    </div>
+  </ng-container>
+
+</mat-card>

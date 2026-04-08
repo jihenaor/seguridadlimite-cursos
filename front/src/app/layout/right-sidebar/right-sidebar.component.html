@@ -1,0 +1,25 @@
+<!-- Right Sidebar -->
+<aside id="rightsidebar" class="right-sidebar" [ngClass]="isOpenSidebar ? 'open' : 'close'"
+  (clickOutside)="onClickedOutside($event)">
+  <div class="rightSidebarClose" (click)="toggleRightSidebar()"><i class="far fa-times-circle"></i></div>
+  <div class="demo-skin"
+    [ngStyle]="{'position' : 'relative', 'max-height' : maxHeight+'px', 'max-width' : maxWidth+'px'}"
+    >
+
+    <div class="rightSetting">
+      <p>COLOR BARRA DE MENU</p>
+      <mat-button-toggle-group class="mt-2" [value]="isDarkSidebar ? 'dark' : 'light'">
+        <mat-button-toggle (click)="lightSidebarBtnClick()" value="light">Light</mat-button-toggle>
+        <mat-button-toggle (click)="darkSidebarBtnClick()" value="dark">Dark</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="rightSetting">
+      <p>COLOR DEL TEMA</p>
+      <mat-button-toggle-group class="mt-2" [value]="isDarTheme ? 'dark' : 'light'">
+        <mat-button-toggle (click)="lightThemeBtnClick()" value="light">Light</mat-button-toggle>
+        <mat-button-toggle (click)="darkThemeBtnClick()" value="dark">Dark</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</aside>
+<!-- #END# Right Sidebar -->

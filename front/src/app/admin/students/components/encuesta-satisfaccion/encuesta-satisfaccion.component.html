@@ -1,0 +1,40 @@
+<div class="flex justify-center">
+  <table class="w-[90%] border-collapse">
+    <thead>
+      <tr>
+        <th colspan="3" class="border border-gray-300 p-2 text-center">FORMATO EVALUACIÓN DE LA SATISFACCIÓN DEL CLIENTE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tbody>
+        <ng-container *ngFor="let agrupador1 of preguntasService.groupedPreguntas | keyvalue">
+          <tr>
+            <td colspan="7" class="border border-gray-300 p-2 text-center bg-yellow-300">{{ agrupador1.key }}</td>
+          </tr>
+          <ng-container *ngFor="let agrupador2 of agrupador1.value | keyvalue">
+            <tr>
+              <td colspan="2" class="border border-gray-300 p-2 text-center bg-gray-200">{{ agrupador2.key }}</td>
+              <td class="border border-gray-300 p-2 text-center bg-gray-200">1</td>
+              <td class="border border-gray-300 p-2 text-center bg-gray-200">2</td>
+              <td class="border border-gray-300 p-2 text-center bg-gray-200">3</td>
+              <td class="border border-gray-300 p-2 text-center bg-gray-200">4</td>
+              <td class="border border-gray-300 p-2 text-center bg-gray-200">5</td>
+            </tr>
+            <ng-container *ngFor="let agrupador3 of agrupador2.value | keyvalue; ">
+              <tr *ngFor="let pregunta of agrupador3.value; let isFirstGroup = first ">
+                <td *ngIf="isFirstGroup" [attr.rowspan]="agrupador3.value.length" class="border border-gray-300 p-2">
+                  {{ agrupador3.key }}
+                </td>
+                <td class="border border-gray-300 p-2">{{ pregunta.pregunta }}</td>
+                <td class="border border-gray-300 p-2 text-center">{{ pregunta.respuestacorrecta == 1 ? "X" : ""}}</td>
+                <td class="border border-gray-300 p-2 text-center">{{ pregunta.respuestacorrecta == 2 ? "X" : ""}}</td>
+                <td class="border border-gray-300 p-2 text-center">{{ pregunta.respuestacorrecta == 3 ? "X" : ""}}</td>
+                <td class="border border-gray-300 p-2 text-center">{{ pregunta.respuestacorrecta == 4 ? "X" : ""}}</td>
+                <td class="border border-gray-300 p-2 text-center">{{ pregunta.respuestacorrecta == 5 ? "X" : ""}}</td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </tbody>
+  </table>
+</div>

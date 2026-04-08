@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="card">
+    <div class="header">
+      <h2>
+        <strong>Documentos</strong>
+      </h2>
+    </div>
+    <div class="body">
+      <div class="body table-responsive">
+        <form>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let documento of aprendiz.documentos; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ documento.nombre }}</td>
+                <td>{{ documento.nombrefile }}</td>
+
+                <td>
+                  <ng-container *ngIf="documento.ext === 'pdf'">
+                    <button mat-raised-button color="primary" (click)="showPdf(documento.base64)">
+                      Ver PDF
+                    </button>
+                  </ng-container>
+
+                  <ng-container *ngIf="documento.ext !== null && documento.ext !== 'pdf'">
+                    <button mat-raised-button color="primary" (click)="showDocument(documento)">
+                      Ver Documento
+                    </button>
+                  </ng-container>
+
+                  <app-file-upload-base64
+                    (base64ValueChange)="onBase64Change($event, documento)"
+                  ></app-file-upload-base64>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="guardarDocumentos(aprendiz.documentos)">
+        Guardar documentos
+      </button>
+    </div>
+  </div>
+</div>

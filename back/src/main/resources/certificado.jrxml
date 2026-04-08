@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="asistencia_grupo" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="516c0356-c3c3-4ba6-9638-3efb723b24ce">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="0.9090909090909125"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<field name="nombreaprendiz" class="java.lang.String"/>
+	<field name="sourcefirma" class="java.lang.String"/>
+	<field name="numerodocumento" class="java.lang.String"/>
+	<field name="representantelegal" class="java.lang.String"/>
+	<field name="arl" class="java.lang.String"/>
+	<field name="nivel" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="nit" class="java.lang.String"/>
+	<field name="fechaemision" class="java.lang.String"/>
+	<field name="horas" class="java.lang.String"/>
+	<field name="codigoministerio" class="java.lang.String"/>
+	<field name="codigoverificacion" class="java.lang.String"/>
+	<field name="fechainicio" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="792">
+			<image>
+				<reportElement positionType="Float" x="0" y="0" width="612" height="792" uuid="f7cea429-fc96-4928-add4-164a6b56a5df"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<imageExpression><![CDATA[$F{sourcefirma}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Transparent" x="78" y="190" width="512" height="31" forecolor="#000000" backcolor="#FF6666" uuid="0f2eb070-6a38-4af8-85c6-51e8a7e3278a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreaprendiz}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="236" width="192" height="30" uuid="97efd514-8ef8-4778-80be-7f96ccff186c"/>
+				<textElement>
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numerodocumento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="348" y="554" width="218" height="17" uuid="7d73c8ba-bde6-456c-9451-573d20fb2d4f"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{representantelegal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="234" width="195" height="43" uuid="e75e2f55-0ec3-49d8-b503-0b71c75f22ed"/>
+				<textElement>
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="363" width="575" height="44" uuid="a8765a7b-da45-4118-8404-53c5ea2c034d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="28" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nivel}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="52" y="554" width="202" height="20" uuid="047b9e9a-ee4e-46b1-b078-77d2ff199f9d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="213" y="534" width="161" height="20" uuid="3395a1b6-d24d-4a18-82f2-706c97ff5fef"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="426" width="25" height="23" uuid="c1fd03fc-9dae-48e1-a391-b59b69db85b7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horas}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="274" y="653" width="62" height="20" uuid="fb03e7a9-81f0-4b68-9639-c642c6f5561e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoministerio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="264" y="600" width="72" height="22" uuid="857ae7c3-9add-447b-a872-e0e91887e6cd"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoverificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="491" width="87" height="20" uuid="088514d7-c956-4d28-bdce-2183f285cb66"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechainicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="504" y="491" width="100" height="20" uuid="22e88a3d-2aca-4953-92ab-70d45e287523"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaemision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

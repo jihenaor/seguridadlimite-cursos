@@ -1,0 +1,23 @@
+<div class="container">
+
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3" class="center-cell">EVALUACION TEORICA</th>
+        <th class="center-cell">Correcta</th>
+        <th class="center-cell">Incorrecta</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tbody>
+        <tr *ngFor="let pregunta of preguntasService.preguntas; let i = index ">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pregunta.grupo.tipoevaluacion =='E' ? 'Enfasis' : '' }}</td>
+          <td>{{ pregunta.pregunta }}</td>
+          <td class="center-cell">{{ pregunta.respuestacorrecta === 'S' ? 'X' : '' }}</td>
+          <td class="center-cell">{{ pregunta.respuestacorrecta === 'N' ? 'X' : '' }}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>

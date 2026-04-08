@@ -1,0 +1,160 @@
+<div class="rounded-2xl shadow-lg p-8">
+  <!-- Título -->
+  <h2 class="text-2xl font-bold text-center mb-8">
+    Digita tu número de documento y presiona el botón buscar
+  </h2>
+
+  <form [formGroup]="authFormTrabajador" class="space-y-6">
+    <!-- Campos de empresa -->
+    @if (esEmpresa) {
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Nombre de la empresa -->
+        <div class="col-span-1">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Nombre de la empresa
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <i class="material-icons text-xl">business</i>
+            </span>
+            <input
+              type="text"
+              formControlName="nombreempresa"
+              maxlength="100"
+              class="w-full pl-10 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+              [ngClass]="{'bg-red-50 border-red-500': authFormTrabajador.get('nombreempresa').touched && authFormTrabajador.get('nombreempresa').hasError('required')}"
+              placeholder="Nombre de la empresa"
+            >
+          </div>
+          @if (authFormTrabajador.get('nombreempresa').touched && authFormTrabajador.get('nombreempresa').hasError('required')) {
+            <p class="mt-1 text-sm text-red-600 flex items-center">
+              <i class="material-icons text-sm mr-1">error</i>
+              El nombre de la empresa es requerido
+            </p>
+          }
+        </div>
+
+        <!-- NIT de la empresa -->
+        <div class="col-span-1">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Nit de la empresa
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <i class="material-icons text-xl">badge</i>
+            </span>
+            <input
+              type="text"
+              formControlName="nit"
+              maxlength="80"
+              class="w-full pl-10 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+              [ngClass]="{'bg-red-50 border-red-500': authFormTrabajador.get('nit').touched && authFormTrabajador.get('nit').hasError('required')}"
+              placeholder="NIT de la empresa"
+            >
+          </div>
+          @if (authFormTrabajador.get('nit').touched && authFormTrabajador.get('nit').hasError('required')) {
+            <p class="mt-1 text-sm text-red-600 flex items-center">
+              <i class="material-icons text-sm mr-1">error</i>
+              El NIT de la empresa es requerido
+            </p>
+          }
+        </div>
+
+        <!-- Nombre del representante legal -->
+        <div class="col-span-1">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Nombre del representante legal
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <i class="material-icons text-xl">person</i>
+            </span>
+            <input
+              type="text"
+              formControlName="nombrerepresentantelegal"
+              maxlength="80"
+              class="w-full pl-10 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+              [ngClass]="{'bg-red-50 border-red-500': authFormTrabajador.get('nombrerepresentantelegal').touched && authFormTrabajador.get('nombrerepresentantelegal').hasError('required')}"
+              placeholder="Nombre del representante"
+            >
+          </div>
+          @if (authFormTrabajador.get('nombrerepresentantelegal').touched && authFormTrabajador.get('nombrerepresentantelegal').hasError('required')) {
+            <p class="mt-1 text-sm text-red-600 flex items-center">
+              <i class="material-icons text-sm mr-1">error</i>
+              El nombre del representante legal es requerido
+            </p>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Documento del aprendiz y botones -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+      <!-- Campo de documento -->
+      <div class="col-span-1">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          Número de documento del aprendiz
+        </label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+            <i class="material-icons text-xl">badge</i>
+          </span>
+          <input
+            type="text"
+            formControlName="username"
+            maxlength="20"
+            appNumericOnly
+            class="w-full pl-10 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+            [ngClass]="{'bg-red-50 border-red-500': authFormTrabajador.get('username').touched && authFormTrabajador.get('username').hasError('required')}"
+            placeholder="Número de documento"
+          >
+        </div>
+        @if (authFormTrabajador.get('username').touched && authFormTrabajador.get('username').hasError('required')) {
+          <p class="mt-1 text-sm text-red-600 flex items-center">
+            <i class="material-icons text-sm mr-1">error</i>
+            El número de documento es requerido
+          </p>
+        }
+      </div>
+
+      <!-- Botón buscar -->
+      <div class="col-span-1">
+        <button
+          (click)="validarTrabajador()"
+          [disabled]="loading"
+          class="w-full bg-yellow-500 text-gray-900 py-3 px-4 rounded-lg hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold shadow-md flex items-center justify-center space-x-2"
+        >
+          @if (loading) {
+            <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          }
+          <span>Buscar</span>
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+
+      <!-- Enlace de información -->
+      <div class="col-span-1">
+        <a
+          routerLink="/student/info"
+          class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors duration-200"
+        >
+          <i class="fas fa-info mr-2"></i>
+          Solicitar información
+        </a>
+      </div>
+    </div>
+
+    <!-- Mensaje de error -->
+    @if (error) {
+      <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mt-6" role="alert">
+        <div class="flex items-center">
+          <i class="material-icons text-red-500 mr-2">error</i>
+          <span class="text-red-700">{{error}}</span>
+        </div>
+      </div>
+    }
+  </form>
+</div>

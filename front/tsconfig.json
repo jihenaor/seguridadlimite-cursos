@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "esModuleInterop": true,
+    "paths": {
+      "@model/*": [
+        "./src/app/core/models/*"
+      ],
+      "@service/*": [
+        "./src/app/core/services/*"
+      ]
+    },
+    "types": [
+      "node",
+      "xlsx"
+    ]
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./src/tsconfig.spec.json"
+    },
+    {
+      "path": "./e2e/tsconfig.e2e.json"
+    }
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "enableControlFlow": true
+  }
+}

@@ -1,0 +1,4 @@
+<div class="file-drop-area">
+  <input #fileInput class="file-input" type="file" accept=".pdf, .jpg, .jpeg, .png" (change)="onFileSelected($event)">
+  <span>{{ fileName ? fileName : 'Haz click o arrastra el documento aquí' }}</span>
+</div>

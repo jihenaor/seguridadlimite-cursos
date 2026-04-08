@@ -1,0 +1,137 @@
+<h2 mat-dialog-title>Editar Permiso de Trabajo en Alturas</h2>
+
+<mat-dialog-content>
+
+  <div *ngIf="error" class="text-red-500 p-4">
+    {{ error }}
+  </div>
+
+  <div *ngIf="permiso" class="space-y-4">
+    <!-- Información General -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <p class="text-sm text-gray-500">Fecha Inicio</p>
+        <p class="font-medium">{{ permiso.fechaInicio | date }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Cupo inicial</p>
+        <p class="font-medium">{{ permiso.cupoinicial | number }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Cupo final</p>
+        <p class="font-medium">{{ permiso.cupofinal | number }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Válido Desde</p>
+        <p class="font-medium">{{ permiso.validodesde | date }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Válido Hasta</p>
+        <p class="font-medium">{{ permiso.validohasta | date }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Horario</p>
+        <p class="font-medium">{{ permiso.horaInicio }} - {{ permiso.horaFinal }}</p>
+      </div>
+    </div>
+
+    <!-- Ubicación y Descripción -->
+    <div class="space-y-2">
+      <p class="text-sm text-gray-500">Proyecto/Área/Sección</p>
+      <p class="font-medium">{{ permiso.proyectoAreaSeccion }}</p>
+
+      <p class="text-sm text-gray-500">Ubicación Específica</p>
+      <p class="font-medium">{{ permiso.ubicacionEspecifica }}</p>
+
+      <p class="text-sm text-gray-500">Descripción de la Tarea</p>
+      <p class="font-medium">{{ permiso.descripcionTarea }}</p>
+    </div>
+
+    <!-- Herramientas y Altura -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <p class="text-sm text-gray-500">Herramientas a Utilizar</p>
+        <p class="font-medium">{{ permiso.herramientasUtilizar }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Altura de Trabajo</p>
+        <p class="font-medium">{{ permiso.alturaTrabajo }}</p>
+      </div>
+    </div>
+
+    <!-- Verificaciones -->
+    <div class="space-y-2">
+      <h3 class="font-semibold">Verificaciones</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="flex items-center">
+          <mat-icon [class.text-green-500]="permiso.verificacionSeguridadSocial" [class.text-red-500]="!permiso.verificacionSeguridadSocial">
+            {{ permiso.verificacionSeguridadSocial ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          <span class="ml-2">Seguridad Social</span>
+        </div>
+        <div class="flex items-center">
+          <mat-icon [class.text-green-500]="permiso.certificadoAptitudMedica" [class.text-red-500]="!permiso.certificadoAptitudMedica">
+            {{ permiso.certificadoAptitudMedica ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          <span class="ml-2">Certificado Aptitud Médica</span>
+        </div>
+        <div class="flex items-center">
+          <mat-icon [class.text-green-500]="permiso.certificadoCompetencia" [class.text-red-500]="!permiso.certificadoCompetencia">
+            {{ permiso.certificadoCompetencia ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          <span class="ml-2">Certificado Competencia</span>
+        </div>
+        <div class="flex items-center">
+          <mat-icon [class.text-green-500]="permiso.condicionSaludTrabajador" [class.text-red-500]="!permiso.condicionSaludTrabajador">
+            {{ permiso.condicionSaludTrabajador ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          <span class="ml-2">Condición Salud Trabajador</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsables -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <p class="text-sm text-gray-500">Persona que Autoriza</p>
+        <p class="font-medium">{{ permiso.personaAutoriza }}</p>
+        <p class="text-sm text-gray-500">CC: {{ permiso.nroCcAutoriza }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Responsable Emergencias</p>
+        <p class="font-medium">{{ permiso.responsableEmergencias }}</p>
+        <p class="text-sm text-gray-500">CC: {{ permiso.nroCcResponsable }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Coordinador Alturas</p>
+        <p class="font-medium">{{ permiso.coordinadorAlturas }}</p>
+        <p class="text-sm text-gray-500">CC: {{ permiso.nroCcCoordinador }}</p>
+      </div>
+    </div>
+
+    <!-- Tipos de Trabajo -->
+    <div class="space-y-2">
+      <h3 class="font-semibold">Tipos de Trabajo</h3>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let tipo of permiso.tiposTrabajo">{{ tipo.tipoTrabajo }}</li>
+      </ul>
+    </div>
+
+    <!-- Actividades -->
+    <div class="space-y-2">
+      <h3 class="font-semibold">Actividades</h3>
+      <div class="space-y-2">
+        <div *ngFor="let actividad of permiso.permisoDetalleActividades" class="flex items-center justify-between p-2 bg-gray-50 rounded">
+          <span>{{ actividad.actividad }}</span>
+          <span [class.text-green-500]="actividad.estado === 'Completado'" [class.text-yellow-500]="actividad.estado === 'En Progreso'" [class.text-red-500]="actividad.estado === 'Pendiente'">
+            {{ actividad.estado }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrarModal()">Cerrar</button>
+</mat-dialog-actions>

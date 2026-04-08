@@ -1,0 +1,32 @@
+<section class="content">
+  <div class="container-fluid">
+    <app-pagetitle [title]="'Enfasis'"></app-pagetitle>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of enfasisService.enfasis">
+                  <td>{{ row.id }}</td>
+                  <td>{{ row.nombre }}</td>
+                  <td>{{ row.estado }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

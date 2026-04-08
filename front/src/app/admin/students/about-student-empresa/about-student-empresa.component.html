@@ -1,0 +1,639 @@
+<section class="content">
+  <div class="container-fluid" *ngIf="aprendiz">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Ficha de inscripción</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/company/dashboard">
+                <i class="fas fa-home"></i> Inicio</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Your content goes here  -->
+    <div class="row clearfix">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="m-b-20">
+            <div class="contact-grid">
+              <div class="profile-header bg-dark">
+                <div class="user-name">{{ aprendiz?.trabajador.nombrecompleto }}</div>
+                <p>
+                  {{ aprendiz?.trabajador.tipodocumento }} {{ aprendiz.trabajador.numerodocumento }}
+                </p>
+                <p>
+                  <span class="mail">
+                    <em class="material-icons">mail</em>{{ aprendiz.trabajador.correoelectronico }}</span>
+                </p>
+                <p>
+                  <span class="phone">
+                    <em class="material-icons">phone</em>{{ aprendiz.trabajador.celular }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="m-b-20">
+            <div class="contact-grid">
+              <div>
+                Nivel: {{ aprendiz.nivel.nombre }}
+              </div>
+              <div>
+                Enfasis: {{ aprendiz.enfasis.nombre }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12">
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="project" aria-expanded="true">
+            <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <div class="card project_widget">
+                  <div class="card">
+                    <form (ngSubmit)="updateTrabajador()" [formGroup]="firstFormGroup">
+                      <div class="body">
+                        <div class="card">
+                          <div class="header" [style.backgroundColor]="'#56B9FF'">
+                            <h2>
+                              <strong>DATOS DEL APRENDIZ EN FORMACION</strong>
+                            </h2>
+                          </div>
+                          <div class="body">
+                            <div class="row">
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="primerapellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primer apellido</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+
+                                  <input matInput formControlName="primerapellido">
+                                  <mat-icon matSuffix>face</mat-icon>
+                                  <div
+                                    *ngIf="firstFormGroup.get('primerapellido').errors && firstFormGroup.get('primerapellido').touched">
+                                    <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('required')">
+                                      El primer apellido es requerido
+                                    </mat-error>
+                                    <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('maxlength')">
+                                      La longitud del campo supera los 20 caracteres
+                                    </mat-error>
+                                  </div>
+
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="segundoapellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segundo apellido</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+
+                                  <input matInput formControlName="segundoapellido">
+                                  <mat-icon matSuffix>face</mat-icon>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="primernombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primer nombre</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <input matInput formControlName="primernombre">
+                                  <mat-icon matSuffix>face</mat-icon>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="segundonombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segundo nombre</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+
+                                  <input matInput formControlName="segundonombre">
+                                  <mat-icon matSuffix>face</mat-icon>
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="genero" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genero</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+
+                                  <mat-select formControlName="genero">
+                                    <mat-option value="M">Masculino</mat-option>
+                                    <mat-option value="F">Femenino</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="fechanacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de nacimiento (AAAA-MM-DD)</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <input matInput formControlName="fechanacimiento" mask="0000/00/00" maxlength="10">
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="tipodocumento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo Documento</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+
+                                  <mat-select formControlName="tipodocumento">
+                                    <mat-option value="CC">Cédula de ciudadania</mat-option>
+                                    <mat-option value="CE">Cédula de extranjeria</mat-option>
+                                    <mat-option value="PA">Pasaporte</mat-option>
+                                    <mat-option value="PE">Permiso especial de permanencia</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="numerodocumento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nro documento</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <input matInput formControlName="numerodocumento">
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="tiposangre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo sangre</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Tipo sangre</mat-label>
+                                  <mat-select formControlName="tiposangre">
+                                    <mat-option value="O-">O-</mat-option>
+                                    <mat-option value="O+">O+</mat-option>
+                                    <mat-option value="A-">A-</mat-option>
+                                    <mat-option value="A+">A+</mat-option>
+                                    <mat-option value="B-">B-</mat-option>
+                                    <mat-option value="B+">B+</mat-option>
+                                    <mat-option value="AB-">AB-</mat-option>
+                                    <mat-option value="AB+">AB+</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="ocupacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ocupación</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <input matInput formControlName="ocupacion">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Dirección de domicilio</mat-label>
+                                  <input matInput formControlName="direcciondomicilio">
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="departamentodomicilio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dpto domicilio</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-select formControlName="departamentodomicilio">
+                                    <mat-option *ngFor="let departamento of departamentos" [value]="departamento.cod">{{
+                                      departamento.nombre }}</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="ciudaddomicilio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad de domicilio</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Ciudad de domicilio</mat-label>
+                                  <mat-select formControlName="ciudaddomicilio">
+                                    <mat-option *ngFor="let ciudad of ciudadesDomicilio" [value]="ciudad.cod">{{
+                                      ciudad.nombre }}</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Celular</label>
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Celular</mat-label>
+                                  <input matInput formControlName="celular" mask="(000) 000-0000">
+                                  <mat-icon matSuffix>phone_android</mat-icon>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Email</mat-label>
+                                  <input matInput formControlName="correoelectronico" maxlength="80">
+                                  <mat-icon matSuffix>email</mat-icon>
+                                  <mat-error
+                                    *ngIf="correoelectronico && correoelectronico.invalid">{{getErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>EPS</mat-label>
+                                  <mat-select formControlName="eps">
+                                    <mat-option *ngFor="let eps of epss" [value]="eps.nombre">
+                                      {{ eps.nombre }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>ARL</mat-label>
+                                  <mat-select formControlName="arl">
+                                    <mat-option *ngFor="let arl of arls" [value]="arl.nombre">
+                                      {{ arl.nombre }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="header" [style.backgroundColor]="'#56B9FF'">
+                            <h2>
+                              <strong>ULTIMO NIVEL DE FORMACION ACADEMICA</strong>
+                            </h2>
+                          </div>
+                          <div class="body">
+                            <div class="row">
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Nivel</mat-label>
+                                  <mat-select formControlName="niveleducativo">
+                                    <mat-option value="1">Primaria</mat-option>
+                                    <mat-option value="2">Bachillerato</mat-option>
+                                    <mat-option value="3">Técnico</mat-option>
+                                    <mat-option value="4">Tecnólogo</mat-option>
+                                    <mat-option value="5">Universotaria</mat-option>
+                                    <mat-option value="6">Tecnólogo</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Presenta dificultad de lecto escritura</mat-label>
+                                  <mat-select formControlName="sabeleerescribir">
+                                    <mat-option value="S">SI</mat-option>
+                                    <mat-option value="N">NO</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="header" [style.backgroundColor]="'#56B9FF'">
+                            <h2>
+                              <strong>EXPERIENCIA TRABAJO EN ALTURAS</strong>
+                            </h2>
+                          </div>
+                          <div class="body">
+                            <div class="row">
+                              <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Tiempo trabajo alturas</mat-label>
+                                  <input matInput formControlName="tiempotrabajoalturas">
+                                </mat-form-field>
+
+                              </div>
+                              <div class="col-xl-8 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Labor que desarrolla</mat-label>
+                                  <input matInput formControlName="labordesarrolla">
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Operativas</mat-label>
+                                  <input matInput formControlName="operativa">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Administrativas</mat-label>
+                                  <input matInput formControlName="administrativa">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Otras</mat-label>
+                                  <input matInput formControlName="otralabor">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="header" [style.backgroundColor]="'#56B9FF'">
+                            <h2>
+                              <strong>AUTOREPORTE DE CONDICIONES DE SALUD</strong>
+                            </h2>
+                          </div>
+                          <div class="body">
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Sufre de algun tipo de alergia/cual: </mat-label>
+                                  <input matInput formControlName="alergias" autocomplete="off">
+                                </mat-form-field>
+
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Consume algún tipo de medicamento actualmente/ cual: </mat-label>
+                                  <input matInput formControlName="medicamentos">
+                                </mat-form-field>
+
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Sufre algún tipo de enfermedad actualmente/ cual:</mat-label>
+                                  <input matInput formControlName="enfermedades">
+                                </mat-form-field>
+
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Ha tenido alguna lesion o cirugia recientemente/ cual:</mat-label>
+                                  <input matInput formControlName="lesiones">
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Esta bajo efectos de alcohol o sustencias psicoactivas:</mat-label>
+                                  <input matInput formControlName="drogas">
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="header" [style.backgroundColor]="'#56B9FF'">
+                            <h2>
+                              <strong>PERSONA DE CONTACTO EN CASO DE EMERGENCIA</strong>
+                            </h2>
+                          </div>
+                          <div class="body">
+                            <div class="row">
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Nombre y apellido</mat-label>
+                                  <input matInput formControlName="nombrecontacto">
+                                  <mat-icon matSuffix>face</mat-icon>
+                                </mat-form-field>
+
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Telefono</mat-label>
+                                  <input matInput formControlName="telefonocontacto">
+                                </mat-form-field>
+
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                  <mat-label>Parentesco</mat-label>
+                                  <input matInput formControlName="parentescocontacto">
+                                </mat-form-field>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-3 col-sm-6">
+                            <button mat-raised-button color="primary">Guardar datos del perfil de ingreso</button>
+                          </div>
+                          <div class="col-lg-3 col-sm-6">
+                            {{ invalid }}
+                          </div>
+                        </div>
+
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="card">
+                    <div class="header">
+                      <h2>Documento del trabajador <b>Lado A o documento con las dos caras</b></h2>
+                    </div>
+                    <div class="body">
+                      <div class="example-container">
+
+                        <form [formGroup]="fileUploadForm">
+                          <div class="row">
+                            <div class="col-4"
+                              *ngIf="aprendiz.trabajador.adjuntodocumento === 'S' && aprendiz.trabajador.ext === 'pdf'">
+                              <ng-container>
+                                <button mat-raised-button color="primary"
+                                  (click)="showPdf(aprendiz.trabajador.base64a)">Ver documento en PDF</button>
+                              </ng-container>
+                            </div>
+                            <!-- *ngIf="aprendiz.trabajador.adjuntodocumento !== 'S'" -->
+                            <div class="col-4">
+                              <div *ngIf="aprendiz.trabajador.adjuntodocumento !== 'S'">
+                                El documento ya ha sido subido. Para subir nuevamente haga click en seleccione un
+                                archivo
+                              </div>
+                              <!--
+                                                          <mat-form-field class="example-full-width mb-3">
+                                                              <ngx-mat-file-input formControlName="ladoa" placeholder="Seleccione un archivo" (change)="onUploadChangeA($event)">
+                                                              </ngx-mat-file-input>
+                                                              <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                          </mat-form-field>
+                                                          -->
+                            </div>
+                            <!-- *ngIf="aprendiz.trabajador.adjuntodocumento !== 'S'" -->
+                            <div class="col-4">
+                              <button *ngIf="trabajadordocumento !== undefined || trabajadordocumento.ext !== undefined"
+                                mat-raised-button color="primary" (click)="updateDocumentoTrabajador()">Guardar
+                                documento</button>
+                            </div>
+                          </div>
+                          @if ("aprendiz.trabajador.ext !== 'pdf' && aprendiz.trabajador.adjuntodocumento === 'S'") {
+                          <div class="row">
+                            <div class="col-12">
+                              <ng-container *ngIf="aprendiz.trabajador !== undefined">
+                                <img [src]="'data:image/jpeg;base64,' + aprendiz.trabajador.base64a" />
+                              </ng-container>
+                            </div>
+                          </div>
+                          }
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="header">
+                      <h2><b>Lado B (Si el lado A no tiene las dos caras del documento)</b></h2>
+                    </div>
+                    <div class="body">
+                      <div class="example-container">
+                        <form [formGroup]="fileUploadForm">
+                          <div class="row">
+                            <div class="col-4"
+                              *ngIf="aprendiz.trabajador.adjuntodocumento === 'S' && aprendiz.trabajador.ext === 'pdf'">
+                              <ng-container>
+                                <button mat-raised-button color="primary"
+                                  (click)="showPdf(aprendiz.trabajador.base64b)">Ver documento en PDF</button>
+                              </ng-container>
+                            </div>
+                            <div class="col-4">
+
+                              <div class="card">
+                                <div class="header">
+                                  <h2>File Upload</h2>
+                                </div>
+                                <div class="body">
+                                  <div class="example-container">
+                                    <form [formGroup]="fileUploadForm">
+                                      <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                                          <label>Upload</label>
+                                          <app-file-upload formControlName="uploadFile"></app-file-upload>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!--
+                                                          <mat-form-field class="example-full-width mb-3">
+                                                              <ngx-mat-file-input formControlName="ladoa" placeholder="Seleccione un archivo" (change)="onUploadChangeB($event)">
+                                                              </ngx-mat-file-input>
+                                                              <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                          </mat-form-field>
+                                                        -->
+                            </div>
+                            <div class="col-4">
+                              <button *ngIf="trabajadordocumento !== undefined || trabajadordocumento.ext !== undefined"
+                                mat-raised-button color="primary" (click)="updateDocumentoTrabajador()">Guardar
+                                documento</button>
+                            </div>
+                          </div>
+                          @if ("aprendiz.trabajador.ext !== 'pdf' && aprendiz.trabajador.adjuntodocumento === 'S'") {
+                          <div class="row">
+                            <div class="col-12">
+                              @if ("aprendiz !== undefined") {
+                              <ng-container>
+                                <img [src]="'data:image/jpeg;base64,' + aprendiz.trabajador.base64b" />
+                              </ng-container>
+                              }
+                            </div>
+                          </div>
+                          }
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="header">
+              <h2>
+                <strong>Otros documentos</strong>
+              </h2>
+            </div>
+            <div class="body">
+              <div class="body table-responsive">
+                <form [formGroup]="fileUploadForm">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Documento</th>
+                        <th>Nombre</th>
+                        <th>Validado</th>
+                        <th>Upload</th>
+                        <th>Download</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let documento of aprendiz?.documentos; let i = index">
+                        <th scope="row">{{ i + 1}}</th>
+                        <td> {{ documento.nombre }}</td>
+                        <td> {{ documento.nombrefile }}</td>
+                        <td></td>
+                        <td>
+                          <ng-container>
+                            <mat-form-field class="example-full-width mb-3">
+                              <ngx-mat-file-input formControlName="file" placeholder="Seleccione un archivo"
+                                (change)="onUploadChangeAprendiz($event, documento)">
+                              </ngx-mat-file-input>
+                              <mat-icon matSuffix>cloud_upload</mat-icon>
+                            </mat-form-field>
+                          </ng-container>
+                        </td>
+
+                        <td>
+                          <ng-container
+                            *ngIf="documento.iddocumentoaprendiz !== undefined && documento.iddocumentoaprendiz !== null && documento.ext !== 'pdf'">
+                            <a href="https://seguridadallimite.com/uploads/A{{documento.iddocumentoaprendiz}}.{{documento.ext}}"
+                              target="_blank">Ver</a>
+                          </ng-container>
+
+                          <div class="col-4" *ngIf="documento.ext === 'pdf' && documento.iddocumentoaprendiz !== null">
+                            <ng-container>
+                              <button mat-raised-button color="primary" (click)="showPdf(documento.base64)">PDF</button>
+                            </ng-container>
+                          </div>
+                        </td>
+                        <td>
+                          {{ documento.savedmsg }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+              <button mat-raised-button color="primary" (click)="guardarDocumentos()">Guardar documentos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

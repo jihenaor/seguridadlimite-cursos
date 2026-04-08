@@ -1,0 +1,30 @@
+<div class="container">
+
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3" class="center-cell">EVALUACIÓN CONOCIMIENTOS PREVIOS</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tbody>
+        <tr *ngFor="let pregunta of preguntasService.preguntas; let i = index ">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <ng-container *ngIf="pregunta.grupo.tipoevaluacion =='E'">
+              <label><b>Énfasis</b></label>
+              <mat-divider></mat-divider>
+            </ng-container>
+            {{ pregunta.pregunta }}
+            <mat-divider></mat-divider>
+            {{ pregunta.textorespuesta }}
+          </td>
+          <td class="center-cell">
+            <mat-icon *ngIf="pregunta.respuestacorrecta === 'S'" class="icon-verde">done</mat-icon>
+            <mat-icon *ngIf="pregunta.respuestacorrecta === 'N'" class="icon-rojo">close</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>

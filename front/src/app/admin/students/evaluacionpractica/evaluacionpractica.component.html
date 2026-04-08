@@ -1,0 +1,128 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Evaluación práctica {{ nombrecompleto }}</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/dashboard/main">
+                                <i class="fas fa-home"></i> Inicio</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a *ngIf="idgrupo" routerLink="/students/aprendices/{{ idgrupo }}">Aprendiz</a>
+                            <a *ngIf="!idgrupo" routerLink="/admin/students/about-student/{{ idaprendiz }}">Aprendiz</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <ng-container *ngFor="let g of grupoevaluacions">
+                            <button style="margin:6px" mat-stroked-button color="primary" (click)="seleccionarGrupo(g)">
+                              <mat-icon *ngIf="grupo && g.id === grupo.id">check_circle_outline
+                              </mat-icon>
+                              {{ g.nombre }}
+                            </button>
+                        </ng-container>
+
+                        <div class="row" *ngIf="grupo">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="body">
+                                                <button mat-raised-button color="primary" (click)="actualizarEvaluacion()">
+                                              Guardar<mat-icon class="col-white">save</mat-icon>
+                                        </button>
+
+                                                <button mat-raised-button color="accent" (click)="downloadEvaluacionPractica()">
+                                          <mat-icon class="col-white">cloud_download</mat-icon>
+                                          Descargar
+                                        </button>
+
+
+                                                <button mat-raised-button color="warn" (click)="onClickDocumento()">
+                                                      <mat-icon>file_upload</mat-icon>
+                                                      Upload
+                                                  </button>
+                                                <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*, application/pdf" style="display:none;" (change)="onUploadChangeA($event)" />
+                                                <button *ngIf="documentoevaluacion.ext !== ''" mat-raised-button color="primary" (click)="updateDocumentoEvaluacion()">Guardar documento evaluación</button>
+                                                <label>{{ documentoevaluacion.nombrearchivo }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-container mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource">
+                                <ng-container matColumnDef="pregunta">
+                                    <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.pregunta.orden}} {{element.pregunta.pregunta}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="cumple">
+                                    <th mat-header-cell *matHeaderCellDef> Cumple </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button style="margin-right:15px" mat-fab (click)="evaluar(element, 'S')">
+                                    <mat-icon *ngIf="element.respuestacorrecta === 'S'">checkcheck</mat-icon>
+
+                                  </button>
+
+
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="nocumple">
+                                    <th mat-header-cell *matHeaderCellDef> No Cumple </th>
+                                    <td mat-cell *matCellDef="let element">
+
+                                        <button style="margin-right:15px" color="primary" mat-fab (click)="evaluar(element, 'N')">
+                                  <mat-icon  *ngIf="element.respuestacorrecta === 'N'">cancel</mat-icon>
+                                </button>
+
+                                    </td>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="grupo">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body">
+                                <button mat-raised-button color="primary" (click)="actualizarEvaluacion()">
+                                  <mat-icon class="col-white">save</mat-icon>Guardar
+                          </button>
+
+                                <button mat-raised-button color="accent" (click)="downloadEvaluacionPractica()">
+                            <mat-icon class="col-white">cloud_download</mat-icon>
+                            Descargar
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

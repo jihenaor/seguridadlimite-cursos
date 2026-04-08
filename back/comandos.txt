@@ -1,0 +1,7 @@
+ps aux | grep java
+
+gunzip
+
+2. Eliminar el archivo del área de staging (si ya lo agregaste con git add)
+
+git reset HEAD deploy.sh

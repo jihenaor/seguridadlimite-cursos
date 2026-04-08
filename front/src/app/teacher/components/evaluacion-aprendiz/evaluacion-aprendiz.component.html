@@ -1,0 +1,77 @@
+<div class="card">
+  <div class="header">
+    <div class="row">
+      <h3 class="col-12">Evaluación {{ aprendiz?.trabajador?.numerodocumento }} - {{ aprendiz?.trabajador?.nombrecompleto }}</h3>
+    </div>
+  </div>
+
+  <div class="example-action-buttons">
+    <div class="row">
+      <div class="col-12">
+        <span>Nota: {{ aprendiz?.epractica }}</span>
+      </div>
+    </div>
+    <button mat-button (click)="accordion.openAll()">Mostrar todo</button>
+    <button mat-button (click)="accordion.closeAll()">Ocultar todo</button>
+  </div>
+
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let grupo of grupoevaluacions">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="custom-panel-title">
+          <span [ngClass]="{'small-font': isSmallDevice()}">{{ grupo.nombre }}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ grupo.porcentaje }}
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Habilidad</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let evaluacion of grupo.evaluacions; let i=index;">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{ evaluacion.pregunta.pregunta }} </td>
+              <td>
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                  <mat-button-toggle
+                    [ngClass]="getButtonStyle(evaluacion, 'N')"
+                    [checked]="evaluacion.respuestacorrecta === 'N'"
+                    (change)="onFontStyleChange($event.value, evaluacion)"
+                    value="N">NO</mat-button-toggle>
+                  <mat-button-toggle
+                    [ngClass]="getButtonStyle(evaluacion, 'S')"
+                    [checked]="evaluacion.respuestacorrecta === 'S'"
+                    (change)="onFontStyleChange($event.value, evaluacion)"
+                    value="S">SI</mat-button-toggle>
+                  <mat-button-toggle
+                    [ngClass]="getButtonStyle(evaluacion, 'A')"
+                    [checked]="evaluacion.respuestacorrecta === 'A'"
+                    (change)="onFontStyleChange($event.value, evaluacion)"
+                    value="A">No aplica</mat-button-toggle>
+                </mat-button-toggle-group>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<!-- #END# Hover Rows -->
+
+<div class="row clearfix">
+<button mat-raised-button color="primary" (click)="guardarEvaluacion()">
+Guardar
+</button>
+</div>
+

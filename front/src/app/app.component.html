@@ -1,0 +1,11 @@
+<div [ngClass]="{ dark: isDarkEnable }" class="bg-theme dark:bg-dark-theme text-link-color dark:text-dark-link-color">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+
+    <!-- Contenido principal -->
+    <div class="flex-1 p-0">
+      <router-outlet></router-outlet>
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.detalle-container {
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .agrupador-label, .nivel-label {
+    font-weight: bold;
+  }
+
+  .agrupador-value, .nivel-value {
+    margin-left: 8px;
+  }
+
+  .agrupador-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .agrupador-label {
+    margin-right: 4px;
+  }
+}/* all-preguntas.component.scss */
+
+/* Estilos para la tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+    border-right: 1px solid #e0e0e0;
+
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  tr:hover {
+    background-color: #e0e0e0;
+  }
+
+  td:last-child {
+    padding-right: 0;
+  }
+
+  .agrupador-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .agrupador-label {
+      font-weight: bold;
+    }
+
+    .agrupador-value {
+      margin-left: 8px;
+    }
+  }
+}

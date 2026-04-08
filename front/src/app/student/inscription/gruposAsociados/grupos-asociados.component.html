@@ -1,0 +1,36 @@
+<div class="resumen-datos">
+  <h3>Resumen de los datos del aprendiz</h3>
+  <p><strong>Nombre:</strong> {{ trabajador?.primernombre }} {{ trabajador?.segundonombre }} {{ trabajador?.primerapellido }} {{ trabajador?.segundoapellido }}</p>
+  <p><strong>Documento:</strong> {{ trabajador?.numerodocumento }}</p>
+  <p><strong>Nivel:</strong> {{ trabajador?.nombrenivel }}</p>
+  <p><strong>Enfasis:</strong> {{ trabajador?.nombreenfasis }}</p>
+  <p><strong>Fecha de inscripcion:</strong> {{ trabajador?.fechainscripcion }}</p>
+  @if(trabajador?.asistenciacompleta){
+    <p><strong>Asistencia:</strong> Completa</p>
+  }
+
+  <p *ngIf="trabajador?.fechaencuesta"><strong>Fecha encuesta:</strong> {{ trabajador?.fechaencuesta }}</p>
+</div>
+
+<div *ngIf="!trabajador?.existeinscripcionabierta" class="tabla-grupos">
+  <label class="text-danger fs-5 p-4">
+    <mat-icon class="align-middle me-2">warning</mat-icon>
+    No existe inscripciones abiertas
+  </label>
+</div>
+
+<div class="row">
+  <div class="col-12 text-center mt-3">
+    <button
+      mat-raised-button
+      color="primary"
+      class="mdc-button mdc-button--raised"
+      (click)="continuarAprendizaje()"
+      [disabled]="registrarContinuaService.loading()">
+      <mat-icon class="me-2">loop</mat-icon>
+      {{ registrarContinuaService.loading() ? 'Procesando...' : 'Continuar mi aprendizaje en este ciclo' }}
+    </button>
+  </div>
+</div>
+
+

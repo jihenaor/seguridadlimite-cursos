@@ -1,0 +1,102 @@
+<div class="container">
+
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="4"></th>
+        <th rowspan="2" class="center-cell">Gestion integral</th>
+        <th colspan="5">Código: GI-FO-004</th>
+      </tr>
+      <tr>
+        <th colspan="5">Versión: 003</th>
+      </tr>
+      <tr>
+        <th rowspan="2" class="center-cell">FORMATO EVALUACIÓN DE LA SATISFACCIÓN DEL CLIENTE</th>
+        <th colspan="5">Fecha de elaboración 02/01/2018</th>
+      </tr>
+      <tr>
+        <th colspan="5">Fecha de última modificación 11/02/2023</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2">Nombre aprendiz encuestado: <b>{{ nombreaprendiz }}</b></td>
+        <td colspan="5">Fecha</td>
+      </tr>
+      <tr>
+        <td colspan="7">
+          Para el centro de formación y entrenamiento SEGURIDAD AL LIMITE S.A.S. es muy importante conocer sus observaciones para el mejoramiento continuo. Por favor llene esta encuesta rápida y háganos saber su opinión
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="7">
+          Exprese su grado de satisfacción de acuerdo a los siguientes criterios, donde
+          <br />
+          <b>1 - Muy Deficiente 2- Deficiente 3- Regular 4- Bueno 5 -Excelente</b>
+        </td>
+      </tr>
+
+      <tbody>
+        <tbody>
+          <ng-container *ngFor="let agrupador1 of preguntasService.groupedPreguntas | keyvalue">
+            <tr>
+              <td colspan="7" class="center-cell celda-amarilla">{{ agrupador1.key }}</td>
+            </tr>
+            <ng-container *ngFor="let agrupador2 of agrupador1.value | keyvalue">
+              <tr>
+                <td colspan="7" class="center-cell celda-gris">{{ agrupador2.key }}</td>
+              </tr>
+              <ng-container *ngFor="let agrupador3 of agrupador2.value | keyvalue; let isLast = last">
+                <tr *ngFor="let pregunta of agrupador3.value; let isFirstGroup = first">
+                  <td *ngIf="isFirstGroup" [attr.rowspan]="agrupador3.value.length">
+                    {{ agrupador3.key }}
+                  </td>
+                  <td colspan="2">{{ pregunta.pregunta }}</td>
+                  <td>
+                    <mat-button-toggle-group (change)="onSeleccionarOpcionRespuesta(pregunta, $event.value)" aria-label="Font Style">
+                      <mat-button-toggle *ngFor="let opcion of pregunta.opcionesrespuestaArray"
+                        [value]="opcion"
+                        [checked]="pregunta.respuestacorrecta === opcion">
+                        {{ opcion }}
+                      </mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+          <tr *ngIf="mostrarInputRespuesta">
+            <td colspan="7" class="textarea-container">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Por favor, especifique su respuesta</mat-label>
+
+                <textarea
+                  matInput
+                  [ngModel]="comentariosencuesta"
+                  (ngModelChange)="onComentariosChange($event)"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="3"
+                  cdkAutosizeMaxRows="3"
+                  class="border-2 border-gray-300 focus:border-blue-500">
+                </textarea>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr >
+            <td colspan="7" class="text-center">
+              <button mat-flat-button color="primary" (click)="actualizarEncuesta()">
+                Actualizar encuesta
+              </button>
+
+              <button mat-flat-button color="accent" routerLink="/student/inscription">
+                Cancelar e Ir a la página de inscripción
+              </button>
+            </td>
+          </tr>
+
+        </tbody>
+  </table>
+</div>

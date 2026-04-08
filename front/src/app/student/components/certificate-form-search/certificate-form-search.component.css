@@ -1,0 +1,37 @@
+.certificate-card {
+  max-width: 800px; /* Limit the card width for larger screens */
+  margin: 0 auto; /* Center the card horizontally */
+  padding: 24px; /* Add padding inside the card */
+}
+
+.login-title {
+  text-align: center; /* Center the title */
+  margin-bottom: 24px;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  text-align: center; /* Center the informative text */
+}
+
+.info-text strong {
+  color: #333;
+}
+
+mat-radio-group {
+  display: flex;
+  justify-content: center; /* Center the radio buttons */
+  gap: 20px; /* Add space between radio buttons */
+}
+
+.example-full-width {
+  width: 100%; /* Ensure form fields take full width of their container */
+}
+
+button[mat-raised-button] {
+  display: block; /* Make the button a block element */
+  margin: 0 auto; /* Center the button */
+}

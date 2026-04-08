@@ -1,0 +1,9 @@
+/* Colores y bordes comunes */
+.bg-light {
+    background-color: #f8f9fa;
+  }
+  
+  .border-bottom {
+    border-bottom: 1px solid #ddd;
+  }
+  

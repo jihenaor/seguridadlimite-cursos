@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <ng-container *ngIf="base64 == null">
+          <span>No existe fotografia del trabajador</span>
+        </ng-container>
+        @if (base64 != null) {
+          <img style="width: 300px; height: 300px;" [src]="transformFoto()" alt="foto">
+        }
+
+  </div>
+</div>

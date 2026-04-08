@@ -1,0 +1,94 @@
+# ─────────────────────────────────────────────────────────────
+#  Perfil LOCAL / DESARROLLO
+#  Las credenciales sensibles se leen de variables de entorno.
+#  Desarrollo local: back/.env (también si user.dir es la raíz del repo: se busca back/.env).
+#  DotenvEnvironmentPostProcessor registra las variables antes de resolver este yaml.
+#
+#  NUNCA pongas contraseñas en este archivo.
+# ─────────────────────────────────────────────────────────────
+
+spring:
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    # Vacío en local si no usas SMTP; evita fallo de inyección en EmailCfg
+    username: ${MAIL_USER:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+        starttls:
+          enable: true
+  servlet:
+    multipart:
+      max-file-size: 180MB
+      max-request-size: 180MB
+
+  datasource:
+    # allowPublicKeyRetrieval/useSSL: comunes en MySQL 8 en Docker desde el host (no corrigen 1045 por mala clave).
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:wwsegu_cursos}?zeroDateTimeBehavior=convertToNull&serverTimezone=America/Bogota&allowPublicKeyRetrieval=true&useSSL=false
+    # Usuario de aplicación (nunca root). Mismo DB_USER/DB_PASSWORD que en docker-compose / infraestructura/.env
+    username: ${DB_USER:seguridadlimite_app}
+    password: ${DB_PASSWORD:DevAppDb_Local_ChangeMe}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    # Si MySQL devuelve 1045, sin dialecto Hibernate muestra ademas "Unable to determine Dialect" (ruido).
+    # Con BD conectada Boot puede inferir dialecto; HHH90000025 es solo informativo.
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+# OpenAPI / Swagger UI (sustituye Springfox en Boot 3)
+springdoc:
+  packages-to-scan: com.seguridadlimite.models
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  jwt:
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:30}
+    # Base64 (≥32 bytes al decodificar). SOLO desarrollo; en producción define JWT_SECRET
+    secret-key: ${JWT_SECRET:c2VndXJpZGFkLWRldi1sb2NhbC1vbmx5LXJlcGxhY2UtaW4tcHJvZA==}
+
+server:
+  port: 8090
+  servlet:
+    context-path: /cursosback
+  tomcat:
+    max-http-form-post-size: 100MB
+
+path:
+  fotos: /root/images/fotos/
+  signatures: /root/images/signatures/
+  documents: /root/images/documents/
+  certificados: /root/images/certificates/
+  windows:
+    fotos: C:\\Users\\Usuario\\Documents\\images\\fotos\\
+    signatures: C:\\Users\\Usuario\\Documents\\images\\signature\\
+    documents: C:\\Users\\Usuario\\Documents\\images\\documents\\
+    certificados: C:\\Users\\Usuario\\Documents\\images\\certificates\\
+
+logging:
+  file:
+    name: ../logs.log
+  level:
+    root: INFO
+    com.seguridadlimite: DEBUG
+  pattern:
+    console: "'%d{yyyy-MM-dd HH:mm} - %msg%n'"
+    file: "'%d{yyyy-MM-dd HH:mm} %-5level - %msg%n'"
+
+deploy:
+  secret-token: ${DEPLOY_SECRET_TOKEN:local_dev_only}

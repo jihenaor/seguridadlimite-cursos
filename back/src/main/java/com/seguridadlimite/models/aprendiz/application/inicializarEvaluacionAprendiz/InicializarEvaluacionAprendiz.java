@@ -1,0 +1,57 @@
+package com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz;
+
+import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
+import com.seguridadlimite.models.evaluacion.application.DeleteEvaluacionService;
+import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.FindParametrosById;
+import com.seguridadlimite.models.parametros.dominio.Parametros;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class InicializarEvaluacionAprendiz {
+
+    @Autowired
+    private IAprendizDao aprendizDao;
+
+    @Autowired
+    private FindParametrosById findParametrosById;
+
+    @Autowired
+    private DeleteEvaluacionService deleteEvaluacionService;
+
+    @Transactional
+    public void update(String numeroDocumento,
+                       String tipoEvaluacion,
+                       Long idaprendiz)  {
+        Parametros parametros = findParametrosById.find();
+        Aprendiz aprendiz;
+
+        if (idaprendiz == null) {
+            // aprendiz = aprendizDao.findFechaInscripcionNumeroDocumento(parametros.getFechainscripcion(), numeroDocumento);
+            aprendiz=null;
+        } else {
+            aprendiz = aprendizDao.findById(idaprendiz).orElseThrow();
+        }
+
+        switch (tipoEvaluacion) {
+            case "T":
+                aprendizDao.updateEvaluacionteorica1((double)0, aprendiz.getId());
+                aprendizDao.updateEvaluacionteorica2((double)0, aprendiz.getId());
+
+                deleteEvaluacionService.delete("E", aprendiz.getId());
+                break;
+            case "I":
+                aprendizDao.updateEvaluacionIngreso((double)0, aprendiz.getId());
+                break;
+            case "E":
+                aprendizDao.updateEvaluacionteoricaEnfasis((double)0, aprendiz.getId());
+                break;
+        }
+
+        deleteEvaluacionService.delete(tipoEvaluacion, aprendiz.getId());
+    }
+}
+
+

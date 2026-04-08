@@ -1,0 +1,752 @@
+<div class="px-0 py-0 max-w-7xl mx-auto">
+  <shared-header [textHeader]="'Inscríbete a nuestros cursos'"></shared-header>
+
+
+  @if (!inscripcionesAbiertas) {
+    <app-inscripciones-abiertas></app-inscripciones-abiertas>
+  }
+
+  @if (!horarioSeleccionado && !mostrarformulario) {
+  <div class="grupos-container" *ngIf="!horarioSeleccionado && !mostrarformulario">
+    <div class="row grupos-main">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2 auth-form-section">
+        <div class="form-inscription">
+          <div class="inscription-wrapper">
+
+            <inscripcion-form-search (trabajadorEncontrado)="validarTrabajador($event)"></inscripcion-form-search>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <div class="grupos-container" *ngIf="false">
+    <app-horario></app-horario>
+  </div>
+
+  <div class="grupos-container" *ngIf="false">
+    <app-cursos-abiertos></app-cursos-abiertos>
+  </div>
+
+  <div class="grupos-container" *ngIf="false">
+    <app-curso-inscripcion></app-curso-inscripcion>
+
+  </div>
+
+  <div id="titulo_ficha_inscripcion"></div>
+
+  @if (mostrardatostrabajador) {
+  <div class="grupos-container">
+    <div class="row grupos-main">
+      <div class="col-sm-12 auth-form-section">
+        <div class="form-inscription">
+          <div class="cursos-wrapper">
+            @if (trabajador?.existeinscripcionabierta && !trabajador?.asistenciacompleta && !trabajador?.aprendizContinuaAprendizaje) {
+            <div class="row">
+              <app-grupos-asociados
+                [trabajador]="trabajador"
+                (trabajadorChange)="trabajador = $event">
+              </app-grupos-asociados>
+
+              <div class="mt-3 d-flex justify-content-center">
+                <button mat-raised-button color="primary" (click)="toggleFormulario()">
+                  Actualizar el formulario de inscripción
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  @if (mostrarformulario) {
+  <div class="grupos-container">
+    <div class="row grupos-main">
+      <div class="col-sm-12 auth-form-section">
+        <div class="form-inscription">
+          <div class="cursos-wrapper">
+            <div class="row">
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
+                *ngIf="trabajador?.existeinscripcionabierta && (trabajador?.aprendizContinuaAprendizaje)">
+                <button mat-raised-button color="secondary" class="w-100" routerLink="/student/photo">
+                  <mat-icon>add_a_photo</mat-icon> Tomar foto
+                </button>
+              </div>
+
+              @if (trabajador.idaprendiz && trabajador?.aprendizContinuaAprendizaje) {
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2">
+                <button mat-raised-button color="secondary" class="w-100" routerLink="/quiz/inicio-teorico">
+                  <mat-icon>assignment</mat-icon> Quiz teórico
+                </button>
+              </div>
+              }
+
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
+                *ngIf="trabajador.idaprendiz && trabajador.aprendizContinuaAprendizaje">
+                <button mat-raised-button color="secondary" class="w-100"
+                  routerLink="/quiz/inicio-satisfaccion-cliente">
+                  <mat-icon>assignment</mat-icon> Encuesta de satisfacción</button>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
+                *ngIf="trabajador.idaprendiz && trabajador.fechaencuesta">
+                  Fecha encuesta: {{ trabajador.fechaencuesta }}
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 mb-2" *ngIf="trabajador.idaprendiz">
+                Evaluación de ingreso: {{ trabajador.eingreso }}
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div *ngIf="trabajador?.existeinscripcionabierta && (trabajador?.aprendizContinuaAprendizaje || trabajador?.asistenciacompleta); else formTemplate">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 mb-2">
+                    <button mat-raised-button color="warn" (click)="cancelGrupo()" class="w-100">Cancelar</button>
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="trabajador?.grupo && trabajador?.grupo !== null">
+                <h4 class="login-title">Se encuentra inscrito en el programa {{ trabajador.grupo.programa.nombre
+                  }} Nivel: {{ trabajador.grupo.nivel.nombre }}</h4>
+
+                Nota: Hasta tanto el formulario de inscripción no sea diligenciado en su totalidad y sean
+                adjuntados todos los documentos, no se considerará inscrito el aprendiz y no se generará ningún
+                tipo de certificado
+              </div>
+
+
+                <h3 id="titulo" class="login-title">FICHA DE INSCRIPCIÓN</h3>
+
+                <form [formGroup]="firstFormGroup" [disabled]="fechaLimiteSuperada">
+
+                  <div class="w-full mb-6">
+                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
+                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
+                            PROGRAMA DE FORMACION Y ENTRENAMIENTO A REALIZAR
+                      </div>
+                      <div class="p-6">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-select formControlName="idnivel">
+                            <mat-option *ngFor="let nivel of niveles" [value]="nivel.id">
+                              {{ nivel.nombre }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w-full mb-6">
+                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
+                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
+                        SECTOR LABORAL O ÉNFASIS AL QUE PERTENECE
+                      </div>
+                      <div class="p-6">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-select id="idenfasis" formControlName="idenfasis" required>
+                            <mat-option *ngFor="let e of enfasisService.enfasis" [value]="e.id">
+                              {{ e.nombre }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      @if (mostrarOtroEnfasis) {
+                        <div class="p-6">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Otro énfasis</mat-label>
+                            <input matInput formControlName="otroenfasis">
+                          </mat-form-field>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="w-full mb-6">
+                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
+                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
+                        DATOS PERSONALES DEL APRENDIZ EN FORMACION
+                      </div>
+                      <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-2">
+                          <!-- Tipo de documento y Número de documento en la primera fila -->
+                          <div>
+                            <label for="tipodocumento" class="block mb-2 text-sm font-medium text-gray-900">Tipo de documento</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <mat-select id="tipodocumento" formControlName="tipodocumento">
+                                <mat-option value="CC">Cédula de ciudadania</mat-option>
+                                <mat-option value="CE">Cédula de extranjeria</mat-option>
+                                <mat-option value="PA">Pasaporte</mat-option>
+                                <mat-option value="PE">Permiso especial de permanencia</mat-option>
+                              </mat-select>
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+
+                          <div>
+                            <label for="numerodocumento" class="block mb-2 text-sm font-medium text-gray-900">Número de documento</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <input matInput type="text" id="numerodocumento" formControlName="numerodocumento">
+                            </mat-form-field>
+                            <div class="text-red-500 text-sm" [class.active]="isNumerodocumentoFieldInvalid">
+                              @if (numerodocumentoField.touched && numerodocumentoField.hasError('required')) {
+                                <p>El número de documento es requerido</p>
+                              }
+                              @if (numerodocumentoField.touched && numerodocumentoField.hasError('maxlength')) {
+                                <p>Debe tener maximo 16 dígitos</p>
+                              }
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                          <div class="w-full">
+                            <label for="primerapellido" class="block mb-2 text-sm font-medium text-gray-900">Primer apellido</label>
+                            <mat-form-field appearance="outline" class="w-full">
+                              <input matInput id="primerapellido" formControlName="primerapellido" maxlength="20">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="segundoapellido" class="block mb-2 text-sm font-medium text-gray-900">Segundo apellido</label>
+                            <mat-form-field appearance="outline" class="w-full">
+                              <input matInput id="segundoapellido" formControlName="segundoapellido" maxlength="20">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="primernombre" class="block mb-2 text-sm font-medium text-gray-900">Primer nombre</label>
+                            <mat-form-field appearance="outline" class="w-full">
+                              <input matInput id="primernombre" formControlName="primernombre" maxlength="20">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="segundonombre" class="block mb-2 text-sm font-medium text-gray-900">Segundo nombre</label>
+                            <mat-form-field appearance="outline" class="w-full">
+                              <input matInput id="segundonombre" formControlName="segundonombre" maxlength="20">
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Género -->
+                          <div class="w-full">
+                            <label for="genero" class="block mb-2 text-sm font-medium text-gray-900">Género</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <mat-select id="genero" formControlName="genero">
+                                <mat-option value="M">Masculino</mat-option>
+                                <mat-option value="F">Femenino</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Tipo de sangre -->
+                          <div class="w-full">
+                            <label for="tiposangre" class="block mb-2 text-sm font-medium text-gray-900">Tipo de sangre</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <mat-select formControlName="tiposangre">
+                                <mat-option value=""></mat-option>
+                                <mat-option value="O-">O-</mat-option>
+                                <mat-option value="O+">O+</mat-option>
+                                <mat-option value="A-">A-</mat-option>
+                                <mat-option value="A+">A+</mat-option>
+                                <mat-option value="B-">B-</mat-option>
+                                <mat-option value="B+">B+</mat-option>
+                                <mat-option value="AB-">AB-</mat-option>
+                                <mat-option value="AB+">AB+</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <div class="text-red-500 text-sm" [class.active]="isTiposangreFieldInvalid">
+                              @if (tiposangreField.touched && tiposangreField.hasError('required')) {
+                                <p>El tipo de sangre es requerido</p>
+                              }
+                            </div>
+                          </div>
+
+                          <!-- Resto de campos con el mismo patrón -->
+                          <div class="w-full">
+                            <label for="fechanacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de nacimiento (AAAA-MM-DD)</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <input matInput formControlName="fechanacimiento" mask="0000-00-00" maxlength="10"
+                                [dropSpecialCharacters]="false">
+                            </mat-form-field>
+                            <div class="text-red-500 text-sm" [class.active]="isFechanacimientoFieldInvalid">
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('required')) {
+                                <p>La fecha de nacimiento es requerida</p>
+                              }
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('invalid_date_format')) {
+                                <p>El formato de fecha debe ser AAAA-MM-DD</p>
+                              }
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('invalid_month')) {
+                                <p>El mes debe estar entre 1 y 12</p>
+                              }
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('invalid_day')) {
+                                <p>El día no es válido para el mes y año especificados</p>
+                              }
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('future_date')) {
+                                <p>La fecha de nacimiento no puede ser en el futuro</p>
+                              }
+                              @if (fechanacimientoField.touched && fechanacimientoField.hasError('too_old')) {
+                                <p>La fecha de nacimiento no puede ser mayor a 120 años</p>
+                              }
+                            </div>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="ocupacion" class="block mb-2 text-sm font-medium text-gray-900">Ocupación</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <input matInput formControlName="ocupacion" autocomplete="off" maxlength="50">
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Dirección de domicilio - fila completa -->
+                          <div class="col-span-full">
+                            <label for="direcciondomicilio" class="block mb-2 text-sm font-medium text-gray-900">Dirección de domicilio</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <input matInput formControlName="direcciondomicilio" autocomplete="off" maxlength="60">
+                            </mat-form-field>
+                            <div class="text-red-500 text-sm" [class.active]="isDirecciondomicilioFieldInvalid">
+                              @if (direcciondomicilioField.touched && direcciondomicilioField.hasError('required')) {
+                                <p>La dirección de domicilio es requerida</p>
+                              }
+                            </div>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="departamentodomicilio" class="block mb-2 text-sm font-medium text-gray-900">Departamento de domicilio</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-select id="departamentodomicilio" formControlName="departamentodomicilio">
+                                <mat-option *ngFor="let departamento of departamentos"
+                                  [value]="departamento.nombre">{{
+                                  departamento.nombre
+                                  }}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <div class="text-red-500 text-sm" [class.active]="isDepartamentodomicilioFieldInvalid">
+                              <p>
+                                @if (departamentodomicilioField.touched &&
+                                departamentodomicilioField.hasError('required')) {
+                                <strong>
+                                  El departamento de domicilio es requerido</strong>
+                                }
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="ciudaddomicilio" class="block mb-2 text-sm font-medium text-gray-900">Ciudad de domicilio</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-select formControlName="ciudaddomicilio">
+                                <mat-option *ngFor="let ciudad of ciudadesDomicilio" [value]="ciudad.nombre">{{
+                                  ciudad.nombre
+                                  }}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="w-full">
+                            <label for="celular" class="block mb-2 text-sm font-medium text-gray-900">Celular</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <input matInput formControlName="celular" mask="(000) 000-0000" [showMaskTyped]="true">
+
+                              <mat-icon matSuffix>phone_android</mat-icon>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-span-full">
+                            <label for="empresa" class="block mb-2 text-sm font-medium text-gray-900">Pertenece a una empresa</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <input matInput type="text" id="empresa" formControlName="empresa" [matAutocomplete]="autoEmpresa">
+                              <mat-autocomplete autoActiveFirstOption #autoEmpresa="matAutocomplete">
+                                <mat-option *ngFor="let empresa of filteredEmpresas | async" [value]="empresa.nombre">
+                                  {{ empresa.nombre }}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-span-full">
+                            <label for="correoelectronico" class="block mb-2 text-sm font-medium text-gray-900">Correo electrónico</label>
+                            <mat-form-field class="w-full" appearance="outline">
+                              <input matInput formControlName="correoelectronico" id="correoelectronico"
+                                maxlength="80" #correoInput>
+                              <mat-icon matSuffix>email</mat-icon>
+                              <mat-hint align="end">{{correoInput.value?.length || 0}}/80</mat-hint>
+                            </mat-form-field>
+
+                            <div class="text-red-500 text-sm" [class.active]="isCorreoelectronicoFieldInvalid">
+                              <p>
+                                @if (correoelectronicoField.touched && correoelectronicoField.hasError('maxlength')) {
+                                <strong>Debe tener maximo 80 caracteres</strong>
+                                }
+                              </p>
+                              <p>
+                                @if (correoelectronicoField.touched && correoelectronicoField.hasError('email')) {
+                                <strong>El formato de correo eléctrónico no es válido</strong>
+                                }
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                          <!-- Forzar nueva fila con div vacío -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                          <!-- Empresa - fila completa -->
+
+                          <!-- Correo electrónico - dos columnas -->
+
+                          <div>
+                            <label for="eps" class="block mb-2 text-sm font-medium text-gray-900">EPS</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-select formControlName="eps" id="eps">
+                                @for (eps of epss; track $index) {
+                                <mat-option [value]="eps.nombre">
+                                  {{ eps.nombre }}
+                                </mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div>
+                            <label for="arl" class="block mb-2 text-sm font-medium text-gray-900">ARL</label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-select formControlName="arl" id="arl">
+                                @for (arl of arls; track $index) {
+                                <mat-option [value]="arl.nombre">
+                                  {{ arl.nombre }}
+                                </mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="header" [style.backgroundColor]="'#56B9FF'">
+                          <h2>
+                            <strong>ULTIMO NIVEL DE FORMACION ACADEMICA </strong>
+                          </h2>
+                        </div>
+                        <div class="body">
+
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="niveleducativo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel educativo</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-select formControlName="niveleducativo">
+                                  <mat-option value=""></mat-option>
+                                  <mat-option value="1">Primaria</mat-option>
+                                  <mat-option value="2">Bachillerato</mat-option>
+                                  <mat-option value="3">Técnico</mat-option>
+                                  <mat-option value="4">Tecnólogo</mat-option>
+                                  <mat-option value="5">Universitaria</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="sabeleerescribir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Presenta dificultades de lecto-escritura</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-select formControlName="sabeleerescribir">
+                                  <mat-option value="S">SI</mat-option>
+                                  <mat-option value="N">NO</mat-option>
+                                </mat-select>
+                                <!--
+                                            <mat-button-toggle-group formControlName="sabeleerescribir">
+                                              <mat-button-toggle value="S">Si</mat-button-toggle>
+                                              <mat-button-toggle value="N">No</mat-button-toggle>
+                                            </mat-button-toggle-group>
+                                          -->
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="header" [style.backgroundColor]="'#56B9FF'">
+                          <h2>
+                            <strong>EXPERIENCIA LABORAL TRABAJO EN ALTURAS</strong>
+                          </h2>
+                        </div>
+                        <div class="body">
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="labordesarrolla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Labor que desarrolla</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput type="text" id="labordesarrolla" formControlName="labordesarrolla"
+                                  [matAutocomplete]="auto">
+
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                  <mat-option *ngFor="let option of filteredLabordesarrollas | async" [value]="option">
+                                    {{option}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                              <mat-label>Seleccione una labor de la lista o escriba otra</mat-label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="header" [style.backgroundColor]="'#56B9FF'">
+                          <h2>
+                            <strong>AUTOREPORTE DE CONDICIONES DE SALUD</strong>
+                          </h2>
+                        </div>
+                        <div class="body">
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                              <div>
+                                Sufre algun tipo de alergia
+                                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                  <mat-button-toggle (change)="onTieneAlergiasChange($event.value)"
+                                    [checked]="!tienealergias" value="N">NO</mat-button-toggle>
+                                  <mat-button-toggle (change)="onTieneAlergiasChange($event.value)"
+                                    [checked]="tienealergias" value="S">SI</mat-button-toggle>
+                                </mat-button-toggle-group>
+                              </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-2">
+                              @if (tienealergias) {
+                              <label for="alergias" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cual tipo de alergia: </label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput formControlName="alergias" autocomplete="off">
+                              </mat-form-field>
+                              }
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                              <ng-container>
+                                Consume algún tipo de medicamento actualmente
+                                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                  <mat-button-toggle (change)="onTieneMedicamentosChange($event.value)"
+                                    [checked]="!tienemedicamentos" value="N">NO</mat-button-toggle>
+                                  <mat-button-toggle (change)="onTieneMedicamentosChange($event.value)"
+                                    [checked]="tienemedicamentos" value="S">SI</mat-button-toggle>
+                                </mat-button-toggle-group>
+                              </ng-container>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-2">
+                              <label for="medicamentos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cual medicamento: </label>
+                              <mat-form-field *ngIf="tienemedicamentos" class="example-full-width" appearance="outline">
+                                <input matInput formControlName="medicamentos">
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+
+                              <label class="control control-checkbox">
+                                Sufre algún tipo de enfermedad actualmente
+                                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                  <mat-button-toggle (change)="onTieneEnfermedadesChange($event.value)"
+                                    [checked]="!tieneenfermedades" value="N">NO</mat-button-toggle>
+                                  <mat-button-toggle (change)="onTieneEnfermedadesChange($event.value)"
+                                    [checked]="tieneenfermedades" value="S">SI</mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                              </label>
+
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-2">
+                              <label for="enfermedades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cual enfermedad:</label>
+                              <mat-form-field *ngIf="tieneenfermedades" class="example-full-width" appearance="outline">
+                                <input matInput formControlName="enfermedades">
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                              <label class="control control-checkbox">
+                                Ha tenido alguna lesión o cirugia recientemente
+                                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                  <mat-button-toggle (change)="onTieneLesionesChange($event.value)"
+                                    [checked]="!tienelesiones" value="N">NO</mat-button-toggle>
+                                  <mat-button-toggle (change)="onTieneLesionesChange($event.value)"
+                                    [checked]="tienelesiones" value="S">SI</mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                              </label>
+
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-2">
+                              <label for="lesiones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cual sesion/Cirugia:</label>
+                              <mat-form-field *ngIf="tienelesiones" class="example-full-width" appearance="outline">
+                                <input matInput formControlName="lesiones">
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+
+                              <label class="control control-checkbox">
+                                Está bajo efectos del alcohol o sustencias psicoactivas:
+                                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                  <mat-button-toggle (change)="onTieneDrogasChange($event.value)"
+                                    [checked]="!tienedrogas" value="N">NO</mat-button-toggle>
+                                  <mat-button-toggle (change)="onTieneDrogasChange($event.value)"
+                                    [checked]="tienedrogas" value="S">SI</mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                              </label>
+
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-2">
+                              <label for="drogas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cual(es) drogas:</label>
+                              <mat-form-field *ngIf="tienedrogas" class="example-full-width" appearance="outline">
+                                <input matInput id="drogas" formControlName="drogas">
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="row" *ngIf="mostrarEmbarazo">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                              <label for="embarazo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Se encuentra en estado de embarazo:</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-select formControlName="embarazo">
+                                  <mat-option value="S">SI</mat-option>
+                                  <mat-option value="N">NO</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                              <label for="mesesgestacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meses de gestacion:</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput formControlName="mesesgestacion" maxlength="2">
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="header" [style.backgroundColor]="'#56B9FF'">
+                          <h2>
+                            <strong>PERSONA DE CONTACTO EN CASO DE EMERGENCIAS</strong>
+                          </h2>
+                        </div>
+                        <div class="body">
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="nombrecontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y apellido</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput formControlName="nombrecontacto" maxlength="60">
+                                <mat-icon matSuffix>face</mat-icon>
+                              </mat-form-field>
+                              <div class="text-red-500 text-sm" [class.active]="isNombrecontactoFieldInvalid">
+                                <p>
+                                  <strong
+                                    *ngIf="nombrecontactoField.touched && nombrecontactoField.hasError('maxlength')">
+                                    Debe tener maximo 60 caracteres</strong>
+                                </p>
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="telefonocontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. Contacto</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput formControlName="telefonocontacto" maxlength="45">
+                              </mat-form-field>
+                              <div class="text-red-500 text-sm" [class.active]="isTelefonocontactoFieldInvalid">
+                                <p>
+                                  <strong
+                                    *ngIf="telefonocontactoField.touched && telefonocontactoField.hasError('maxlength')">
+                                    Debe tener maximo 45 dígitos</strong>
+                                </p>
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="parentescocontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput formControlName="parentescocontacto" maxlength="45">
+                              </mat-form-field>
+                              <div class="text-red-500 text-sm" [class.active]="isParentescocontactoFieldInvalid">
+                                <p>
+                                  <strong
+                                    *ngIf="parentescocontactoField.touched && parentescocontactoField.hasError('maxlength')">
+                                    Debe tener maximo 45 caracteres</strong>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </form>
+
+                <inscripcion-terminos-condiciones
+                  (checkboxChange)="onCheckboxChange($event)">
+                </inscripcion-terminos-condiciones>
+
+                <div class="row clearfix">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
+                    <button mat-raised-button color="warn" (click)="cancelGrupo()" class="w-100 h-200">
+                      <span class="d-flex align-items-center justify-content-center">
+                        Cancelar
+                      </span>
+                    </button>
+                  </div>
+
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
+                    @if (aceptarterminos) {
+                    <button mat-raised-button color="primary" (click)="save()" class="w-100 h-200">
+                      <span class="d-flex align-items-center justify-content-center">
+                        Continuar <mat-icon class="ms-2">arrow_forward</mat-icon>
+                      </span>
+                    </button>
+                    }
+
+                    {{ invalid }}
+                    <!--
+                    {{ mensajedocumentos }}
+
+                  -->
+                  </div>
+                </div>
+
+                <!-- Final spacer -->
+                <div class="pb-5 mb-5"></div>
+              <!-- -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

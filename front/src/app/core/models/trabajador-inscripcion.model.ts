@@ -1,0 +1,36 @@
+export interface TrabajadorInscripcion {
+  id?: number;
+  tipodocumento: string;
+  numerodocumento: string;
+  primernombre: string;
+  segundonombre: string;
+  primerapellido: string;
+  segundoapellido: string;
+  nombrecompleto?: string;
+  genero: string;
+  nacionalidad: string;
+  tiposangre: string;
+  fechanacimiento: string;
+  valido: string;
+  idempresa: number;
+  empresa: string;
+  nit: string;
+  exception: string;
+  idaprendiz: number;
+  idenfasis: number;
+  nombreenfasis?: string;
+  nombrenivel?: string;
+  idnivel: number;
+  inscripcionconscaner?: string;
+  estadoinscripcion?: string;
+  idasistencia?: number;
+  fechainscripcion?: string;
+  fechalimiteinscripcion?: string;
+  existeinscripcionabierta?: boolean;
+  asistenciacompleta?: boolean;
+  aprendizContinuaAprendizaje?: boolean;
+  fechaencuesta?: string;
+  fechaUltimaAsistencia?: string;
+  inscripcionporlector?: boolean;
+  evaluacionAbierta?: boolean;
+}

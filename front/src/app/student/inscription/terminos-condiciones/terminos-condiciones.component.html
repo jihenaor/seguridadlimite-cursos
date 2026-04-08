@@ -1,0 +1,49 @@
+<div class="w-full mb-8">
+  <div class="rounded-xl shadow-md bg-white border border-gray-200">
+    <div class="bg-[#777] text-white px-6 py-4 rounded-t-xl">
+      <h2 class="text-xl font-bold">Términos y condiciones</h2>
+    </div>
+
+    <div class="p-8 space-y-8">
+      <!-- Código de buen comportamiento -->
+      <div class="flex items-center py-4">
+        <a href="https://seguridadallimite.com/documentos/GI-OD-004_Codigo_Buen_Comportamiento_2020.pdf"
+          target="_blank"
+          download="GI-OD-004_Codigo_Buen_Comportamiento_2020.pdf"
+          class="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg">
+          Descargue <span class="font-bold">aquí</span> el código del buen comportamiento para la ejecución de cursos en trabajo seguro en alturas
+        </a>
+      </div>
+
+      <div class="border-t border-gray-200 my-6"></div>
+
+      <!-- Política de tratamiento de datos -->
+      <div class="flex items-center py-4">
+        <a href="https://seguridadallimite.com/documentos/POLITICATRATAMIENTODATOS.pdf"
+          target="_blank"
+          download="POLITICATRATAMIENTODATOS.pdf"
+          class="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg">
+          Descargue <span class="font-bold">aquí</span> la política de tratamiento de datos
+        </a>
+      </div>
+
+      <div class="border-t border-gray-200 my-6"></div>
+
+      <!-- Checkbox de aceptación -->
+      <div class="flex items-start space-x-4 py-4">
+        <div class="flex items-center h-6 mt-1">
+          <input type="checkbox"
+            id="aceptarterminos"
+            [(ngModel)]="aceptarterminos"
+            (ngModelChange)="onCheckboxChange()"
+            class="w-6 h-6 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition duration-150 ease-in-out cursor-pointer hover:border-blue-500">
+        </div>
+        <label for="aceptarterminos"
+          class="text-lg text-gray-700 cursor-pointer leading-relaxed">
+          Certifico que he leído y acepto los términos y condiciones especificadas en el
+          <span class="font-bold">CÓDIGO DEL BUEN COMPORTAMIENTO PARA LA EJECUCIÓN DE CURSOS EN TRABAJO SEGURO EN ALTURAS</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

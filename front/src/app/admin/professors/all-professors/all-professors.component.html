@@ -1,0 +1,173 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="table-responsive">
+              <div class="bg-gray-100 p-4 flex items-center min-w-[800px]">
+                <div class="flex w-full">
+                  <div class="w-2/3">
+                    <ul class="flex items-center gap-5">
+                      <li>
+                        <h2 class="text-gray-700 text-lg font-medium">
+                          <strong>Instructores</strong>
+                        </h2>
+                      </li>
+                      <li class="relative">
+                        <label for="search-input" class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                          <i class="material-icons text-gray-500">search</i>
+                        </label>
+                        <input placeholder="Buscar" type="text" #filter
+                          class="pl-10 pr-4 py-2 h-11 rounded-md border border-gray-200 focus:outline-none focus:border-blue-400 w-64 bg-white"
+                          aria-label="Search box">
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="w-1/3 flex justify-end gap-3">
+                    <button
+                      class="w-11 h-11 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+                      (click)="addNew()">
+                      <span class="material-icons text-white">add</span>
+                    </button>
+                    <button
+                      class="w-11 h-11 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+                      (click)="refresh()">
+                      <span class="material-icons text-white">refresh</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="numerodocumento">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Número de documento
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                    {{row.numerodocumento}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nombrecompleto">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.nombrecompleto}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="entrenador">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Entrenador
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.entrenador}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="supervisor">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Supervisor
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.supervisor}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="numerocelular">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Número de celular
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.numerocelular}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Email
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.email}}
+                  </mat-cell>
+                </ng-container>
+
+                <!-- actions -->
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell class="pr-0" *matHeaderCellDef>Acciones</mat-header-cell>
+                  <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                    <button
+                      class="w-9 h-9 rounded-full flex items-center justify-center bg-blue-100 hover:bg-blue-200 transition-colors duration-200 shadow-sm mr-2"
+                      (click)="$event.stopPropagation(); editCall(row)">
+                      <span class="material-icons text-blue-600 text-base">
+                        edit
+                      </span>
+                    </button>
+                    <button
+                      class="w-9 h-9 rounded-full flex items-center justify-center bg-red-50 hover:bg-red-100 transition-colors duration-200 shadow-sm"
+                      (click)="$event.stopPropagation(); deleteItem(row)">
+                      <span class="material-icons text-red-500 text-base">
+                        delete
+                      </span>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns">
+                </mat-header-row>
+                <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
+                  [style.cursor]="'pointer'" matRipple>
+                </mat-row>
+              </mat-table>
+              <!-- context menu start -->
+              <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+              </div>
+              <mat-menu #contextMenu="matMenu">
+                <ng-template matMenuContent let-item="item">
+                  <button mat-menu-item (click)="addNew()">
+                    <mat-icon>add_box</mat-icon>
+                    <span>Add Record</span>
+                  </button>
+                  <button mat-menu-item (click)="editCall(item)">
+                    <mat-icon>create</mat-icon>
+                    <span>Edit Record</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteItem(item)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete Record</span>
+                  </button>
+                  <button mat-menu-item (click)="refresh()">
+                    <mat-icon>refresh</mat-icon>
+                    <span>Refresh Record</span>
+                  </button>
+                  <button mat-menu-item disabled>
+                    <mat-icon>no_encryption</mat-icon>
+                    <span>Disable</span>
+                  </button>
+                  <button mat-menu-item [matMenuTriggerFor]="nestedmenu">
+                    <mat-icon>list_alt</mat-icon>
+                    <span> Nested Menu</span>
+                  </button>
+                </ng-template>
+              </mat-menu>
+              <mat-menu #nestedmenu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>mail_outline</mat-icon>
+                  <span>Item 1</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>call</mat-icon>
+                  <span>Item 2</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>chat</mat-icon>
+                  <span>Item 3</span>
+                </button>
+              </mat-menu>
+              <!-- context menu end -->
+              <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No results
+              </div>
+              <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="20"
+                [pageSizeOptions]="[5, 10, 20, 100]">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

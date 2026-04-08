@@ -1,0 +1,517 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{dialogTitle}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="onNoClick()" aria-label="Cerrar diálogo">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+
+    <form *ngIf="!cargando" [formGroup]="permisoForm" class="register-form m-4">
+      <mat-tab-group>
+        <!-- Pestaña de Información General -->
+        <mat-tab label="Información General">
+          <div class="row mt-3">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="idNivel">Nivel</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <mat-select formControlName="idNivel" required>
+                  <mat-option *ngFor="let nivel of niveles" [value]="nivel.id">
+                    {{nivel.nombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="permisoForm.get('idNivel')?.hasError('required')">
+                  El nivel es requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="fechaInicio">Fecha de Inicio (AAAA-MM-DD)</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" formControlName="fechaInicio" placeholder="AAAA-MM-DD" required>
+                <mat-error *ngIf="permisoForm.get('fechaInicio')?.hasError('required')">
+                  La fecha de inicio es requerida
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="cupoInicial">Cupo inicial</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="number" formControlName="cupoinicial">
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="cupofinal">Cupo final</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="number" formControlName="cupofinal">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="validodesde">Válido Desde (AAAA-MM-DD)</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" formControlName="validodesde">
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="validohasta">Válido Hasta (AAAA-MM-DD)</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" formControlName="validohasta">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="validodesde">Numero de dias</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="number" formControlName="dias" required>
+                <mat-error *ngIf="permisoForm.get('dias')?.hasError('required')">
+                  El numero de dias es requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="validodesde">Codigo ministerio</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="number" formControlName="codigoministerio" maxlength="12">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="horaInicio">Hora de Inicio (HH:MM)</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" maxlength="5" formControlName="horaInicio" timeMask placeholder="HH:MM">
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="horaFinal">Hora Final (HH:MM)</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" maxlength="5" formControlName="horaFinal" timeMask placeholder="HH:MM">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="proyectoAreaSeccion">Proyecto / Área / Sección</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput formControlName="proyectoAreaSeccion" required>
+                <mat-error *ngIf="permisoForm.get('proyectoAreaSeccion')?.hasError('required')">
+                  Este campo es requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="ubicacionEspecifica">Ubicación Específica</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput formControlName="ubicacionEspecifica" required>
+                <mat-error *ngIf="permisoForm.get('ubicacionEspecifica')?.hasError('required')">
+                  Este campo es requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="descripcionTarea">Descripción de la Tarea</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <textarea matInput formControlName="descripcionTarea" rows="3" required></textarea>
+                <mat-error *ngIf="permisoForm.get('descripcionTarea')?.hasError('required')">
+                  Este campo es requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="herramientasUtilizar">Herramientas a Utilizar</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <textarea matInput formControlName="herramientasUtilizar" rows="2"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="alturaTrabajo">Altura de Trabajo (metros)</label>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="text" formControlName="alturaTrabajo">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Pestaña de Tipos de Trabajo -->
+        <mat-tab *ngIf="false" label="Tipos de Trabajo">
+          <div class="row mt-3">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="tiposTrabajoSeleccionados">Seleccione los tipos de trabajo aplicables:</label>
+              <div class="tipos-trabajo-container">
+                <mat-selection-list #tiposTrabajoList class="row">
+                  <div class="col-md-6">
+                    <ng-container *ngFor="let tipo of tiposTrabajo; let i = index">
+                      <mat-list-option *ngIf="i < tiposTrabajo.length/2" [value]="tipo"
+                        [selected]="permisoForm.get('tiposTrabajoSeleccionados')?.value?.includes(tipo)">
+                        {{tipo}}
+                      </mat-list-option>
+                    </ng-container>
+                  </div>
+                  <div class="col-md-6">
+                    <ng-container *ngFor="let tipo of tiposTrabajo; let i = index">
+                      <mat-list-option *ngIf="i >= tiposTrabajo.length/2" [value]="tipo"
+                        [selected]="permisoForm.get('tiposTrabajoSeleccionados')?.value?.includes(tipo)">
+                        {{tipo}}
+                      </mat-list-option>
+                    </ng-container>
+                  </div>
+                </mat-selection-list>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Calendario">
+          <div class="row mt-3">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <h4 class="mb-3 text-primary">Calendario de clases/Prácticas</h4>
+              
+              <div class="calendar-container">
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <div class="alert alert-info">
+                      <mat-icon>info</mat-icon>
+                      <strong>Información:</strong> El calendario se generará automáticamente desde la fecha de inicio hasta la fecha final del permiso, 
+                      creando {{ permisoForm.get('dias')?.value || 0 }} días de clases/prácticas.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <button mat-raised-button 
+                            color="primary" 
+                            (click)="generarCalendario()"
+                            [disabled]="!permisoForm.get('fechaInicio')?.value || !permisoForm.get('dias')?.value">
+                      <mat-icon>event</mat-icon>
+                      Generar Calendario
+                    </button>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <button mat-raised-button 
+                            color="warn" 
+                            (click)="limpiarCalendario()"
+                            [disabled]="!permiso.permisoFechas || permiso.permisoFechas.length === 0">
+                      <mat-icon>clear</mat-icon>
+                      Limpiar Calendario
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tabla de fechas generadas -->
+                <div class="fechas-generadas mt-4" *ngIf="permiso.permisoFechas && permiso.permisoFechas.length > 0">
+                  <h5 class="mb-3">Fechas del Calendario ({{ permiso.permisoFechas.length }} días)</h5>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                      <thead class="thead-light">
+                        <tr>
+                          <th class="text-center">#</th>
+                          <th class="text-center">Fecha</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let fechaPermiso of permiso.permisoFechas; let i = index">
+                          <td class="text-center">{{ fechaPermiso.dia }}</td>
+                          <td class="text-center">
+                            <!-- Fecha editable para registros intermedios -->
+                            <input *ngIf="esFechaEditable(i)" 
+                                   type="date" 
+                                   class="form-control text-center"
+                                   [value]="fechaPermiso.fecha"
+                                   (change)="actualizarFechaCalendario(i, $event)"
+                                   style="max-width: 150px; margin: 0 auto;">
+                            <!-- Fecha no editable para primer y último registro -->
+                            <span *ngIf="!esFechaEditable(i)" class="font-weight-bold">
+                              {{ fechaPermiso.fecha | date:'dd/MM/yyyy' }}
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Mensaje cuando no hay fechas -->
+                <div class="no-fechas mt-4" *ngIf="!permiso.permisoFechas || permiso.permisoFechas.length === 0">
+                  <div class="alert alert-warning">
+                    <mat-icon>warning</mat-icon>
+                    No hay fechas generadas. Use el botón "Generar Calendario" para crear las fechas automáticamente.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Pestaña de Verificaciones y Responsables -->
+        <mat-tab label="Verificaciones y Responsables">
+          <div class="row mt-3">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <h4 class="mb-3 text-primary">Verificaciones de Seguridad:</h4>
+              <div class="verificaciones-container row">
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="verificacionSeguridadSocial" class="mb-3 d-block">
+                    Verificación de Seguridad Social
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="certificadoAptitudMedica" class="mb-3 d-block">
+                    Certificado de Aptitud Médica
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="certificadoCompetencia" class="mb-3 d-block">
+                    Certificado de Competencia
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="condicionSaludTrabajador" class="mb-3 d-block">
+                    Condición de Salud del Trabajador
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <mat-divider class="my-3"></mat-divider>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="numerogrupos" class="block text-sm font-medium text-gray-700">Número de grupos</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <input matInput type="number" formControlName="numerogrupos" required min="1" max="2" value="1">
+                <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('required')">
+                  El número de grupos es requerido
+                </mat-error>
+                <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('min') || permisoForm.get('numerogrupos')?.hasError('max')">
+                  El número de grupos debe ser 1 o 2
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-divider class="my-3"></mat-divider>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="idpersonaautoriza1" class="block text-sm font-medium text-gray-700">Coordinador de alturas /
+                Persona que autoriza 1</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <mat-select formControlName="idpersonaautoriza1" required>
+                  <ng-container *ngFor="let personal of instructorService.instructores">
+                    <mat-option [value]="personal.id" class="text-gray-700">
+                      {{ personal.nombrecompleto }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+                <mat-error *ngIf="permisoForm.get('idpersonaautoriza1')?.hasError('required')"
+                  class="text-red-500 text-sm">
+                  La persona de apoyo es requerida
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            @if (permisoForm.get('numerogrupos')?.value === 2) {
+              <div class="col-md-6">
+                <label for="idpersonaautoriza2" class="block text-sm font-medium text-gray-700">Coordinador de alturas /
+                  Persona que autoriza 2</label>
+                <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-select formControlName="idpersonaautoriza2">
+                    <ng-container *ngFor="let personal of instructorService.instructores">
+                      <mat-option [value]="personal.id" class="text-gray-700">
+                        {{ personal.nombrecompleto }}
+                      </mat-option>
+                    </ng-container>
+                  </mat-select>
+                  <mat-error *ngIf="permisoForm.get('idpersonaautoriza2')?.hasError('required')"
+                    class="text-red-500 text-sm">
+                    El segundo coordinador es requerido cuando hay 2 grupos
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="idresponsableemeergencias" class="block text-sm font-medium text-gray-700">Responsable de
+                emergencias</label>
+              <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <mat-select formControlName="idresponsableemeergencias" required>
+                  <ng-container *ngFor="let personal of instructorService.personaapoyos">
+                    <mat-option [value]="personal.id" class="text-gray-700">
+                      {{ personal.nombrecompleto }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+                <mat-error *ngIf="permisoForm.get('idresponsableemeergencias')?.hasError('required')"
+                  class="text-red-500 text-sm">
+                  La persona de apoyo es requerida
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+        </mat-tab>
+
+        <!-- Pestaña de Grupos de Chequeo -->
+        <mat-tab label="Grupos de Chequeo">
+          <div class="row mt-3">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div *ngFor="let grupo of permiso.grupoChequeo; let i = index" class="grupo-chequeo mb-4">
+                <h4>{{grupo.descripcion}}</h4>
+                <p class="text-muted">Valores posibles: {{grupo.posiblesValores || 'C (Cumple), N (No cumple), A (No
+                  aplica)'}}</p>
+
+                <div *ngIf="permiso.permisoDetalleChequeos && permiso.permisoDetalleChequeos.length > 0" class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Descripción</th>
+                        <th class="text-center">Cumple (C)</th>
+                        <th class="text-center">No cumple (N)</th>
+                        <th class="text-center">No aplica (A)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let detalle of permiso.permisoDetalleChequeos | filterByGrupo:grupo.idGrupo; let j = index">
+                        <td>{{detalle.descripcion}}</td>
+                        <td class="text-center">
+                          <mat-radio-button [checked]="detalle.respuesta === '1'" (change)="detalle.respuesta = '1'"
+                            [name]="'grupo_' + grupo.idGrupo + '_detalle_' + j"></mat-radio-button>
+                        </td>
+                        <td class="text-center">
+                          <mat-radio-button [checked]="detalle.respuesta === '2'" (change)="detalle.respuesta = '2'"
+                            [name]="'grupo_' + grupo.idGrupo + '_detalle_' + j"></mat-radio-button>
+                        </td>
+                        <td class="text-center">
+                          <mat-radio-button [checked]="detalle.respuesta === '3'" (change)="detalle.respuesta = '3'"
+                            [name]="'grupo_' + grupo.idGrupo + '_detalle_' + j"></mat-radio-button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Actividades y Peligros">
+          <div class="tab-content">
+            <h4>Registro de Actividades y sus Controles</h4>
+
+            <div class="table-container mat-elevation-z2">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Actividad a realizar</th>
+                    <th>Peligros existentes y potenciales / Consecuencias</th>
+                    <th>Controles Requeridos</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let actividad of permiso.permisoDetalleActividades; let i = index">
+                    <td>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <input matInput [(ngModel)]="actividad.actividadrealizar" [ngModelOptions]="{standalone: true}"
+                          placeholder="Actividad">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <input matInput [(ngModel)]="actividad.peligros" [ngModelOptions]="{standalone: true}"
+                          placeholder="Peligros">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <input matInput [(ngModel)]="actividad.controlesrequeridos"
+                          [ngModelOptions]="{standalone: true}" placeholder="Controles">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <button mat-icon-button color="warn" (click)="eliminarActividad(i)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="actions-container mt-3">
+                <button mat-raised-button color="primary" (click)="agregarActividad()">
+                  <mat-icon>add</mat-icon>
+                  Agregar Actividad
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Aprendices">
+          <div class="row mt-3">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <h4>Aprendices</h4>
+            </div>
+          </div>
+
+          <app-aprendiz-permiso-trabajo [idPermiso]="permiso.idPermiso"></app-aprendiz-permiso-trabajo>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <div class="row mt-4">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button *ngIf="action !== 'view'" mat-raised-button
+              [color]="permisoForm.invalid ? 'warn' : 'primary'"
+              [disabled]="guardando"
+              (click)="permisoForm.invalid ? mostrarCamposInvalidos() : guardarPermiso()">
+              <span *ngIf="!guardando">
+                <mat-icon>{{permisoForm.invalid ? 'error_outline' : 'save'}}</mat-icon>
+                {{permisoForm.invalid ? 'Mostrar campos inválidos' : 'Guardar'}}
+              </span>
+              <span *ngIf="guardando">
+                <mat-spinner diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+                Guardando...
+              </span>
+            </button>
+            <button *ngIf="action === 'view'" mat-raised-button color="primary" (click)="onNoClick()">Cerrar</button>
+
+            <button *ngIf="action !== 'view'" mat-raised-button color="warn" [disabled]="guardando"
+              (click)="onNoClick()" tabindex="-1">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

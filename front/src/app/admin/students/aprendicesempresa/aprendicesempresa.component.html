@@ -1,0 +1,229 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Aprendices por empresa</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/dashboard/main">
+                                <i class="fas fa-home"></i> Inicio</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a href="#" onClick="return false;">Aprendices</a>
+                        </li>
+                        <li class="breadcrumb-item active">All</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <div class="materialTableHeader">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <ul class="header-buttons-left ml-0">
+                                                    <li class="dropdown">
+                                                        <h2>
+                                                            <strong>Aprendices</strong></h2>
+                                                    </li>
+                                                    <li class="dropdown m-l-20">
+                                                        <label for="search-input"><i
+                                                                            class="material-icons search-icon">search</i></label>
+                                                        <input placeholder="Buscar" type="text" #filter class="browser-default search-field" aria-label="Search box">
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-4">
+                                                <ul class="header-buttons">
+                                                    <li>
+                                                        <div class="icon-button-demo">
+                                                            <button mat-mini-fab color="primary" [routerLink]="['/admin/students/wizard']" matTooltip="Nuevo aprendiz">
+                                                                      <mat-icon class="col-white">add</mat-icon>
+                                                                    </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="icon-button-demo">
+                                                            <button mat-mini-fab color="primary" (click)="refresh()">
+                                                                            <mat-icon class="col-white">refresh
+                                                                            </mat-icon>
+                                                                        </button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="select">
+                                            <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
+                                                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [ngClass]="'tbl-checkbox'">
+                                                </mat-checkbox>
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-6'">
+                                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
+                                                </mat-checkbox>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <!-- ID Column -->
+                                        <ng-container matColumnDef="id">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Id
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="img">
+                                            <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image </mat-header-cell>
+                                            <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"> <img [src]="row.img" />
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="numerodocumento">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Documento
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.trabajador.numerodocumento}}
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="nombrecompleto">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.trabajador.nombrecompleto}}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="genero">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Genero
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.trabajador.genero}}
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="celular">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Celular
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.trabajador.celular}}
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="correoelectronico">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Correo electrónico
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.trabajador.correoelectronico}}
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="nivel">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Nivel
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.nivel.nombre}}
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="enfasis">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Enfasis
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.enfasis.nombre}}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="estadoinscripcion">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Estado
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                                                <span *ngIf="row.estadoinscripcion === 'P'" class="label bg-yellow m-b-10">Pre - inscrito</span>
+                                                <span *ngIf="row.estadoinscripcion === 'I'" class="label bg-green m-b-10">Inscrito</span>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="semaforo">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                                                <span class="label bg-red m-b-10" matTooltip="Et1: {{row.eteorica1}} Et2: {{row.eteorica2}} Prac: {{row.epractica}}">
+                                              <mat-icon *ngIf="row.aprobocurso">checkcheck</mat-icon>
+                                              <mat-icon *ngIf="!row.aprobocurso">cancel</mat-icon>
+                                            </span>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- actions -->
+                                        <ng-container matColumnDef="actions">
+                                            <mat-header-cell class="pr-0" *matHeaderCellDef>Acciones
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                                                <button mat-icon-button color="accent" class="btn-tbl-edit" [routerLink]="['/students/about-student-empresa', row.trabajador.id, row.idgrupo]">
+                                                              <mat-icon aria-label="Edit" class="col-white">edit
+                                                              </mat-icon>
+                                                          </button>
+                                                <button *ngIf="false" mat-icon-button color="accent" class="btn-tbl-delete" (click)="$event.stopPropagation()" (click)="deleteItem(row)">
+                                                                <mat-icon aria-label="Delete" class="col-white">delete
+                                                                </mat-icon>
+                                                            </button>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <mat-header-row *matHeaderRowDef="displayedColumns">
+                                        </mat-header-row>
+                                        <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                                        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)" [style.cursor]="'pointer'" matRipple>
+                                        </mat-row>
+                                    </mat-table>
+                                    <!-- context menu start -->
+                                    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+                                    </div>
+                                    <mat-menu #contextMenu="matMenu">
+                                        <ng-template matMenuContent let-item="item">
+                                            <button mat-menu-item (click)="gotoEvaluacionteorica(item, 1)">
+                                                                  <mat-icon>add_box</mat-icon>
+                                                                  <span>Evaluación teórica {{ item.eteorica1 > 0 && item.eteorica1 < 3 ? '1' : ''}}</span>
+                                                              </button>
+                                            <button mat-menu-item *ngIf="item.eteorica1 > 0 && item.eteorica1 < 3" (click)="gotoEvaluacionteorica(item, 2)">
+                                                                <mat-icon>add_box</mat-icon>
+                                                                <span>Evaluación teórica {{ item.eteorica1 > 0 && item.eteorica1 < 3 ? '2' : ''}}</span>
+                                                            </button>
+                                            <button mat-menu-item (click)="gotoEvaluacionpractica(item)">
+                                                                <mat-icon>add_box</mat-icon>
+                                                                <span>Evaluación práctica</span>
+                                                            </button>
+                                            <button mat-menu-item (click)="(item)">
+                                                              <mat-icon>add_box</mat-icon>
+                                                              <span>Evaluación énfasis</span>
+                                                          </button>
+                                            <mat-divider></mat-divider>
+                                            <button mat-menu-item (click)="gotoEvaluacionteorica(item, 1)">
+                                              <mat-icon>add_box</mat-icon>
+                                              <span>Evaluación teórica {{ item.eteorica1 > 0 && item.eteorica1 < 3 ? '1' : ''}}</span>
+                                          </button>
+                                            <button mat-menu-item *ngIf="item.eteorica1 > 0 && item.eteorica1 < 3" (click)="gotoEvaluacionteorica(item, 2)">
+                                            <mat-icon>add_box</mat-icon>
+                                            <span>Evaluación teórica {{ item.eteorica1 > 0 && item.eteorica1 < 3 ? '2' : ''}}</span>
+                                        </button>
+                                            <button mat-menu-item (click)="downloadEvaluacionpractica(item)">
+                                            <mat-icon>cloud_download</mat-icon>
+                                            <span>Descargar evaluación práctica</span>
+                                        </button>
+                                            <button mat-menu-item (click)="(item)">
+                                          <mat-icon>add_box</mat-icon>
+                                          <span>Evaluación énfasis</span>
+                                      </button>
+                                        </ng-template>
+                                    </mat-menu>
+
+                                    <!-- context menu end -->
+                                    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                                        No results
+                                    </div>
+                                    <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+    </div>
+</section>

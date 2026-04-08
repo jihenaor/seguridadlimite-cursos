@@ -1,0 +1,128 @@
+<div class="flex flex-col h-full">
+  <mat-tab-group class="w-full flex-1">
+    <mat-tab label="Cursos abiertos en la fecha">
+      <div class="p-4">
+        <app-active-work-permits></app-active-work-permits>
+      </div>
+    </mat-tab>
+    
+    <mat-tab label="Apertura de Inscripción">
+      <div class="p-4 max-h-80 overflow-y-auto">
+      <div *ngIf="niveles.length > 0" class="overflow-x-auto max-w-full">
+      <div class="overflow-x-auto">
+        <table class="w-full border border-gray-300 bg-white">
+          <!-- Encabezados -->
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="px-2 py-2 text-left w-24 border-b border-gray-300">Selec</th>
+              <th class="px-2 py-2 text-left border-b border-gray-300">Nombre</th>
+              <th class="px-2 py-2 text-left w-40 border-b border-gray-300">Fecha Desde</th>
+              <th class="px-2 py-2 text-left w-40 border-b border-gray-300">Fecha Hasta</th>
+              <th class="px-2 py-2 text-left w-40 border-b border-gray-300"># de Grupos</th>
+            </tr>
+          </thead>
+          
+          <!-- Cuerpo de la tabla -->
+          <tbody>
+            <ng-container *ngFor="let nivel of niveles">
+              <!-- Fila principal -->
+              <tr class="hover:bg-gray-50">
+                <!-- Selección -->
+                <td class="px-2 py-2 border-b border-gray-300 w-24">
+                  <mat-checkbox [(ngModel)]="nivel.seleccionado" (change)="onSelectionChange(nivel)"></mat-checkbox>
+                </td>
+                
+                <!-- Nombre -->
+                <td class="px-2 py-2 border-b border-gray-300">
+                  {{ nivel.nombre }}
+                </td>
+                
+                <!-- Fecha Desde -->
+                <td class="px-2 py-2 border-b border-gray-300 w-40">
+                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
+                    <input type="date" 
+                           [(ngModel)]="nivel.fechadesde"
+                           (change)="onDateChange(nivel, 'fechadesde', $event)"
+                           title="Seleccione una fecha"
+                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  <span *ngIf="!nivel.seleccionado">-</span>
+                </td>
+                
+                <!-- Fecha Hasta -->
+                <td class="px-2 py-2 border-b border-gray-300 w-40">
+                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
+                    <input type="date" 
+                           [(ngModel)]="nivel.fechahasta"
+                           (change)="onDateChange(nivel, 'fechahasta', $event)"
+                           title="Seleccione una fecha"
+                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  <span *ngIf="!nivel.seleccionado">-</span>
+                </td>
+                
+                                
+                <!-- Número de Grupos -->
+                <td class="px-2 py-2 border-b border-gray-300 w-40">
+                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
+                    <input type="number" 
+                           [(ngModel)]="nivel.numerogrupos"
+                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  <span *ngIf="!nivel.seleccionado">-</span>
+                </td>
+              </tr>
+              
+              <!-- Fila expandida -->
+              <tr *ngIf="nivel.seleccionado" class="bg-gray-50">
+                <td colspan="7" class="px-4 py-4 border-b border-gray-300">
+                  <div class="w-full">
+
+                    
+                    <div class="max-w-md">
+                      <table class="w-full text-sm border border-gray-300 bg-white">
+                        <thead>
+                          <tr class="bg-gray-100">
+                            <th class="border border-gray-300 px-3 py-2 text-left">Día</th>
+                            <th class="border border-gray-300 px-3 py-2 text-left">Fecha</th>
+                            <th class="border border-gray-300 px-3 py-2 text-left">Contexto</th>
+                            <th class="border border-gray-300 px-3 py-2 text-left">Unidad</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let dia of nivel.diasdiseno" class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-3 py-2">{{ dia.dia }}</td>
+                            <td class="border border-gray-300 px-3 py-2">
+                              <input type="date" 
+                                     [(ngModel)]="dia.fecha"
+                                     (change)="onDateChange(dia, 'fecha', $event)"
+                                     title="Seleccione una fecha"
+                                     class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </td>
+                            <td class="border border-gray-300 px-3 py-2">{{ dia.contexto }}</td>
+                            <td class="border border-gray-300 px-3 py-2">{{ dia.unidad }}</td>
+                            <td class="border border-gray-300 px-3 py-2 text-center">
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+    </mat-tab>
+  </mat-tab-group>
+  
+  <!-- Botones siempre visibles en la parte inferior -->
+  <div class="flex justify-end space-x-4 mt-4 p-4 border-t border-gray-200 bg-white sticky bottom-0">
+    <button mat-raised-button color="primary" (click)="startWorkPermissions()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Actualizar</button>
+    <button mat-button (click)="dialogRef.close()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Cancelar</button>
+  </div>
+</div>

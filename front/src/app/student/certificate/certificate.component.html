@@ -1,0 +1,13 @@
+<shared-header [textHeader]="'Descarga el certificado'"></shared-header>
+
+
+<certificate-form-search (trabajadorEncontrado)="validarTrabajador($event)"
+  (tipoUsuarioChange)="onTipoUsuarioChange($event)">
+</certificate-form-search>
+
+
+@if (tipoUsuario === 'aprendiz') {
+<certificate-table></certificate-table>
+} @else if (tipoUsuario === 'empresa') {
+<certificate-table-empresa></certificate-table-empresa>
+}

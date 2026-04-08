@@ -1,0 +1,138 @@
+<shared-header [textHeader]="'Solicita información'"></shared-header>
+
+<div class="w-full mb-6">
+  <div class="rounded-xl shadow-md bg-white border border-gray-200">
+    <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
+      Formulario de solicitud de información
+    </div>
+    <div class="p-6">
+      <form [formGroup]="register" (ngSubmit)="onRegister()" class="space-y-6">
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Número de documento</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <input matInput formControlName="numerodocumento" maxlength="20" required
+                   class="text-foreground placeholder-muted-foreground">
+            <mat-icon matSuffix class="text-muted-foreground">face</mat-icon>
+            <mat-error *ngIf="register.get('numerodocumento').hasError('required')" class="text-destructive">
+              El numero de documento de la persona contacto es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Nombre de la persona contacto</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <input matInput formControlName="nombrecontacto" required
+                   class="text-gray-900 placeholder-gray-500">
+            <mat-icon matSuffix class="text-gray-500">face</mat-icon>
+            <mat-error *ngIf="register.get('nombrecontacto').hasError('required')" class="text-red-600">
+              El nombre de la persona contacto es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Email persona contacto</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <input matInput formControlName="email" maxlength="80" required
+                   class="text-gray-900 placeholder-gray-500">
+            <mat-icon matSuffix class="text-gray-500">email</mat-icon>
+            <mat-error *ngIf="register.get('email').hasError('required') || register.get('email').touched" class="text-red-600">
+              El correo electrónico es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Número de celular de la persona contacto</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <input matInput formControlName="celular" mask="(000) 000-0000" required maxlength="14"
+                   class="text-gray-900 placeholder-gray-500">
+            <mat-icon matSuffix class="text-gray-500">phone</mat-icon>
+            <mat-error *ngIf="register.get('celular').hasError('required') || register.get('email').touched" class="text-red-600">
+              El número de celular es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Horario en que requiere el curso</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-select formControlName="horario" required class="text-gray-900">
+              <mat-option [value]="'FIN DE SEMANA'" class="text-gray-900">FIN DE SEMANA</mat-option>
+              <mat-option [value]="'ENTRE SEMANA'" class="text-gray-900">ENTRE SEMANA</mat-option>
+              <mat-option [value]="'OTRO'" class="text-gray-900">OTRO</mat-option>
+            </mat-select>
+            <mat-error *ngIf="register.get('horario').hasError('required')" class="text-red-600">
+              El horario es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Cantidad de aprendices</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <input matInput formControlName="cupo" required
+                   class="text-gray-900 placeholder-gray-500">
+            <mat-error *ngIf="register.get('cupo').hasError('required')" class="text-red-600">
+              El cupo es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Programa</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-select formControlName="programa" required class="text-gray-900">
+              <mat-option [value]="'ENTRENAMIENTO EN ALTURA'" class="text-gray-900">ENTRENAMIENTO EN ALTURA</mat-option>
+            </mat-select>
+            <mat-error *ngIf="register.get('programa').hasError('required')" class="text-red-600">
+              El programa es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold  mb-2">Nivel</label>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-select formControlName="nivel" required class="text-gray-900">
+              <mat-option [value]="'TRABAJADOR AUTORIZADO'" class="text-gray-900">TRABAJADOR AUTORIZADO</mat-option>
+              <mat-option [value]="'REENTRENAMIENTO'" class="text-gray-900">REENTRENAMIENTO</mat-option>
+              <mat-option [value]="'COORDINADOR'" class="text-gray-900">COORDINADOR</mat-option>
+              <mat-option [value]="'ACTUALIZACION DE COORDINADOR'" class="text-gray-900">ACTUALIZACION DE COORDINADOR</mat-option>
+              <mat-option [value]="'JEFE DE AREA PARA TRABAJO EN ALTURAS'" class="text-gray-900">JEFE DE ÁREA PARA TRABAJO EN ALTURAS</mat-option>
+            </mat-select>
+            <mat-icon matSuffix class="text-gray-500">flag</mat-icon>
+            <mat-error *ngIf="register.get('nivel').hasError('required')" class="text-red-600">
+              El nivel es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700 shadow-sm">
+          <h4 class="text-xl font-semibold text-blue-500 mb-2">Términos y condiciones</h4>
+          <p class="text-gray-300">
+            El número mínimo de personas inscritas por grupo es de cinco (5)
+          </p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" formControlName="termcondition"
+                 class="w-4 h-4 text-primary border-muted rounded focus:ring-primary">
+          <label class="text-sm text-foreground">Acepto términos y condiciones</label>
+        </div>
+
+        <div class="flex justify-center">
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!register.valid"
+            class="w-full md:w-auto px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

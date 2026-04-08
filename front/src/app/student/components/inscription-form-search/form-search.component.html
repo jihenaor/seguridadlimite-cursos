@@ -1,0 +1,33 @@
+<mat-card>
+
+  <h4 class="login-title">Digita tu número de documento y presiona el botón buscar</h4>
+
+  <form class="validate-form" [formGroup]="authFormTrabajador">
+      <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-8 col-sm-6 mb-2">
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de documento del aprendiz</label>
+              <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Número de documento del aprendiz</mat-label>
+                  <input matInput formControlName="username" maxlength="20" appNumericOnly autofocus/>
+                  <mat-icon matSuffix>face</mat-icon>
+                  <mat-error *ngIf="authFormTrabajador.get('username').hasError('required')">
+                      El numero de documento es requerido
+                  </mat-error>
+              </mat-form-field>
+              <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-2">
+              <div style="text-align:center">
+                  <button mat-raised-button color="primary" [class.spinner]="loading"
+                      [disabled]="loading" (click)="validarTrabajador()">Buscar</button>
+              </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+              <div style="text-align:center">
+                  <a routerLink="/student/info">
+                      <i class="fas fa-info"></i> Solicitar información</a>
+              </div>
+          </div>
+      </div>
+  </form>
+</mat-card>

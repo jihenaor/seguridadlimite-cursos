@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Whenever you're developing a component, service, module, or any structure for an Angular project, always assume the project is using the Standalone Component architecture and Tailwind CSS for styling.
+
+Use standalone: true in @Component or @Directive decorators.
+
+Import required modules directly into the imports array of the decorator.
+
+Do not generate or rely on NgModules.
+
+Use only Tailwind utility classes for styling.
+
+Avoid using styleUrls or styles unless absolutely necessary. Prefer using Tailwind classes directly in the HTML template.

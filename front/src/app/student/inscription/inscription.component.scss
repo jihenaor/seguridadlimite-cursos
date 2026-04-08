@@ -1,0 +1,463 @@
+// FORZAR COLORES DE BOTONES - Angular Material Button Color Overrides
+.mat-mdc-raised-button, .mat-raised-button, .mat-mdc-unelevated-button {
+  &.mat-primary, &[color="primary"] {
+    background-color: #1976d2 !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+  
+  &.mat-accent, &[color="accent"] {
+    background-color: #ff4081 !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+  
+  &.mat-warn, &[color="warn"] {
+    background-color: #f44336 !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+  
+  // Secondary color (using a nice blue-gray)
+  &[color="secondary"] {
+    background-color: #607d8b !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+}
+
+// ESTILOS ADICIONALES PARA GARANTIZAR VISIBILIDAD
+button[mat-raised-button] {
+  &[color="primary"] {
+    background-color: #1976d2 !important;
+    color: white !important;
+  }
+  
+  &[color="secondary"] {
+    background-color: #607d8b !important;
+    color: white !important;
+  }
+  
+  &[color="warn"] {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}
+
+// ESTILOS DE PRUEBA MUY VISIBLES - PARA CONFIRMAR QUE FUNCIONA
+.cursos-wrapper {
+  button {
+    // Forzar colores en TODOS los botones dentro de cursos-wrapper
+    &[color="primary"] {
+      background-color: #1976d2 !important;
+      color: white !important;
+      font-weight: bold !important;
+      border-radius: 8px !important;
+    }
+    
+    &[color="secondary"] {
+      background-color: #607d8b !important;
+      color: white !important;
+      font-weight: bold !important;
+      border-radius: 8px !important;
+    }
+    
+    &[color="warn"] {
+      background-color: #f44336 !important;
+      color: white !important;
+      font-weight: bold !important;
+      border-radius: 8px !important;
+    }
+  }
+}
+
+// SOLUCION DEFINITIVA PARA PROBLEMAS DE VISIBILIDAD DE TEXTO
+// Forzar texto visible en elementos con fondo blanco
+.bg-white, .bg-white *, 
+.overflow-x-auto.bg-white, .overflow-x-auto.bg-white *,
+table, table *, 
+.table, .table *,
+.card, .card *,
+.form-inscription, .form-inscription * {
+  color: #333333 !important;
+}
+
+// Asegurar que los encabezados de tabla sean visibles
+thead th, 
+.bg-gray-50 th,
+th.text-gray-600 {
+  color: #374151 !important;
+  background-color: #f9fafb !important;
+}
+
+// Asegurar que las celdas de tabla sean visibles
+tbody td,
+td {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+// Botones específicos con colores apropiados
+.form-inscription button {
+  &[color="primary"] {
+    background-color: #1976d2 !important;
+    color: white !important;
+  }
+  
+  &[color="secondary"] {
+    background-color: #607d8b !important;
+    color: white !important;
+  }
+  
+  &[color="warn"] {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+  
+  // Botones sin color específico
+  &:not([color]) {
+    background-color: #6c757d !important;
+    color: white !important;
+  }
+}
+
+// Ensure button hover states are visible
+.mat-mdc-raised-button:hover {
+  &.mat-primary {
+    background-color: #1565c0 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+  }
+  
+  &.mat-accent {
+    background-color: #e91e63 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+  }
+  
+  &.mat-warn {
+    background-color: #d32f2f !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+  }
+  
+  &[color="secondary"] {
+    background-color: #546e7a !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+  }
+}
+
+// Additional styles for regular mat-button (flat buttons)
+.mat-mdc-button {
+  &.mat-primary {
+    color: #1976d2 !important;
+    font-weight: 500 !important;
+  }
+  
+  &.mat-accent {
+    color: #ff4081 !important;
+    font-weight: 500 !important;
+  }
+  
+  &.mat-warn {
+    color: #f44336 !important;
+    font-weight: 500 !important;
+  }
+  
+  &[color="secondary"] {
+    color: #607d8b !important;
+    font-weight: 500 !important;
+  }
+}
+
+.grupos-container {
+  min-height: 100%;
+  width: 100%;
+  .grupos-main {
+    min-height: 100%;
+    width: 100%;
+    margin: 0px !important;
+
+  }
+  padding-bottom: 30px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+.form-inscription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursos-wrapper {
+  width: 90%;
+  max-width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+
+.inscription-wrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
+  max-width: 100%;
+
+  @media (min-width: 768px) {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  @media (min-width: 992px) {
+    width: 80%; /* Ancho del 80% en dispositivos grandes */
+    max-width: 80%; /* Ancho máximo del 80% en dispositivos grandes */
+  }
+}
+
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.control {
+  font-family: arial;
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  cursor: pointer;
+/*  font-size: 16px;*/
+
+  input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+}
+
+.control_indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #e6e6e6;
+  border: 0px solid #000000;
+  border-radius: 0px;
+}
+
+.control {
+  &:hover input ~ .control_indicator {
+    background: #cccccc;
+  }
+
+  input {
+    &:focus ~ .control_indicator {
+      background: #cccccc;
+    }
+
+    &:checked ~ .control_indicator {
+      background: #2aa1c0;
+    }
+  }
+
+  &:hover input:not([disabled]):checked ~ .control_indicator {
+    background: #0E6647;
+  }
+
+  input {
+    &:checked:focus ~ .control_indicator {
+      background: #0e6647;
+    }
+
+    &:disabled ~ .control_indicator {
+      background: #e6e6e6;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+}
+
+.control_indicator:after {
+  box-sizing: unset;
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.control input:checked ~ .control_indicator:after {
+  display: block;
+}
+
+.control-checkbox {
+  .control_indicator:after {
+    left: 8px;
+    top: 4px;
+    width: 3px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  input:disabled ~ .control_indicator:after {
+    border-color: #7b7b7b;
+  }
+
+  .control_indicator::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-left: -1.3rem;
+    margin-top: -1.3rem;
+    background: #2aa1c0;
+    border-radius: 3rem;
+    opacity: 0.6;
+    z-index: 99999;
+    transform: scale(0);
+  }
+
+  input {
+    + .control_indicator::before {
+      animation: s-ripple 250ms ease-out;
+    }
+
+    &:checked + .control_indicator::before {
+      animation-name: s-ripple-dup;
+    }
+  }
+}
+
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.min-height {
+  min-height: 220px;
+  min-width: 300px;
+}
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+  padding-bottom: 120px; /* Ensure enough space at bottom */
+  min-height: calc(100vh - 64px); /* Adjust based on your header height */
+}
+
+/* Add padding when virtual keyboard is visible */
+@media screen and (max-height: 600px) {
+  .content-wrapper {
+    padding-bottom: 180px;
+  }
+}
+
+/* Fix text visibility issues */
+.grupos-container {
+  color: #333 !important;
+  
+  table {
+    color: #333 !important;
+    
+    th {
+      color: #333 !important;
+      background-color: #f8f9fa !important;
+    }
+    
+    td {
+      color: #333 !important;
+      background-color: #fff !important;
+    }
+  }
+  
+  .table {
+    color: #333 !important;
+    
+    th {
+      color: #333 !important;
+      background-color: #f8f9fa !important;
+    }
+    
+    td {
+      color: #333 !important;
+      background-color: #fff !important;
+    }
+  }
+  
+  /* Modal content text visibility */
+  .modal-body {
+    color: #333 !important;
+  }
+  
+  /* General text elements */
+  p, span, div, label, h1, h2, h3, h4, h5, h6 {
+    color: #333 !important;
+  }
+  
+  /* Button text */
+  button {
+    &:not(.btn-primary):not(.btn-secondary):not(.btn-success):not(.btn-danger):not(.btn-warning):not(.btn-info) {
+      color: #333 !important;
+    }
+  }
+}

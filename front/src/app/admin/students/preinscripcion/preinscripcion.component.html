@@ -1,0 +1,859 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Registar Aprendiz - Asistente</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/dashboard/main">
+                <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item bcrumb-2">
+              <a href="#" onClick="return false;">Forms</a>
+            </li>
+            <li class="breadcrumb-item active">Asistente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+
+            <div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input type="date" [formControl]="fechaInscripcion" class="form-control" placeholder="yyyy-mm-dd">
+              </div>
+              <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <button mat-raised-button color="secondary" class="auth-form-btn">
+                  Abrir inscripción ????
+                </button>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Ultima fecha de inscripción: ????
+              </div>
+            </div>
+
+            <form [formGroup]="firstFormGroup">
+
+              <ng-template matStepLabel> FICHA DE INSCRIPCIÓN </ng-template>
+              <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div *ngIf="(!basico || basico === 'N') && !idempresa">
+                    <mat-slide-toggle class="example-margin" [color]="color" [checked]="scanner"
+                      (change)="changeScan()">
+                      Usar scaner de cedula
+                    </mat-slide-toggle>
+                  </div>
+
+                  <div *ngIf="scanner" class="card">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>DATOS DEL APRENDIZ EN FORMACION</strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Número de documento</mat-label>
+                            <input matInput type="text" #numerodocumento formControlName="numerodocumento">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+
+                          <div class="messages" [class.active]="isNumerodocumentoFieldInvalid">
+                            <p>
+                              <strong *ngIf="numerodocumentoField.touched && numerodocumentoField.hasError('required')">
+                                El número de documento es requerido</strong>
+                            </p>
+                            <p>
+                              <strong
+                                *ngIf="numerodocumentoField.touched && numerodocumentoField.hasError('maxlength')"> Debe
+                                tener maximo 16 dígitos</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput type="text" formControlName="primerapellido">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isPrimerapellidoFieldInvalid">
+                            <mat-error *ngIf="primerapellidoField.hasError('required')">
+                              El primer apellido es requerido
+                            </mat-error>
+                            <mat-error *ngIf="primerapellidoField.hasError('maxlength')">
+                              Debe tener máximo 20 caracteres
+                            </mat-error>
+                            <mat-error *ngIf="primerapellidoField.hasError('pattern')">
+                              El primer apellido debe contener solo letras sin espacios
+                            </mat-error>
+                          </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <label for="segundoapellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segundo apellido</label>
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput formControlName="segundoapellido" maxlength="20">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <label for="primernombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primer nombre</label>
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput formControlName="primernombre">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput formControlName="segundonombre" maxlength="20">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Genero</mat-label>
+                            <input matInput type="text" formControlName="genero">
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Tipo de sangre</mat-label>
+                            <input matInput type="text" formControlName="tiposangre">
+
+                            <div class="messages" [class.active]="isTiposangreFieldInvalid">
+                              <p>
+                                <strong *ngIf="tiposangreField.touched && tiposangreField.hasError('required')"> El tipo
+                                  de sangre es requerido</strong>
+                              </p>
+                            </div>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row" *ngIf="scanner == false">
+                        <div class="col-xl-1 col-lg-1 col-md-12 col-sm-12 mb-2">
+                          <button type="button" mat-raised-button color="secondary"
+                            (click)="validarTrabajador()">Validar para continuar</button>
+                        </div>
+
+                        <div class="col-xl-1 col-lg-1 col-md-12 col-sm-12 mb-2">
+                          <h6 *ngIf="existeTrabajador === true" class="m-b-20">
+                            <span class="label label-default">Existe aprendiz</span>
+                          </h6>
+                          <h6 *ngIf="existeTrabajador === false" class="m-b-20">
+                            <span class="label label-default">Nuevo aprendiz</span>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card" *ngIf="basico === 'N'">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>IDENTIFICACION DEL APRENDIZ EN FORMACION </strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+                        <div *ngIf="!scanner" class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Tipo de documento</mat-label>
+                            <mat-select formControlName="tipodocumento">
+                              <mat-option value="CC">Cédula de ciudadania</mat-option>
+                              <mat-option value="CE">Cédula de extranjeria</mat-option>
+                              <mat-option value="PA">Pasaporte</mat-option>
+                              <mat-option value="PE">Permiso especial de permanencia</mat-option>
+                            </mat-select>
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="!scanner" class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Número de documento</mat-label>
+                            <input matInput type="text" id="numerodocumento" maxlength="20" formControlName="numerodocumento">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+
+                          <div class="messages" [class.active]="isNumerodocumentoFieldInvalid">
+                            <p>
+                              <strong *ngIf="numerodocumentoField.touched && numerodocumentoField.hasError('required')">
+                                El número de documento es requerido</strong>
+                            </p>
+                            <p>
+                              <strong
+                                *ngIf="numerodocumentoField.touched && numerodocumentoField.hasError('maxlength')"> Debe
+                                tener maximo 16 dígitos</strong>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div *ngIf="!scanner" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-2">
+                            <button mat-raised-button color="primary" [class.spinner]="loading"
+                            [disabled]="loading" (click)="validarTrabajador()">Buscar</button>
+                            <button mat-raised-button color="warn" (click)="buildForm()">Cancelar</button>
+                            @if (trabajador?.id) {
+                              <button mat-raised-button color="primary" (click)="irTrabajador(trabajador.id, trabajador.idaprendiz)">Editar</button>
+                            }
+                        </div>
+
+                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 mb-2">
+                          @if (existeTrabajador) {
+                            <h6 class="m-b-20">
+                              <span class="label label-default">Existe aprendiz</span>
+                            </h6>
+                          } @else {
+                            <h6 class="m-b-20">
+                              <span class="label label-default">Nuevo aprendiz</span>
+                            </h6>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card" *ngIf="basico === 'N' && trabajadorvalidado">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>DATOS DEL APRENDIZ EN FORMACION {{ trabajador.fechainscripcion ? 'Fecha de inscripción: '+ trabajador.fechainscripcion : '' }} </strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+
+
+                      <div *ngIf="!scanner" class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput type="text" formControlName="primerapellido">
+                            <mat-icon matSuffix>face</mat-icon>
+
+                            <div class="messages" [class.active]="isPrimerapellidoFieldInvalid">
+                              <mat-error *ngIf="primerapellidoField.hasError('required')">
+                                El primer apellido es requerido
+                              </mat-error>
+                              <mat-error *ngIf="primerapellidoField.hasError('maxlength')">
+                                Debe tener máximo 20 caracteres
+                              </mat-error>
+                              <mat-error *ngIf="primerapellidoField.hasError('pattern')">
+                                El primer apellido debe contener solo letras sin espacios
+                              </mat-error>
+                            </div>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput formControlName="segundoapellido" maxlength="20">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput formControlName="primernombre">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput formControlName="segundonombre" maxlength="20">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+
+                        <div *ngIf="!scanner" class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Genero</mat-label>
+                            <mat-select formControlName="genero">
+                              <mat-option value="M">Masculino</mat-option>
+                              <mat-option value="F">Femenino</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div *ngIf="!scanner" class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Tipo de sangre</mat-label>
+                            <mat-select formControlName="tiposangre">
+                              <mat-option value=""></mat-option>
+                              <mat-option value="O-">O-</mat-option>
+                              <mat-option value="O+">O+</mat-option>
+                              <mat-option value="A-">A-</mat-option>
+                              <mat-option value="A+">A+</mat-option>
+                              <mat-option value="B-">B-</mat-option>
+                              <mat-option value="B+">B+</mat-option>
+                              <mat-option value="AB-">AB-</mat-option>
+                              <mat-option value="AB+">AB+</mat-option>
+                            </mat-select>
+
+                            <div class="messages" [class.active]="isTiposangreFieldInvalid">
+                              <p>
+                                <strong *ngIf="tiposangreField.touched && tiposangreField.hasError('required')"> El tipo
+                                  de sangre es requerido</strong>
+                              </p>
+                            </div>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Ocupación</mat-label>
+                            <input matInput formControlName="ocupacion">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Dirección de domicilio</mat-label>
+                            <input matInput formControlName="direcciondomicilio">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Departamento de domicilio</mat-label>
+                            <mat-select formControlName="departamentodomicilio">
+                              <mat-option *ngFor="let departamento of departamentos" [value]="departamento.cod">{{
+                                departamento.nombre }}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Ciudad de domicilio</mat-label>
+                            <mat-select formControlName="ciudaddomicilio">
+                              <mat-option *ngFor="let ciudad of ciudadesDomicilio" [value]="ciudad.cod">{{ ciudad.nombre
+                                }}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Celular</mat-label>
+                            <input type="tel" matInput formControlName="celular" maxlength="10">
+                            <mat-icon matSuffix>phone_android</mat-icon>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input type="mail" matInput formControlName="correoelectronico" maxlength="80">
+                            <mat-icon matSuffix>mail</mat-icon>
+                          </mat-form-field>
+
+                          <div class="messages" [class.active]="isCorreoelectronicoFieldInvalid">
+                            <p>
+                              <strong
+                                *ngIf="correoelectronicoField.touched && correoelectronicoField.hasError('maxlength')">
+                                Debe tener maximo 40 caracteres</strong>
+                            </p>
+                            <p>
+                              <strong
+                                *ngIf="correoelectronicoField.touched && correoelectronicoField.hasError('email')"> El
+                                formato de correo eléctrónico no es válido</strong>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>EPS</mat-label>
+                            <mat-select formControlName="eps">
+                              <mat-option *ngFor="let eps of epss" [value]="eps.nombre">
+                                {{ eps.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>ARL</mat-label>
+                            <mat-select formControlName="arl">
+                              <mat-option *ngFor="let arl of arls" [value]="arl.nombre">
+                                {{ arl.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="basico == 'N' && trabajadorvalidado" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>ULTIMO NIVEL DE FORMACION ACADEMICA </strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Nivel educativo</mat-label>
+                            <mat-select formControlName="niveleducativo">
+                              <mat-option value=""></mat-option>
+                              <mat-option value="1">Primaria</mat-option>
+                              <mat-option value="2">Bachillerato</mat-option>
+                              <mat-option value="3">Técnico</mat-option>
+                              <mat-option value="4">Tecnólogo</mat-option>
+                              <mat-option value="5">Universitaria</mat-option>
+                              <mat-option value="6">Tecnólogo</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Presenta dificultad de lecto escritura</mat-label>
+                            <mat-select formControlName="sabeleerescribir">
+                              <mat-option value="S">SI</mat-option>
+                              <mat-option value="N">NO</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="basico == 'N' && trabajadorvalidado" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>EXPERIENCIA TRABAJO EN ALTURAS</strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+                        <div class="col-xl-8 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Labor que desarrolla</mat-label>
+                            <input matInput formControlName="labordesarrolla">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isEnfermedadesFieldInvalid">
+                            <p>
+                              <strong *ngIf="enfermedadesField.touched && enfermedadesField.hasError('maxlength')"> Debe
+                                tener maximo 45 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Operativas</mat-label>
+
+                            <mat-select formControlName="operativa">
+                              <mat-option value=""></mat-option>
+                              <mat-option value="X">X</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Administrativas</mat-label>
+                            <mat-select formControlName="administrativa">
+                              <mat-option value=""></mat-option>
+                              <mat-option value="X">X</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Otras</mat-label>
+                            <input matInput formControlName="otralabor">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isOtralaborFieldInvalid">
+                            <p>
+                              <strong *ngIf="otralaborField.touched && otralaborField.hasError('maxlength')"> Debe tener
+                                maximo 20 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="basico == 'N' && trabajadorvalidado" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>AUTOREPORTE DE CONDICIONES DE SALUD</strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>sufre de algun tipo de alergia/cual: </mat-label>
+                            <input matInput formControlName="alergias">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isAlergiasFieldInvalid">
+                            <p>
+                              <strong *ngIf="alergiasField.touched && alergiasField.hasError('maxlength')"> Debe tener
+                                maximo 100 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>consume algún tipo de medicamento actualmente/ cual: </mat-label>
+                            <input matInput formControlName="medicamentos">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isMedicamentosFieldInvalid">
+                            <p>
+                              <strong *ngIf="medicamentosField.touched && medicamentosField.hasError('maxlength')"> Debe
+                                tener maximo 100 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>sufre algún tipo de enfermedad actualmente/ cual:</mat-label>
+                            <input matInput formControlName="enfermedades">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isEnfermedadesFieldInvalid">
+                            <p>
+                              <strong *ngIf="enfermedadesField.touched && enfermedadesField.hasError('maxlength')"> Debe
+                                tener maximo 100 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Ha tenido alguna lesion o cirugia recientemente/ cual:</mat-label>
+                            <input matInput formControlName="lesiones">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isLesionesFieldInvalid">
+                            <p>
+                              <strong *ngIf="lesionesField.touched && lesionesField.hasError('maxlength')"> Debe tener
+                                maximo 100 caracteres</strong>
+                            </p>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Esta bajo efectos de alcohol o sustencias psicoactivas::</mat-label>
+                            <input matInput formControlName="drogas">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isDrogasFieldInvalid">
+                            <p>
+                              <strong *ngIf="drogasField.touched && drogasField.hasError('maxlength')"> Debe tener
+                                maximo 100 caracteres</strong>
+                            </p>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="basico == 'N' && trabajadorvalidado" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="header" [style.backgroundColor]="'#56B9FF'">
+                      <h2>
+                        <strong>PERSONA DE CONTACTO EN CASO DE EMERGENCIA</strong>
+                      </h2>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Nombre y apellido</mat-label>
+                            <input matInput formControlName="nombrecontacto">
+                            <mat-icon matSuffix>face</mat-icon>
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isNombrecontactoFieldInvalid">
+                            <p>
+                              <strong *ngIf="nombrecontactoField.touched && nombrecontactoField.hasError('maxlength')">
+                                Debe tener maximo 60 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Telefono</mat-label>
+                            <input matInput formControlName="telefonocontacto">
+                          </mat-form-field>
+                          <div class="messages" [class.active]="isTelefonocontactoFieldInvalid">
+                            <p>
+                              <strong
+                                *ngIf="telefonocontactoField.touched && telefonocontactoField.hasError('maxlength')">
+                                Debe tener maximo 45 dígitos</strong>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Parentezco</mat-label>
+                            <input matInput formControlName="parentescocontacto">
+                          </mat-form-field>
+
+                          <div class="messages" [class.active]="isParentescocontactoFieldInvalid">
+                            <p>
+                              <strong
+                                *ngIf="parentescocontactoField.touched && parentescocontactoField.hasError('maxlength')">
+                                Debe tener maximo 45 caracteres</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <strong *ngIf="firstFormGroup.hasError('invalid_document1')">
+                  <p>Las cedulas entre 0 y 19999999 deben tener genero Masculino</p>
+                </strong>
+                <strong *ngIf="firstFormGroup.hasError('invalid_document2')">
+                  <p>Las cedulas entre 70000000 y 99999999 deben tener genero Masculino</p>
+                </strong>
+                <strong *ngIf="firstFormGroup.hasError('invalid_document3')">
+                  <p>Las cédulas entre 20000000 y 69999999 deben tener sexo Femenimo</p>
+                </strong>
+                <strong *ngIf="firstFormGroup.hasError('invalid_document4')">
+                  <p>El numero de digitos de la CEDULA debe ser entre 3 y 8 o 10 y 12</p>
+                </strong>
+              </div>
+
+              <ng-template matStepLabel>NIVEL DE FORMACIÓN A REALIZAR</ng-template>
+
+              <div class="card" *ngIf="trabajadorvalidado">
+                <div class="header" [style.backgroundColor]="'#56B9FF'">
+                  <h2>
+                    <strong>PROGRAMA AL CUAL SE INSCRIBE {{ idgrupo }}</strong>
+                  </h2>
+                </div>
+                <div class="body">
+                  <div class="row" *ngIf="idgrupo === undefined">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Programa</mat-label>
+                        <mat-select formControlName="idprograma" required>
+                          <mat-option></mat-option>
+                          <mat-option *ngFor="let programa of programas" [value]="programa.id">
+                            {{ programa.nombre }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="idgrupo === undefined">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Grupo: </mat-label>
+
+                        <mat-select *ngIf="!idempresa" formControlName="idgrupo">
+                          <mat-option></mat-option>
+                          <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
+                            Nivel: {{ grupo.nombrenivel }} Inicio: {{ grupo.fechainicio }}
+                            Horario: {{ grupo.horario }}
+                            Entrenador {{ grupo.entrenador }}
+                            Estado: {{ grupo.aucodestad }}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-select *ngIf="idempresa" formControlName="idgrupo">
+                          <mat-option></mat-option>
+                          <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
+                            Nivel: {{ grupo.nivel.nombre }} Inicio: {{ grupo.fechainicio }}
+                            Horario: {{ grupo.horario }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Sector laboral al que pertenece (Enfasis) </mat-label>
+                        <mat-select formControlName="idenfasis" required>
+                          <mat-option [value]="0">
+                            NO DEFINIDO
+                          </mat-option>
+                          <mat-option [value]="1">
+                            HIDROCARBUROS
+                          </mat-option>
+                          <mat-option [value]="2">
+                            TELECOMUNICACIONES
+                          </mat-option>
+                          <mat-option [value]="3">
+                            CONSTRUCCION
+                          </mat-option>
+                          <mat-option [value]="4">
+                            ELÉCTRICO
+                          </mat-option>
+                          <mat-option [value]="5">
+                            AGROPECUARIO
+                          </mat-option>
+                          <mat-option [value]="6">
+                            COMERCIO Y SERVICIOS
+                          </mat-option>
+                          <mat-option [value]="7">
+                            INDUSTRIAL
+                          </mat-option>
+                          <mat-option [value]="8">
+                            TRANSPORTE
+                          </mat-option>
+                          <mat-option [value]="9">
+                            COMERCIO
+                          </mat-option>
+                          <mat-option [value]="10">
+                            FINANCIERO
+                          </mat-option>
+                          <mat-option [value]="11">
+                            MINERO Y ENERGETICO
+                          </mat-option>
+                          <mat-option [value]="12">
+                            EDUCACION
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="idnivel === undefined">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nivel</mat-label>
+                        <mat-select formControlName="idnivel" required>
+                          <mat-option *ngFor="let nivel of nivels" [value]="nivel.id">
+                              {{ nivel.nombre }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="!idempresa">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nombre de la empresa</mat-label>
+                        <input matInput type="text" id="empresa"
+                          formControlName="empresa" [matAutocomplete]="autoEmpresa">
+
+                        <mat-autocomplete autoActiveFirstOption #autoEmpresa="matAutocomplete">
+                          <mat-option *ngFor="let empresa of filteredEmpresas | async" [value]="empresa.nombre">
+                            {{ empresa.nombre }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="idnivel === undefined">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nit</mat-label>
+                        <input matInput formControlName="nit">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="idnivel === undefined">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nombre del representante legal</mat-label>
+                        <input matInput formControlName="representantelegal">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="(!basico || basico == 'N') && trabajadorvalidado && !this.idempresa">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Pago el curso: </mat-label>
+                    <mat-select formControlName="pagocurso">
+                      <mat-option [value]="'S'">
+                        SI
+                      </mat-option>
+                      <mat-option [value]="'N'">
+                        NO
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div *ngIf="trabajadorvalidado" class="row clearfix">
+                <button mat-raised-button color="primary"
+                  (click)="confirmAdd()"
+                  [disabled]="trabajador && trabajador.idaprendiz"
+                  >Finalizar</button> {{ invalid }}
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,565 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="asistencia_grupo" language="java" pageWidth="612" pageHeight="792" columnWidth="575" leftMargin="20" rightMargin="17" topMargin="20" bottomMargin="19" uuid="516c0356-c3c3-4ba6-9638-3efb723b24ce">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.3310000000000257"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="287"/>
+	<field name="numerodocumento" class="java.lang.String"/>
+	<field name="nombrenivel" class="java.lang.String"/>
+	<field name="nombreentrenador" class="java.lang.String"/>
+	<field name="nombreaprendiz" class="java.lang.String"/>
+	<field name="modulo" class="java.lang.String"/>
+	<field name="unidad" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="formacion" class="java.lang.String"/>
+	<field name="entrenamiento" class="java.lang.String"/>
+	<field name="dia" class="java.lang.String"/>
+	<field name="firmaaprendiz" class="java.lang.String"/>
+	<field name="evaluacionconocimiento" class="java.lang.String"/>
+	<field name="evaluacionhabilidades" class="java.lang.String"/>
+	<field name="otrostalleres" class="java.lang.String"/>
+	<field name="permisoalturas" class="java.lang.String"/>
+	<field name="nombresupervisor" class="java.lang.String"/>
+	<field name="personaldeapoyo" class="java.lang.String"/>
+	<field name="logoseguridad" class="java.lang.String"/>
+	<variable name="aceptacion" class="java.lang.String">
+		<expression><![CDATA["YO"]]></expression>
+		<initialValueExpression><![CDATA["YO" +
+($F{nombreaprendiz} != null ? $F{nombreaprendiz}.toString() : "") +
+" identificado(a) con documento de Identidad No. " +
+($F{numerodocumento} != null ? $F{numerodocumento}.toString() : "") +
+", voluntariamente y en pleno uso de mis facultades, " +
+"acepto conocer y cumplir el código de buen comportamiento y código de ética, establecido por el centro de formación y entrenamiento en protección contra caídas para trabajo " +
+"en alturas SEGURIDAD AL LIMITE S.A.S. <br /><br />" +
+"Adicionalmente certifico que he recibido socialización de la matriz de riesgos, plan de emergencias, e información sobre el buen uso de equipos y de las instalaciones."]]></initialValueExpression>
+	</variable>
+	<group name="numerodocumento">
+		<expression><![CDATA[$F{numerodocumento}]]></expression>
+		<groupHeader>
+			<band height="264">
+				<element kind="textField" uuid="f0043b14-0f33-4e43-90a2-f2935528a065" x="0" y="79" width="571" height="127" markup="html" fontSize="7.0">
+					<expression><![CDATA[$V{aceptacion}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="bf705c06-e9ea-4605-a631-6a3ada2e68ea" mode="Opaque" x="336" y="222" width="235" height="42" backcolor="#CCCCCC" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[FIRMA DEL APRENDIZ]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="762ea822-24a9-4a9c-a792-91acbbf0d4fc" mode="Transparent" x="297" y="236" width="39" height="28" backcolor="#CCCCCC" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Dia]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="61a25977-f01d-439a-8091-f64feb2cb7c3" mode="Opaque" x="147" y="222" width="189" height="14" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[INTENSIDAD HORARIA X ETAPA]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="aea0d3dc-0808-4eef-aaec-84bce0401b4f" mode="Opaque" x="98" y="222" width="49" height="42" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[FECHA]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="c29ad71f-b92e-4670-9829-4b04bd0728c6" mode="Opaque" x="49" y="222" width="49" height="42" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[ UNIDAD]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="e5968324-f04c-451d-ba66-d21c445e3f98" mode="Opaque" x="0" y="222" width="49" height="42" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[MODULO]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="a4dbec26-fbd0-4465-aff8-fc5eba9f0461" mode="Opaque" x="147" y="236" width="75" height="28" backcolor="#FFFFFF" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Formación]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="3dc62b61-8b5d-408f-9ac4-726514040df4" mode="Opaque" x="222" y="236" width="75" height="28" backcolor="#FFFFFF" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Entrenamiento]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="5d526aa9-3612-4763-a0bc-31ba9eec942e" mode="Opaque" x="0" y="206" width="571" height="16" backcolor="#FFFF66" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[II. CONTROL DE ASISTENCIA AL PROGRAMA DE FORMACIÓN Y ENTRENAMIENTO]]></text>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="92616212-0ea8-4a29-aba1-3a98d054af18" mode="Opaque" x="0" y="0" width="86" height="24" backcolor="#CCCCCC" fontSize="8.0" vTextAlign="Middle">
+					<text><![CDATA[Nombre del aprendiz]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="ffa9bcdc-bfb0-42c6-8f99-6e5a2ff7a0d6" x="86" y="0" width="240" height="24" fontSize="8.0" vTextAlign="Middle">
+					<paragraph leftIndent="4"/>
+					<expression><![CDATA[$F{nombreaprendiz}]]></expression>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="d2d5da68-aea9-4616-a07d-3f15df0bd915" mode="Opaque" x="325" y="0" width="142" height="24" backcolor="#CCCCCC" fontSize="7.0" vTextAlign="Middle">
+					<text><![CDATA[Nivel de formacion y entrenamiento:]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="bfa23aec-430d-44bc-a0be-2554922dcbe6" x="467" y="0" width="104" height="24" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<paragraph leftIndent="4"/>
+					<expression><![CDATA[$F{nombrenivel}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="7aa2d30a-8476-4510-bc41-cc2af47aa549" x="0" y="24" width="571" height="40" fontSize="8.0" vTextAlign="Middle">
+					<text><![CDATA[El centro de formación y entrenamiento en protección contra caídas para trabajo en alturas SEGURIDAD AL LIMITE S.A.S., implementa el presente formato con el objetivo de asegurar y verificar el cumplimiento del perfil de egreso de los aprendices, así como támbien dar cumplimiento a los requisitos legales vigentes en la prestación del servicio de los diferentes programas de formación y entrenamiento ofertado
+]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="bb3b3ca5-e4d9-4d79-986b-99714885a340" x="221" y="193" width="149" height="13" hTextAlign="Center">
+					<text><![CDATA[Firma del aprendiz]]></text>
+					<box>
+						<topPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="aa50176a-75c2-4802-8b14-6a4ad348d48d" mode="Opaque" x="0" y="64" width="571" height="15" backcolor="#FFFF66" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[I. ACEPTACIÓN DE CONOCIMIENTO DE INFORMACIÓN ESPECIFICA]]></text>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="image" uuid="49d68a1e-1cd9-4870-89d8-1a80a4ebcd0d" key="Logo_Footer" x="230" y="114" width="123" height="78" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+					<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{firmaaprendiz}))
+]]></expression>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="189">
+				<element kind="staticText" uuid="926e3658-86b7-4cf5-96cb-8c5a227f2898" mode="Opaque" x="0" y="28" width="571" height="19" backcolor="#FFFFFF" fontSize="10.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[REGISTRO DE CALIFICACIONES
+]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="fcce6c66-9daf-4567-a440-46f6052751c3" mode="Opaque" x="424" y="47" width="147" height="16" backcolor="#CCCCCC" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Diligenciamieto de permiso de alturas]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="a4b22ce3-35cd-4f40-983c-201b1ece1918" mode="Opaque" x="294" y="47" width="130" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Otros Talleres (si aplica)]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="0c06036e-4c71-477a-a0ee-76a761075ebd" mode="Opaque" x="147" y="47" width="147" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Evaluación Habilidades]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="d1fda748-dd16-4689-802d-265c74bc6c95" mode="Opaque" x="0" y="47" width="147" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Evaluación Conocimiento ]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="67aa2964-3add-4312-9a09-5f960c4aeb58" mode="Opaque" x="0" y="91" width="571" height="28" backcolor="#FFFF33" fontSize="10.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[IV. FIRMAS DEL PERSONAL ENCARGADO DEL PROCESO DE FORMACIÓN Y ENTRENAMIENTO
+]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="69e20adc-8d7e-4bfc-ad3f-79de900f8720" mode="Opaque" x="190" y="119" width="190" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Entrenador a Cargo]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="ed144a8d-d86b-427c-b5cc-4d818bcac001" mode="Opaque" x="0" y="119" width="190" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[nombresupervisor]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="44450d3d-458f-47c8-8d26-00f175a0188d" mode="Opaque" x="380" y="119" width="191" height="16" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[Persona de Apoyo
+]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="61c15654-e950-4ce8-861c-227ebe12adbd" mode="Opaque" x="0" y="163" width="190" height="26" backcolor="#FFFFFF" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[FIRMA]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="047a0702-db90-4f77-ba7b-48b94a89171e" mode="Opaque" x="190" y="163" width="190" height="26" backcolor="#FFFFFF" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[FIRMA]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="95b02a24-7dfb-4653-9a2e-80b6eb8e0507" mode="Opaque" x="380" y="163" width="191" height="26" backcolor="#FFFFFF" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[FIRMA]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="445db387-9e3a-479c-a3e7-cc8ed01362df" mode="Opaque" x="0" y="0" width="571" height="28" backcolor="#FFFF33" fontSize="10.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<text><![CDATA[III. VERIFICACIÓN PERFIL DE EGRESO]]></text>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="c2079ea7-9cc4-4ba2-82d7-14e97faed553" x="0" y="63" width="147" height="28" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{evaluacionconocimiento}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="329218bf-5637-4231-89b9-97e8eb5602d1" x="147" y="63" width="147" height="28" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{evaluacionhabilidades}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="eb758d1d-7b45-4dbd-8ff9-b740aa882c2b" x="294" y="63" width="130" height="28" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{otrostalleres}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="00f8d1db-95ae-4b97-9a53-692b1e3d067d" x="424" y="63" width="147" height="28" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{permisoalturas}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="5408a0e0-7167-47b4-8ad9-dd0690df5819" x="0" y="135" width="190" height="28" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{nombresupervisor}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="7da6a4b8-48ae-4b20-a47b-81fbaf368779" x="380" y="135" width="191" height="28" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{personaldeapoyo}]]></expression>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="5a9d01b5-0161-4b3f-badc-e865f7aee1ae" x="190" y="136" width="190" height="27" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{nombreentrenador}]]></expression>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<pageHeader height="83">
+		<element kind="staticText" uuid="bf5006b8-7e6e-440c-a958-58e94f49845a" x="143" y="31" width="324" height="47" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[FORMATO PARA LA PRESTACIÓN DEL SERVICIO DE LOS PROGRAMAS DE FORMACIÓN Y ENTRENAMIENTO EN PROTECCIÓN CONTRA CAÍDAS PARA TRABAJO EN ALTURAS PERFIL DE EGRESO
+]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="df021aea-4609-488e-9b8e-e5697a9353ff" x="467" y="55" width="104" height="23" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Fecha de última modificación 30/05/2024]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f60a9996-c237-4851-907a-88fd10d69dd5" x="467" y="31" width="104" height="24" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Fecha de elaboración 21/07/2023]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="5791e2d2-2998-4b4c-913b-aaa50ae6400a" x="143" y="0" width="324" height="31" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[GESTIÓN DE TALENTO HUMANO]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f02d4091-6785-4c4b-aba3-60633838d08f" x="467" y="0" width="104" height="16" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Código: GTH-FO-024]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a869ddaf-05f4-46f5-9048-1020d6bcf8ca" x="467" y="16" width="104" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Version: 002]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="image" uuid="c23d17de-2c35-4fa1-aabc-742766117e1b" key="Logo_Footer" x="0" y="0" width="123" height="78" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{logoseguridad}))
+]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<box>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+	</pageHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="ca15d28d-0a3d-4f5e-9aa3-b4381ac1d4e5" x="0" y="0" width="49" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{modulo}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="1319ce1e-f7ba-41b3-91a5-dcf01b9947f3" x="49" y="0" width="49" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{unidad}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="18dbf193-1a54-4123-a344-433ba6122ae6" x="98" y="0" width="49" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{fecha}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="d93d28ca-fbae-4701-a19a-b5fdf382e814" x="147" y="0" width="75" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{formacion}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b1a2bff8-d7d8-4f12-9d1b-63e346712499" x="222" y="0" width="75" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{entrenamiento}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="14a7ff5b-872a-4e53-9740-22dbf82ed6d7" x="297" y="0" width="39" height="30" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{dia}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="image" uuid="955466a7-4757-47f2-bc23-a84a769560eb" key="Logo_Footer" x="336" y="0" width="235" height="30" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+				<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{firmaaprendiz}))
+]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary splitType="Stretch"/>
+</jasperReport>

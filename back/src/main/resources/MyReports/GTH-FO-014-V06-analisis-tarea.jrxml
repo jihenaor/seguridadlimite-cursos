@@ -1,0 +1,74 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_Letter_1" language="java" columnCount="3" pageWidth="572" pageHeight="752" orientation="Landscape" columnWidth="190" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e0f51c03-6dfb-48df-b76e-92773ff0a278" ignorePagination="true">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="respuesta" class="java.lang.String"/>
+	<variable name="C" class="java.lang.String">
+		<expression><![CDATA[$F{respuesta}.equals( "1" ) ? "X" : ""]]></expression>
+	</variable>
+	<variable name="NC" class="java.lang.String">
+		<expression><![CDATA[$F{respuesta}.equals( "2" ) ? "X" : ""]]></expression>
+	</variable>
+	<variable name="NA" class="java.lang.String">
+		<expression><![CDATA[$F{respuesta}.equals( "3" ) ? "X" : ""]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<element kind="textField" uuid="327d0a23-d088-45ce-937e-7d3f0c8fb789" x="0" y="0" width="119" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{descripcion}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2f0b867-4740-4798-9cb6-988d5adf64e0"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0a9405c1-4a75-482e-8444-19142fda9203" x="137" y="0" width="18" height="15">
+				<expression><![CDATA[$V{NC}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="91e17ed5-50b5-4666-ae82-56099bee3f89" x="119" y="0" width="18" height="15" hTextAlign="Center">
+				<expression><![CDATA[$V{C}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="d322c29d-e56b-4fce-9815-bdb5595597c7" x="155" y="0" width="18" height="15">
+				<expression><![CDATA[$V{NA}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

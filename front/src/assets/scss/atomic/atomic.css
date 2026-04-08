@@ -1,0 +1,7 @@
+/* atomic.css - entrypoint que importa todo */
+@import './atoms/_typography.css';
+@import './atoms/_spacing.css';
+@import './atoms/_colors.css';
+
+@import './molecules/_title-block.css';
+@import './organisms/_page-header.css';

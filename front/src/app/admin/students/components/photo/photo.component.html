@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="body d-flex flex-column align-items-center">
+    <app-foto-trabajador [base64]="base64"></app-foto-trabajador>
+    <div class="snap-container">
+      <button class="btn btn-primary" *ngIf="!isCaptured" (click)="capture()">Tomar foto</button>
+      <button class="btn btn-primary" *ngIf="isCaptured" (click)="updateFotoTrabajador()">Guardar foto</button>
+      <button class="btn btn-danger" *ngIf="isCaptured" (click)="removeCurrent()">Tomar otra foto</button>
+    </div>
+    <div class="video-container" *ngIf="!error">
+      <video [class.show]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT" autoplay></video>
+      <canvas [class.show]="isCaptured" [class.hide]="!isCaptured" #canvas id="canvas" [width]="WIDTH" [height]="HEIGHT"></canvas>
+    </div>
+    <div class="snap-container">
+      <div *ngIf="error" class="text-danger mt-4">
+        {{ error }}. Please click refresh on stackblitz
+        <div class="mt-5">
+          <img src="https://trungk18.com/7e0976255739e721501803ee074f1f94/camera.gif" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

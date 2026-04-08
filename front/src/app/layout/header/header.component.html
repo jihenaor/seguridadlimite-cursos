@@ -1,0 +1,37 @@
+<nav #navbar class="h-[60px] relative overflow-hidden" style="background: linear-gradient(135deg, #333333 60%, #777777 60%)">
+  <div class="container-fluid h-full">
+    <div class="flex items-center justify-between h-full px-4">
+      <!-- Logo, título y controles -->
+      <div class="flex items-center gap-4">
+        <button mat-button (click)="callSidemenuCollapse()" class="sidemenu-collapse nav-notification-icons text-white">
+          <i class="material-icons-outlined">menu</i>
+        </button>
+        <img src="assets/images/logo_sticky.jpeg" alt="Logo Seguridad al Límite" class="w-16 h-16 rounded-full" />
+        <div class="flex flex-col">
+          <h2 class="text-3xl font-bold text-white mb-1">Seguridad al Límite</h2>
+        </div>
+      </div>
+
+      <!-- Controles de usuario -->
+      <div class="flex items-center gap-4">
+        <div class="nav-item user_profile">
+          <button mat-button>
+            <div class="chip dropdown-toggle text-white" ngbDropdownToggle>
+              <span>{{userFullName}}</span>
+            </div>
+          </button>
+        </div>
+
+        <button mat-button class="nav-notification-icons text-white" (click)="callFullscreen()">
+          <i class="material-icons-outlined">fullscreen</i>
+        </button>
+
+        <button mat-icon-button (click)="toggleRightSidebar()" class="nav-notification-icons js-right-sidebar text-white">
+          <mat-icon id="settingBtn">settings</mat-icon>
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</nav>

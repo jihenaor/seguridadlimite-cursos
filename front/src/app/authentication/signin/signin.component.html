@@ -1,0 +1,99 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+  <div class="w-full max-w-md">
+    <!-- Card contenedora -->
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <!-- Logo -->
+      <div class="mb-6 text-center">
+        <img src="assets/images/logo_sticky.jpeg" alt="Logo" class="mx-auto h-24 w-auto">
+      </div>
+
+      <!-- Título -->
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+        Bienvenido
+        <span class="block text-lg font-normal text-gray-600 mt-1">Ingresa tus credenciales para continuar</span>
+      </h2>
+
+      <!-- Formulario -->
+      @if (perfil === 'A' || perfil === 'E') {
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        <!-- Campo de usuario -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700">
+            {{ perfil == 'A' ? 'Usuario' : 'Nit de la empresa' }}
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <i class="material-icons text-xl">person</i>
+            </span>
+            <input type="text" formControlName="username"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+              [ngClass]="{'border-red-500 ring-red-500': authForm.get('username').touched && authForm.get('username').hasError('required')}"
+              placeholder="Ingresa tu usuario">
+          </div>
+          @if (authForm.get('username').touched && authForm.get('username').hasError('required')) {
+          <p class="mt-1 text-sm text-red-600 flex items-center">
+            <i class="material-icons text-sm mr-1">error</i>
+            Identificación del usuario es requerida
+          </p>
+          }
+        </div>
+
+        <!-- Campo de contraseña -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700">
+            Contraseña
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <i class="material-icons text-xl">lock</i>
+            </span>
+            <input [type]="hide ? 'password' : 'text'" formControlName="password"
+              class="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all"
+              [ngClass]="{'border-red-500 ring-red-500': authForm.get('password').touched && authForm.get('password').hasError('required')}"
+              placeholder="Ingresa tu contraseña">
+            <button type="button" (click)="hide = !hide"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+              <i class="material-icons text-xl">{{ hide ? 'visibility_off' : 'visibility' }}</i>
+            </button>
+          </div>
+          @if (authForm.get('password').touched && authForm.get('password').hasError('required')) {
+          <p class="mt-1 text-sm text-red-600 flex items-center">
+            <i class="material-icons text-sm mr-1">error</i>
+            La contraseña es requerida
+          </p>
+          }
+        </div>
+
+        <!-- Mensaje de error -->
+        @if (error) {
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6" role="alert">
+          <div class="flex items-center">
+            <i class="material-icons text-red-500 mr-2">error</i>
+            <span class="text-red-700">{{error}}</span>
+          </div>
+        </div>
+        }
+
+        <!-- Botón de ingreso -->
+        <div class="pt-4">
+          <button type="submit" [disabled]="!authForm.valid"
+            class="w-full bg-yellow-500 text-gray-900 py-3 px-4 rounded-xl hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
+            <span>Ingresar</span>
+            <i class="material-icons">arrow_forward</i>
+          </button>
+<!--
+  <app-custom-button variant="warning" icon="fas fa-save" (onClick)="actualizarEncuesta()">
+    Actualizar encuesta
+  </app-custom-button>
+
+  <app-custom-button variant="secondary" icon="fas fa-arrow-left"
+    (onClick)="router.navigate(['/student/inscription'])">
+    Cancelar e Ir a la página de inscripción
+  </app-custom-button>
+          -->
+        </div>
+      </form>
+      }
+    </div>
+  </div>
+</div>

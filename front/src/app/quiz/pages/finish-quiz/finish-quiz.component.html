@@ -1,0 +1,31 @@
+<section class="container-section">
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm m-4">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h2>Resumen de la evaluación</h2>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <mat-card class="card">
+            <quiz-show-aprendiz *ngIf="!isEmpty(aprendiz)" [aprendiz]="aprendiz" [opciones] = "opciones"></quiz-show-aprendiz>
+
+          </mat-card>
+        </div>
+      </div>
+
+      <app-boton-salir [tipoEvaluacion]="tipoEvaluacion"> </app-boton-salir>
+
+      <ng-container *ngIf="aprendiz && aprendiz.id && opciones.evaluacionTeorico">
+        <quiz-respuestas-teorico [aprendiz]="aprendiz"></quiz-respuestas-teorico>
+      </ng-container>
+
+      <ng-container *ngIf="aprendiz && aprendiz.id && opciones.conocimientosPrevios">
+        <quiz-respuestas-conocimientos-previos [aprendiz]="aprendiz"></quiz-respuestas-conocimientos-previos>
+      </ng-container>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,145 @@
+<form (ngSubmit)="updateTrabajador()" [formGroup]="firstFormGroup">
+
+  <div class="body">
+    <div class="card">
+      <div class="header">
+        <h2>
+          DATOS DEL APRENDIZ EN FORMACION (T {{ trabajador.id }})
+        </h2>
+      </div>
+      <div class="body">
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+            <label for="primerapellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primer apellido</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="primerapellido">
+              <div *ngIf="firstFormGroup.get('primerapellido').errors && firstFormGroup.get('primerapellido').touched">
+                <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('required')">
+                  El primer apellido es requerido
+                </mat-error>
+                <mat-error *ngIf="firstFormGroup.get('primerapellido').hasError('maxlength')">
+                  La longitud del campo supera los 20 caracteres
+                </mat-error>
+              </div>
+
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+            <label for="segundoapellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segundo apellido</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="segundoapellido">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+            <label for="primernombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primer nombre</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="primernombre">
+            </mat-form-field>
+          </div>
+
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+            <label for="segundonombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segundo nombre</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="segundonombre">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-2">
+            <label for="genero" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genero</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-select formControlName="genero">
+                <mat-option value="M">Masculino</mat-option>
+                <mat-option value="F">Femenino</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="fechanacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de nacimiento (AAAA-MM-DD)</label>
+          <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="fechanacimiento"
+              mask="0000-00-00" maxlength="10"
+              [dropSpecialCharacters]="false"
+              >
+          </mat-form-field>
+        </div>
+
+        </div>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-2">
+            <label for="tipodocumento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo Documento</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-select formControlName="tipodocumento">
+                <mat-option value="CC">Cédula de ciudadania</mat-option>
+                <mat-option value="CE">Cédula de extranjeria</mat-option>
+                <mat-option value="PA">Pasaporte</mat-option>
+                <mat-option value="PE">Permiso especial de permanencia</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-2">
+            <label for="numerodocumento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nro documento</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="numerodocumento">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+        </div>
+        <div class="row">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-2">
+            <label for="tiposangre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo sangre</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-select formControlName="tiposangre">
+                <mat-option value="O-">O-</mat-option>
+                <mat-option value="O+">O+</mat-option>
+                <mat-option value="A-">A-</mat-option>
+                <mat-option value="A+">A+</mat-option>
+                <mat-option value="B-">B-</mat-option>
+                <mat-option value="B+">B+</mat-option>
+                <mat-option value="AB-">AB-</mat-option>
+                <mat-option value="AB+">AB+</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-2">
+            <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Celular</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="celular" mask="(000) 000-0000">
+              <mat-icon matSuffix>phone_android</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-8 col-lg-6 col-md-6 col-sm-12 mb-2">
+            <label for="correoelectronico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="correoelectronico">
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <label for="ocupacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ocupación</label>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <input matInput formControlName="ocupacion">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <button mat-raised-button class="!bg-yellow-500 hover:!bg-yellow-600 text-black" (click)="updateTrabajador()">
+              <mat-icon>save</mat-icon>
+              Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

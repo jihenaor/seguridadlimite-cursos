@@ -1,0 +1,76 @@
+<div class="tableBody m-4">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <tbody>
+          <tr>
+            <th>Nombre del aprendiz</th>
+            <td >
+              {{ aprendiz.trabajador.primernombre }} {{ aprendiz.trabajador.segundonombre }} {{ aprendiz.trabajador.primerapellido }} {{ aprendiz.trabajador.segundoapellido }}
+            </td>
+          </tr>
+          <tr>
+            <th>Nivel</th>
+            <td >
+              {{ aprendiz.nivel.nombre }}
+            </td>
+          </tr>
+
+          <tr>
+            <th>Enfasis</th>
+            <td >
+              {{ aprendiz.enfasis.nombre }}
+            </td>
+          </tr>
+
+          <tr>
+            <th>Fecha de inicio del curso (inscripcion)</th>
+            <td >
+              {{ aprendiz.fechainscripcion }}
+            </td>
+          </tr>
+
+          <tr *ngIf="this.opciones.satisfaccionCliente">
+            <th>Fecha limite para presentar encuesta</th>
+            <td >
+              {{ aprendiz.fechalimiteencuesta }}
+            </td>
+          </tr>
+
+          <tr *ngIf="this.opciones.satisfaccionCliente">
+            <th>Fecha de encuesta</th>
+            <td >
+              {{ aprendiz.fechaencuesta }}
+            </td>
+          </tr>
+
+          <tr *ngIf="this.opciones.evaluacionTeorico">
+            <th>Estado de la evaluación</th>
+            <td >
+              {{ aprendiz.minutosEvaluacion > 0 ? 'En curso' : 'Finalizada'}}
+            </td>
+          </tr>
+
+          <tr *ngIf="this.opciones.evaluacionTeorico">
+            <th>Intentos</th>
+            <td >
+              {{ aprendiz.eteorica1 === 0 ? 'No ha realizado ningun intento' : '' }}
+              {{ aprendiz.eteorica1 > 0 && aprendiz.eteorica2 === 0 ? 'Ha realizado un intento. Nota: ' + aprendiz.eteorica1 : '' }}
+              {{ aprendiz.eteorica1 > 0 && aprendiz.eteorica2 > 0 ? 'Ha realizado dos intentos' : '' }}
+              <br>
+              {{ (aprendiz.eteorica1 > 0 && aprendiz.eteorica1 < 4) && aprendiz.eteorica2 === 0 ? 'No aprobó primer intento' : '' }}
+              {{ (aprendiz.eteorica1 > 0 && aprendiz.eteorica1 < 4) && (aprendiz.eteorica2 > 0 && aprendiz.eteorica2 < 4) ? 'No aprobó segundo intento. Nota: ' + aprendiz.eteorica2 : '' }}
+              {{ aprendiz.eteorica1 >= 4 || aprendiz.eteorica2 >= 4? 'Aprobo' : '' }}
+            </td>
+          </tr>
+
+          <tr *ngIf="this.opciones.conocimientosPrevios">
+            <th>Evaluación conocimientos previos</th>
+            <td >
+              {{ aprendiz.eingreso }}
+
+            </td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

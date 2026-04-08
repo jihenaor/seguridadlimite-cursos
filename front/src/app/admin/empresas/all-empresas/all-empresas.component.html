@@ -1,0 +1,95 @@
+<section class="content">
+  <div class="container-fluid">
+    <app-pagetitle [title]="'Empresas'"></app-pagetitle>
+
+    <div class="card">
+      <div class="body">
+        <div class="materialTableHeader">
+          <div class="row">
+            <div class="col-8">
+              <ul class="header-buttons-left ml-0">
+                <li class="dropdown m-l-20">
+                  <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                  <input placeholder="Buscar" type="text" #filter class="browser-default search-field"
+                    aria-label="Search box">
+                </li>
+              </ul>
+            </div>
+            <div class="col-4">
+              <ul class="header-buttons tbl-export-btn">
+                <li>
+                  <div class="icon-button-demo">
+                    <button mat-mini-fab color="primary" (click)="addNew()">
+                      <mat-icon class="col-white">add</mat-icon>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <div class="icon-button-demo">
+                    <button mat-mini-fab color="primary" (click)="refresh()">
+                      <mat-icon class="col-white">refresh
+                      </mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+          <table class="w-full border-collapse" #table>
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Tipo de documento</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nro de documento</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Dirección</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Teléfono</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre de contacto</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre representante legal</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Enfasis</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Seleccion</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Certificado sin pago</th>
+                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of empresaService.empresas; let i = index">
+                <tr (contextmenu)="onContextMenu($event, row)"
+                    class="border-b border-gray-100 text-gray-700 transition-colors duration-150 ease-in-out hover:bg-gray-50/80">
+                  <td class="p-3">{{ row.tipodocumento }}</td>
+                  <td class="p-3">{{ row.numerodocumento }}</td>
+                  <td class="p-3">{{ row.nombre }}</td>
+                  <td class="p-3">{{ row.direccion }}</td>
+                  <td class="p-3">{{ row.telefono }}</td>
+                  <td class="p-3">{{ row.nombrecontacto }}</td>
+                  <td class="p-3">{{ row.nombrerepresentantelegal }}</td>
+                  <td class="p-3">{{ row.enfasis?.nombre }}</td>
+                  <td class="p-3">{{ row.seleccion }}</td>
+                  <td class="p-3">{{ row.certificadosinpago }}</td>
+                  <td class="p-3 pr-4">
+                    <div class="flex gap-2">
+                      <button
+                        class="w-8 h-8 rounded-full flex items-center justify-center bg-blue-100 hover:bg-blue-200 transition-colors duration-200"
+                        (click)="editCall(row)"
+                      >
+                        <mat-icon class="text-blue-600 text-sm">edit</mat-icon>
+                      </button>
+                      <button
+                        class="w-8 h-8 rounded-full flex items-center justify-center bg-red-50 hover:bg-red-100 transition-colors duration-200"
+                        (click)="deleteItem(row)"
+                      >
+                        <mat-icon class="text-red-500 text-sm">delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

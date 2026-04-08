@@ -1,0 +1,49 @@
+<section class="content">
+  <div class="container-block">
+    <app-block-header></app-block-header>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-statistic-4">
+            <div class="row card-spacing">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <input matInput [formControl]="searchField" id="searchField"
+                         placeholder="Número de documento/Nombre/Fecha inscripción (yyyy-MM-dd)" autofocus>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 d-none d-sm-block">
+                <button mat-icon-button matTooltip="Buscar aprendiz" (click)="search()" class="ml-2">
+                  <mat-icon>search</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Listar inscritos hoy" (click)="searchInscritoshoy()" class="ml-2">
+                  <mat-icon>list</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Indicador de carga -->
+          <div *ngIf="aprendizInscritoFindService.loading(); else dataContent" class="text-center mt-4 mb-4">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <!-- Contenido principal -->
+          <ng-template #dataContent>
+            <div *ngIf="aprendizInscritoFindService.aprendizs(); else noResults">
+              <app-aprendices-instructor-table [aprendices]="aprendizInscritoFindService.aprendizs()"></app-aprendices-instructor-table>
+            </div>
+          </ng-template>
+
+          <!-- Mensaje cuando no hay resultados -->
+          <ng-template #noResults>
+            <div class="text-center mt-4 mb-4 text-muted">
+              <p>No se encontraron resultados.</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

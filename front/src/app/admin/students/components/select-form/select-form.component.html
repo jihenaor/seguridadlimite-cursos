@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <ng-container *ngFor="let item of items">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+          <button class="button-90-percent-width" mat-raised-button color="primary" (click)="toggleComponent(item)">{{ item.label }}</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <aprendiz-conocimientos-previos [aprendiz]="aprendiz"
+    *ngIf="itemSelected === 'conocimientosPrevios'"></aprendiz-conocimientos-previos>
+    <aprendiz-evaluacion-teorica [aprendiz]="aprendiz"
+    *ngIf="itemSelected === 'evaluacionTeorica'"></aprendiz-evaluacion-teorica>
+    <aprendiz-evaluacion-practica [aprendiz]="aprendiz"
+    *ngIf="itemSelected === 'evaluacionPractica'"></aprendiz-evaluacion-practica>
+    <aprendiz-encuesta-satisfaccion [aprendiz]="aprendiz"
+    *ngIf="itemSelected === 'encuestaSatisfaccion'"></aprendiz-encuesta-satisfaccion>
+    </div>
+  </div>

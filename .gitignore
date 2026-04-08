@@ -1,0 +1,50 @@
+# ─────────────────────────────────────────────
+#  .gitignore — Seguridad Al Límite (monorepo)
+# ─────────────────────────────────────────────
+
+# ══ ARCHIVOS SENSIBLES — NUNCA subir ══════════
+**/.env
+**/.env.local
+**/.env.production
+**/set_env.bat
+**/application-prod.yml
+
+# ══ BACK-END (Maven / Java) ═══════════════════
+back/target/
+back/.mvn/wrapper/maven-wrapper.jar
+**/*.class
+**/*.jar
+**/*.war
+
+# ══ FRONT-END (Angular / Node) ════════════════
+front/node_modules/
+front/dist/
+front/.angular/
+**/node_modules/
+
+# ══ MICROFRONTENDS (obsoleto) ════════════════
+microfrontends/
+
+# ══ LOGS ══════════════════════════════════════
+*.log
+*.log.*.gz
+logs/
+
+# ══ IDEs ══════════════════════════════════════
+.idea/
+.vscode/
+*.iml
+*.suo
+*.user
+
+# ══ SISTEMA OPERATIVO ══════════════════════════
+.DS_Store
+Thumbs.db
+nul
+
+# ══ DOCKER (imágenes locales) ══════════════════
+**/.docker/
+
+# ══ DOCUMENTOS DE ANÁLISIS (no son código) ════
+*.docx
+*.pdf

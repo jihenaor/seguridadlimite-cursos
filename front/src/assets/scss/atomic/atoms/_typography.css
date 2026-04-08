@@ -1,0 +1,13 @@
+/* Tipografías básicas */
+.heading-lg {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+    color: #666666;
+    margin: 0;
+  }
+  

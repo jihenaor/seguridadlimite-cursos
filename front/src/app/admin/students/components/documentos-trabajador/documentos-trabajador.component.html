@@ -1,0 +1,91 @@
+<div class="col-xl-12 col-lg-12 col-md-12">
+  <!---->
+  <div class="body">
+    <div class="card">
+      <div class="header">
+        <h2>
+          Documento del trabajador
+        </h2>
+      </div>
+      <div class="body">
+        <div class="card">
+          <div class="header">
+            <h2>Lado A</h2>
+          </div>
+          <div class="body">
+            <div class="example-container">
+
+              <div class="row">
+                @if (trabajador.adjuntodocumento === 'S' && trabajador.ext === 'pdf') {
+                  <div class="col-8">
+                    <ng-container>
+                      <button mat-raised-button color="secondary" (click)="showPdf(trabajador.base64a)">PDF</button>
+                    </ng-container>
+                  </div>
+                }
+                <div class="col-8" *ngIf="trabajador.adjuntodocumento !== 'S'">
+                  <app-file-upload-base64 (base64ValueChange)="onBase64Ladoa($event)"></app-file-upload-base64>
+                </div>
+              </div>
+              <div class="row" *ngIf="trabajador.ext !== 'pdf' && trabajador.adjuntodocumento === 'S'">
+                <div class="col-12">
+                  <ng-container *ngIf="trabajador !== undefined">
+                    <img [src]="'data:image/jpeg;base64,' + trabajador.base64a"/>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (trabajador.adjuntodocumento !== 'S' || (trabajador.adjuntodocumento === 'S' && trabajador.base64b && trabajador.base64b.length > 0)) {
+          <div class="card">
+            <div class="header">
+              <h2><b>Lado B</b></h2>
+            </div>
+            <div class="body">
+              <div class="example-container">
+                <div class="row">
+                  @if (trabajador.adjuntodocumento === 'S' && trabajador.ext === 'pdf') {
+                    <div class="col-8">
+                      <ng-container>
+                        <button mat-raised-button color="secondary" (click)="showPdf(trabajador.base64b)">PDF</button>
+                      </ng-container>
+                    </div>
+                  }
+                  <div class="col-8" *ngIf="trabajador.adjuntodocumento !== 'S'">
+                    <app-file-upload-base64 (base64ValueChange)="onBase64Ladob($event)"></app-file-upload-base64>
+                  </div>
+                </div>
+                <div class="row" *ngIf="trabajador.ext !== 'pdf' && trabajador.adjuntodocumento === 'S'">
+                  <div class="col-12">
+                    <ng-container *ngIf="trabajador !== undefined">
+                      <img [src]="'data:image/jpeg;base64,' + trabajador.base64b"/>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+      </div>
+
+      <div class="row" >
+        <div class="col-lg-3 col-sm-6">
+
+          <div class="example-container" *ngIf="trabajador.adjuntodocumento === 'N'">
+                <button *ngIf="trabajadordocumento !== undefined || trabajadordocumento.ext !== undefined"
+                  mat-raised-button color="primary" (click)="updateDocumentoTrabajador()">Guardar documento
+                </button>
+              </div>
+              <div class="example-container" *ngIf="trabajador.adjuntodocumento === 'S'">
+                <button *ngIf="trabajadordocumento !== undefined || trabajadordocumento.ext !== undefined"
+                  mat-raised-button color="secondary" (click)="inicializarDocumentos()">Subir otro documento
+                </button>
+              </div>
+        </div>
+    </div>
+      </div>
+  </div>
+</div>

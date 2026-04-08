@@ -1,0 +1,9 @@
+# Esta configuración recomienda eliminar estos navegadores antiguos
+# kaios 2.5
+# op_mini all
+
+# Mantén navegadores modernos compatibles con ES6+
+last 2 Chrome versions
+last 2 Edge versions
+last 2 Firefox versions
+last 2 Safari versions

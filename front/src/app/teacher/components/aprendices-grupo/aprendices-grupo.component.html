@@ -1,0 +1,175 @@
+<div class="card">
+  <div class="card">
+    <div class="header d-flex justify-content-between align-items-center">
+      <h2>Aprendices </h2>
+      <div class="toggle-container">
+        <mat-slide-toggle
+          [(ngModel)]="mostrarEncuesta"
+          color="primary">
+          Encuesta
+        </mat-slide-toggle>
+        <mat-slide-toggle
+          [(ngModel)]="mostrarFoto"
+          color="primary">
+          Fotos
+        </mat-slide-toggle>
+        <mat-slide-toggle
+          [(ngModel)]="mostrarFirma"
+          color="primary">
+          Firma
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+  <div class="body table-responsive">
+    <div class="container-fluid">
+      <!-- Campo de fecha -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="fechaSeleccionada">Fecha Asistencia (AAAA-MM-DD)</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput
+                   [(ngModel)]="fechaSeleccionada"
+                   placeholder="AAAA-MM-DD"
+                   pattern="\d{4}-\d{2}-\d{2}"
+                   #fechaInput="ngModel">
+            <mat-error *ngIf="fechaInput.errors?.['pattern']">
+              Formato requerido: AAAA-MM-DD
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-header-responsive">
+          <th>#</th>
+          <th>Evaluar</th>
+          <th>Nombre completo</th>
+          @if (mostrarEncuesta) {
+            <th>Encuesta</th>
+          }
+          @if (mostrarFoto) {
+            <th>Foto</th>
+          }
+          @if (mostrarFirma) {
+            <th>Firma</th>
+          }
+          <th>Eval. Conoc</th>
+          <th>Eval. Teór 1</th>
+          <th>Eval. Teór 2</th>
+          <th>Eval Pract</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (aprendiz of aprendizs; track $index) {
+          <tr >
+            <th scope="row">{{$index + 1}}</th>
+            <td class="table-cell-responsive">
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-600 hover:bg-gray-700 transition-colors duration-200 shadow-md"
+                [ngClass]="aprendizSeleccionadoEval === aprendiz.id ? 'bg-gray-200 hover:bg-gray-300' : 'bg-gray-600'"
+                (click)="gotoEvaluacion(aprendiz)"
+              >
+                <span class="material-icons"
+                  [ngClass]="aprendizSeleccionadoEval === aprendiz.id ? 'text-gray-700' : 'text-white'"
+                >
+                  assignment
+                </span>
+              </button>
+            </td>
+            <td (click)="toggleDetail($index)" class="table-cell-responsive">
+              <div class="aprendiz">
+                <span class="nombre nombre-responsive">{{ aprendiz.nombreCompletoTrabajador }}</span>
+                <span class="nivel nivel-responsive">{{ aprendiz.nivel?.nombre }}</span>
+              </div>
+            </td>
+            @if (mostrarEncuesta) {
+              <td>
+                <div *ngIf="aprendiz">
+                  <span *ngIf="aprendiz?.fechaencuesta; else noEncuesta" class="icon-success">✔️</span>
+                  <ng-template #noEncuesta><span class="icon-error">❌</span></ng-template>
+                </div>
+              </td>
+            }
+            @if (mostrarFoto) {
+              <td style="text-align: center;">
+                <button mat-mini-fab (click)="toggleFoto($index, aprendiz.idtrabajador)">
+                  <mat-icon aria-label="Edit" class="col-white">
+                    @if (aprendiz.foto === 'S') {
+                      monochrome_photos
+                    } @else {
+                      no_photography
+                    }
+                  </mat-icon>
+                </button>
+              </td>
+            }
+            @if (mostrarFirma) {
+              <td>
+                <div class="button-group">
+                  <button
+                    mat-mini-fab
+                    color="accent"
+                    matTooltip="Capturar Firma"
+                    (click)="capturarFirma(aprendiz.idtrabajador, aprendiz.id)">
+                    <mat-icon>draw</mat-icon>
+                  </button>
+                </div>
+              </td>
+            }
+            <td class="text-end pe-3">{{ aprendiz.eingreso }}</td>
+            <td class="text-end pe-3">{{ aprendiz.eteorica1 }}</td>
+            <td class="text-end pe-3">{{ aprendiz.eteorica2 }}</td>
+            <td class="text-end pe-3">{{ aprendiz.epractica }}</td>
+          </tr>
+
+          @if (apredizSeleccionado === $index) {
+            <tr>
+              <td colspan="6">
+                <table class="table-asistencia">
+                  <tbody>
+                    <ng-container *ngFor="let modulo of aprendiz.modulos">
+                      <tr>
+                        <td class="center-cell celda-amarilla">
+                          Mod: {{ modulo.modulo }}
+                        </td>
+                        <td>
+                          <table class="table-asistencia">
+                            <ng-container *ngFor="let dia of modulo.dias">
+                              <tr>
+                                <td class="center-cell celda-gris">
+                                  Dia: {{ dia.dia }} - {{ dia.fechaProgramada }}
+                                </td>
+                                <td>
+                                  <table class="table-asistencia">
+                                    <tr>
+                                      <td *ngFor="let unidad of dia.unidads">
+                                        <span>{{ unidad.unidad }}</span>
+                                        &nbsp; &nbsp;
+                                        <mat-slide-toggle
+                                        [checked]="unidad.asistencia.selected"
+                                            (change)="onChangeAsistencia(unidad.asistencia, dia.fechaProgramada)"></mat-slide-toggle>
+
+                                            {{ unidad.asistencia.fecha }}
+                                          </td>
+                                        </tr>
+                                      </table>
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </table>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

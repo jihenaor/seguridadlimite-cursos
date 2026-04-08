@@ -1,0 +1,68 @@
+<div class="body">
+  <div class="card">
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6">
+
+        <div class="card m-b-20">
+
+          
+          @if (mediaService.firmaObtenida()) {
+            <img style="width: 200px; height: 100px;" [src]="transformFirma()" alt="firma">
+          } @else {
+            <div class="text-center p-3">
+              <p class="text-muted">No hay firma disponible</p>
+            </div>
+          }
+        </div>
+        <div class="card m-b-20">
+          <canvas id="cnv" name="cnv" width="500" height="100"></canvas>
+          <canvas #sigImg width="500" height="100"></canvas>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+
+              <div style="text-align:center">
+
+                <div class="snap-container">
+                  <div>
+                    <button mat-raised-button (click)="onSign()">  Capturar
+                    </button>
+                    <button mat-raised-button (click)="onClear()">Limpiar</button>
+                    <button mat-raised-button (click)="onDone()">Guardar</button>
+                    <br>
+                    <br>
+                    <ng-container [formGroup]="formGroup">
+                      <mat-form-field>
+                        <mat-label>bioSigData</mat-label>
+                        <textarea matInput formControlName="bioSigData" placeholder="bioSigData:"></textarea>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-label>sigImgData</mat-label>
+                        <textarea matInput formControlName="sigImgData" placeholder="sigImgData:"></textarea>
+                      </mat-form-field>
+
+                      <br>
+                      <br>
+                      <mat-form-field>
+                        <mat-label>SigString</mat-label>
+                        <textarea matInput formControlName="sigStringData" placeholder="SigString:"></textarea>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>Base64 String</mat-label>
+                        <textarea matInput formControlName="sigImageData" placeholder="Base64 String:"></textarea>
+                      </mat-form-field>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

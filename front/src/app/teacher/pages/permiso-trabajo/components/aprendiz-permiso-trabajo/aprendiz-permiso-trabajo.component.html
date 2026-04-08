@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="header">
+    <button mat-raised-button color="primary" (click)="buscarAprendices()">
+      <mat-icon>search</mat-icon>
+      Buscar Aprendices asignados al permiso
+    </button>
+
+    <button mat-raised-button color="primary" (click)="buscarAprendicesUltimaAsistencia()">
+      <mat-icon>search</mat-icon>
+      Buscar aprendices cuya última asistencia coincide con las fechas del permiso.
+    </button>
+
+    <button mat-raised-button color="primary" (click)="buscarAprendicesInscritos()">
+      <mat-icon>search</mat-icon>
+      Buscar aprendices ultima asistencia.
+    </button>
+
+  </div>
+
+  <div class="table-container">
+
+      @if (aprendices.length > 0) {
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Acciones</th>
+              <th>Tipo documento</th>
+              <th>Documento</th>
+              <th>Primer nombre</th>
+              <th>Segundo nombre</th>
+              <th>Primer apellido</th>
+              <th>Segundo apellido</th>
+              <th>Género</th>
+              <th>País nacimiento</th>
+              <th>Fecha nacimiento</th>
+              <th>Nivel educativo</th>
+              <th>Área trabajo</th>
+              <th>Cargo actual</th>
+              <th>Sector</th>
+              <th>Empleador</th>
+              <th>ARL</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (aprendiz of aprendices; track aprendiz.id) {
+              <tr>
+                <td>
+                  @if (!aprendiz.idPermiso) {
+                    <button class="btn btn-primary btn-sm" (click)="asignarPermiso(aprendiz)">
+                      <i class="fas fa-plus"></i> Asignar
+                    </button>
+                  } @else {
+                    <span class="badge bg-success">Asignado</span>
+                  }
+                </td>
+                
+                <td>{{aprendiz.trabajador?.tipodocumento || '--'}}</td>
+                <td>{{aprendiz.trabajador?.documento || '--'}}</td>
+                <td>{{aprendiz.trabajador?.primernombre || '--'}}</td>
+                <td>{{aprendiz.trabajador?.segundonombre || '--'}}</td>
+                <td>{{aprendiz.trabajador?.primerapellido || '--'}}</td>
+                <td>{{aprendiz.trabajador?.segundoapellido || '--'}}</td>
+                <td>{{aprendiz.trabajador?.genero || '--'}}</td>
+                <td>{{aprendiz.trabajador?.paisnacimiento || '--'}}</td>
+                <td>{{aprendiz.trabajador?.fechanacimiento || '--'}}</td>
+                <td>{{getNivelEducativo(aprendiz.niveleducativo) || '--'}}</td>
+                <td>{{aprendiz.areatrabajo || '--'}}</td>
+                <td>{{aprendiz.cargoactual || '--'}}</td>
+                <td>{{aprendiz.nivel?.nombre || '--'}}</td>
+                <td>{{ aprendiz.empleador || '--'}}</td>
+                <td>{{ aprendiz.arl || '--'}}</td>
+                
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <div class="alert alert-info">
+          <p>No hay aprendices registrados para este permiso de trabajo</p>
+        </div>
+      }
+    
+  </div>
+</div>

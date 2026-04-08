@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="header">
+    <h2>
+      <strong>Asistencia</strong>
+    </h2>
+  </div>
+  <div class="body">
+    
+    <!-- Date Selector -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="fechaSeleccionada">Fecha Asistencia (AAAA-MM-DD)</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput
+                 [(ngModel)]="fechaSeleccionada"
+                 placeholder="AAAA-MM-DD"
+                 pattern="\d{4}-\d{2}-\d{2}"
+                 #fechaInput="ngModel"
+                 maxlength="10">
+          <mat-error *ngIf="fechaInput.errors?.['pattern']">
+            Formato requerido: AAAA-MM-DD
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="errorMessage()" class="alert alert-danger mb-3">
+      {{ errorMessage() }}
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading()" class="alert alert-info mb-3">
+      Registrando asistencia...
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover dashboard-task-infos">
+        <thead>
+          <tr>
+            <th>Modulo</th>
+            <th>Unidad</th>
+            <th>Dia</th>
+            <th>Fecha</th>
+            <th>Horas</th>
+            <th>Asistió</th>
+<th>Actualizar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asistencia of aprendiz.asistencias; let i = index">
+            <td>{{ asistencia.modulo }}</td>
+            <td>{{ asistencia.unidad }}</td>
+            <td>{{ asistencia.dia }}</td>
+            <td>{{ asistencia.fecha }}</td>
+            <td>{{ asistencia.horas }}</td>
+            <td>{{ asistencia.fecha?.length > 0 ? 'X' : '' }}</td>
+
+            <td>
+              @if(!asistencia.fecha || asistencia.fecha.length !== 10) {
+                <button mat-raised-button color="secondary"
+                  (click)="onChangeAsistencia(asistencia)"
+                  [disabled]="isLoading()">
+                  Registrar
+                </button>
+              }
+              <span class="ms-2">{{ (asistencia.fecha && asistencia.fecha.length == 10) || 'No registrada' }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4"></td>
+            <td>{{  totalizarHoras() }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

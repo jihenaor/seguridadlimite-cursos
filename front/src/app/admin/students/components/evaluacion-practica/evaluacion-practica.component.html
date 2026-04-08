@@ -1,0 +1,34 @@
+<div class="container">
+
+  <table>
+    <thead>
+      <tr>
+        <th class="center-cell">EVALUACION PRACTICA</th>
+        <th class="center-cell">CUMPLE</th>
+        <th class="center-cell">NO CUMPLE</th>
+        <th class="center-cell">NO APLICA</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tbody>
+        <tbody>
+          <ng-container *ngFor="let agrupador1 of preguntasService.groupedPreguntas | keyvalue">
+            <ng-container *ngFor="let agrupador2 of agrupador1.value | keyvalue">
+              <tr>
+                <td colspan="4" class="center-cell celda-gris">{{ agrupador2.key }}</td>
+              </tr>
+              <ng-container *ngFor="let agrupador3 of agrupador2.value | keyvalue; ">
+                <tr *ngFor="let pregunta of agrupador3.value; let isFirstGroup = first ">
+
+                  <td>{{ pregunta.pregunta }}</td>
+                  <td>{{ pregunta.respuestacorrecta == 'S' ? 'X':'' }}</td>
+                  <td>{{ pregunta.respuestacorrecta == 'N' ? 'X':'' }}</td>
+                  <td>{{ pregunta.respuestacorrecta == 'X' ? 'X':'' }}</td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </tbody>
+  </table>
+</div>

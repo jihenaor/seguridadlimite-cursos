@@ -1,0 +1,74 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Cambiar contraseña</h4>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/admin/dashboard/main">
+                                <i class="fas fa-home"></i> Inicio</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 auth-form-section">
+            <div class="form-section">
+                <div class="auth-wrapper">
+
+                    <form class="validate-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
+                                    <mat-icon matSuffix (click)="hide = !hide">
+                                        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="authForm.get('password').hasError('required')">
+                                        Contraseña es requerida
+                                    </mat-error>
+                                    <div *ngIf="authForm.get('password').invalid">
+                                        <mat-error *ngIf="authForm.get('password').hasError('invalid_password')">
+                                            Debe tener un numero
+                                        </mat-error>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>Confirmar contraseña</mat-label>
+                                    <input matInput formControlName="cpassword" [type]="chide ? 'password' : 'text'" required>
+                                    <mat-icon matSuffix (click)="chide = !chide">
+                                        {{chide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                                    <div *ngIf="authForm.get('cpassword').touched && authForm.errors">
+                                        <mat-error *ngIf="authForm.get('cpassword').hasError('required')">
+                                            Confirmar contraseña es requerido
+                                        </mat-error>
+
+                                        <mat-error *ngIf="authForm.hasError('match_password')">
+                                            Los password no son iguales
+                                        </mat-error>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="container-auth-form-btn">
+                            <button mat-flat-button color="primary" class="auth-form-btn" [disabled]="!authForm.valid " type="submit">
+              Actualizar
+            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

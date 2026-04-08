@@ -1,0 +1,65 @@
+<div class="row" style="width: 100%;" *ngIf="pregunta.type === 1">
+  <div class="col-12">
+    <div class="card">
+      <div class="header">
+        <h2>
+          <strong>Respuestas</strong>
+        </h2>
+      </div>
+      <div class="body table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Numero</th>
+              <th scope="col">Respuesta</th>
+              <th scope="col">Tiene imagen</th>
+              <th scope="col">Nombre imagen</th>
+              <th scope="col">Imagen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let respuesta of pregunta.respuestas">
+              <td scope="row"  >
+                <span [ngStyle]="{'color': pregunta.numerorespuestacorrecta === respuesta.numero ? 'green' : 'black', 'font-weight': pregunta.numerorespuestacorrecta === respuesta.numero ? 'bold' : 'normal'}">
+                {{ respuesta.numero }}
+                </span>
+              </td>
+              <td>
+                <span [ngStyle]="{'color': pregunta.numerorespuestacorrecta === respuesta.numero ? 'green' : 'black', 'font-weight': pregunta.numerorespuestacorrecta === respuesta.numero ? 'bold' : 'normal'}">
+                {{ respuesta.respuesta}}
+                </span>
+              </td>
+              <td>
+                <span [ngStyle]="{'color': pregunta.numerorespuestacorrecta === respuesta.numero ? 'green' : 'back'}">
+                  {{ respuesta.tieneimagen === 'S' ? 'Si' : 'No'}}
+                  </span>
+                </td>
+                <td>
+                  <span [ngStyle]="{'color': pregunta.numerorespuestacorrecta === respuesta.numero ? 'green' : 'back'}">
+                    {{ respuesta.nombreimagen}}
+                    </span>
+                  </td>
+                  <td>
+                    <!-- Mostrar imagen si tiene imagen y base64 con datos -->
+                    <div *ngIf="respuesta.tieneimagen && respuesta.base64 && respuesta.base64.trim() !== ''">
+                      <img 
+                        [src]="'data:image/jpeg;base64,' + respuesta.base64" 
+                        [alt]="respuesta.nombreimagen || 'Imagen de respuesta'"
+                        class="img-thumbnail"
+                        style="max-width: 150px; max-height: 150px; object-fit: contain;"
+                        (error)="$event.target.style.display='none'"
+                      />
+                    </div>
+                    <!-- Mostrar mensaje si no hay imagen -->
+                    <div *ngIf="!respuesta.tieneimagen || !respuesta.base64 || respuesta.base64.trim() === ''" 
+                         class="text-muted">
+                      <small>Sin imagen</small>
+                    </div>
+                  </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

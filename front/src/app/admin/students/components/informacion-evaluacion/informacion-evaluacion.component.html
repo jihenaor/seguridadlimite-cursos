@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="header">
+    <h2>
+      <strong>Evaluación</strong>
+    </h2>
+  </div>
+  <div class="body">
+
+    <div class="table-responsive">
+      <table class="table table-hover dashboard-task-infos">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Nota 1</th>
+            <th>Nota 2</th>
+            <th>Definitiva</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ingreso</td>
+            <td><span>{{ aprendiz.eingreso | number }}</span></td>
+          </tr>
+          <tr>
+            <td>Teórica</td>
+            <td>
+              <span [className]="aprendiz.eteorica1 < 3 ? 'badge col-red' : 'badge col-green'">{{
+                aprendiz.eteorica1 | number }}</span>
+            </td>
+            <td>
+              <span [className]="aprendiz.eteorica2 < 3 ? 'badge col-red' : 'badge col-green'">{{
+                aprendiz.eteorica2 | number }}</span>
+            </td>
+            <td></td>
+            <td>
+              <a *ngIf="aprendiz.exteteorica1"
+                href="http://3.16.43.222:82/ET{{student.id}}.{{aprendiz.exteteorica}}"
+                target="_blank">Ver</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Práctica</td>
+            <td>
+              <span [className]="aprendiz.epractica < 3 ? 'badge col-red' : 'badge col-green'">{{
+                aprendiz.epractica | number }}</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <a *ngIf="aprendiz.extepractica"
+                href="http://3.16.43.222:82/EP{{student.id}}.{{aprendiz.extepractica}}"
+                target="_blank">Ver</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Énfasis</td>
+            <td>{{ aprendiz.eenfasis | number }}</td>
+            <td></td>
+            <td></td>
+            <td>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<aprendiz-select-form [aprendiz]="aprendiz"></aprendiz-select-form>

@@ -1,0 +1,70 @@
+.w-100 {
+  width: 100%;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.bg-green {
+  background-color: #4CAF50;
+}
+
+.bg-orange {
+  background-color: #FF9800;
+}
+
+.bg-red {
+  background-color: #F44336;
+}
+
+.table-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.action-column {
+  width: 150px;
+  text-align: center;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+.badge-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.badge-warning {
+  background-color: #ff9800;
+  color: white;
+}
+
+.badge-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-id {
+  width: 80px;
+}
+
+.mat-column-acciones {
+  width: 150px;
+}

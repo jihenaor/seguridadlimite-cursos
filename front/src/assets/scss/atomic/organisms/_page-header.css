@@ -1,0 +1,10 @@
+/* Encabezado principal de una página */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 1.5rem;
+  }
+  

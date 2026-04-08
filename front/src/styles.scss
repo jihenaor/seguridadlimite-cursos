@@ -1,0 +1,65 @@
+h3 {
+  color: #1976d2; // Color azul de Material Design
+  margin-bottom: 1rem;
+  font-weight: 900;
+}
+
+// SOLUCION GLOBAL PARA PROBLEMAS DE VISIBILIDAD DE TEXTO
+// Forzar texto visible en elementos con fondo blanco en toda la aplicación
+.bg-white, .bg-white *,
+.overflow-x-auto.bg-white, .overflow-x-auto.bg-white *,
+table, table *,
+.table, .table *,
+.card, .card *,
+.mat-card, .mat-card *,
+.mat-table, .mat-table *,
+.content, .content * {
+  color: #333333 !important;
+}
+
+// Asegurar visibilidad en encabezados de tabla
+thead th,
+.bg-gray-50 th,
+th.text-gray-600,
+.mat-header-cell {
+  color: #374151 !important;
+  background-color: #f9fafb !important;
+}
+
+// Asegurar visibilidad en celdas de tabla
+tbody td,
+td,
+.mat-cell {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+// Forzar colores apropiados en botones de Angular Material
+.mat-mdc-raised-button, .mat-raised-button, .mat-mdc-unelevated-button {
+  &.mat-primary, &[color="primary"] {
+    background-color: #1976d2 !important;
+    color: white !important;
+  }
+  
+  &.mat-accent, &[color="accent"] {
+    background-color: #ff4081 !important;
+    color: white !important;
+  }
+  
+  &.mat-warn, &[color="warn"] {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+  
+  &[color="secondary"] {
+    background-color: #607d8b !important;
+    color: white !important;
+  }
+}
+
+// Sobrescribir cualquier regla que force texto blanco en fondos blancos
+* {
+  &.bg-white {
+    color: #333333 !important;
+  }
+}

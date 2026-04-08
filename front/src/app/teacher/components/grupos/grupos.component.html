@@ -1,0 +1,52 @@
+<div style="padding: 16px;">
+  <div style="max-width: 48rem; margin: 0 auto;">
+    <!-- Botón de Abrir grupos -->
+    <button
+      type="button"
+      (click)="updateInscriptionDate2()"
+      style="width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 16px 24px; background-color: #2196F3; color: white; border: none; margin-bottom: 1px; border-radius: 8px;"
+    >
+      <mat-icon style="color: white;">calendar_today</mat-icon>
+      <span style="color: white; margin-left: 12px;">Abrir inscripción</span>
+    </button>
+
+    <!-- Botón de Aprendices inscritos -->
+    <button
+      type="button"
+      (click)="gotoAprendizSinGrupo()"
+      style="width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 16px 24px; background-color: #4CAF50; color: white; border: none; margin-bottom: 1px; border-radius: 8px;"
+    >
+      <mat-icon style="color: white;">school</mat-icon>
+      <span style="color: white; margin-left: 12px;">Ver aprendices</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="updateParametrosEvaluationDate()"
+      style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background-color: #2196F3; color: white; border: none; border-radius: 8px;"
+    >
+      <div style="display: flex; align-items: center;">
+        <mat-icon style="color: white;">poll</mat-icon>
+        <span style="color: white; margin-left: 12px;">Iniciar evaluación</span>
+      </div>
+      <span style="background-color: #2196F3; padding: 4px 12px; border-radius: 4px; font-size: 14px;">
+        {{ parametrosFindService.parametros?.fechaevaluacion || 'Sin fecha' }}
+      </span>
+    </button>
+
+    <!-- Botón de Iniciar encuesta -->
+    <button
+      type="button"
+      (click)="updateParametrosEncuestaDate()"
+      style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background-color: #673AB7; color: white; border: none; border-radius: 8px;"
+    >
+      <div style="display: flex; align-items: center;">
+        <mat-icon style="color: white;">poll</mat-icon>
+        <span style="color: white; margin-left: 12px;">Iniciar encuesta</span>
+      </div>
+      <span style="background-color: #512DA8; padding: 4px 12px; border-radius: 4px; font-size: 14px;">
+        {{ parametrosFindService.parametros?.fechaencuesta || 'Sin fecha' }}
+      </span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<section class="content">
+  <div class="container-fluid">
+
+    <app-pagetitle [title]="'Aprendices'"></app-pagetitle>
+
+    <div class="card">
+      <div class="body">
+        <div class="materialTableHeader">
+          <div class="row">
+            <div class="col-8">
+              <ul class="header-buttons-left ml-0">
+                <li class="dropdown m-l-20">
+
+                  <mat-form-field>
+                    <mat-label>Selecciona una fecha inicial</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" (dateChange)="onStartDateChanged($event)">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>Selecciona una fecha final</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" (dateChange)="onEndDateChanged($event)">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>Tipo de evento</mat-label>
+                    <mat-select [(ngModel)]="aprendizDetalle">
+                      <mat-option value="FECHA-ULTIMA-AISTENCIA">FECHA ULTIMA AISTENCIA</mat-option>
+                      <mat-option value="INSCRIPCION">INSCRIPCION</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div class="d-flex align-items-center gap-4 mt-3">
+                    <button mat-raised-button color="primary" (click)="consultarAprendices()">Buscar</button>
+                    <button mat-raised-button color="secondary" (click)="exportToExcel()">
+                      <mat-icon>file_download</mat-icon>
+                      <span>Exportar todos los aprendices</span>
+                    </button>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+            <div class="col-4">
+              <ul class="header-buttons tbl-export-btn">
+                <li>
+                  <div class="icon-button-demo">
+                  </div>
+                </li>
+                <li>
+                  <div class="icon-button-demo">
+
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+
+          @if(aprendicesInscritosService.data) {
+            <app-listado-aprendices-table [data]="aprendicesInscritosService.data"></app-listado-aprendices-table>
+
+          }
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

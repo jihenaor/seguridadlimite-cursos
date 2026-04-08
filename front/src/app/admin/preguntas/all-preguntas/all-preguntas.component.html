@@ -1,0 +1,138 @@
+<section class="content">
+  <div class="container-block">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Preguntas: {{ nombrenivel }}{{ nombregrupo }}</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="body">
+        <div class="table-responsive">
+          <div class="materialTableHeader">
+            <div class="row">
+              <div class="col-8">
+                <ul class="header-buttons-left ml-0">
+
+                  <li class="dropdown m-l-20">
+                    <button mat-mini-fab color="primary" (click)="toggleAllDetails()">
+                      <mat-icon class="col-white">{{ mostrarRespuestas ? 'maximize' : 'horizontal_split' }}
+                      </mat-icon>
+                    </button>
+                  </li>
+
+                  <li class="dropdown m-l-20">
+                    <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                    <input placeholder="Buscar" type="text" #filter class="browser-default search-field"
+                      aria-label="Search box">
+                  </li>
+                </ul>
+              </div>
+              <div class="col-4">
+                <ul class="tbl-export-btn ms-0">
+                  <li>
+                    <div class="icon-button-demo">
+                      <button mat-mini-fab color="primary" (click)="addNew()">
+                        <mat-icon class="col-white">add</mat-icon>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="icon-button-demo">
+                      <button mat-mini-fab color="primary" (click)="refresh()">
+                        <mat-icon class="col-white">refresh
+                        </mat-icon>
+                      </button>
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <table class="table" #table>
+            <thead>
+              <tr>
+                <th>Orden</th>
+                <th>Pregunta</th>
+                <th>Enfasis</th>
+                <th>Agrupadores</th>
+                <th>Dificultad en lectura/escritura</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of preguntasService.preguntas; let i = index">
+
+                <tr (click)="toggleDetail(i)" >
+                  <td [ngStyle]="{'background-color': getColorClass(row.agrupador1)}">
+                    <div class="detalle-container">
+                      <div class="agrupador-row">
+                        {{ row.orden }}
+                      </div>
+                      <div class="agrupador-row">
+                        <b><span>{{ row.agrupador1 }}</span></b>
+                      </div>
+                      </div>
+                  </td>
+                  <td>{{ row.pregunta }}</td>
+                  <td>{{ row.enfasis.nombre }}</td>
+                  <td>
+                    <div class="detalle-container">
+
+                      <div *ngIf="!nombregrupo" class="agrupador-row">
+                        <span class="agrupador-label">Formulario:</span>
+                        <span  class="agrupador-value">{{ row.grupo.nombre }}</span>
+                      </div>
+
+                      <div class="agrupador-row">
+                        <span class="agrupador-label">Ag2:</span>
+                        <span class="agrupador-value">{{ row.agrupador2 }}</span>
+                      </div>
+
+                      <div class="agrupador-row">
+                        <span class="agrupador-label">Ag3:</span>
+                        <span class="agrupador-value">{{ row.agrupador3 }}</span>
+                      </div>
+                      <div class="agrupador-row">
+                        <span class="agrupador-label">Niv:</span>
+                        <span class="agrupador-value" *ngIf="row.nivel">{{ row.nivel?.nombre }}</span>
+                        <span class="agrupador-value" *ngIf="!row.nivel">N/A</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span *ngIf="row.diflectura !== 'S'">{{ row.diflectura === 'S' ? 'Si' : 'No' }}</span>
+                    <img *ngIf="row.diflectura === 'S' && row.base64" 
+                         [src]="'data:image/jpeg;base64,' + row.base64" 
+                         alt="Imagen de dificultad de lectura"
+                         class="img-thumbnail"
+                         style="max-width: 100px; max-height: 100px;">
+                    <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
+                  </td>
+                  
+                  <td class="pr-0">
+                    <button mat-mini-fab color="primary" (click)="editCall(row)">
+                      <mat-icon class="col-white">edit</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+                <!-- Fila de detalle -->
+                <tr *ngIf="mostrarRespuestas || preguntaDetalle === i">
+                  <td colspan="6">
+                    <app-respuestas [pregunta]="row"></app-respuestas>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

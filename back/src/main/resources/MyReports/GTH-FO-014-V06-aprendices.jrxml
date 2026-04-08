@@ -1,0 +1,68 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="GTH-FO-014-V06-aprendices" language="java" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cc8e5637-7168-449a-832d-6bd85ad7facf">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="tiponumerodocumento" class="java.lang.String"/>
+	<field name="firma" class="java.lang.String"/>
+	<columnHeader height="15" splitType="Stretch">
+		<element kind="staticText" uuid="3e55d1b7-faa2-4865-b719-1ab151328402" x="0" y="0" width="227" height="15" fontSize="8.0">
+			<paragraph firstLineIndent="3"/>
+			<text><![CDATA[1. Nombre y apellidos de los trabajadores / Aprendices:]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f939e16-375b-40da-a01a-9dffc78bfbaf"/>
+			<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box>
+				<bottomPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="91144cf1-52a1-4e3e-8c00-2a7931c59f4c" x="227" y="0" width="172" height="15" fontSize="8.0">
+			<paragraph firstLineIndent="3"/>
+			<text><![CDATA[Clase y Nro. documento:]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3b1938d-5e79-478c-a019-5f5d8804df7f"/>
+			<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box>
+				<bottomPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="430280e8-416d-4035-892d-e070f3703cf2" x="400" y="0" width="172" height="15" fontSize="8.0">
+			<text><![CDATA[Firma]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86d3450e-7f8f-4204-88a9-ec955eb6e945"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box>
+				<bottomPen lineWidth="0.5"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="c9e31b9c-4080-4eba-a67e-8db2ee5995de" x="0" y="0" width="210" height="30">
+				<expression><![CDATA[$F{nombrecompleto}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f939e16-375b-40da-a01a-9dffc78bfbaf"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="719ec6fd-414b-4079-b9d1-35b9c91b041b" x="227" y="0" width="172" height="30">
+				<expression><![CDATA[$F{tiponumerodocumento}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3b1938d-5e79-478c-a019-5f5d8804df7f"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="image" uuid="4228eeb0-9480-420b-a9b4-f51940a8adc5" key="Logo_Footer" x="400" y="0" width="172" height="30" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+				<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{firma}))
+]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

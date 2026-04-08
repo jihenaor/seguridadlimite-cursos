@@ -1,0 +1,2 @@
+# Bash en WSL/Linux exige finales de línea LF; CRLF rompe `set -o pipefail` y el shebang.
+*.sh text eol=lf

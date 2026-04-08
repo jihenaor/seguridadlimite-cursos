@@ -1,0 +1,180 @@
+<div class="addContainer dialog-container">
+    <div class="modalHeader">
+        <div class="editRowModal">
+            <div class="modalHeader clearfix">
+                <div class="modal-about">
+                    <div class="font-weight-bold p-t-5 p-l-10 font-17">
+                        {{dialogTitle}}</div>
+                </div>
+            </div>
+        </div>
+        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content class="dialog-content">
+        <form class="register-form m-4" [formGroup]="stdForm" (ngSubmit)="submit">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-select formControlName="tipodocumento" required>
+                            <mat-option [value]="'NI'">
+                                NIT
+                            </mat-option>
+                            <mat-option [value]="'CC'">
+                                CEDULA DE CIUDADANIA
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="stdForm.get('tipodocumento').hasError('required')">
+                            El tipodocumento es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Numero de documento</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="numerodocumento" required type="text" maxlength="20">
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('numerodocumento').hasError('required')">
+                            El numerodocumento es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Nombre de la empresa</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="nombre" required type="text" maxlength="100">
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('nombre').hasError('required')">
+                            El nombre de la empresa es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Dirección</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="direccion" required type="text" maxlength="100">
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('direccion').hasError('required')">
+                            El direccion es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Teléfono</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="telefono" required>
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('telefono').hasError('required')">
+                            El telefono es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                  <mat-label>Nombre del representante legal</mat-label>
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <input matInput formControlName="nombrerepresentantelegal" required maxlength="60">
+                      <mat-icon matSuffix>face</mat-icon>
+                      <mat-error *ngIf="stdForm.get('nombrerepresentantelegal').hasError('required')">
+                          El nombrerepresentantelegal es requerido
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-label>Nombre del contacto</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="nombrecontacto" required maxlength="60">
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('nombrecontacto').hasError('required')">
+                            El nombrecontacto es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                    <mat-label>Teléfono de contacto</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <input matInput formControlName="telefonocontacto" required maxlength="15">
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('telefonocontacto').hasError('required')">
+                            El telefono de contacto es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        
+                        <mat-label>Genera certificado sin pago</mat-label>
+                        <mat-select formControlName="certificadosinpago">
+                            <mat-option value=""></mat-option>
+                            <mat-option value="N">NO</mat-option>
+                            <mat-option value="S">SI</mat-option>
+                        </mat-select>
+
+                        <mat-icon matSuffix>face</mat-icon>
+                        <mat-error *ngIf="stdForm.get('certificadosinpago').hasError('required')">
+                            Indique si genera certificado sin pago
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                    <mat-label>Sector laboral (Enfasis) {{enfasisService.enfasis?.length}}</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        
+                        @if (enfasisService.enfasis && enfasisService.enfasis.length > 0) {
+                            <mat-select formControlName="idenfasis" required>
+                                @for (e of enfasisService.enfasis; track e.id) {
+                                    <mat-option [value]="e.id">
+                                        {{e.nombre}}
+                                    </mat-option>
+                                }
+                            </mat-select>
+                        }
+                        <mat-error *ngIf="stdForm.get('idenfasis')?.hasError('required')">
+                          El sector laboral es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
+                    <mat-label>Seleccion</mat-label>
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-select formControlName="seleccion">
+                        <mat-option value="S">SI</mat-option>
+                        <mat-option value="N">NO</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="example-button-row">
+                        <button mat-raised-button color="primary" [type]="submit" [disabled]="!stdForm.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
+                        <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Diseño curricular</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="table-responsive">
+              <div class="materialTableHeader">
+                <div class="row">
+                      <div class="col-12">
+                        <ul class="tbl-export-btn ms-0">
+                            <li>
+                                <div class="icon-button-demo">
+                                    <button mat-mini-fab color="primary" (click)="addNew()">
+                                      <mat-icon class="col-white">add</mat-icon>
+                                  </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Modulo</th>
+                    <th>Contexto</th>
+                    <th>Unidad</th>
+                    <th>Dia</th>
+                    <th>Horas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of service.disenocurriculars; let i = index">
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}">{{ row.id }}</td>
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}" *ngIf="!isEditing[i]">{{ row.modulo }}</td>
+                    <td *ngIf="isEditing[i]">
+                      <mat-form-field>
+                        <input matInput [(ngModel)]="service.disenocurriculars[i].modulo" />
+                      </mat-form-field>
+                    </td>
+
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}" *ngIf="!isEditing[i]">{{ row.contexto }}</td>
+                    <td *ngIf="isEditing[i]">
+                      <mat-form-field>
+                        <input matInput [(ngModel)]="service.disenocurriculars[i].contexto" maxlength="1" />
+                      </mat-form-field>
+                    </td>
+
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}" *ngIf="!isEditing[i]">{{ row.unidad }}</td>
+                    <td *ngIf="isEditing[i]">
+                      <mat-form-field>
+                        <input matInput [(ngModel)]="service.disenocurriculars[i].unidad" />
+                      </mat-form-field>
+                    </td>
+
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}" *ngIf="!isEditing[i]">{{ row.dia }}</td>
+                    <td *ngIf="isEditing[i]">
+                      <mat-form-field>
+                        <input matInput [(ngModel)]="service.disenocurriculars[i].dia" />
+                      </mat-form-field>
+                    </td>
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}" *ngIf="!isEditing[i]">{{ row.horas }}</td>
+                    <td *ngIf="isEditing[i]">
+                      <mat-form-field>
+                        <input matInput [(ngModel)]="service.disenocurriculars[i].horas" />
+                      </mat-form-field>
+                    </td>
+                    <td [ngClass]="{'contexto-T': row.contexto === 'T'}">
+                      <button *ngIf="!isEditing[i]" mat-mini-fab color="primary" (click)="toggleEdit(i)">
+                        <mat-icon class="col-white">edit</mat-icon>
+                      </button>
+                      <button *ngIf="isEditing[i]" mat-mini-fab color="primary" (click)="saveChanges(i)">
+                        <mat-icon class="col-white">save</mat-icon>
+                      </button>
+                      <button *ngIf="isEditing[i]" mat-mini-fab color="primary" (click)="cancelChanges(i)">
+                        <mat-icon class="col-white">cancel</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="contexto-T total-row" colspan="5">Total horas teórico</td>
+                    <td class="contexto-T total-row" colspan="2">{{ sumarHoras().get('T') }}</td>
+                  </tr>
+                  <tr>
+                    <td class="total-row" colspan="5">Total horas práctico</td>
+                    <td class="total-row" colspan="2"> {{ sumarHoras().get('P') }}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="total-row" colspan="5">Total</td>
+                    <td class="total-row" colspan="2">{{ sumarHoras().get('T') + sumarHoras().get('P') }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

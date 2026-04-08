@@ -1,0 +1,629 @@
+<div class="card">
+  <div class="header">
+    <h2>
+      <strong>Programas</strong>
+    </h2>
+  </div>
+
+  <div  class="body">
+    <mat-accordion>
+      <mat-panel-description>Formato
+        {{ aprendiz.nivel.nombre }} - I:{{ aprendiz.grupo?.fechainicio }} - F:{{ aprendiz.grupo?.fechafinal }} -
+        E:{{ aprendiz.grupo?.aucodestad }} - Id:{{aprendiz.grupo?.id}}
+      </mat-panel-description>
+
+      <mat-panel-description
+        *ngIf="!isFechaMayorFechaActual(aprendiz.grupo?.fechafinal) && aprendiz.grupo?.aucodestad === 'A'" color="red">
+        <a style="color: red;" routerLink="/admin/grupos/all-grupos">
+          Error de estado</a>
+
+      </mat-panel-description>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          id: {{ aprendiz.id }}
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <student-informe-formato-inscripcion [idaprendiz]="aprendiz.id"></student-informe-formato-inscripcion>
+
+            <aprendiz-informe-perfil-ingreso [idaprendiz]="aprendiz.id"></aprendiz-informe-perfil-ingreso>
+
+            <app-formato-evaluacion [idaprendiz]="aprendiz.id"></app-formato-evaluacion>
+
+          </mat-menu>
+        </div>
+      </div>
+
+      @if (aprendiz.idPermiso) {
+        <div class="mb-6">
+          <mat-card class="bg-gray-50 shadow-md">
+
+            <mat-card-header class="bg-gray-100 p-4 border-b border-gray-200">
+              <mat-card-title class="text-lg font-semibold text-gray-800">
+                <mat-icon class="text-gray-600 mr-2">group</mat-icon>
+                Información permiso de trabajo id: {{ aprendiz.permisoTrabajoAlturas?.idPermiso }}
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="p-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="space-y-2 lg:col-span-2">
+                  <p class="text-sm text-gray-500">Personal</p>
+                  <p class="text-gray-800 font-medium">
+                    <strong>Persona autoriza:</strong> {{ aprendiz.permisoTrabajoAlturas?.personaautoriza?.nombrecompleto || 'No asignado' }}
+                    <br>
+                    <strong>Responsable emergencias:</strong> {{ aprendiz.permisoTrabajoAlturas?.responsableemeergencias?.nombrecompleto || 'No asignado' }}
+                  </p>
+                </div>
+
+                <div class="space-y-2">
+                  <p class="text-sm text-gray-500">Fecha Inicio</p>
+                  <p class="text-gray-800 font-medium">{{ aprendiz.permisoTrabajoAlturas?.fechaInicio || 'No definida' }}</p>
+                </div>
+                <div class="space-y-2">
+                  <p class="text-sm text-gray-500">Valido desde</p>
+                  <p class="text-gray-800 font-medium">{{ aprendiz.permisoTrabajoAlturas?.validodesde || 'No definida' }}</p>
+                </div>
+
+                <div class="space-y-2">
+                  <p class="text-sm text-gray-500">Valido hasta</p>
+                  <p class="text-gray-800 font-medium">{{ aprendiz.permisoTrabajoAlturas?.validohasta || 'No definida' }}</p>
+                </div>
+
+              </div>
+            </mat-card-content>
+
+          </mat-card>
+        </div>
+      }
+
+
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="fechainscripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha inscripcion</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.fechainscripcion" maxlength="10">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="idenfasis" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sector laboral al que pertenece (Enfasis) </label>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-select [(ngModel)]="aprendiz.idenfasis" required>
+              <mat-option [value]="0">
+                NO DEFINIDO
+              </mat-option>
+              <mat-option [value]="1">
+                HIDROCARBUROS
+              </mat-option>
+              <mat-option [value]="2">
+                TELECOMUNICACIONES
+              </mat-option>
+              <mat-option [value]="3">
+                CONSTRUCCION
+              </mat-option>
+              <mat-option [value]="4">
+                ELÉCTRICO
+              </mat-option>
+              <mat-option [value]="5">
+                AGROPECUARIO
+              </mat-option>
+              <mat-option [value]="6">
+                COMERCIO Y SERVICIOS
+              </mat-option>
+              <mat-option [value]="7">
+                INDUSTRIAL
+              </mat-option>
+              <mat-option [value]="8">
+                TRANSPORTE
+              </mat-option>
+              <mat-option [value]="9">
+                COMERCIO
+              </mat-option>
+              <mat-option [value]="10">
+                FINANCIERO
+              </mat-option>
+              <mat-option [value]="11">
+                MINERO Y ENERGETICO
+              </mat-option>
+              <mat-option [value]="12">
+                EDUCACION
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="idnivel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-select [(ngModel)]="aprendiz.idnivel">
+              <mat-option *ngFor="let nivel of nivels" [value]="nivel.id">
+                {{ nivel.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="pagocurso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pago el curso</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-select [(ngModel)]="aprendiz.pagocurso">
+              <mat-option [value]="'S'">
+                SI
+              </mat-option>
+              <mat-option [value]="'N'">
+                NO
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="cumplehoras" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cumple horas - Horas en la aistencia: {{aprendiz.totalhoras}}</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-select [(ngModel)]="aprendiz.cumplehoras">
+              <mat-option [value]="'S'">
+                SI
+              </mat-option>
+              <mat-option [value]="'N'">
+                NO
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="duraciontotal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.duraciontotal" maxlength="10">
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="fechaemision" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de emisión (dd/mm/aaaa)</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.fechaemision" maxlength="10">
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="fechareentrenamiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha reentrenamiento (dd/mm/aaaa)</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.fechareentrenamiento" maxlength="10">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="ciudadexpedicion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad de emisión</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.ciudadexpedicion" maxlength="12">
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+          <label for="ciudadreentrenamiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad reentrenamiento</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.ciudadreentrenamiento" maxlength="30">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="codigoverificacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código verificación</label>
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <input matInput [(ngModel)]="aprendiz.codigoverificacion" maxlength="12">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="border-b border-gray-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-gray-900">
+              <mat-icon class="text-gray-600 mr-2">health_and_safety</mat-icon>
+              AUTOREPORTE DE CONDICIONES DE SALUD
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="eps" class="block text-sm font-medium text-gray-700">EPS</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.eps" maxlength="40"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="arl" class="block text-sm font-medium text-gray-700">ARL</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.arl" maxlength="40"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="alergias" class="block text-sm font-medium text-gray-700">Sufre de algun tipo de alergia/cual:</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.alergias" autocomplete="off"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="medicamentos" class="block text-sm font-medium text-gray-700">Consume algún tipo de medicamento actualmente/cual:</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.medicamentos"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="enfermedades" class="block text-sm font-medium text-gray-700">Sufre algún tipo de enfermedad actualmente/cual:</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.enfermedades"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="lesiones" class="block text-sm font-medium text-gray-700">Ha tenido alguna lesión o cirugía recientemente/cual:</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.lesiones"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+
+            <div class="space-y-2">
+              <label for="drogas" class="block text-sm font-medium text-gray-700">Está bajo efectos de alcohol o sustancias psicoactivas:</label>
+              <mat-form-field class="w-full" appearance="outline">
+                <input matInput [(ngModel)]="aprendiz.drogas"
+                       class="text-gray-900 bg-gray-50 rounded-lg">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="header">
+            <h2>
+              DOMICILIO
+            </h2>
+          </div>
+          <div class="body">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="direcciondomicilio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [(ngModel)]="aprendiz.direcciondomicilio">
+                  <mat-icon matSuffix>face</mat-icon>
+                </mat-form-field>
+
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="departamentodomicilio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.departamentodomicilio" (selectionChange)="onDepartamentoChange()">
+                    <mat-option [value]=""></mat-option>
+                    <mat-option *ngFor="let departamento of departamentos" [value]="departamento.nombre">{{ departamento.nombre
+                      }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="ciudaddomicilio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.ciudaddomicilio">
+                    <mat-option [value]=""></mat-option>
+                    <mat-option *ngFor="let ciudad of ciudadesDomicilio" [value]="ciudad.nombre">{{ ciudad.nombre
+                      }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="header">
+            <h2>
+              PERSONA DE CONTACTO EN CASO DE EMERGENCIA
+            </h2>
+          </div>
+          <div class="body">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="nombrecontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y apellido</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [(ngModel)]="aprendiz.nombrecontacto">
+                  <mat-icon matSuffix>face</mat-icon>
+                </mat-form-field>
+
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="telefonocontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [(ngModel)]="aprendiz.telefonocontacto">
+                </mat-form-field>
+
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="parentescocontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput [(ngModel)]="aprendiz.parentescocontacto">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="header">
+            <h2>
+              VERIFICACION DOCUMENTAL
+            </h2>
+          </div>
+          <div class="body">
+            <div class="row">
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="tipovinculacionlaboral" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo vinculacion laboral</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.tipovinculacionlaboral">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="D">Dependiente</mat-option>
+                    <mat-option value="I">Independiente</mat-option>
+                    <mat-option value="N">Ninguno</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="regimenafiliacionseguridadsocial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Regimen de afiliación al sistema de seguridad social</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.regimenafiliacionseguridadsocial">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="C">Contributivo</mat-option>
+                    <mat-option value="S">Subsidiado</mat-option>
+                    <mat-option value="O">Otro</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="documentoidentidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento de identidad</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.documentoidentidad">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="ultimopagoseguridadsocial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Copia pago seguridad social</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.ultimopagoseguridadsocial">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="afiliacionseguridadsocial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Afiliación al sistema de seguridad social</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.afiliacionseguridadsocial">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="certificadoaptitudmedica" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Certificado de aptitud médica</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.certificadoaptitudmedica">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="certificadotrabajadorautorizado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Certificado trabajador autorizado</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.certificadotrabajadorautorizado">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-2">
+                <label for="certificadonivelcoordinador" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Certificado nivel coordinador</label>
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-select [(ngModel)]="aprendiz.certificadonivelcoordinador">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="N">NO</mat-option>
+                    <mat-option value="S">SI</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="header">
+            <h2>DOCUMENTOS Y ACCIONES</h2>
+          </div>
+          <div class="body">
+            <!-- Documentos -->
+            <div class="row mb-4">
+              <h4 class="text-muted mb-2">Formatos</h4>
+              <div class="d-flex gap-2 flex-wrap">
+
+                <!-- En la sección de botones -->
+                <button mat-raised-button color="basic" [disabled]="loading" (click)="showPdf('formatoinscripcion')"
+                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                  <mat-icon class="text-gray-600">description</mat-icon>
+                  @if (!loading) {
+                    <span class="text-gray-700">Formato de inscripción</span>
+                  } @else {
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <mat-spinner diameter="20"></mat-spinner>
+                      <span>Descargando...</span>
+                    </div>
+                  }
+                </button>
+
+                <button mat-raised-button color="basic" [disabled]="loading" (click)="showPdf('asistenciaaprendizreport')"
+                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                  <mat-icon class="text-gray-600">description</mat-icon>
+                  @if (!loading) {
+                    <span class="text-gray-700">Asistencia</span>
+                  } @else {
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <mat-spinner diameter="20"></mat-spinner>
+                      <span>Descargando...</span>
+                    </div>
+                  }
+                </button>
+
+                <button mat-raised-button color="basic" [disabled]="loadingEncuesta" (click)="downloadEncuesta()"
+                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                  <mat-icon class="text-gray-600">description</mat-icon>
+                  @if (!loadingEncuesta) {
+                    <span class="text-gray-700">Encuesta</span>
+                  } @else {
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <mat-spinner diameter="20"></mat-spinner>
+                      <span>Descargando...</span>
+                    </div>
+                  }
+                </button>
+
+<!--
+                <button
+                  mat-raised-button
+                  color="basic"
+                  (click)="showPerfilIngreso()">
+                  <mat-icon>person_outline</mat-icon>
+                  Perfil de ingreso
+                </button>
+
+                <button
+                  mat-raised-button
+                  color="basic"
+                  (click)="showFormatoEvaluacion()">
+                  <mat-icon>assessment</mat-icon>
+                  Formato de evaluación
+                </button>
+
+                <button
+                  mat-raised-button
+                  color="basic"
+                  (click)="showFormatoAsistencia()">
+                  <mat-icon>event_note</mat-icon>
+                  Formato de Asistencia
+                </button>
+              </div>
+            </div>
+-->
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-12">
+              <h4 class="text-muted mb-2">Certificados</h4>
+              <div>
+
+                <div class="d-flex gap-2 flex-wrap">
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    (change)="subirCertificadoPDF($event)"
+                    style="display: none"
+                    #fileInput>
+
+                  <button
+                    mat-raised-button
+                    color="basic"
+                    [disabled]="!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0"
+                    (click)="fileInput.click()"
+                    class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    <mat-icon class="text-gray-600">upload</mat-icon>
+                    <span class="text-gray-700">Subir Certificado</span>
+                  </button>
+                  @if (!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0) {
+                  <p class="text-red-500 text-sm mt-2">
+                    Debe ingresar un código de verificación antes de subir el certificado
+                  </p>
+                  }
+
+                  <button
+                    mat-raised-button
+                    color="basic"
+                    [disabled]="loading"
+                    (click)="descargarCertificadoPDF()"
+                    class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    <mat-icon class="text-gray-600">download</mat-icon>
+                    @if (!loading) {
+                      <span class="text-gray-700">Descargar certificado</span>
+                    } @else {
+                      <div class="flex items-center gap-2 text-gray-600">
+                        <mat-spinner diameter="20"></mat-spinner>
+                        <span>Descargando...</span>
+                      </div>
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <button
+        mat-raised-button
+        (click)="updateAprendiz()"
+        color="primary"
+        class="btn-lg">
+        <mat-icon>save</mat-icon>
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,61 @@
+<section class="content">
+  <div class="container-fluid">
+    <app-pagetitle [title]="'Niveles'"></app-pagetitle>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre del nivel</th>
+                  <th>Programa</th>
+                  <th>Dias</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of dataSource" (contextmenu)="onContextMenu($event, row)">
+                  <td>{{ row.id }}</td>
+                  <td>{{ row.nombre }}</td>
+                  <td>{{ row.programa.nombre }}</td>
+                  <td>{{ row.dias }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+              [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+            </div>
+
+
+
+            <mat-menu #contextMenu="matMenu">
+              <ng-template matMenuContent let-item="item">
+
+                <button mat-menu-item (click)="loadPreguntas(item.id, 'T', item.nombre)">
+                  <mat-icon>add_box</mat-icon>
+                  <span>Preguntas Teórica</span>
+                </button>
+
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="loadDisenocurricular(item.id, 'E', item.nombre)">
+                  <mat-icon>assignment</mat-icon>
+                  <span>Diseño curricular</span>
+                </button>
+
+              </ng-template>
+            </mat-menu>
+
+            <div class="no-results" [style.display]="dataSource.length === 0 ? '' : 'none'">
+              No results
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

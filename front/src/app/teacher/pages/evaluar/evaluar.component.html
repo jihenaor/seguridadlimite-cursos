@@ -1,0 +1,44 @@
+<section class="content">
+  <div class="container-block">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Evaluación práctica</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+      <div class="row ">
+          <div class="col-12">
+            <mat-stepper #stepper>
+              <mat-step >
+                  <ng-template matStepLabel>Grupo</ng-template>
+
+                  <div>
+                    <teacher-grupos
+                        [idprofesor]="idprofesor"
+                        (grupoSelected)="onGrupoSelected()"></teacher-grupos>
+                  </div>
+
+              </mat-step>
+              <mat-step>
+                  <ng-template matStepLabel>Aprendiz</ng-template>
+                  <div>
+                    <teacher-aprendices-grupo
+                        (aprendizSelected)="onAprendizSelected()"></teacher-aprendices-grupo>
+                  </div>
+
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Evaluar</ng-template>
+                <teacher-evaluacion-aprendiz></teacher-evaluacion-aprendiz>
+              </mat-step>
+
+            </mat-stepper>
+          </div>
+      </div>
+  </div>
+</section>

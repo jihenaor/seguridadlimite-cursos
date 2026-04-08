@@ -1,0 +1,68 @@
+# ══════════════════════════════════════════════════════════════
+#  docker-compose.local.yml — Override para desarrollo LOCAL
+#
+#  Construye imágenes desde el código fuente local.
+#
+#  Uso:
+#    docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+#    o desde el menú: start-local.bat → opción 1
+#
+#  Accesos locales:
+#    http://localhost       → Gateway Nginx (enruta todo)
+#    http://localhost/api/  → API Backend
+#    http://localhost:8090  → Backend directo (Postman/debug)
+#    http://localhost:8080  → phpMyAdmin
+# ══════════════════════════════════════════════════════════════
+
+version: "3.9"
+
+services:
+
+  # ────────────────────────────────────────────────────────────
+  #  Backend — build desde código local
+  # ────────────────────────────────────────────────────────────
+  backend:
+    image: seguridad-backend:local
+    build:
+      context: ../back
+      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-wwsegu_cursos}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-30}
+      MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USER: ${MAIL_USER:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      DEPLOY_SECRET_TOKEN: ${DEPLOY_SECRET_TOKEN:-local_deploy_token}
+    ports:
+      - "8090:8090"
+
+  # ────────────────────────────────────────────────────────────
+  #  Frontend — build desde código local
+  # ────────────────────────────────────────────────────────────
+  frontend:
+    image: seguridad-frontend:local
+    build:
+      context: ../front
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+
+  # ────────────────────────────────────────────────────────────
+  #  Gateway — HTTP en local (sin TLS)
+  # ────────────────────────────────────────────────────────────
+  gateway:
+    volumes:
+      - ./nginx/gateway-local.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+
+  # Certbot deshabilitado en local
+  certbot:
+    profiles: ["certbot-only"]

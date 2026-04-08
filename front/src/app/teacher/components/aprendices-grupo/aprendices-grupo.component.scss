@@ -1,0 +1,172 @@
+/* Agrega estilos a la tabla */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.table th, .table td {
+  border: 1px solid transparent;
+  border-left: none;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.modulo {
+  font-weight: bold;
+}
+
+
+/* Aplica estilos para días */
+.dia {
+  background-color: #f5f5f5;
+}
+
+/* Agrega estilos a la tabla */
+.table-asistencia {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.table-asistencia th, .table td {
+  border: 1px solid #ddd;
+  padding: 1px;
+  text-align: left;
+}
+
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #49c5b6 ;
+}
+
+:host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #49c5b6 ;
+}
+
+.aprendiz {
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre {
+  font-size: 16px; /* Tamaño de fuente para el nombre */
+  font-weight: bold; /* Opcional: Puedes ajustar el peso de la fuente */
+}
+
+.nivel {
+  font-size: 9px; /* Tamaño de fuente más pequeño para el nivel */
+  color: #888; /* Color de fuente más claro para el nivel (opcional) */
+}
+
+.fecha-encuesta {
+  font-size: 0.9rem;
+  margin-left: 8px;
+  color: #4caf50; /* Verde */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.modal-content button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+  .table-header-responsive th {
+    font-size: 0.7rem !important;  /* Reducido a 0.7rem y agregado !important */
+    padding: 0.3rem 0.2rem !important;  /* Reducido el padding */
+  }
+
+  .table-cell-responsive {
+    font-size: 0.7rem !important;  /* Reducido a 0.7rem y agregado !important */
+    padding: 0.3rem 0.2rem !important;
+  }
+
+  td, th {  /* Selector general para asegurar que afecte a todas las celdas */
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.2rem !important;
+  }
+
+  .nombre-responsive {
+    font-size: 0.7rem !important;
+    display: block;  /* Para asegurar que el nombre y nivel aparezcan en líneas separadas */
+  }
+
+  .nivel-responsive {
+    font-size: 0.65rem !important;
+    display: block;
+    color: #666;  /* Color más suave para el nivel */
+  }
+
+  button.mat-mdc-mini-fab {
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    padding: 0 !important;
+
+    .mat-icon {
+      font-size: 16px !important;
+      line-height: 16px !important;
+      height: 16px !important;
+      width: 16px !important;
+      position: relative !important;
+      top: -2px !important;
+    }
+  }
+
+  /* Asegurarnos de que el botón FAB sea más pequeño */
+  .mdc-fab--mini {
+    width: 30px !important;
+    height: 30px !important;
+    padding: 0 !important;
+  }
+
+  /* Selector alternativo por si el anterior no funciona */
+  .mat-icon {
+    &[aria-label="Edit"] {
+      font-size: 16px !important;
+      line-height: 16px !important;
+      height: 16px !important;
+      width: 16px !important;
+      position: relative !important;
+      top: -2px !important;
+    }
+  }
+}
+

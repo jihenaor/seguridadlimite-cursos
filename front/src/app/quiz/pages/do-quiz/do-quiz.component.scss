@@ -1,0 +1,106 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 599px) {
+  .custom-card {
+    width: 100%;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+  .custom-card {
+    width: 80%;
+  }
+}
+
+@media (min-width: 960px) {
+  .custom-card {
+    width: 70%;
+  }
+}
+
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.border-slate-300 {
+  border-color: #CBD5E0;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.duration-300 {
+  transition-duration: 0.3s;
+}
+
+.ease-in-out {
+  transition-timing-function: ease-in-out;
+}
+
+.hover\:transition-all:hover {
+  transition-property: all;
+}
+
+.hover\:duration-500:hover {
+  transition-duration: 0.5s;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.bg-transition {
+  background-color: rgba(0, 0, 0, 0); /* Color inicial transparente */
+  transition: background-color 0.5s; /* Duración de la transición */
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 1); /* Color final sólido */
+  }
+}
+
+.bg-green-600 {
+  @extend .bg-transition;
+  background-color: rgba(46, 204, 113, 0); /* Color inicial transparente */
+
+  &:hover {
+    background-color: rgba(46, 204, 113, 1); /* Color final sólido */
+  }
+}
+
+.bg-red-600 {
+  @extend .bg-transition;
+  background-color: rgba(220, 38, 38, 0); /* Color inicial transparente */
+
+  &:hover {
+    background-color: rgba(220, 38, 38, 1); /* Color final sólido */
+  }
+}

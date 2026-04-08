@@ -1,0 +1,37 @@
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+          <div class="header" [style.backgroundColor]="'#56B9FF'">
+              <h2>
+                  <strong>PROGRAMA DE FORMACION Y ENTRENAMIENTO A REALIZAR</strong>
+              </h2>
+          </div>
+          <div class="body">
+              <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Nivel</mat-label>
+                          <mat-select formControlName="idnivel" id="idnivel">
+                              <mat-option [value]="1">
+                                  TRABAJADOR AUTORIZADO
+                              </mat-option>
+                              <mat-option [value]="2">
+                                  COORDINADOR
+                              </mat-option>
+                              <mat-option [value]="4">
+                                  REENTRENAMIENTO
+                              </mat-option>
+                              <mat-option [value]="5">
+                                  ACTUALIZACION DE COORDINADOR
+                              </mat-option>
+                              <mat-option [value]="6">
+                                  ADMINISTRATIVO JEFE DE ÁREA
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

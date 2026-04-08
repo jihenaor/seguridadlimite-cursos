@@ -1,0 +1,45 @@
+<div class="row mb-2">
+  <div class="col-md-12">
+    <div class="shadow-md rounded-lg border-none">
+      <div class="p-2">
+        <h5 class="text-indigo-600 font-medium mb-2">Filtros</h5>
+        <div class="row">
+
+          <div class="col-md-2">
+            <label for="fechaDesde" class="block mb-1">Código Ministerio</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [(ngModel)]="codigoministerio">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <label for="fechaDesde" class="block mb-1">Valido Desde incial</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="fechaDesde">
+              <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+              <mat-datepicker #pickerDesde></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-md-3">
+            <label for="fechaHasta" class="block mb-1">Valido desde final</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="fechaHasta">
+              <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+              <mat-datepicker #pickerHasta></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 flex items-center">
+            <button mat-raised-button color="primary" (click)="aplicarFiltro()" class="mr-2">
+              <mat-icon>search</mat-icon> Buscar
+            </button>
+            <button mat-icon-button color="warn" (click)="limpiarFiltros()" matTooltip="Limpiar filtros">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

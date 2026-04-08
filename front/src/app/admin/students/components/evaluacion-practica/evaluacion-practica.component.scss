@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .center-cell {
+    text-align: center;
+  }
+}
+
+.celda-amarilla {
+  background-color: yellow;
+}
+
+.celda-gris {
+  background-color: #DCDCDC;
+  ;
+}

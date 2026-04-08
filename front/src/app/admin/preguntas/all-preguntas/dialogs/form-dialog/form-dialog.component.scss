@@ -1,0 +1,18 @@
+.respuesta-container {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el textarea y el botón */
+}
+
+textarea {
+  flex: 1; /* Hace que el textarea ocupe todo el espacio disponible en el contenedor */
+  margin-right: 10px; /* Espacio entre el textarea y el botón */
+}
+
+.respuestas {
+  background-color: #EBE6E6;
+  padding: 20px;
+}
+
+.input-white {
+  background-color: white;
+}

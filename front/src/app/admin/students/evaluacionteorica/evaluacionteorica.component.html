@@ -1,0 +1,153 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">Evaluación teórica {{ numeroevaluacion }} - {{ nombretrabajador }}</h4>
+
+                        </li>
+                        <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/dashboard/main">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a routerLink="/students/aprendices/{{ idgrupo }}">Aprendiz</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <div class="materialTableHeader">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <ul class="header-buttons-left ml-0">
+                                                    <li class="dropdown">
+                                                        <h2>
+                                                            <strong>Evaluación </strong></h2>
+                                                    </li>
+                                                    <li>
+                                                        <button mat-raised-button color="primary" (click)="actualizar()">
+                                                        <mat-icon class="col-white">save</mat-icon>Guardar
+                                                  </button>
+                                                    </li>
+
+                                                    <li class="dropdown m-l-20">
+                                                        <span>Preguntas: </span> <strong>{{dataSource.filteredData.length}}</strong> <span> Aprobadas </span> <strong>{{ naprobadas }}</strong> <span>Fallidas: </span> &nbsp;<strong>{{ nfallidas }}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <div class="icon-button-demo m-l-10">
+                                                            <button mat-raised-button color="secondary" (click)="aprobarTodas()"> Aprobar todas
+                                                                <mat-icon>assignment_turned_in
+                                                                </mat-icon>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        Nota {{ nota }}
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-4">
+                                                <ul class="header-buttons">
+                                                    <li>
+                                                        <div class="icon-button-demo">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+                                        <ng-container matColumnDef="bloque">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Bloque
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.pregunta.agrupador1}}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="pregunta">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)" [ngClass]="{'color-fila': row.pregunta.bloque.id % 2 === 0}">
+                                                {{ row.pregunta.orden}}
+                                                <mat-icon class="color-icono-respuesta-incorrecta" *ngIf="row.respuestacorrecta === 'N'">cancel</mat-icon>
+                                                <mat-icon class="color-icono-respuesta-correcta" *ngIf="row.respuestacorrecta === 'S'">check_circle</mat-icon>
+
+                                                {{row.pregunta.pregunta }}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="r">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header> A
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)" [ngClass]="{'color-fila': row.pregunta.bloque.id % 2 === 0}">
+                                                <button style="margin-right:15px" mat-fab (click)="seleccionarRespuesta(row, 1)" matTooltip="{{ row.pregunta.respuesta1 }}">
+                                                        <mat-icon *ngIf="row.numerorespuesta === 1">check</mat-icon>
+                                                        <label>A</label>
+                                                </button>
+
+                                                <button style="margin-right:15px" mat-fab color="primary" (click)="seleccionarRespuesta(row, 2)" matTooltip="{{ row.pregunta.respuesta2 }}">
+                                                        <mat-icon *ngIf="row.numerorespuesta === 2">check</mat-icon>
+                                                        <label>B</label>
+                                                      </button>
+
+                                                <button style="margin-right:15px" mat-fab color="accent" (click)="seleccionarRespuesta(row, 3)" matTooltip="{{ row.pregunta.respuesta3 }}">
+                                                        <mat-icon *ngIf="row.numerorespuesta === 3">check</mat-icon>
+                                                        <label>C</label>
+                                                      </button>
+
+                                                <button style="margin-right:15px" mat-fab color="warn" (click)="seleccionarRespuesta(row, 4)" matTooltip="{{ row.pregunta.respuesta4 }}">
+                                                        <mat-icon *ngIf="row.numerorespuesta === 4">check</mat-icon>
+                                                        <label>D</label>
+                                                      </button>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <mat-header-row *matHeaderRowDef="displayedColumns">
+                                        </mat-header-row>
+                                        <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                                        <mat-row *matRowDef="let row; columns: displayedColumns;" [style.cursor]="'pointer'" matRipple>
+                                        </mat-row>
+                                    </mat-table>
+                                    <!-- context menu start -->
+                                    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+                                    </div>
+                                    <mat-menu #contextMenu="matMenu">
+                                        <ng-template matMenuContent let-item="item">
+                                            <button mat-menu-item>
+                                                            <mat-icon>add_box</mat-icon>
+                                                            <span>Add Record</span>
+                                                        </button>
+                                        </ng-template>
+                                    </mat-menu>
+                                    <mat-menu #nestedmenu="matMenu">
+                                        <button mat-menu-item>
+                                                        <mat-icon>mail_outline</mat-icon>
+                                                        <span>Item 1</span>
+                                                    </button>
+                                    </mat-menu>
+                                    <!-- context menu end -->
+                                    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                                        Sin datos
+                                    </div>
+                                    <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="30" [pageSizeOptions]="[5, 10, 30]">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

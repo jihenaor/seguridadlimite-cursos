@@ -1,0 +1,2409 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_Letter_2" language="java" pageWidth="612" pageHeight="1000" columnWidth="580" leftMargin="20" rightMargin="12" topMargin="20" bottomMargin="20" uuid="45113a45-325b-42fa-9d97-30ae356b8993">
+	<property name="ireport.zoom" value="0.9330147604194844"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="tipodocumento" class="java.lang.String"/>
+	<field name="numerodocumento" class="java.lang.String"/>
+	<field name="primernombre" class="java.lang.String"/>
+	<field name="segundonombre" class="java.lang.String"/>
+	<field name="primerapellido" class="java.lang.String"/>
+	<field name="segundoapellido" class="java.lang.String"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="niveleducativoprimaria" class="java.lang.String"/>
+	<field name="niveleducativobachillerato" class="java.lang.String"/>
+	<field name="niveleducativotecnico" class="java.lang.String"/>
+	<field name="niveleducativotecnologo" class="java.lang.String"/>
+	<field name="niveleducativouniversitaria" class="java.lang.String"/>
+	<field name="cargoactual" class="java.lang.String"/>
+	<field name="genero" class="java.lang.String"/>
+	<field name="nacionalidad" class="java.lang.String"/>
+	<field name="tiposangre" class="java.lang.String"/>
+	<field name="ocupacion" class="java.lang.String"/>
+	<field name="departamentodomicilio" class="java.lang.String"/>
+	<field name="ciudaddomicilio" class="java.lang.String"/>
+	<field name="direcciondomicilio" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="correoelectronico" class="java.lang.String"/>
+	<field name="eps" class="java.lang.String"/>
+	<field name="arl" class="java.lang.String"/>
+	<field name="sabeleerescribir" class="java.lang.String"/>
+	<field name="labordesarrolla" class="java.lang.String"/>
+	<field name="alergias" class="java.lang.String"/>
+	<field name="medicamentos" class="java.lang.String"/>
+	<field name="enfermedades" class="java.lang.String"/>
+	<field name="lesiones" class="java.lang.String"/>
+	<field name="drogas" class="java.lang.String"/>
+	<field name="nombrecontacto" class="java.lang.String"/>
+	<field name="telefonocontacto" class="java.lang.String"/>
+	<field name="parentescocontacto" class="java.lang.String"/>
+	<field name="trabajadorautorizado" class="java.lang.String"/>
+	<field name="nivelcoordinador" class="java.lang.String"/>
+	<field name="nivelbasicooperativo" class="java.lang.String"/>
+	<field name="nivelreentrenamiento" class="java.lang.String"/>
+	<field name="hidrocarburos" class="java.lang.String"/>
+	<field name="telecomunicaciones" class="java.lang.String"/>
+	<field name="construccion" class="java.lang.String"/>
+	<field name="otros" class="java.lang.String"/>
+	<field name="dia" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="ano" class="java.lang.String"/>
+	<field name="embarazo" class="java.lang.String"/>
+	<field name="mesesgestacion" class="java.lang.String"/>
+	<field name="electrico" class="java.lang.String"/>
+	<field name="industrial" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="conceptoapto" class="java.lang.String"/>
+	<field name="certificadovigente" class="java.lang.String"/>
+	<field name="administrativojefearea" class="java.lang.String"/>
+	<field name="tipovinculacionlaboraldependiente" class="java.lang.String"/>
+	<field name="tipovinculacionlaboralindependiente" class="java.lang.String"/>
+	<field name="tipovinculacionlaboralninguno" class="java.lang.String"/>
+	<field name="regimenafiliacionseguridadsocialcontributivo" class="java.lang.String"/>
+	<field name="regimenafiliacionseguridadsocialsubsidiado" class="java.lang.String"/>
+	<field name="regimenafiliacionseguridadsocialotro" class="java.lang.String"/>
+	<field name="cual" class="java.lang.String"/>
+	<field name="copiadocumentoidentidad" class="java.lang.String"/>
+	<field name="copiapagoseguridadsocial" class="java.lang.String"/>
+	<field name="afiliciacionseguridadsocial" class="java.lang.String"/>
+	<field name="certificadoaptitudmedica" class="java.lang.String"/>
+	<field name="reentrenamiento" class="java.lang.String"/>
+	<field name="actualizadocoordinador" class="java.lang.String"/>
+	<field name="inspeccionsi" class="java.lang.String"/>
+	<field name="inspeccionno" class="java.lang.String"/>
+	<field name="noaplica" class="java.lang.String"/>
+	<field name="medidaproteccionsi" class="java.lang.String"/>
+	<field name="medidaproteccionno" class="java.lang.String"/>
+	<field name="supervisor" class="java.lang.String"/>
+	<field name="entrenadoracargo" class="java.lang.String"/>
+	<field name="personadeapoyo" class="java.lang.String"/>
+	<field name="logoseguridad" class="java.lang.String"/>
+	<field name="firmaaprendiz" class="java.lang.String"/>
+	<field name="codigoverificacion" class="java.lang.String"/>
+	<field name="eingresobueno" class="java.lang.String"/>
+	<field name="eingresoexcelente" class="java.lang.String"/>
+	<field name="evaluacionconocimientopregunta1" class="java.lang.String"/>
+	<field name="evaluacionconocimientopregunta2" class="java.lang.String"/>
+	<field name="evaluacionconocimientopregunta3" class="java.lang.String"/>
+	<field name="evaluacionconocimientopregunta4" class="java.lang.String"/>
+	<field name="evaluacionconocimientopregunta5" class="java.lang.String"/>
+	<variable name="alergias_si" class="java.lang.String">
+		<expression><![CDATA[$F{alergias}.length() > 2 ? "SI X" : ""]]></expression>
+	</variable>
+	<variable name="alergias_no" class="java.lang.String">
+		<expression><![CDATA[$F{alergias}.length() < 3 ? "NO X" : ""]]></expression>
+	</variable>
+	<variable name="medicamentos_si" class="java.lang.String">
+		<expression><![CDATA[$F{medicamentos}.length() > 2 ? "SI X" : ""]]></expression>
+	</variable>
+	<variable name="medicamentos_no" class="java.lang.String">
+		<expression><![CDATA[$F{medicamentos}.length() < 2 ? "NO X" : ""]]></expression>
+	</variable>
+	<variable name="enfermedades_si" class="java.lang.String">
+		<expression><![CDATA[$F{enfermedades}.length() > 2 ? "SI X": ""]]></expression>
+	</variable>
+	<variable name="enfermedades_no" class="java.lang.String">
+		<expression><![CDATA[$F{enfermedades}.length() < 2 ? "NO X": ""]]></expression>
+	</variable>
+	<variable name="lesiones_si" class="java.lang.String">
+		<expression><![CDATA[$F{lesiones}.length() > 2? "SI X": ""]]></expression>
+	</variable>
+	<variable name="lesiones_no" class="java.lang.String">
+		<expression><![CDATA[$F{lesiones}.length() < 2 ? "NO X" : ""]]></expression>
+	</variable>
+	<variable name="drogas_si" class="java.lang.String">
+		<expression><![CDATA[$F{drogas}.length() > 2 ? "SI X" : ""]]></expression>
+	</variable>
+	<variable name="drogas_no" class="java.lang.String">
+		<expression><![CDATA[$F{drogas}.length() < 2 ? "NO X" : ""]]></expression>
+	</variable>
+	<variable name="embarazo_si" class="java.lang.String">
+		<expression><![CDATA[$F{embarazo}.length() > 0 && $F{embarazo}.equals( "S" ) ? "X": ""]]></expression>
+	</variable>
+	<variable name="embarazo_no" class="java.lang.String">
+		<expression><![CDATA[$F{embarazo}.length() > 0 && $F{embarazo}.equals( "N" ) ? "X": ""]]></expression>
+	</variable>
+	<variable name="empresa_si" class="java.lang.String">
+		<expression><![CDATA[$F{empresa}.length() > 0 ? "X": ""]]></expression>
+	</variable>
+	<variable name="empresa_no" class="java.lang.String">
+		<expression><![CDATA[$F{empresa}.length() == 0 ? "X": ""]]></expression>
+	</variable>
+	<variable name="conceptoapto_si" class="java.lang.String">
+		<expression><![CDATA[$F{conceptoapto}.length() > 0 ? "X ": ""]]></expression>
+	</variable>
+	<variable name="conceptoapto_no" class="java.lang.String">
+		<expression><![CDATA[$F{conceptoapto}.length() == 0 ? "X ": ""]]></expression>
+	</variable>
+	<variable name="certificadovigente_si" class="java.lang.String">
+		<expression><![CDATA[$F{certificadovigente}.length() > 0 ? "X ": ""]]></expression>
+	</variable>
+	<variable name="certificadovigente_no" class="java.lang.String">
+		<expression><![CDATA[$F{certificadovigente}.length() == 0 ? "X ": ""]]></expression>
+	</variable>
+	<variable name="genero_masculino" class="java.lang.String">
+		<expression><![CDATA[$F{genero}.equals( "M" ) ? "X": ""]]></expression>
+	</variable>
+	<variable name="genero_femenino" class="java.lang.String">
+		<expression><![CDATA[$F{genero}.equals("F") ? "X": ""]]></expression>
+	</variable>
+	<variable name="tipodocumento_cc" class="java.lang.String">
+		<expression><![CDATA[$F{tipodocumento}.equals("CC") ? "X": ""]]></expression>
+	</variable>
+	<variable name="tipodocumento_ce" class="java.lang.String">
+		<expression><![CDATA[$F{tipodocumento}.equals("CE") ? "X": ""]]></expression>
+	</variable>
+	<variable name="tipodocumento_pp" class="java.lang.String">
+		<expression><![CDATA[$F{tipodocumento}.equals("PP") ? "X": ""]]></expression>
+	</variable>
+	<variable name="aceptacion" class="java.lang.String">
+		<expression><![CDATA["Yo:" + $F{nombrecompleto}
++ "Identificado(a) con documento de Identidad No."
++ $F{numerodocumento}
++ "voluntariamente y en pleno uso de mis facultades, acepto conocer y cumplir el codigo de buen comportamiento y codigo de etica establecido en proteccion contra caidas para trabajo en alturas SEGURIDAD AL LIMITE SAS. "
++ "Adicionalmente certifico que he recibido socializacion de la matriz de riesgos, plan de emergencias, e informacion sobre el buen uso de equipos y las instalaciones."]]></expression>
+	</variable>
+	<variable name="sabellerescribirsi" class="java.lang.String">
+		<expression><![CDATA[$F{sabeleerescribir}.equals( "S" ) ? "X": ""]]></expression>
+	</variable>
+	<variable name="sabellerescribirno" class="java.lang.String">
+		<expression><![CDATA[$F{sabeleerescribir}.equals( "N" ) ? "X": ""]]></expression>
+	</variable>
+	<variable name="consentimiento" class="java.lang.String">
+		<expression><![CDATA["El diligenciamiento de este formato es voluntario, se solicita para trámites y requerimiento legales en la formación y entrenamiento en protección contra caídas para trabajo en alturas."
++ "<br /><br />Yo "  + $F{nombrecompleto}.toString()
++ "identificado(a) con documento de Identidad No. " + $F{numerodocumento}.toString()
++ ", voluntariamente y en pleno uso de mis facultades, autorizo al centro de formación y entrenamiento en protección contra caídas para trabajo en alturas SEGURIDAD AL LIMITE S.A.S a conocer mi datos personales y condiciones de salud necesaria y aplicada en el presente formato."
++ "<br /><br />Adicionalmente dando cumplimiento a lo dispuesto en la Ley 1581 de 2012, 'Por el cual se dictan disposiciones generales para la protección de datos personales' y de conformidad con lo señalado en el Decreto 1377 de 2013, con la firma de este documento manifiesto que he sido informado de la Politica de tratamiento de datos por parte de entro de formación y entrenamiento en protección contra caídas para trabajo en alturas SEGURIDAD AL LIMITE S.A.S."]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<pageHeader height="81" splitType="Stretch">
+		<element kind="staticText" uuid="3b8eed95-21e1-4bb5-af39-89f0018efa63" x="465" y="0" width="108" height="20" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Codigo: GTH-FO-020]]></text>
+			<box padding="0">
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a5f9f5e3-8ff9-42b8-ac13-20bd717bc6c9" x="465" y="20" width="108" height="20" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Versión:004]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box padding="1">
+				<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="9aa7c8a1-48f3-415d-aeac-35be3b3e7071" x="0" y="70" width="123" height="11" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Nit 900.824.368-6]]></text>
+			<box>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="3484fa00-fd36-4636-a55f-3394fde141ff" x="465" y="60" width="108" height="21" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Fecha de ultima modificacion 30/05/2024]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="9cfbf892-8fde-4d32-86c4-1df2de6e12d9" x="465" y="40" width="108" height="20" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Fecha de elaboracion 25/07/2022]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a88bc065-e068-4f04-802a-062032094670" x="123" y="0" width="342" height="40" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[GESTIÒN DE TALENTO HUMANO]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="15127710-1970-41e8-9ec0-b6b1c2f0a215" x="123" y="40" width="342" height="41" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[FORMATO PARA LA PRESTACIÓN DEL SERVICIO DE LOS PROGRAMAS DE FORMACIÓN Y ENTRENAMIENTO EN PROTECCIÓN CONTRA CAÍDAS PARA TRABAJO EN ALTURAS]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.5"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+		<element kind="image" uuid="919ac0b8-d923-475c-9723-e8ae67b87f37" key="Logo_Footer" x="0" y="0" width="123" height="70" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{logoseguridad}))
+]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<box>
+				<topPen lineWidth="0.5"/>
+				<leftPen lineWidth="0.5"/>
+				<bottomPen lineWidth="0.0"/>
+				<rightPen lineWidth="0.5"/>
+			</box>
+		</element>
+	</pageHeader>
+	<detail>
+		<band height="662" splitType="Stretch">
+			<element kind="staticText" uuid="91242b83-ac21-4404-9e57-1509036e218b" mode="Opaque" x="523" y="410" width="10" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[SI]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ad24ff78-52ce-44a6-a06a-ceff555761e4" mode="Opaque" x="417" y="605" width="20" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Cual]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f002fe51-a34d-4f39-8d1e-92fdf7cf4b26" mode="Opaque" x="279" y="605" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Subsidiado]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="1e74b922-e2ae-4bda-a6b0-2a607b6faf9f" mode="Opaque" x="367" y="605" width="21" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Otro]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d47b52b8-06a4-4bb0-bdb5-3c8bc05e605c" mode="Opaque" x="198" y="605" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Contributivo]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f311917a-8bce-47d1-a0b7-59876e6f846f" mode="Opaque" x="129" y="605" width="42" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Ninguna]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="38c75b72-864f-4dfd-9fe1-f1af3306dcf2" mode="Opaque" x="64" y="605" width="42" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Independiente]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ec7bde58-66a1-4bcc-b620-2a673fac5122" mode="Opaque" x="548" y="410" width="25" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Left" vTextAlign="Middle">
+				<text><![CDATA[NO]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="10162379-7c24-4a4e-be59-32101322c1eb" mode="Transparent" x="0" y="221" width="78" height="20" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Trabajador autorizado]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="cd3e7d2d-e939-4931-9946-8d2c7bfdca70" mode="Transparent" x="209" y="221" width="72" height="20" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Coordinador]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="036c79a0-57a7-4737-94be-731660e7b08b" mode="Transparent" x="100" y="221" width="78" height="20" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[reentrenamiento]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="26bb1241-ff41-4a30-a601-198c11ad1fd9" mode="Transparent" x="381" y="221" width="113" height="20" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Jefe de Área para trabajo en alturas]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="02f025e4-63de-4bdb-9650-75b8077ae158" mode="Opaque" x="411" y="253" width="42" height="15" backcolor="#FFFFFF" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[ Otro/Cual]]></text>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d6ae00ee-aeef-4b21-8416-eac032283fac" x="479" y="470" width="46" height="15">
+				<text><![CDATA[]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ee6bc00c-32cc-4b6d-806a-26955365eddc" x="525" y="470" width="48" height="15" hTextAlign="Center">
+				<text><![CDATA[]]></text>
+				<box>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="e6eb5add-ef40-4397-a1dd-b137cf6ebb13" x="0" y="640" width="573" height="22">
+				<text><![CDATA[]]></text>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a14a7d63-7964-4195-990c-488b3107fe12" x="198" y="605" width="375" height="15">
+				<text><![CDATA[]]></text>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f8c0533d-7cf6-4e6c-8aad-67a616f070ac" x="0" y="605" width="198" height="15">
+				<text><![CDATA[]]></text>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="af52633b-cacb-473e-bb8c-cc31c32243a7" mode="Opaque" x="0" y="0" width="152" height="15" forecolor="#000000" backcolor="#F0F0F0" fontSize="8.0" vTextAlign="Middle">
+				<text><![CDATA[ FECHA DE DILIGENCIAMIENTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="03b2217b-f231-40b1-84d7-d3e299af1a9c" mode="Opaque" x="383" y="0" width="82" height="15" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Right" vTextAlign="Middle">
+				<text><![CDATA[NO. CERTIFICADO:]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2c77217d-f0b2-44b3-be19-ffce5260b9a4" mode="Opaque" x="0" y="209" width="573" height="12" backcolor="#D8D8D8" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[1 SELECCIONE PROGRAMA DE FORMACIÓN Y ENTENAMIENTO A REALIZAR]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a72fb823-2c3f-4858-9b86-bac925ca0cd3" mode="Opaque" x="0" y="241" width="573" height="12" backcolor="#D8D8D8" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[2. SELECCIONE SECTOR LABORAL O ENFASIS AL QUE PERTENECE]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="fdf1073f-9ec3-48d1-92c0-c39dd970a483" mode="Opaque" x="0" y="253" width="54" height="15" backcolor="#FFFFFF" fontSize="7.0" hTextAlign="Right" vTextAlign="Middle">
+				<text><![CDATA[Hidrocarburos]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a0204a41-bd45-4d6d-8130-c5c19cead2a1" mode="Opaque" x="159" y="253" width="65" height="15" backcolor="#FFFFFF" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Telecomunicaciones]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a464c293-0f51-4e23-9f60-fdd24b76e14c" mode="Opaque" x="82" y="253" width="49" height="15" backcolor="#FFFFFF" fontSize="7.0" hTextAlign="Right" vTextAlign="Middle">
+				<text><![CDATA[Construcción]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="83f8575e-abff-4927-87b1-55ae19683659" mode="Opaque" x="0" y="268" width="573" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[3. DATOS PERSONALES DEL APRENDIZ EN FORMACIÓN]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a75fa414-0c50-4448-a6f6-a75ac7d08b2f" mode="Opaque" x="0" y="283" width="163" height="12" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[ PRIMER APELLIDO]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="51eb71bf-c9ed-4603-91ff-3507559ad0a2" mode="Opaque" x="163" y="283" width="147" height="12" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[SEGUNDO APELLIDO]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f50b89bf-9c15-4999-954d-02342cba0393" mode="Opaque" x="309" y="283" width="264" height="12" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[NOMBRE(S)]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="215771c8-8f66-40a4-84e3-92d2692da838" mode="Opaque" x="0" y="307" width="87" height="12" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[ GENERO]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b3b41ab4-a64f-4fbe-a296-c12e610e235b" mode="Opaque" x="1" y="331" width="98" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="bfbd86ee-a6f9-4578-8960-5e65a69bd20c" mode="Opaque" x="339" y="307" width="92" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[GRUPO SANGUNEO Y RH]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b1ff11c5-e6ac-471f-a398-3aa659b4dda4" mode="Opaque" x="431" y="331" width="142" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[LABOR QUE DESARROLLA O CARGO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b273835f-0b59-4981-b01e-7b1cb8ad3c2e" mode="Opaque" x="431" y="307" width="142" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[No CELULAR]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="360c731a-feeb-4e75-b9da-cffb4f4512fc" mode="Opaque" x="236" y="365" width="203" height="15" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CORREO ELECTRONICO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="859bc649-ad33-4735-bb41-d03a665866e9" mode="Opaque" x="439" y="365" width="69" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[EPS]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="6365c20f-1d18-4e8b-8716-c2c77020fda5" mode="Opaque" x="0" y="395" width="573" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[SELECCIONE EL ULTIMO NIVEL DE FORMACIÓN ACADEMICA]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="773ea6c1-cd6d-4887-b5e6-4a1e99702e02" mode="Opaque" x="0" y="410" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PRIMARIA]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="661aa12f-6ebf-4394-ab67-19d0cc5b3ee2" mode="Opaque" x="187" y="410" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[TECNICO]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="70130d1f-e863-48a3-bbb6-a7bbad5ce6ba" mode="Opaque" x="363" y="410" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[UNIVERSITARIA]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="3cf45da6-b957-43d4-90d7-be808e13caa5" mode="Opaque" x="94" y="410" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[BACHILLERATO]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="9d4ebe30-5097-437d-bfbd-27c1f32db3e3" mode="Opaque" x="281" y="410" width="56" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[TECNOLOGO]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="e19c009f-c8b9-4593-81fd-9267371780cc" mode="Opaque" x="437" y="410" width="86" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Presenta dificultad de lectura escritura]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ae0885c8-6a95-4a50-8654-c465340e8c78" mode="Opaque" x="0" y="425" width="573" height="15" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[AUTO REPORTE CONDISIONES DE SALUD]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="fedf2201-ec04-4936-8d06-29b16454554e" x="0" y="440" width="192" height="15" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Sufre algun tipo de alergias]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="c7b37c9a-7a5e-4a42-a5c1-6e641bf20cf2" x="0" y="455" width="192" height="15" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Consume algun tipo de medicamento actualmente]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="5bdc27a9-9650-4051-8c02-ae1f6ed8be7e" x="0" y="470" width="192" height="15" fontSize="7.0" vTextAlign="Top">
+				<text><![CDATA[Sufre algun tipo de enfermedad actualmente]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="24708307-e235-4e61-86a5-e58c5ce3928d" x="0" y="485" width="192" height="15" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Ha tenido alguna lesion o cirujia recientemente]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="24708307-e235-4e61-86a5-e58c5ce3928d" x="0" y="500" width="192" height="15" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Esta bajo el efecto de alcohol o sustancias psicoactivas]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="73cc39af-5300-488f-ab97-391124698be8" mode="Opaque" x="0" y="515" width="573" height="15" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PERSONA DE CONTACTO EN CASO DE EMERGENCIA]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="5ac04507-7be3-4ac6-93bf-d7afb7c77653" mode="Opaque" x="0" y="530" width="198" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[NOMBRE COMPLETO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="253f087a-27ab-41ee-b8db-06b983945168" mode="Opaque" x="198" y="530" width="163" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[No CONTACTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="92d4b347-c356-4c94-8c78-dab3024612d5" mode="Opaque" x="361" y="530" width="212" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PARENTESCO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="163c0c38-8456-42d3-87c2-63413c3ee312" x="188" y="319" width="151" height="12" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{numerodocumento}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="867f81d4-8cb2-44a8-9c12-c2229c1ab3af" x="0" y="295" width="163" height="12" fontSize="7.0" hTextAlign="Center">
+				<expression><![CDATA[$F{primerapellido}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="9d39e825-7c19-4567-a37f-42048b9f2375" x="163" y="295" width="146" height="12" fontSize="7.0" hTextAlign="Center">
+				<expression><![CDATA[$F{segundoapellido}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="dd3d9ebf-4826-48c3-8f37-bc531c4b35da" x="309" y="295" width="102" height="12" fontSize="8.0" hTextAlign="Center">
+				<expression><![CDATA[$F{primernombre}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="5c8a9543-b9e2-4411-a455-93e953dc3902" x="411" y="295" width="162" height="12" fontSize="8.0" hTextAlign="Center">
+				<expression><![CDATA[$F{segundonombre}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="07ab8e3b-f994-4684-8198-06967c7a412d" x="339" y="319" width="92" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<paragraph spacingAfter="2"/>
+				<expression><![CDATA[$F{tiposangre}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f272cbcf-5a19-49ca-8522-78a5b9da43d6" x="431" y="343" width="142" height="22" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{ocupacion}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="010df1de-b954-4090-b7ab-67bbc1d41ae0" x="163" y="343" width="268" height="22" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<expression><![CDATA[$F{direcciondomicilio}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="14f71387-5dd0-44ff-b237-7df1fe861281" x="431" y="319" width="142" height="12" fontSize="7.0" hTextAlign="Center">
+				<expression><![CDATA[$F{celular}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0f975bf2-3f9d-4c70-a4d4-6ecdf965a5b5" x="236" y="380" width="203" height="15" fontSize="7.0">
+				<expression><![CDATA[$F{correoelectronico}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="1222a5cc-b621-4a9e-88b3-ba4c0e5c3da9" x="439" y="380" width="69" height="15" fontSize="7.0">
+				<expression><![CDATA[$F{eps}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7aa046a3-8aac-48e3-a89f-861ffbc0aeec" x="234" y="440" width="148" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{alergias}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6ab79390-cb48-4ef9-9402-7dd49d2435a1" x="234" y="455" width="148" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{medicamentos}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="eae5a170-8970-44b1-95a2-11fc387f9eba" x="234" y="470" width="148" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{enfermedades}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="bd0de839-28a4-4744-bc4a-3e2ce0041537" x="234" y="485" width="148" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{lesiones}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="9e79d145-4dd9-4746-9783-3a7231a829f5" x="0" y="545" width="198" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{nombrecontacto}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6f323285-07cf-426c-bc31-993fcf5cdd2f" x="198" y="545" width="163" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{telefonocontacto}]]></expression>
+			</element>
+			<element kind="textField" uuid="95d3a46a-1c7a-4493-ad63-6390ffdaa946" x="361" y="545" width="212" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{parentescocontacto}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="2c56acd7-7372-4a58-b0d3-6bc2b00ce52e" x="61" y="255" width="17" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{hidrocarburos}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8b9b0942-1386-48b0-95b7-9306ef9afe38" x="81" y="225" width="18" height="13" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{trabajadorautorizado}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="3544e180-175f-4ae1-9881-571bcff12992" x="314" y="225" width="18" height="13" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{nivelcoordinador}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="df7d6450-b8f9-4dbc-a418-eeb9e98fe820" x="185" y="225" width="18" height="13" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{nivelreentrenamiento}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0ea8f5f9-07a0-4e2e-8936-7f13828eb1df" x="231" y="255" width="17" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{telecomunicaciones}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="e1fb4106-cd03-443e-8fdc-95ecedda2398" x="136" y="255" width="17" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{construccion}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f6fc4617-6198-43f1-a3a6-816fd187e2c0" x="452" y="253" width="121" height="15" fontSize="7.5" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{otros}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="50a8b908-0a43-45bf-af75-299e22e73117" x="58" y="411" width="16" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{niveleducativoprimaria}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="77502fd4-9557-46ab-823e-59810e882fc8" x="159" y="411" width="16" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{niveleducativobachillerato}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="fc85cb9e-2759-40fd-b62a-a8f31535cdd1" x="252" y="411" width="16" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{niveleducativotecnico}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="fefb2d98-ad6e-4c31-a956-dad63c105a02" x="341" y="411" width="16" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{niveleducativotecnologo}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="27a8eae2-d791-4b5a-888a-9bbcd0cf6525" x="421" y="411" width="16" height="12" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{niveleducativouniversitaria}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f4bf7c76-5507-4642-914b-e0f22a14eb45" mode="Opaque" x="0" y="319" width="23" height="12" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[M]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="1817677d-b81d-42ff-8d82-96d3e2b5396d" mode="Opaque" x="51" y="320" width="16" height="10" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[F]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="037f19c2-cb56-4f8e-bfb2-1800bd0b85ec" mode="Opaque" x="100" y="331" width="288" height="12" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="c7b66197-ef90-428c-b22b-9a291d5e35cd" mode="Opaque" x="0" y="331" width="431" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[LUGAR DE DOMICILIO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="d5f85b27-d50e-4c56-bf15-3690b9af3227" x="152" y="0" width="70" height="15" bold="false" hTextAlign="Center">
+				<expression><![CDATA[$F{dia}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6700e918-43ee-4fce-b0ca-971810c6239b" x="222" y="0" width="68" height="15" hTextAlign="Center">
+				<expression><![CDATA[$F{mes}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6960e755-a89f-41cc-8c3d-140561617323" x="290" y="0" width="93" height="15" hTextAlign="Center">
+				<expression><![CDATA[$F{ano}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="4a277d36-f113-4a25-bde3-f8db4f4006a9" x="0" y="15" width="573" height="18" fontSize="6.0">
+				<text><![CDATA[El centro de formación y entrenamiento en protección contra caídas para trabajo en alturas SEGURIDAD AL LIMITE S.A.S., implementa el presente formato con el objetivo de asegurar y verificar el cumplimiento del perfil de ingreso de los aspirantes a aprendiz, así como támbien dar cumplimiento a los requisitos legales vigentes en la prestación del servicio de los diferentes programas de formación y entrenamiento ofertados.]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="80165a73-7997-4de8-80d1-463bb125f470" mode="Opaque" x="0" y="193" width="573" height="16" backcolor="#FFFF99" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[I. FICHA DE INSCRIPCIÓN]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d98cc3ee-62ba-4788-a019-7b979a6774a5" mode="Opaque" x="262" y="253" width="38" height="15" backcolor="#FFFFFF" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Electríco]]></text>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="84dca149-91cd-4a14-87e7-1b39c1ad475e" mode="Opaque" x="188" y="307" width="151" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[No. DOCUMENTO DE IDENTIDAD]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="6b054996-814d-4ed2-b993-d04af51ea5db" mode="Opaque" x="87" y="307" width="101" height="12" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[TIPO DE DOCUMENTO]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="13a23bca-46a3-4f89-a084-545c99f01585" mode="Opaque" x="87" y="320" width="22" height="10" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CC]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="4af9a435-1e26-4cbe-add7-2cb9e768ac21" mode="Opaque" x="0" y="560" width="573" height="15" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[II. VERIFICACION PERFIL DE INGRESO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="7561439b-7534-4139-a257-5fbe6bc9abb9" mode="Opaque" x="0" y="575" width="573" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[4. VERIFICACION DOCUMENTAL]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="1ab7589a-8e6f-4b62-bd6c-edf1740f32e3" x="0" y="640" width="97" height="22" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Copia documento identidad (legible)]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="90e3ebf4-8ea1-4f8b-a628-dbc10fc3bfde" x="126" y="640" width="114" height="22" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Copia ultimo pago al Sistema de Seguridad Social]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="5b7e0ac8-55a7-41d3-9350-c924663d07e2" x="271" y="640" width="130" height="22" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Afiliación al Sistema de Seguridad Social]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="25eceebe-f25c-433e-80bd-86f3f844f38a" x="427" y="640" width="114" height="22" fontSize="8.0" vTextAlign="Middle">
+				<text><![CDATA[Certificado de Aptitud Medica]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="c5d0a353-6bfc-45a3-9aaa-01e18fa1d702" x="234" y="500" width="148" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{drogas}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="519e7fc7-1071-4d89-82f9-c935bcf98b92" x="192" y="440" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{alergias_si}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8735289b-879c-46e8-80aa-9b2a565645f8" x="213" y="440" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{alergias_no}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="ce313287-1f9b-46bb-8707-feb223473cee" x="192" y="455" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{medicamentos_si}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="18a150ce-96d5-44f1-822a-65fcc3cb7c8f" x="213" y="455" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{medicamentos_no}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="d846996e-8842-4483-aeff-3aa831d8b2ca" x="192" y="470" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{enfermedades_si}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="461877a6-5a3f-43c5-bb96-52846586ec8a" x="213" y="470" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{enfermedades_no}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b51e4a3e-4bb9-4fb7-b2ec-946c954f2a4b" x="192" y="485" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{lesiones_si}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="3a2d81b0-478c-4814-9f8b-aa10ca6d1d58" x="213" y="485" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{lesiones_no}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="57d2702d-4e10-413e-93d3-f34db398b497" x="192" y="500" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{drogas_si}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="4a526fc6-0f78-48db-8e57-d357228e2387" x="213" y="500" width="21" height="15" fontSize="7.0" vTextAlign="Middle">
+				<expression><![CDATA[$V{drogas_no}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d44eae9f-5653-4d3b-bb00-956736333c4d" mode="Opaque" x="382" y="440" width="191" height="15" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CONTESTE SOLO SI ES MUJER]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="092ee00a-2602-4827-a7df-7707d710bbd0" x="382" y="455" width="97" height="30" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Se encuentra en estado de embarazo]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="85166ae2-6c63-41a2-a94c-532bf1ea129a" x="382" y="485" width="97" height="30" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[En que tiempo de gestacion(indique  en meses)]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7999c0fd-1672-43f6-baa4-95f6dc6064db" x="491" y="472" width="20" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{embarazo_si}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="390dc515-f354-4125-8b8d-2a41a26d5c22" x="539" y="472" width="20" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{embarazo_no}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="8981a0a6-647b-4dc5-ad4e-d716a766e7a2" x="479" y="455" width="46" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[SI]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b7ba1985-cf5c-4ebd-bdd4-bd3b441c6fec" x="525" y="455" width="48" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[NO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0ae8c288-1891-4c3f-bbd8-828112359d0f" x="479" y="485" width="94" height="30" fontSize="7.0">
+				<expression><![CDATA[$F{mesesgestacion}]]></expression>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="8a1a27f3-26b6-467b-9490-d2da15244535" mode="Opaque" x="129" y="320" width="12" height="10" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CE]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="07da8d69-395d-455f-821e-56bbe83f1a10" mode="Opaque" x="508" y="365" width="65" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[ARL]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8157c704-5748-4671-8993-0cf80d47d361" x="508" y="380" width="65" height="15" fontSize="7.0">
+				<expression><![CDATA[$F{arl}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d3881419-1709-4725-b454-c4577e9915d2" mode="Opaque" x="0" y="365" width="236" height="15" backcolor="#F0F0F0" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PERTENECE A UNA EMPRESA]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="47a23b69-9cfb-4fa2-8f65-d6cda571df2c" x="0" y="380" width="15" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[SI]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ecf53298-b391-4629-a522-a3848429111d" x="33" y="380" width="19" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[NO]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="037ed8e5-38e7-4c20-ac92-82f31b7c3d77" x="19" y="382" width="12" height="11" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{empresa_si}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0cf6105b-7327-4090-adbc-bb8d99c86d3d" x="75" y="380" width="161" height="15" fontSize="7.0">
+				<expression><![CDATA[$F{empresa}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7006dda4-e58a-4a43-924d-6d746bb07309" x="55" y="382" width="12" height="11" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{empresa_no}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6338bd48-0469-4c7d-af70-b481cbd4ec8f" x="86" y="351" width="77" height="14" fontSize="6.0">
+				<paragraph leftIndent="2"/>
+				<expression><![CDATA[$F{departamentodomicilio}]]></expression>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="e8e8dc9d-8f57-4aca-9bf4-e2ab47624e07" x="0" y="351" width="86" height="14" fontSize="7.0">
+				<paragraph leftIndent="2"/>
+				<expression><![CDATA[$F{ciudaddomicilio}]]></expression>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b2dc06be-3c38-46e7-8129-f97735eaadfd" x="23" y="320" width="12" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{genero_masculino}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b8e05c70-03fb-4a34-9338-71c243336e83" x="69" y="320" width="10" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{genero_femenino}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="28d4d116-fc3d-4a97-bafa-31dfdbda761f" x="557" y="412" width="15" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{sabellerescribirno}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="92b71ca5-9eaf-4e6a-99b5-118a43730117" x="116" y="320" width="10" height="10" fontSize="5.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{tipodocumento_cc}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8394e100-848d-4b39-b0bc-d3cc0bf57f32" x="144" y="320" width="10" height="10" fontSize="5.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{tipodocumento_ce}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8089a372-d93c-4844-8c52-c0c7498d96b1" x="0" y="48" width="573" height="145" markup="html" fontSize="7.0">
+				<expression><![CDATA[$V{consentimiento}]]></expression>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="473811ca-0831-4ad6-b1b4-0273985b210c" mode="Opaque" x="0" y="33" width="573" height="15" backcolor="#CCCCCC" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CONSENTIMIENTO INFORMADO]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="750c5bee-a8c3-4e2e-9292-be05ecf515d4" x="178" y="177" width="202" height="13" hTextAlign="Center">
+				<text><![CDATA[Firma aprendiz]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="16079e00-e019-4df9-85ea-a6c204728e0d" mode="Transparent" x="519" y="225" width="18" height="13" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="7.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" bold="false" underline="false" strikeThrough="false" italic="false" pdfEmbedded="false" hTextAlign="Center" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{administrativojefearea}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a3a54966-0610-437f-aa8e-ddba4760fb31" mode="Opaque" x="332" y="253" width="38" height="15" backcolor="#FFFFFF" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Industrial]]></text>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="238d8abc-c1fd-4a48-aba9-db5806042222" mode="Opaque" x="569" y="221" width="4" height="20" backcolor="#FFFFFF" fontSize="7.0" hTextAlign="Right" vTextAlign="Middle">
+				<text><![CDATA[]]></text>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="bb68db4d-d3c0-41d6-b444-de875afef1ad" mode="Opaque" x="158" y="320" width="12" height="10" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[PP]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="eb97c6ac-24b8-4cbd-9afd-d578c451ff26" mode="Transparent" x="173" y="320" width="12" height="10" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="5.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" bold="false" underline="false" strikeThrough="false" italic="false" pdfEmbedded="false" hTextAlign="Center" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$V{tipodocumento_pp}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="80c087f2-da37-42cd-850b-0959dd0bcc93" mode="Transparent" x="0" y="343" width="86" height="8" backcolor="#F0F0F0" fontSize="5.0" vTextAlign="Middle">
+				<paragraph leftIndent="1"/>
+				<text><![CDATA[Municipio]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="854e284b-b34c-43bd-99c6-76986031f89b" mode="Transparent" x="86" y="343" width="72" height="8" backcolor="#F0F0F0" fontSize="5.0" vTextAlign="Middle">
+				<paragraph leftIndent="1"/>
+				<text><![CDATA[Departamento]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="43322e76-dff5-4e6d-93f9-adf0d46c4454" mode="Opaque" x="198" y="590" width="375" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[REGIMEN DE AFILIACIÓN AL SISTEMA DE SEGURIDAD SOCIAL]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a67fecd3-419f-427e-aaff-a2e8aaf0a583" mode="Opaque" x="0" y="590" width="198" height="15" backcolor="#F0F0F0" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[TIPO VINCULACIÓN LABORAL]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2abcf373-703f-4567-a994-a59c87815a56" mode="Opaque" x="0" y="605" width="40" height="15" backcolor="#FFFFFF" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Dependiente]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7899df35-ac30-406c-9ffb-8f286ecfea4a" x="306" y="255" width="20" height="12" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{electrico}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="ef7d0051-8eba-474b-9dea-5e43bb989715" x="382" y="255" width="17" height="12" fontSize="8.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{industrial}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="cecb719c-e3f6-433b-bd59-cc039a5328c3" x="43" y="607" width="14" height="10" fontSize="6.0" removeLineWhenBlank="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{tipovinculacionlaboraldependiente}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="9b79932e-fc8a-496b-afcb-98465e1c6ebb" x="109" y="607" width="15" height="10" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{tipovinculacionlaboralindependiente}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="9e7db5aa-f08c-49bc-9cf2-bb46fc19fddb" x="176" y="607" width="14" height="10" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{tipovinculacionlaboralninguno}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="a174c4af-fccf-4e52-aed5-122e18484d57" x="260" y="607" width="14" height="10" fontSize="5.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{regimenafiliacionseguridadsocialcontributivo}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0d8e47df-19cf-4db1-89cb-c0f3b223a66b" x="340" y="607" width="14" height="10" fontSize="5.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{regimenafiliacionseguridadsocialsubsidiado}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="758d762f-a33c-426e-9145-0881e619787d" x="396" y="607" width="14" height="10" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{regimenafiliacionseguridadsocialotro}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="fc2026e9-e628-4445-942b-eab2c3417ecf" x="437" y="605" width="136" height="15" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{cual}]]></expression>
+			</element>
+			<element kind="textField" uuid="492d8bd0-5fdd-4716-8eea-037fab567e6f" x="102" y="645" width="17" height="10" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{copiadocumentoidentidad}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="dc65defa-fa21-470e-a826-c026ba420372" x="247" y="645" width="17" height="10" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{copiapagoseguridadsocial}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="612eabfa-7319-4d21-be5e-902cfd25fcef" x="406" y="645" width="17" height="10" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{afiliciacionseguridadsocial}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7bd36820-affa-460f-b19b-ce097f28fb4a" x="549" y="645" width="17" height="10" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{certificadoaptitudmedica}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="582d8d15-6e0b-4f9d-a982-b6667fc73ca2" x="532" y="412" width="14" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$V{sabellerescribirsi}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="image" uuid="4b93921c-0c46-4337-b1f0-64dd53407c93" key="Logo_Footer" x="222" y="130" width="119" height="46" scaleImage="RetainShape" linkType="None" linkTarget="Self" usingCache="false" hImageAlign="Center" vImageAlign="Bottom">
+				<expression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(Base64.getDecoder().decode($F{firmaaprendiz}))
+]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="e9c90d35-5c4c-4c0e-97d4-0884f659933e" x="465" y="0" width="108" height="15" blankWhenNull="true" hTextAlign="Center">
+				<paragraph leftIndent="2"/>
+				<expression><![CDATA[$F{codigoverificacion}]]></expression>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+		</band>
+		<band height="533">
+			<element kind="staticText" uuid="6a060e55-6973-4080-8756-8f013af87abc" mode="Opaque" x="0" y="1" width="580" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[5. CERTIFICADO PROCESO DE FORMACIÓN Y ENTRENAMIENTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="9cecc307-8423-4080-a861-9b94c34224ac" mode="Opaque" x="286" y="33" width="294" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[ACTUALIZADO COORDINADOR]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="1deb9465-0cdc-4c93-be75-c73030145340" mode="Opaque" x="0" y="33" width="286" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[REENTRENAMIENTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="00006f75-0415-4545-89d8-48600cde9c4c" x="0" y="16" width="580" height="17" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[* En el presente numeral relacione el certificado de acuerdo al nivel de formación inscrito o a ejecutar]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="0a89d3fb-e8cd-485e-8ab0-cfe54795f711" x="170" y="308" width="240" height="14" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[CRITERIO DE CALIFICACIÓN]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="e4cd9382-623d-4682-8e71-f14126828bc1" mode="Opaque" x="0" y="445" width="185" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Supervisor]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="e6141867-f380-42ef-a323-d1efdb182840" mode="Opaque" x="185" y="445" width="203" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Entrenador a Cargo]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="0f19c01d-9355-49a0-a7e4-63449108d828" x="0" y="474" width="185" height="39" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[FIRMA]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="c556277e-713d-46ff-b1a1-27a42d3cf4c0" x="185" y="474" width="203" height="39" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[FIRMA]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="6310e424-805a-41c6-b7a5-64eab0ee7b28" x="388" y="474" width="192" height="39" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[FIRMA]]></text>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2fa442c8-ab48-4c12-bba4-8dfb9dc78eb1" x="0" y="48" width="286" height="17" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Certificado capacitación nivel Trabajador Autorizado]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="32c214bc-6562-4c61-a343-8f27e1bfc2fc" x="286" y="48" width="294" height="17" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Certificado capacitación nivel Coordinador]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a5bcdfd8-fd10-45ea-98d9-95b48a1f5c23" mode="Opaque" x="0" y="65" width="580" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[6. EVALUACIÓN DE CONOCIMIENTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2d777349-b224-497c-8971-87dcd43bb3d8" x="0" y="80" width="580" height="17" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Marque con una X la respuesta correcta]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="50c39388-a062-4f86-ba99-128eaec6089e" x="170" y="322" width="120" height="26" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[>= 4: Excelente]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a9013ea5-fff4-475b-8e29-e6116e7e1a88" x="290" y="322" width="120" height="26" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[<=3:Bueno]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2becb270-48d6-4064-948f-18aa93682ee2" mode="Opaque" x="0" y="348" width="580" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[7. EVALUACIÓN DE HABILIDADES BASICAS Y APTITUDES]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="5a122c5e-c014-45a5-a4f9-6a99c2a5408d" x="78" y="370" width="274" height="26" fontSize="7.0" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[Medida de prevención: Inspección de equipos de alturas]]></text>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="13632fdb-c9f7-4d89-a983-c84e8194df43" x="78" y="396" width="274" height="26" fontSize="7.0" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[Medida de protección: Instalación de punto de anclaje y linea de trabajo]]></text>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="8be51d52-219b-4d28-928d-f494c968992d" x="352" y="370" width="48" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[SI]]></text>
+				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f8bf6c5d-7934-4467-a24e-52840c0ea190" x="400" y="370" width="43" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[NO]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f791fbd9-56f3-47e8-a347-193e0f48163b" x="443" y="370" width="39" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[N/A]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="078f70db-8f14-4b8a-8ef2-fc3a79f4dd09" x="352" y="396" width="48" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[SI]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f1d75d37-b215-4169-970d-9c438af685ae" x="400" y="396" width="43" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[NO]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="c6e4a561-7138-41f0-8a46-960de7382dc8" x="443" y="396" width="39" height="26" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph leftIndent="2"/>
+				<text><![CDATA[N/A]]></text>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="ffe1fca2-bbb5-4a00-9b66-b07eaef07a44" mode="Opaque" x="0" y="430" width="580" height="15" backcolor="#FFFF99" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[III. FIRMAS DEL PERSONAL ENCARGADO DEL PROCESO DE FORMACIÓN Y ENTRENAMIENTO]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b03c959c-1d8b-4506-b158-9d5885f2a01c" x="0" y="460" width="185" height="14" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Nombre:]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d7b6ac7a-b2bd-48ef-8b03-7bf4cdfe78bc" x="185" y="460" width="203" height="14" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+				<text><![CDATA[Nombre:]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="2cb6d7c2-f847-4bd8-bea7-5491bcfd24a7" x="388" y="460" width="192" height="14" fontSize="7.0" vTextAlign="Middle">
+				<text><![CDATA[Nombre:]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="c05a4c91-00ec-41dd-a57e-87fc1cd1ca53" x="240" y="50" width="20" height="12" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{reentrenamiento}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="42eaecbf-b949-4a60-b6fd-66a9af91548f" x="518" y="50" width="20" height="12" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{actualizadocoordinador}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="image" uuid="ea9c78b5-ebd0-48ca-b8b0-a964e3dc3896" x="307" y="137" width="67" height="62">
+				<expression><![CDATA["./elementos1.PNG"]]></expression>
+			</element>
+			<element kind="image" uuid="c4c61dad-959c-472a-bfdc-35735ca94b68" x="411" y="137" width="50" height="50">
+				<expression><![CDATA["./elementos2.PNG"]]></expression>
+			</element>
+			<element kind="image" uuid="493bf7b1-e234-4a42-ac0a-6ba3bfdae5d5" x="490" y="137" width="77" height="67">
+				<expression><![CDATA["./elementos3.png"]]></expression>
+			</element>
+			<element kind="image" uuid="6fc7c505-2ae9-425d-9319-ee7f32312ca7" x="35" y="242" width="50" height="50">
+				<expression><![CDATA["./seguridad1.PNG"]]></expression>
+			</element>
+			<element kind="image" uuid="7cadbe55-3347-4450-8198-8af0adf04a53" x="209" y="239" width="50" height="50">
+				<expression><![CDATA["./seguridad2.PNG"]]></expression>
+			</element>
+			<element kind="image" uuid="ef9260f7-5903-4b97-8fe3-71a7df2ddb09" x="125" y="239" width="50" height="50">
+				<expression><![CDATA["./seguridad3.PNG"]]></expression>
+			</element>
+			<element kind="textField" uuid="19310d1a-e4db-40eb-baf0-777793ef4b60" x="262" y="330" width="18" height="10" fontSize="6.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{eingresoexcelente}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f29658c0-58fe-490b-9549-ae9717527f91" x="376" y="330" width="18" height="10" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{eingresobueno}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="57bc4c4c-240a-4215-9a2b-632c11a5451e" x="375" y="375" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{inspeccionsi}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="0c8d527d-087d-47e4-9927-d89306c61095" x="420" y="375" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{inspeccionno}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="a9ce51b6-c595-426e-9f45-d4815199589e" x="459" y="375" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{noaplica}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7c3d99d4-9389-412f-adbe-389c297a2480" x="459" y="401" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{noaplica}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="86d9aff5-884d-4d30-83a6-037916541320" x="375" y="401" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{medidaproteccionsi}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="a3b42cc8-1650-45b3-b4bd-63e8feeb91c6" x="420" y="401" width="16" height="16" fontSize="6.0" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{medidaproteccionno}]]></expression>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="b7bc3dd3-877d-4e30-b7d2-7b88af1a9196" mode="Opaque" x="388" y="445" width="192" height="15" backcolor="#D8D8D8" fontSize="8.0" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Persona de apoyo]]></text>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="dd2e58e1-afba-4ad1-9635-2ce136078375" x="38" y="460" width="147" height="14" fontSize="8.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{supervisor}]]></expression>
+			</element>
+			<element kind="textField" uuid="6b7eda74-6773-44c6-992f-8ef73f4ef27e" x="240" y="460" width="148" height="14" fontSize="8.0" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{entrenadoracargo}]]></expression>
+			</element>
+			<element kind="textField" uuid="2f69f568-f19d-4c99-bd28-f27bc2b0778c" x="427" y="460" width="153" height="14" fontSize="8.0" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{personadeapoyo}]]></expression>
+			</element>
+			<element kind="staticText" uuid="21ff695b-a0ba-467f-8957-a1d4a48ee0a4" x="297" y="137" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[A)]]></text>
+			</element>
+			<element kind="staticText" uuid="372be558-7f7a-44ee-b110-3580a9210698" x="481" y="137" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[C)]]></text>
+			</element>
+			<element kind="staticText" uuid="5ef2882a-d6ca-458f-b6e5-84e922bd22dc" x="393" y="137" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[B)]]></text>
+			</element>
+			<element kind="staticText" uuid="d2de26b1-2a95-49f7-9804-c701c863a501" x="195" y="239" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[C)]]></text>
+			</element>
+			<element kind="staticText" uuid="23fc9514-02e5-40ee-8edf-a7d1dbae559d" x="114" y="242" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[B)]]></text>
+			</element>
+			<element kind="staticText" uuid="5df97b26-2f6b-464f-8f31-2a1b7caab60c" x="21" y="242" width="8" height="16" fontSize="6.0">
+				<text><![CDATA[A)]]></text>
+			</element>
+			<element kind="textField" uuid="b6c852fc-3e18-4e75-98b7-b3d47890a4aa" x="0" y="97" width="290" height="55" markup="html" fontSize="7.0" blankWhenNull="true">
+				<expression><![CDATA[$F{evaluacionconocimientopregunta1}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="df9c7fe6-c0ca-4360-8454-c7395f9ebdc2" x="0" y="152" width="290" height="53" markup="html" fontSize="7.0" blankWhenNull="true">
+				<expression><![CDATA[$F{evaluacionconocimientopregunta2}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f3be0180-a8ed-460c-a466-633018be8cca" x="290" y="205" width="290" height="93" markup="html" fontSize="7.0" blankWhenNull="true">
+				<expression><![CDATA[$F{evaluacionconocimientopregunta5}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="18c5ed77-12c9-4194-bf7c-1f19789c1671" x="0" y="205" width="290" height="93" markup="html" fontSize="7.0" blankWhenNull="true">
+				<expression><![CDATA[$F{evaluacionconocimientopregunta4}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="77456e27-5dbf-4efd-abe2-0f7b34037507" x="290" y="97" width="290" height="108" markup="html" fontSize="7.0" blankWhenNull="true">
+				<expression><![CDATA[$F{evaluacionconocimientopregunta4}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<pageFooter splitType="Stretch"/>
+</jasperReport>
