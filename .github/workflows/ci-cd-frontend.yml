@@ -132,6 +132,9 @@ jobs:
             set -e
             cd ${{ secrets.SERVER_DEPLOY_PATH }}
 
+            echo "🔐 Login en GHCR..."
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u jihenaor --password-stdin
+
             echo "📦 Pulling nueva imagen del frontend..."
             docker compose pull frontend
 
