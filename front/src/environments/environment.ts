@@ -4,6 +4,6 @@
 
 export const environment = {
   production: false,
-    apiUrl: '/api',
-    // apiUrl: 'https://cursos.seguridadallimite.com/cursosback/api',
+  apiUrl: '/api',
+  // Producción (vía gateway): 'https://cursos.seguridadallimite.com/api' — ver environment.prod.ts
 };
