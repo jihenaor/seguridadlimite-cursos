@@ -1,7 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Allow: /
-Disallow: /blog/author/jihenaor/page/2/
-
-# Sitemap
-Sitemap: https://seguridadallimite.com/sitemap.xml
