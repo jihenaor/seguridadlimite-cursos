@@ -141,6 +141,8 @@ services:
       - "9443:443"
     volumes:
       - ./nginx/gateway.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
     networks:
       - gateway_net
 
