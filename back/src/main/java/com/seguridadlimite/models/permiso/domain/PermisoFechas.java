@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "permiso-fechas", 
-       uniqueConstraints = @UniqueConstraint(
-           name = "idx_fecha_permiso", 
-           columnNames = {"id_permiso", "fecha"}
-       ))
+@Table(
+        name = "permiso_fechas",
+        uniqueConstraints =
+                @UniqueConstraint(
+                        name = "idx_fecha_permiso",
+                        columnNames = {"id_permiso", "fecha"}))
 public class PermisoFechas {
 
     @Id
