@@ -18,7 +18,7 @@ public interface PermisoTrabajoAlturasPort {
     boolean existenInscripcionesActivasIdNivel(String fecha, long idNivel);
     List<PermisoTrabajoAlturas> findPermisosVigentesEnFecha(String fecha);
     List<PermisoTrabajoAlturas> findPermisosVigentesEnFechaWithPermisoFechas(String fecha);
-    Optional<PermisoTrabajoAlturas> findPermisosFechaInicioIdnivelIdpersonaautoriza(String fechaInicio, Long idNivel, Integer idpersonaautoriza);
+    Optional<PermisoTrabajoAlturas> findPermisosFechaInicioIdnivelIdpersonaautoriza(String fechaInicio, Integer idNivel, Integer idpersonaautoriza);
     Optional<PermisoTrabajoAlturas> findByCodigoministerio(String codigoministerio);
     List<PermisoTrabajoAlturas> findAll();
 }

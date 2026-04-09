@@ -19,7 +19,7 @@ public class ImportarPermisoTrabajo {
 
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
 
-    private static final Map<String, Long> NIVEL_ID_MAP;
+    private static final Map<String, Integer> NIVEL_ID_MAP;
 /*
 1	TRABAJADOR AUTORIZADO
 2	COORDINADOR
@@ -29,21 +29,21 @@ public class ImportarPermisoTrabajo {
  */
     static {
         NIVEL_ID_MAP = new HashMap<>();
-        NIVEL_ID_MAP.put("TRABAJADOR AUTORIZADO", 1L);
-        NIVEL_ID_MAP.put("COORDINADOR", 2L);
-        NIVEL_ID_MAP.put("BASICO OPERATIVO", 3L);
-        NIVEL_ID_MAP.put("REENTRENAMIENTO", 4L);
-        NIVEL_ID_MAP.put("ADMINISTRATIVO", 5L);
-        NIVEL_ID_MAP.put("ADMINSTRATIVO", 5L);
-        NIVEL_ID_MAP.put("REENTRENO", 4L);
-        NIVEL_ID_MAP.put("REEENTRENAMIENTO", 4L);
-        NIVEL_ID_MAP.put("AVANAZADO", 7L);
-        NIVEL_ID_MAP.put("AVANZADO", 7L);
-        NIVEL_ID_MAP.put("ACTUALIZACION DE COORDINADOR", 8L);
-         NIVEL_ID_MAP.put("ADMINISTRATIVO PERSONAL", 9L);
+        NIVEL_ID_MAP.put("TRABAJADOR AUTORIZADO", 1);
+        NIVEL_ID_MAP.put("COORDINADOR", 2);
+        NIVEL_ID_MAP.put("BASICO OPERATIVO", 3);
+        NIVEL_ID_MAP.put("REENTRENAMIENTO", 4);
+        NIVEL_ID_MAP.put("ADMINISTRATIVO", 5);
+        NIVEL_ID_MAP.put("ADMINSTRATIVO", 5);
+        NIVEL_ID_MAP.put("REENTRENO", 4);
+        NIVEL_ID_MAP.put("REEENTRENAMIENTO", 4);
+        NIVEL_ID_MAP.put("AVANAZADO", 7);
+        NIVEL_ID_MAP.put("AVANZADO", 7);
+        NIVEL_ID_MAP.put("ACTUALIZACION DE COORDINADOR", 8);
+         NIVEL_ID_MAP.put("ADMINISTRATIVO PERSONAL", 9);
 
 
-        NIVEL_ID_MAP.put("BASICO ADMINISTRATIVO", 5L);
+        NIVEL_ID_MAP.put("BASICO ADMINISTRATIVO", 5);
     }
 
     public void index(String content) throws BusinessException, ParseException {
@@ -143,8 +143,8 @@ public class ImportarPermisoTrabajo {
         }
     }
 
-    private static Long getNivel(RegistroPermiso registro) throws BusinessException {
-        Long idnivel = NIVEL_ID_MAP.get(registro.getNivel().trim());
+    private static Integer getNivel(RegistroPermiso registro) throws BusinessException {
+        Integer idnivel = NIVEL_ID_MAP.get(registro.getNivel().trim());
 
         if (idnivel == null) {
             throw new BusinessException("Nivel no existe " + registro.getNivel() + " - " + registro.getTRABAJO());

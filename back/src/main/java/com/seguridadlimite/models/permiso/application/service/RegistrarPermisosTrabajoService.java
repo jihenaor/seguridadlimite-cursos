@@ -44,7 +44,7 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
             validarNivelDTO(nivelDTO);
             
             PermisoTrabajoAlturas permiso = PermisoTrabajoAlturas.builder()
-                    .idNivel(nivelDTO.getId())
+                    .idNivel(nivelDTO.getId() == null ? null : nivelDTO.getId().intValue())
                     .fechaInicio(nivelDTO.getFechadesde())
                     .validodesde(nivelDTO.getFechadesde())
                     .validohasta(nivelDTO.getFechahasta())

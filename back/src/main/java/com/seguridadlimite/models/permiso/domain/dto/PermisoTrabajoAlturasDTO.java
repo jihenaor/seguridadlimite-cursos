@@ -23,7 +23,7 @@ public class PermisoTrabajoAlturasDTO {
     private String descripcionTarea;
     private String herramientasUtilizar;
     private String alturaTrabajo;
-    private Long idNivel;
+    private Integer idNivel;
     private String nombrenivel;
     private Boolean verificacionSeguridadSocial;
     private Boolean certificadoAptitudMedica;

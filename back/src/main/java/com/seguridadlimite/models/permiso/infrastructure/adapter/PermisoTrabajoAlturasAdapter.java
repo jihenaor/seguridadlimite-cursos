@@ -77,7 +77,7 @@ public class PermisoTrabajoAlturasAdapter implements PermisoTrabajoAlturasPort {
 
     @Override
     public Optional<PermisoTrabajoAlturas> findPermisosFechaInicioIdnivelIdpersonaautoriza(
-            String fechaInicio, Long idNivel, Integer idpersonaautoriza) {
+            String fechaInicio, Integer idNivel, Integer idpersonaautoriza) {
         return repository.findByFechaInicioNivelIdpersonaautoriza(fechaInicio, idNivel, idpersonaautoriza);
     }
 

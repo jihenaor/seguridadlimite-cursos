@@ -81,7 +81,9 @@ public class FindTrabajadorInscripcionCu {
 							aprendiz.getFechaUltimaAsistencia(), aprendiz.getIdnivel());
 
 					for (PermisoTrabajoAlturas permiso : permisos) {
-						if (aprendiz.getIdnivel().equals(permiso.getIdNivel())
+						if (aprendiz.getIdnivel() != null
+								&& permiso.getIdNivel() != null
+								&& aprendiz.getIdnivel().intValue() == permiso.getIdNivel()
 								&& isFechaValida(permiso)) {
 							int fechaAsistencia = parseFecha(aprendiz.getFechaUltimaAsistencia());
 							int desde = parseFecha(permiso.getValidodesde());

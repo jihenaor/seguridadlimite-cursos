@@ -71,6 +71,6 @@ public interface PermisoTrabajoAlturasRepository extends JpaRepository<PermisoTr
             "AND p.idpersonaautoriza1 = :idpersonaautoriza1")
     Optional<PermisoTrabajoAlturas> findByFechaInicioNivelIdpersonaautoriza(
             @Param("fechaInicio") String fechaInicio,
-            @Param("idNivel") Long idNivel,
+            @Param("idNivel") Integer idNivel,
             @Param("idpersonaautoriza1") Integer idpersonaautoriza1);
 } 

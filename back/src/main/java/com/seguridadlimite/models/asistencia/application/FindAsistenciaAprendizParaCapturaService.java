@@ -43,7 +43,9 @@ public class FindAsistenciaAprendizParaCapturaService {
             aprendiz.setAsistencias(asistenciaAprendiz);
 
             Optional<PermisoTrabajoAlturas> permisoOptional = permisoTrabajoAlturas.stream()
-                    .filter(p -> p.getIdNivel() == aprendiz.getIdnivel())
+                    .filter(p -> Objects.equals(
+                            aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().intValue(),
+                            p.getIdNivel()))
                     .findFirst();
 
             PermisoTrabajoAlturas permiso = permisoOptional.orElse(null);

@@ -58,7 +58,7 @@ public class PermisoTrabajoAlturas {
     private String alturaTrabajo;
 
     @Column(name = "id_nivel")
-    private Long idNivel;
+    private Integer idNivel;
 
     @JoinColumn(name = "id_nivel", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)

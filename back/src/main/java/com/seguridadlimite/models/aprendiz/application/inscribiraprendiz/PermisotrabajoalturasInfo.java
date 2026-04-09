@@ -27,7 +27,7 @@ public class PermisotrabajoalturasInfo {
     private String descripcionTarea;
     private String herramientasUtilizar;
     private String alturaTrabajo;
-    private Long idNivel;
+    private Integer idNivel;
     private String verificacionSeguridadSocial;
     private String certificadoAptitudMedica;
     private String certificadoCompetencia;
