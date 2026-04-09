@@ -47,13 +47,15 @@ export class EmpresasService {
     const url = `${environment.apiUrl}` + '/saveEmpresa';
 
     const datos = JSON.stringify(empresa);
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(url,
         {
           method: 'POST',
           body: datos,
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
           }
         });
       if (!response.ok) {

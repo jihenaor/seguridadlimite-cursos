@@ -39,13 +39,15 @@ export class ProfessorsService {
     const datos = JSON.stringify(professors);
 //            'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
 // 'Authorization': 'my-new-auth-token'
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(url,
         {
           method: 'POST',
           body: datos,
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
           }
         });
       if (!response.ok) {

@@ -9,13 +9,19 @@ export class ServicesService {
 
   }
 
+  private authHeaders(): Record<string, string> {
+    const token = sessionStorage.getItem('token');
+    return {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    };
+  }
+
   async executeFetch(url: string) {
     try {
       const response = await fetch(`${environment.apiUrl}${url}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.authHeaders(),
       });
 
       switch (response.status) {
@@ -110,9 +116,7 @@ export class ServicesService {
       const response = await fetch(url, {
         method,
         body: datos,
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        headers: this.authHeaders(),
       });
 
       const data = await response.json();
@@ -145,9 +149,7 @@ export class ServicesService {
       response = await fetch(url,
         {
           method:'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          }
+          headers: this.authHeaders(),
         });
     } catch (error) {
       throw new Error('Se genero un error: ' + error);

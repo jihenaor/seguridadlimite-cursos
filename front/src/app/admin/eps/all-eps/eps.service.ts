@@ -29,14 +29,15 @@ export class EpsService {
     const url = `${environment.apiUrl}` + '/saveEps';
 
     const datos = JSON.stringify(eps);
-
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(url,
         {
           method: 'POST',
           body: datos,
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
           }
         });
       if (!response.ok) {
