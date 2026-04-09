@@ -4,9 +4,8 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 
-@Entity
+// @Entity — tabla "trabajadoresfoto" no existe en BD; clase sin uso activo
 @Table(name = "trabajadoresfoto")
-
 public class Trabajadorfoto implements Serializable {
 
   private static final long serialVersionUID = 1L;

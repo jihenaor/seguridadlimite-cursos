@@ -8,9 +8,8 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "asistencia")
-
+// @Entity — clase sin uso activo; usar models/asistencia/domain/Asistencia.java
+@Table(name = "sl_asistencias")
 public class Asistenciar implements Serializable {
 
   private static final long serialVersionUID = 1L;

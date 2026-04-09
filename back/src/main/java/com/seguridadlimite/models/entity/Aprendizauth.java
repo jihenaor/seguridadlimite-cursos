@@ -3,9 +3,8 @@ package com.seguridadlimite.models.entity;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "aprendices")
-
+// @Entity — tabla "aprendices" no existe; clase sin uso activo
+@Table(name = "sl_aprendices")
 public class
 Aprendizauth implements Serializable {
   private static final long serialVersionUID = 1L;

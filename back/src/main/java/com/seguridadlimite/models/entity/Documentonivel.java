@@ -7,9 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
-@Entity
+// @Entity — tabla "documentosnivel" no existe en BD; clase sin uso activo
 @Table(name = "documentosnivel")
-
 public class Documentonivel implements Serializable {
 
   private static final long serialVersionUID = 1L;

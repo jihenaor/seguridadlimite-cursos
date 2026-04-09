@@ -7,10 +7,8 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
 
-@Entity
-@Table(name = "trabajadores")
-
-
+// @Entity — clase sin uso activo; usar models/trabajador/dominio/Trabajador.java
+@Table(name = "sl_trabajadores")
 public class Trabajadorauth implements Serializable {
 
   private static final long serialVersionUID = 1L;
