@@ -78,24 +78,6 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.GET,  "/api/aprendiz/evaluacion/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/evaluacion/**").permitAll();
 
-            // ── Endpoints públicos — flujo /student/inscription (sin login) ──
-            // El formulario de inscripción pública necesita cargar catálogos y
-            // guardar el trabajador/aprendiz sin que el usuario esté autenticado.
-            authConfig.requestMatchers(HttpMethod.GET,
-                    "/api/empresas",
-                    "/api/epss",
-                    "/api/arls",
-                    "/api/gruposactivosinscripcion",
-                    "/api/trabajadorinscripcion/**",
-                    "/api/parametros",
-                    "/api/nivel/**",
-                    "/api/permisos/inscripciones-abiertas").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST,
-                    "/api/aprendiz/save",
-                    "/api/saveSolicitud").permitAll();
-            authConfig.requestMatchers(HttpMethod.PUT,
-                    "/api/updateFoto").permitAll();
-
             // ── Endpoints protegidos — cualquier usuario autenticado ──────────
             authConfig.requestMatchers("/api/**").authenticated();
 

@@ -58,9 +58,12 @@ security:
     secret-key: ${JWT_SECRET}
 
 # ── Logging ───────────────────────────────────────────────────
+# Archivo activo: /app/logs/seguridadallimite.log
+# Histórico diario: /app/logs/seguridadallimite.yyyy-MM-dd.log (30 días, ver logback-spring.xml)
 logging:
   level:
     root: WARN
     com.seguridadlimite: INFO
   file:
-    name: /app/logs/seguridadallimite.log
+    path: /app/logs
+    name: seguridadallimite.log

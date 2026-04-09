@@ -18,17 +18,17 @@ RUN mvn clean package -DskipTests --no-transfer-progress
 # ─────────────────────────────────────────────
 FROM eclipse-temurin:21-jre-alpine
 
+RUN apk add --no-cache su-exec \
+  && addgroup -S appgroup \
+  && adduser -S appuser -G appgroup
+
 WORKDIR /app
 
-# Usuario no-root por seguridad
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
 COPY --from=builder /app/target/seguridadallimite-1.0.jar app.jar
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh \
+  && chown appuser:appgroup /app/app.jar
 
 EXPOSE 8090
 
-ENTRYPOINT ["java", \
-  "-Djava.security.egd=file:/dev/./urandom", \
-  "-Dspring.profiles.active=prod", \
-  "-jar", "app.jar"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

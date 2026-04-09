@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn clean:*)",
+      "Bash(./mvnw clean:*)",
+      "Bash(xargs grep:*)",
+      "Bash(grep -oE \"\\(get|post|put|delete\\)\\\\\\(['\\\\`][^'\\\\`]+['\\\\`]\")",
+      "Bash(grep -oE \"apiUrl.*['\\\\`][^'\\\\`]+\")",
+      "Bash(grep -oE \"'/[^'\\\\`]+\")",
+      "Bash(timeout 60 ./mvnw spring-boot:run -Dmaven.test.skip=true)",
+      "Bash(java -version)",
+      "Bash(/c/Windows/System32/where.exe java:*)",
+      "Read(//c/Program Files/Eclipse Adoptium//**)",
+      "Read(//c/Program Files/Microsoft//**)",
+      "Bash(export JAVA_HOME=\"/c/Program Files/Eclipse Adoptium/jdk-21.0.8.9-hotspot\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "Bash(timeout 90 ./mvnw spring-boot:run -Dmaven.test.skip=true)",
+      "Bash(/c/Windows/System32/netstat.exe -ano)",
+      "Bash(/c/Windows/System32/taskkill.exe:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(wsl docker:*)",
+      "Bash(wsl bash:*)"
+    ]
+  }
+}
