@@ -16,6 +16,11 @@ logs/
 # ══ CERTIFICADOS SSL (generados por certbot) ══
 nginx/certs/
 letsencrypt/
+certbot/
+
+# ══ SCRIPTS SSL (generados localmente) ══
+*ssl.sh
+*.bak
 
 # ══ SISTEMA OPERATIVO ══════════════════════════
 .DS_Store
