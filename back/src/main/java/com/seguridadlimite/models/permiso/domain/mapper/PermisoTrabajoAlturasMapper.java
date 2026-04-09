@@ -162,7 +162,7 @@ public class PermisoTrabajoAlturasMapper {
 
         // Inicialización de las listas de detalles
 
-        Map<Long, PermisoDetalleChequeoDTO> dtoMap = dto.getPermisoDetalleChequeos().stream()
+        Map<Integer, PermisoDetalleChequeoDTO> dtoMap = dto.getPermisoDetalleChequeos().stream()
                 .collect(Collectors.toMap(PermisoDetalleChequeoDTO::getIdPermisoDetalle, Function.identity()));
 
         permisoTrabajoAlturas.getPermisoDetalleChequeos().forEach(detalle -> {

@@ -20,7 +20,7 @@ public class PermisoDetalleChequeo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_permiso_detalle")
-    private Long idPermisoDetalle;
+    private Integer idPermisoDetalle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_permiso")

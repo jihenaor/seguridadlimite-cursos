@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermisoDetalleChequeoDTO {
-    private Long idPermisoDetalle;
+    private Integer idPermisoDetalle;
     private int idPermiso;
     private Integer idGrupo;
     private String descripcion;
