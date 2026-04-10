@@ -8,7 +8,7 @@ import { PermisoTrabajoComponent } from './pages/permiso-trabajo/permiso-trabajo
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'evaluar',
+    redirectTo: 'permiso-trabajo',
     pathMatch: 'full'
   },
   {

@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +28,7 @@ export interface PermisoTrabajo {
     templateUrl: './permiso-trabajo.component.html',
     imports: [
         CommonModule,
+        RouterLink,
         MatButtonModule,
         MatIconModule,
         MatDialogModule,

@@ -93,16 +93,18 @@ export class SigninComponent implements OnInit {
           this.authService.saveToken(res);
           sessionStorage.setItem("loginid", res.id);
 
-          switch(res.role) {
-            case 'A':
-              this.router.navigate(['/admin/dashboard/main']);
-              break;
-            case 'E':
-              this.router.navigate(['/admin/evaluacion/evaluar']);
-              break;
-            case 'C':
-              this.router.navigate(['/company/dashboard']);
-              break;
+          const role = (res.role || '').toUpperCase();
+          if (role === 'ADMINISTRADOR' || role === 'COORDINADOR') {
+            this.router.navigate(['/admin/dashboard/main']);
+          } else if (role === 'INSTRUCTOR') {
+            this.router.navigate(['/teacher/permiso-trabajo']);
+          } else if (role === 'C') {
+            this.router.navigate(['/company/dashboard']);
+          } else {
+            // Rol no reconocido (ej. 'x', null) — no navegar, mostrar error
+            this.showNotificacionService.displayError(
+              'El usuario no tiene un rol asignado. Contacte al administrador.'
+            );
           }
         } else {
           alert('Fallo en la autenticación');

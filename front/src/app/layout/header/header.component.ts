@@ -56,14 +56,15 @@ export class HeaderComponent
     this.userFullName = this.authService.currentUserValue.nombreusuario;
     this.userImg = this.authService.currentUserValue.img;
 
-    if (userRole === Role.Admin) {
+    const r = (userRole || '').toUpperCase();
+    if (r === Role.Administrador || r === Role.Coordinador) {
       this.homePage = 'admin/dashboard/main';
-    } else if (userRole === Role.Teacher) {
-      this.homePage = 'teacher/dashboard';
-    } else if (userRole === Role.Student) {
+    } else if (r === Role.Instructor) {
+      this.homePage = 'teacher/permiso-trabajo';
+    } else if (r === Role.Student) {
       this.homePage = 'student/dashboard';
     } else {
-      this.homePage = 'admin/dashboard/main';
+      this.homePage = 'authentication/signin';
     }
 
   }

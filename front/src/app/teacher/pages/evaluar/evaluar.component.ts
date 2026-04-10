@@ -1,17 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Grupo } from 'src/app/core/models/grupo.model';
-import { AprendizGrupoTeacherService } from '../../services/aprendizgrupoteacher.service';
-import { Aprendiz } from 'src/app/core/models/aprendiz.model';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { AprendizGrupoTeacherService } from '../../services/aprendizgrupoteacher.service';
 import { PreguntasEvaluacionTeacherService } from '../../services/preguntasevaluacionteacher.service';
 import { EvaluacionAprendizComponent } from '../../components/evaluacion-aprendiz/evaluacion-aprendiz.component';
 import { AprendicesGrupoComponent } from '../../components/aprendices-grupo/aprendices-grupo.component';
 import { GruposComponent } from '../../components/grupos/grupos.component';
-import { FotoModalComponent } from '../../components/foto-modal/foto-modal.component';
 
 @Component({
     templateUrl: './evaluar.component.html',
-    imports: [MatStepperModule,
+    imports: [
+        RouterLink,
+        MatButtonModule,
+        MatIconModule,
+        MatStepperModule,
         GruposComponent,
         AprendicesGrupoComponent,
         EvaluacionAprendizComponent

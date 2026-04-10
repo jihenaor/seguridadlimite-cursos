@@ -47,7 +47,7 @@ const routes: Routes = [
       {
         path: 'admin',
         canActivate: [AuthGuard],
-        data: { role: [Role.Admin, Role.Teacher, Role.Company] },
+        data: { role: [Role.Administrador, Role.Coordinador, Role.Company] },
         loadChildren: () =>
           import('./admin/admin.module').then((m) => m.AdminModule),
       },
@@ -55,7 +55,7 @@ const routes: Routes = [
       {
         path: 'teacher',
         canActivate: [AuthGuard],
-        data: { role: [Role.Teacher, Role.Admin] },
+        data: { role: [Role.Instructor, Role.Administrador, Role.Coordinador] },
         loadChildren: () =>
           import('./teacher/teacher.module').then((m) => m.TeacherModule),
       },

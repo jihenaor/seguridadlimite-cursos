@@ -82,16 +82,43 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
     :host ::ng-deep .inscripcion-date-field {
       width: 100%;
     }
-    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-subscript-wrapper {
+    /* Ocultar hint/error sin colapsar el cálculo de altura del outline (evita etiqueta pegada al borde). */
+    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-subscript-wrapper,
+    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-subscript-wrapper {
       display: none;
+    }
+    :host ::ng-deep .inscripcion-date-field.mat-mdc-form-field,
+    :host ::ng-deep .inscripcion-dia-date.mat-mdc-form-field {
+      --mat-form-field-subscript-text-line-height: 0px;
+      --mat-form-field-subscript-text-tracking: 0;
     }
     :host ::ng-deep .inscripcion-dia-date {
       flex: 1;
       width: 100%;
       font-size: 13px;
     }
-    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-subscript-wrapper {
-      display: none;
+    /*
+     * Artefacto MDC: el notch lleva border-left transparente; si un tema pinta border-color
+     * en el notch, aparece una línea vertical en medio del texto (también fuera de .dark).
+     */
+    :host ::ng-deep .inscripcion-date-field .mdc-notched-outline__notch,
+    :host ::ng-deep .inscripcion-dia-date .mdc-notched-outline__notch {
+      border-left-color: transparent !important;
+    }
+    :host ::ng-deep [dir='rtl'] .inscripcion-date-field .mdc-notched-outline__notch,
+    :host ::ng-deep [dir='rtl'] .inscripcion-dia-date .mdc-notched-outline__notch {
+      border-left: none !important;
+      border-right-color: transparent !important;
+    }
+    /* Línea entre zona de texto y botón del calendario (sufijo). */
+    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-icon-suffix,
+    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-icon-suffix {
+      border: none !important;
+      border-inline-start: none !important;
+    }
+    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-infix,
+    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-infix {
+      border-inline-end: none !important;
     }
     .dia-diseno-label {
       min-width: 0;

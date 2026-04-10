@@ -82,15 +82,10 @@ export class ModalPermisoComponent implements OnInit {
   // Definición de los grupos de chequeo con sus detalles
   gruposChequeo: any[] = [];
 
-  /** Rol granular de sl_personal del usuario autenticado (ej. COORDINADOR, INSTRUCTOR) */
-  get rolPersonal(): string {
-    return this.authService.currentUserValue?.rolPersonal || '';
-  }
-
-  /** Solo Admin (A) y Supervisor (S) pueden gestionar responsables */
+  /** Solo Administrador y Coordinador pueden ver/gestionar la pestaña de Responsables */
   get puedeGestionarResponsables(): boolean {
-    const role = this.authService.currentUserValue?.role as string;
-    return role === 'A' || role === 'S';
+    const role = (this.authService.currentUserValue?.role as string || '').toUpperCase();
+    return role === 'ADMINISTRADOR' || role === 'COORDINADOR';
   }
 
   constructor(
