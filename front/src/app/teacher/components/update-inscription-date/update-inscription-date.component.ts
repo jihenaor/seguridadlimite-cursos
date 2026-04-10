@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Nivel } from '../../../core/models/nivel.model';
 import { IniciarPermisoTrabajoAlturasService } from '../../../core/service/iniciarPermisoTrabajoAlturas.service';
 import { ActiveWorkPermitsComponent } from '../active-work-permits/active-work-permits.component';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-update-inscription-date',
@@ -79,6 +79,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class UpdateInscriptionDateComponent {
   niveles: Nivel[] = [];
+  /** 0 = Cursos abiertos en la fecha, 1 = Apertura de Inscripción */
+  selectedTabIndex = 0;
   updateSuccess = signal(false);
   private effectRef: EffectRef | undefined;
 
@@ -99,6 +101,35 @@ export class UpdateInscriptionDateComponent {
   onSelectionChange(nivel: Nivel) {
   }
 
+  onTabChange(ev: MatTabChangeEvent): void {
+    this.selectedTabIndex = ev.index;
+  }
+
+  /**
+   * Al menos un nivel seleccionado con fechas válidas y, si hay fechas de diseño, día informado.
+   */
+  canSaveInscripcion(): boolean {
+    const seleccionados = this.niveles.filter((n) => n.seleccionado);
+    if (seleccionados.length === 0) {
+      return false;
+    }
+    for (const n of seleccionados) {
+      if (!this.validateDate(n.fechadesde) || !this.validateDate(n.fechahasta)) {
+        return false;
+      }
+      const dias = n.diasdiseno;
+      if (dias?.length) {
+        for (const d of dias) {
+          const tieneFecha = !!(d.fecha && String(d.fecha).trim());
+          if (tieneFecha && (d.dia === null || d.dia === undefined)) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   formatDate(date: string | Date): string {
     if (!date) return '';
     if (typeof date === 'string') return date;
@@ -110,15 +141,10 @@ export class UpdateInscriptionDateComponent {
     return `${year}-${month}-${day}`;
   }
 
-  onDateChange(nivel: Nivel, field: 'fechadesde' | 'fechahasta' , event: any) {
-    // For HTML5 date input, the value is already in YYYY-MM-DD format
+  onDateChange(obj: any, field: string, event: any) {
     const dateValue = event.target.value;
     if (dateValue) {
-      // Ensure the date is stored as YYYY-MM-DD string
-      nivel[field] = dateValue;
-      console.log(`${field} set to:`, dateValue);
-      console.log('Date format verified:', /^\d{4}-\d{2}-\d{2}$/.test(dateValue));
-      console.log('Full nivel object:', nivel);
+      obj[field] = dateValue;
     }
   }
 
@@ -176,15 +202,24 @@ export class UpdateInscriptionDateComponent {
 
   startWorkPermissions() {
     const nivelesSeleccionados = this.niveles.filter(nivel => nivel.seleccionado);
-    
-    // Validar que todos los niveles seleccionados tengan fechas válidas
+
+    if (nivelesSeleccionados.length === 0) {
+      alert('Seleccione al menos un nivel y complete las fechas en la pestaña «Apertura de Inscripción».');
+      return;
+    }
+
     const nivelesInvalidos = nivelesSeleccionados.filter(nivel => {
-      return !this.validateDate(nivel.fechadesde) || 
+      return !this.validateDate(nivel.fechadesde) ||
              !this.validateDate(nivel.fechahasta);
     });
 
     if (nivelesInvalidos.length > 0) {
       alert('Todos los campos de fecha deben estar en formato AAAA-MM-DD para los niveles seleccionados');
+      return;
+    }
+
+    if (!this.canSaveInscripcion()) {
+      alert('Revise las fechas de diseño: cada fecha requiere el día del cronograma indicado.');
       return;
     }
 

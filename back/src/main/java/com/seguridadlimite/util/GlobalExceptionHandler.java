@@ -8,6 +8,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,6 +23,9 @@ public class GlobalExceptionHandler {
         if (e instanceof BusinessException) {
             errorResponse = new ErrorResponse(e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
+        } else if (e instanceof AuthenticationException authEx) {
+            errorResponse = new ErrorResponse(authEx.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         } else if (e instanceof DataIntegrityViolationException dataintegrityviolationexception) {
             String message = extractConstraintViolationMessage(dataintegrityviolationexception);
             errorResponse = new ErrorResponse(message);

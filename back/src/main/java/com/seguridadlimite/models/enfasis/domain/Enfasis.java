@@ -23,6 +23,7 @@ public class Enfasis implements Serializable {
   @Size(min = 1, max = 45)
   private String nombre;
 
+  @Column(name = "estado", length = 1, nullable = false)
   private String estado;
 
   public Enfasis() {

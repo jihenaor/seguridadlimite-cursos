@@ -4,7 +4,6 @@ import com.seguridadlimite.security.security.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,9 +34,6 @@ import org.springframework.stereotype.Component;
 public class HttpSecurityConfig {
 
     @Autowired
-    private AuthenticationProvider authenticationProvider;
-
-    @Autowired
     private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
@@ -47,7 +43,6 @@ public class HttpSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider)
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(builderRequestMatchers());
 
@@ -77,6 +72,25 @@ public class HttpSecurityConfig {
             // Los trabajadores acceden directamente con su número de documento
             authConfig.requestMatchers(HttpMethod.GET,  "/api/aprendiz/evaluacion/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/evaluacion/**").permitAll();
+
+            // ── Datos de referencia usados en el formulario público de inscripción ──
+            // Estos endpoints son de solo lectura y los necesita el flujo de
+            // auto-inscripción del trabajador, que no requiere login previo.
+            authConfig.requestMatchers(HttpMethod.GET,
+                    "/api/empresas",
+                    "/api/epss",
+                    "/api/arls",
+                    "/api/enfasis-inscripcion",
+                    "/api/documentos",
+                    "/api/gruposactivosinscripcion",
+                    "/api/nivel/activosfecha",
+                    "/api/nivel/activosinscripcion",
+                    "/api/permisos/inscripciones-abiertas").permitAll();
+            authConfig.requestMatchers(HttpMethod.GET,
+                    "/api/trabajadorinscripcion/**",
+                    "/api/aprendiz/**").permitAll();
+            // Guardar inscripción desde el formulario público
+            authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/save").permitAll();
 
             // ── Endpoints protegidos — cualquier usuario autenticado ──────────
             authConfig.requestMatchers("/api/**").authenticated();

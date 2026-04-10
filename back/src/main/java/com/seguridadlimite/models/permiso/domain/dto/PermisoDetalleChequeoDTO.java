@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PermisoDetalleChequeoDTO {
     private Integer idPermisoDetalle;
-    private int idPermiso;
+    private Integer idPermiso;
     private Integer idGrupo;
     private String descripcion;
     private String respuesta;

@@ -59,9 +59,11 @@ public class PermisoTrabajoAlturasMapper {
                     .toList(); // o .collect(Collectors.toList()) si usas Java 8
 
 
-            builder.tiposTrabajo(convertToTipoTrabajoDTOs(entity.getTiposTrabajo()))
-                   .permisoDetalleChequeos(convertToDetalleChequeoDTOs(entity.getPermisoDetalleChequeos()))
-                   .permisoDetalleActividades(convertToDetalleActividadDTOs(entity.getPermisoDetalleActividades()))
+            Integer idPermiso = entity.getIdPermiso();
+            builder.tiposTrabajo(convertToTipoTrabajoDTOs(entity.getTiposTrabajo(), idPermiso))
+                   .permisoDetalleChequeos(convertToDetalleChequeoDTOs(entity.getPermisoDetalleChequeos(), idPermiso))
+                   .permisoDetalleActividades(
+                           convertToDetalleActividadDTOs(entity.getPermisoDetalleActividades(), idPermiso))
                    .permisoFechas(convertToPermisoFechasDTOs(entity.getPermisoFechas()))
                    .grupoChequeo(grupoChequeoDTOs);
         }
@@ -77,46 +79,50 @@ public class PermisoTrabajoAlturasMapper {
                 .build();
     }
 
-    private List<PermisoDetalleChequeoDTO> convertToDetalleChequeoDTOs(List<PermisoDetalleChequeo> detalles) {
-        if (detalles == null) return List.of();
+    private List<PermisoDetalleChequeoDTO> convertToDetalleChequeoDTOs(
+            List<PermisoDetalleChequeo> detalles, Integer idPermiso) {
+        if (detalles == null) {
+            return List.of();
+        }
         return detalles.stream()
-                .map(detalleChequeo -> {
-                        return PermisoDetalleChequeoDTO.builder()
-                                .idPermisoDetalle(detalleChequeo.getIdPermisoDetalle())
-                                .idPermiso(detalleChequeo.getPermisoTrabajoAlturas().getIdPermiso())
-                                .idGrupo(detalleChequeo.getIdGrupo())
-                                .descripcion(detalleChequeo.getDescripcion())
-                                .respuesta(detalleChequeo.getRespuesta())
-                                .build();
-                })
+                .map(detalleChequeo -> PermisoDetalleChequeoDTO.builder()
+                        .idPermisoDetalle(detalleChequeo.getIdPermisoDetalle())
+                        .idPermiso(idPermiso)
+                        .idGrupo(detalleChequeo.getIdGrupo())
+                        .descripcion(detalleChequeo.getDescripcion())
+                        .respuesta(detalleChequeo.getRespuesta())
+                        .build())
                 .toList();
     }
 
-    private List<PermisoDetalleActividadDTO> convertToDetalleActividadDTOs(List<PermisoDetalleActividad> detalles) {
-        if (detalles == null) return List.of();
+    private List<PermisoDetalleActividadDTO> convertToDetalleActividadDTOs(
+            List<PermisoDetalleActividad> detalles, Integer idPermiso) {
+        if (detalles == null) {
+            return List.of();
+        }
         return detalles.stream()
-                .map(detalle -> {
-                        return PermisoDetalleActividadDTO.builder()
-                                .idPermisoActividad(detalle.getIdPermisoActividad())
-                                .idPermiso(detalle.getPermisoTrabajoAlturas().getIdPermiso())
-                                .actividadrealizar(detalle.getActividadRealizar())
-                                .controlesrequeridos(detalle.getControlesRequeridos())
-                                .peligros(detalle.getPeligros())
-                                .build();
-
-                })
+                .map(detalle -> PermisoDetalleActividadDTO.builder()
+                        .idPermisoActividad(detalle.getIdPermisoActividad())
+                        .idPermiso(idPermiso)
+                        .actividadrealizar(detalle.getActividadRealizar())
+                        .controlesrequeridos(detalle.getControlesRequeridos())
+                        .peligros(detalle.getPeligros())
+                        .build())
                 .toList();
     }
 
-    private List<PermisoTipoTrabajoDTO> convertToTipoTrabajoDTOs(List<?> tipos) {
-        if (tipos == null) return List.of();
+    private List<PermisoTipoTrabajoDTO> convertToTipoTrabajoDTOs(
+            List<PermisoTipoTrabajo> tipos, Integer idPermiso) {
+        if (tipos == null) {
+            return List.of();
+        }
         return tipos.stream()
-                .map(tipo -> {
-                    if (tipo instanceof PermisoTipoTrabajoDTO) {
-                        return (PermisoTipoTrabajoDTO) tipo;
-                    }
-                    return null;
-                })
+                .filter(Objects::nonNull)
+                .map(tipo -> PermisoTipoTrabajoDTO.builder()
+                        .idPermisoTipoTrabajo(tipo.getId() != null ? tipo.getId().longValue() : null)
+                        .idPermiso(idPermiso != null ? idPermiso.longValue() : null)
+                        .descripcion(tipo.getTipoTrabajo())
+                        .build())
                 .toList();
     }
 

@@ -82,7 +82,7 @@ path:
 
 logging:
   file:
-    name: ../logs.log
+    name: ../logs/logs.log
   level:
     root: INFO
     com.seguridadlimite: DEBUG

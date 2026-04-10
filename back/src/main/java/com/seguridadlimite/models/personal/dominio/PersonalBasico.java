@@ -12,6 +12,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * Subconjunto de columnas de {@code sl_personal} para relaciones JPA ligeras (p. ej. permisos).
+ * La autenticación usa {@link Personal} (misma tabla), que incluye {@code password}, {@code role}, email, etc.
+ */
 @Entity
 @Table(name = "sl_personal")
 @Data

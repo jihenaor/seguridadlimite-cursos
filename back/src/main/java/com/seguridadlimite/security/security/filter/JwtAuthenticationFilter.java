@@ -1,8 +1,9 @@
 package com.seguridadlimite.security.security.filter;
 
-import com.seguridadlimite.security.entity.User;
-import com.seguridadlimite.security.repository.UserRepository;
+import com.seguridadlimite.models.personal.application.PersonalService;
+import com.seguridadlimite.models.personal.dominio.Personal;
 import com.seguridadlimite.security.service.JwtService;
+import com.seguridadlimite.security.util.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +20,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -30,14 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private UserRepository userRepository;
+    private PersonalService personalService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // 1. Leer el header Authorization
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -45,17 +44,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 2. Extraer el JWT
         String jwt = authHeader.split(" ")[1].trim();
 
-        // 3. Validar firma y expiración antes de continuar
         if (!jwtService.isTokenValid(jwt)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"error\":\"Token inválido o expirado\"}");
             return;
         }
 
-        // 4. Extraer username
         String username;
         try {
             username = jwtService.extractUsername(jwt);
@@ -66,24 +62,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 5. Buscar usuario en BD para obtener sus roles (opcional).
-        // Si el username pertenece al sistema legacy (Personal/Empresa/Trabajador)
-        // puede no existir en la tabla security 'user' — igual se autentica con JWT válido.
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        Collection<? extends GrantedAuthority> authorities = userOptional
-                .map(User::getAuthorities)
-                .orElseGet(() -> {
-                    logger.debug("Username '{}' no está en tabla security/user; se autentica con JWT sin roles específicos.", username);
-                    return Collections.emptyList();
-                });
+        // Subject del JWT = mismo identificador que en login (documento o email en sl_personal).
+        Personal personal = personalService.findByLogin(username, null);
+        Collection<? extends GrantedAuthority> authorities;
+        if (personal != null) {
+            Role role = Role.fromPersonalRoleCode(personal.getRole());
+            authorities = Role.asSpringAuthorities(role);
+        } else {
+            logger.debug("Subject JWT '{}' no encontrado en sl_personal; se autentica sin authorities de BD.",
+                    username);
+            authorities = Collections.emptyList();
+        }
 
-        // 6. Registrar autenticación en el SecurityContext
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                username, null, authorities
-        );
+                username, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        // 7. Continuar con la cadena de filtros
         filterChain.doFilter(request, response);
     }
 }

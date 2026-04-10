@@ -16,8 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -79,23 +82,49 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
     }
 
     private void registrarPermisoFechas(PermisoTrabajoAlturas permiso, List<DiaDto> diasdiseno) {
-        List<PermisoFechas> permisoFechasList = new ArrayList<>();
-        
-        for (DiaDto diaDto : diasdiseno) {
-            if (diaDto.getFecha() != null && !diaDto.getFecha().isEmpty() && diaDto.getFecha().length() == 10) {
-                PermisoFechas permisoFechas = PermisoFechas.builder()
-                        .permisoTrabajoAlturas(permiso)
-                        .fecha(diaDto.getFecha())
-                        .contexto(diaDto.getContexto())
-                        .build();
-                permisoFechasList.add(permisoFechas);
-            }
+        if (diasdiseno == null || diasdiseno.isEmpty()) {
+            permiso.setPermisoFechas(new ArrayList<>());
+            return;
         }
-        
-        // Establecer la relación en la entidad principal
+
+        // Una fila por fecha calendario: en BD suele existir UNIQUE idx_fecha_permiso (id_permiso, fecha).
+        // El front puede enviar la misma fecha repetida (distinto dia/contexto/unidad); sin esto falla el INSERT.
+        Map<String, DiaDto> unicosPorFecha = new LinkedHashMap<>();
+        for (DiaDto diaDto : diasdiseno) {
+            String fecha = normalizarFechaCalendario(diaDto.getFecha());
+            if (fecha == null) {
+                continue;
+            }
+            unicosPorFecha.putIfAbsent(fecha, diaDto);
+        }
+
+        List<PermisoFechas> permisoFechasList = new ArrayList<>();
+        for (DiaDto diaDto : unicosPorFecha.values()) {
+            String fecha = normalizarFechaCalendario(diaDto.getFecha());
+            permisoFechasList.add(PermisoFechas.builder()
+                    .permisoTrabajoAlturas(permiso)
+                    .fecha(fecha)
+                    .dia(diaDto.getDia())
+                    .contexto(diaDto.getContexto())
+                    .unidad(diaDto.getUnidad())
+                    .build());
+        }
+
         permiso.setPermisoFechas(permisoFechasList);
     }
-    
+
+    /** yyyy-MM-dd normalizado; null si no es una fecha calendario válida de 10 caracteres. */
+    private static String normalizarFechaCalendario(String raw) {
+        if (raw == null) {
+            return null;
+        }
+        String t = raw.trim();
+        if (t.length() != 10 || !t.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            return null;
+        }
+        return t;
+    }
+
     private void validarNivelDTO(NivelUpdateDTO nivelDTO) {
         if (nivelDTO.getId() == null) {
             throw new BusinessException("El ID del nivel es obligatorio");
@@ -107,37 +136,84 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
             throw new BusinessException("La fecha fin es obligatoria");
         }
 
-        // Validar formato de fecha AAAA-MM-DD
-        if (!nivelDTO.getFechadesde().matches("\\d{4}-\\d{2}-\\d{2}")) {
-            throw new BusinessException("La fecha de inicio debe tener el formato AAAA-MM-DD");
-        }
-        if (!nivelDTO.getFechahasta().matches("\\d{4}-\\d{2}-\\d{2}")) {
-            throw new BusinessException("La fecha fin debe tener el formato AAAA-MM-DD");
+        String fd = nivelDTO.getFechadesde().trim();
+        String fh = nivelDTO.getFechahasta().trim();
+        nivelDTO.setFechadesde(fd);
+        nivelDTO.setFechahasta(fh);
+
+        if (!fd.matches("\\d{4}-\\d{2}-\\d{2}") || !fh.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            throw new BusinessException("Las fechas deben tener el formato AAAA-MM-DD");
         }
 
-        // Obtener fecha actual en formato AAAA-MM-DD
-        String fechaActual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        
-        // Validar que la fecha de inicio no sea menor a la fecha actual
-        if (nivelDTO.getFechadesde().compareTo(fechaActual) < 0) {
-            throw new BusinessException("La fecha de inicio no puede ser menor a la fecha actual");
+        LocalDate dDesde = parseFechaIso(fd, "fecha de inicio");
+        LocalDate dHasta = parseFechaIso(fh, "fecha fin");
+        LocalDate hoy = LocalDate.now();
+        LocalDate limite = hoy.plusMonths(2);
+
+        if (dDesde.isBefore(hoy)) {
+            throw new BusinessException("La fecha de inicio no puede ser anterior a la fecha actual");
+        }
+        if (dHasta.isBefore(hoy)) {
+            throw new BusinessException("La fecha fin no puede ser anterior a la fecha actual");
+        }
+        if (dDesde.isAfter(limite)) {
+            throw new BusinessException("La fecha de inicio no puede ser posterior a 2 meses desde la fecha actual");
+        }
+        if (dHasta.isAfter(limite)) {
+            throw new BusinessException("La fecha fin no puede ser posterior a 2 meses desde la fecha actual");
+        }
+        if (dDesde.isAfter(dHasta)) {
+            throw new BusinessException("La fecha de inicio no puede ser posterior a la fecha fin");
         }
 
-        // Calcular fecha máxima (2 meses después de la fecha actual)
-        String fechaMaxima = LocalDate.now().plusMonths(2).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        
-        // Validar que la fecha fin no sea mayor a 2 meses después de la fecha actual
-        if (nivelDTO.getFechahasta().compareTo(fechaMaxima) > 0) {
-            throw new BusinessException("La fecha fin no puede ser mayor a 2 meses después de la fecha actual");
-        }
+        validarFechasDiasDiseno(nivelDTO.getDiasdiseno(), dDesde, dHasta, hoy, limite);
+    }
 
-        // Validar que la fecha fin no sea menor a la fecha de inicio
-        if (nivelDTO.getFechahasta().compareTo(nivelDTO.getFechadesde()) < 0) {
-            throw new BusinessException("La fecha fin no puede ser menor a la fecha de inicio");
+    private static LocalDate parseFechaIso(String valor, String etiqueta) {
+        try {
+            return LocalDate.parse(valor, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (DateTimeParseException e) {
+            throw new BusinessException("La " + etiqueta + " no es una fecha válida del calendario (AAAA-MM-DD)");
         }
+    }
 
-        //if (nivelDTO.getCupoInicial() == null || nivelDTO.getCupoInicial() < 0) {
-        //     throw new BusinessException("El cupo inicial debe ser un número positivo");
-        //}
+    /**
+     * Fechas digitadas en el diseño: dentro de [hoy, hoy+2 meses] y dentro del rango del permiso [inicio, fin].
+     */
+    private void validarFechasDiasDiseno(
+            List<DiaDto> diasdiseno,
+            LocalDate dDesde,
+            LocalDate dHasta,
+            LocalDate hoy,
+            LocalDate limite) {
+        if (diasdiseno == null || diasdiseno.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < diasdiseno.size(); i++) {
+            DiaDto diaDto = diasdiseno.get(i);
+            if (diaDto.getFecha() == null || diaDto.getFecha().trim().isEmpty()) {
+                continue;
+            }
+            String f = normalizarFechaCalendario(diaDto.getFecha());
+            if (f == null) {
+                throw new BusinessException(
+                        "La fecha del día de diseño (posición " + (i + 1) + ") debe ser AAAA-MM-DD válida");
+            }
+            LocalDate d = parseFechaIso(f, "fecha del día de diseño");
+            if (d.isBefore(hoy)) {
+                throw new BusinessException("Las fechas de diseño no pueden ser anteriores a la fecha actual");
+            }
+            if (d.isAfter(limite)) {
+                throw new BusinessException("Las fechas de diseño no pueden ser posteriores a 2 meses desde la fecha actual");
+            }
+            if (d.isBefore(dDesde) || d.isAfter(dHasta)) {
+                throw new BusinessException(
+                        "Las fechas de diseño deben estar entre la fecha de inicio y la fecha fin del permiso");
+            }
+            if (diaDto.getDia() == null) {
+                throw new BusinessException(
+                        "El día del cronograma es obligatorio para cada fecha de diseño (posición " + (i + 1) + ")");
+            }
+        }
     }
 } 

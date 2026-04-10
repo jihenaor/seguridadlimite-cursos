@@ -1,128 +1,146 @@
-<div class="flex flex-col h-full">
-  <mat-tab-group class="w-full flex-1">
+<div style="display: flex; flex-direction: column; height: 100%;">
+
+  <mat-tab-group style="flex: 1; min-height: 0;"
+                 (selectedTabChange)="onTabChange($event)">
+
+    <!-- Tab 1: Cursos activos (solo consulta; no guarda inscripción aquí) -->
     <mat-tab label="Cursos abiertos en la fecha">
-      <div class="p-4">
+      <div style="padding: 16px; max-height: 62vh; overflow-y: auto;">
         <app-active-work-permits></app-active-work-permits>
       </div>
     </mat-tab>
-    
+
+    <!-- Tab 2: Apertura de inscripción -->
     <mat-tab label="Apertura de Inscripción">
-      <div class="p-4 max-h-80 overflow-y-auto">
-      <div *ngIf="niveles.length > 0" class="overflow-x-auto max-w-full">
-      <div class="overflow-x-auto">
-        <table class="w-full border border-gray-300 bg-white">
-          <!-- Encabezados -->
-          <thead>
-            <tr class="bg-gray-100">
-              <th class="px-2 py-2 text-left w-24 border-b border-gray-300">Selec</th>
-              <th class="px-2 py-2 text-left border-b border-gray-300">Nombre</th>
-              <th class="px-2 py-2 text-left w-40 border-b border-gray-300">Fecha Desde</th>
-              <th class="px-2 py-2 text-left w-40 border-b border-gray-300">Fecha Hasta</th>
-              <th class="px-2 py-2 text-left w-40 border-b border-gray-300"># de Grupos</th>
-            </tr>
-          </thead>
-          
-          <!-- Cuerpo de la tabla -->
-          <tbody>
-            <ng-container *ngFor="let nivel of niveles">
-              <!-- Fila principal -->
-              <tr class="hover:bg-gray-50">
-                <!-- Selección -->
-                <td class="px-2 py-2 border-b border-gray-300 w-24">
-                  <mat-checkbox [(ngModel)]="nivel.seleccionado" (change)="onSelectionChange(nivel)"></mat-checkbox>
-                </td>
-                
-                <!-- Nombre -->
-                <td class="px-2 py-2 border-b border-gray-300">
-                  {{ nivel.nombre }}
-                </td>
-                
-                <!-- Fecha Desde -->
-                <td class="px-2 py-2 border-b border-gray-300 w-40">
-                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
-                    <input type="date" 
-                           [(ngModel)]="nivel.fechadesde"
-                           (change)="onDateChange(nivel, 'fechadesde', $event)"
-                           title="Seleccione una fecha"
-                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  </div>
-                  <span *ngIf="!nivel.seleccionado">-</span>
-                </td>
-                
-                <!-- Fecha Hasta -->
-                <td class="px-2 py-2 border-b border-gray-300 w-40">
-                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
-                    <input type="date" 
-                           [(ngModel)]="nivel.fechahasta"
-                           (change)="onDateChange(nivel, 'fechahasta', $event)"
-                           title="Seleccione una fecha"
-                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  </div>
-                  <span *ngIf="!nivel.seleccionado">-</span>
-                </td>
-                
-                                
-                <!-- Número de Grupos -->
-                <td class="px-2 py-2 border-b border-gray-300 w-40">
-                  <div *ngIf="nivel.seleccionado" class="w-40" style="max-width: 160px;">
-                    <input type="number" 
-                           [(ngModel)]="nivel.numerogrupos"
-                           class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  </div>
-                  <span *ngIf="!nivel.seleccionado">-</span>
-                </td>
-              </tr>
-              
-              <!-- Fila expandida -->
-              <tr *ngIf="nivel.seleccionado" class="bg-gray-50">
-                <td colspan="7" class="px-4 py-4 border-b border-gray-300">
-                  <div class="w-full">
+      <div style="display: flex; flex-direction: column; max-height: 62vh; min-height: 0;">
+        <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px;">
 
-                    
-                    <div class="max-w-md">
-                      <table class="w-full text-sm border border-gray-300 bg-white">
-                        <thead>
-                          <tr class="bg-gray-100">
-                            <th class="border border-gray-300 px-3 py-2 text-left">Día</th>
-                            <th class="border border-gray-300 px-3 py-2 text-left">Fecha</th>
-                            <th class="border border-gray-300 px-3 py-2 text-left">Contexto</th>
-                            <th class="border border-gray-300 px-3 py-2 text-left">Unidad</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let dia of nivel.diasdiseno" class="hover:bg-gray-50">
-                            <td class="border border-gray-300 px-3 py-2">{{ dia.dia }}</td>
-                            <td class="border border-gray-300 px-3 py-2">
-                              <input type="date" 
-                                     [(ngModel)]="dia.fecha"
-                                     (change)="onDateChange(dia, 'fecha', $event)"
-                                     title="Seleccione una fecha"
-                                     class="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            </td>
-                            <td class="border border-gray-300 px-3 py-2">{{ dia.contexto }}</td>
-                            <td class="border border-gray-300 px-3 py-2">{{ dia.unidad }}</td>
-                            <td class="border border-gray-300 px-3 py-2 text-center">
+        <p *ngIf="niveles.length === 0"
+           style="text-align: center; color: #9e9e9e; padding: 32px 0;">
+          No hay niveles disponibles
+        </p>
 
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+        <!-- Tarjeta por nivel -->
+        <div *ngFor="let nivel of niveles"
+             style="margin-bottom: 12px; border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s;"
+             [style.border]="nivel.seleccionado ? '2px solid #1976d2' : '1px solid #e0e0e0'"
+             [style.boxShadow]="nivel.seleccionado ? '0 2px 8px rgba(25,118,210,0.12)' : 'none'">
+
+          <!-- Encabezado del card (clic para expandir) -->
+          <div style="display: flex; align-items: center; padding: 12px 16px; cursor: pointer; user-select: none;"
+               [style.backgroundColor]="nivel.seleccionado ? '#e3f2fd' : '#fafafa'"
+               (click)="nivel.seleccionado = !nivel.seleccionado; onSelectionChange(nivel)">
+
+            <mat-checkbox
+              [(ngModel)]="nivel.seleccionado"
+              (click)="$event.stopPropagation()"
+              (change)="onSelectionChange(nivel)"
+              style="margin-right: 12px;">
+            </mat-checkbox>
+
+            <span style="flex: 1; font-weight: 500; font-size: 15px; color: #212121;">
+              {{ nivel.nombre }}
+            </span>
+
+            <mat-icon style="color: #757575; font-size: 20px;">
+              {{ nivel.seleccionado ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </div>
+
+          <!-- Cuerpo expandido -->
+          <div *ngIf="nivel.seleccionado"
+               style="padding: 16px 20px 20px; background: #fff; border-top: 1px solid #e3f2fd;">
+
+            <!-- Fechas y número de grupos -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 160px; gap: 16px; margin-bottom: 4px;">
+
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Fecha desde</mat-label>
+                <input matInput type="date"
+                       [(ngModel)]="nivel.fechadesde"
+                       (change)="onDateChange(nivel, 'fechadesde', $event)">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Fecha hasta</mat-label>
+                <input matInput type="date"
+                       [(ngModel)]="nivel.fechahasta"
+                       (change)="onDateChange(nivel, 'fechahasta', $event)">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label># Grupos</mat-label>
+                <input matInput type="number" min="1"
+                       [(ngModel)]="nivel.numerogrupos"
+                       placeholder="Ej. 2">
+              </mat-form-field>
+
+            </div>
+
+            <!-- Días de diseño curricular -->
+            <div *ngIf="nivel.diasdiseno && nivel.diasdiseno.length > 0"
+                 style="margin-top: 8px;">
+
+              <p style="font-size: 11px; font-weight: 600; text-transform: uppercase;
+                         letter-spacing: 0.05em; color: #757575; margin-bottom: 10px;">
+                Fechas por día de diseño curricular
+              </p>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div *ngFor="let dia of nivel.diasdiseno"
+                     style="display: flex; align-items: center; gap: 12px;
+                            background: #f5f5f5; border-radius: 6px; padding: 8px 12px;">
+
+                  <!-- Etiqueta del día -->
+                  <div style="min-width: 80px; flex-shrink: 0;">
+                    <div style="font-size: 13px; font-weight: 600; color: #37474f;">
+                      Día {{ dia.dia }}
+                    </div>
+                    <div style="font-size: 11px; color: #78909c; white-space: nowrap;
+                                overflow: hidden; text-overflow: ellipsis; max-width: 110px;"
+                         [title]="dia.contexto + ' — ' + dia.unidad">
+                      {{ dia.contexto }}
                     </div>
                   </div>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
+
+                  <!-- Input de fecha -->
+                  <mat-form-field appearance="outline"
+                                  style="flex: 1; font-size: 13px; margin-bottom: -1.25em;">
+                    <input matInput type="date"
+                           [(ngModel)]="dia.fecha"
+                           (change)="onDateChange(dia, 'fecha', $event)">
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        </div>
+
+        <!-- Acciones fijas al pie solo en esta pestaña -->
+        <div style="flex-shrink: 0; display: flex; justify-content: flex-end; gap: 12px;
+                    padding: 14px 20px; border-top: 1px solid #e0e0e0; background: #fff;">
+          <button mat-button type="button" (click)="dialogRef.close()">Cancelar</button>
+          <button mat-raised-button color="primary" type="button"
+                  [disabled]="!canSaveInscripcion()"
+                  (click)="startWorkPermissions()">
+            <mat-icon style="font-size: 18px; height: 18px; width: 18px;
+                         vertical-align: middle; margin-right: 6px;">save</mat-icon>
+            Guardar inscripción
+          </button>
+        </div>
       </div>
-      </div>
-    </div>
     </mat-tab>
   </mat-tab-group>
-  
-  <!-- Botones siempre visibles en la parte inferior -->
-  <div class="flex justify-end space-x-4 mt-4 p-4 border-t border-gray-200 bg-white sticky bottom-0">
-    <button mat-raised-button color="primary" (click)="startWorkPermissions()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Actualizar</button>
-    <button mat-button (click)="dialogRef.close()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Cancelar</button>
+
+  <!-- Cerrar desde la pestaña de solo lectura -->
+  <div *ngIf="selectedTabIndex === 0"
+       style="display: flex; justify-content: flex-end; gap: 12px;
+              padding: 14px 20px; border-top: 1px solid #e0e0e0; background: #fff;">
+    <button mat-button type="button" (click)="dialogRef.close()">Cerrar</button>
   </div>
+
 </div>

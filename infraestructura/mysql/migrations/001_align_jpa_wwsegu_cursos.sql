@@ -4,6 +4,9 @@
 -- Bases antiguas: columna única idpersonaautoriza, sin numerogrupos / idpersonaautoriza2,
 -- tablas grupo_chequeo en minúsculas vs @Table GrupoChequeo en Java.
 --
+-- Si solo fallan columnas en INSERT (p. ej. idpersonaautoriza1) y no quieres
+-- tocar aún el índice único, ejecuta primero: 004_permiso_trabajo_alturas_columnas_jpa.sql
+--
 -- Hacer BACKUP antes. Ejecutar por bloques y omitir lo que ya esté aplicado.
 -- MySQL 8.x · base: wwsegu_cursos
 -- =============================================================================
@@ -48,9 +51,8 @@ WHERE `idpersonaautoriza` IS NOT NULL;
 
 ALTER TABLE `permiso_trabajo_alturas` DROP COLUMN `idpersonaautoriza`;
 
--- Solo si NO tienes columna dias todavía:
--- ALTER TABLE `permiso_trabajo_alturas`
---   ADD COLUMN `dias` int NOT NULL DEFAULT 1 AFTER `cupofinal`;
+-- Columna dias: añádela con 004 (idempotente) o manualmente si aún no existe:
+-- ALTER TABLE `permiso_trabajo_alturas` ADD COLUMN `dias` int NULL AFTER `cupofinal`;
 
 ALTER TABLE `permiso_trabajo_alturas`
   ADD UNIQUE KEY `idx_nivel_fecha_autoriza_unique` (`id_nivel`,`fecha_inicio`,`idpersonaautoriza1`);

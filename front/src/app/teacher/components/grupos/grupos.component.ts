@@ -88,9 +88,11 @@ export class GruposComponent implements OnInit {
       next: (niveles) => {
         // Una vez tengamos los datos, abrimos el modal
         const dialogRef = this.dialog.open(UpdateInscriptionDateComponent, {
-          width: '800px',
+          width: '920px',
+          maxWidth: '96vw',
+          maxHeight: '90vh',
           disableClose: true,
-          data: { niveles } // Pasamos los datos al modal
+          data: { niveles }
         });
 
         dialogRef.afterClosed().subscribe(result => {

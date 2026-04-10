@@ -57,6 +57,7 @@ public class Nivel implements Serializable {
   @ManyToOne
   private Programa programa;
 
+  @Column(name = "dias")
   private Integer dias;
 
   private String requierepermiso;

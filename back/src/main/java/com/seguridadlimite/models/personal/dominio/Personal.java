@@ -13,6 +13,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * Personal operativo sobre {@code sl_personal}. Incluye credenciales y rol; usada en login
+ * ({@link com.seguridadlimite.models.personal.application.PersonalService#findByLogin},
+ * {@code AuthController}, {@code AuthenticationService}, {@code JwtAuthenticationFilter}).
+ * {@link PersonalBasico} mapea la misma tabla solo con datos básicos, no para autenticación.
+ */
 @Entity
 @Table(name = "sl_personal")
 @Data

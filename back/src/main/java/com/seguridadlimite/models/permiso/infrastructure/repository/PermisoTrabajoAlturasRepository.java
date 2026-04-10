@@ -58,7 +58,7 @@ public interface PermisoTrabajoAlturasRepository extends JpaRepository<PermisoTr
     List<PermisoTrabajoAlturas> findByDate(
             @Param("fecha") String fecha);
 
-    @Query("SELECT p FROM PermisoTrabajoAlturas p " +
+    @Query("SELECT DISTINCT p FROM PermisoTrabajoAlturas p " +
             "LEFT JOIN FETCH p.permisoFechas " +
             "WHERE :fecha >= p.validodesde " +
             "AND :fecha <= p.validohasta")
