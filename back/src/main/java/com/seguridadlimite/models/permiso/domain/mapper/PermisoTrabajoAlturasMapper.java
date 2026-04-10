@@ -65,7 +65,7 @@ public class PermisoTrabajoAlturasMapper {
                    .permisoDetalleActividades(
                            convertToDetalleActividadDTOs(entity.getPermisoDetalleActividades(), idPermiso))
                    .permisoFechas(convertToPermisoFechasDTOs(entity.getPermisoFechas()))
-                   .grupoChequeo(grupoChequeoDTOs);
+                   .gruposChequeo(grupoChequeoDTOs);
         }
 
         return builder.build();

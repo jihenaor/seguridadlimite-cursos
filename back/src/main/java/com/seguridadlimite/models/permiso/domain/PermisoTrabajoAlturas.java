@@ -100,20 +100,20 @@ public class PermisoTrabajoAlturas {
     @Column(name = "cupofinal", nullable = false)
     private Integer cupofinal;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_permiso") // esta columna estará en la tabla hijo
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_permiso")
     private List<PermisoTipoTrabajo> tiposTrabajo;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_permiso") // esta columna estará en la tabla hijo
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_permiso")
     private List<PermisoDetalleChequeo> permisoDetalleChequeos;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_permiso") // esta columna estará en la tabla hijo
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_permiso")
     private List<PermisoDetalleActividad> permisoDetalleActividades;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_permiso") // esta columna estará en la tabla hijo
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_permiso")
     private List<PermisoFechas> permisoFechas;
 
     private Integer dias;

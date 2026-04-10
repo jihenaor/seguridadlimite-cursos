@@ -90,4 +90,9 @@ public class PermisoTrabajoAlturasAdapter implements PermisoTrabajoAlturasPort {
     public List<PermisoTrabajoAlturas> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<PermisoTrabajoAlturas> findByIdNivelSolapamientoRango(Integer idNivel, String desde, String hasta) {
+        return repository.findByIdNivelSolapamientoRango(idNivel, desde, hasta);
+    }
 } 

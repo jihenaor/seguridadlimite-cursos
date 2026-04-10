@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -40,6 +42,7 @@ import { AprendizPermisoTrabajoComponent } from '../aprendiz-permiso-trabajo/apr
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatCheckboxModule,
     MatIconModule,
     MatTabsModule,
@@ -79,6 +82,17 @@ export class ModalPermisoComponent implements OnInit {
   // Definición de los grupos de chequeo con sus detalles
   gruposChequeo: any[] = [];
 
+  /** Rol granular de sl_personal del usuario autenticado (ej. COORDINADOR, INSTRUCTOR) */
+  get rolPersonal(): string {
+    return this.authService.currentUserValue?.rolPersonal || '';
+  }
+
+  /** Solo Admin (A) y Supervisor (S) pueden gestionar responsables */
+  get puedeGestionarResponsables(): boolean {
+    const role = this.authService.currentUserValue?.role as string;
+    return role === 'A' || role === 'S';
+  }
+
   constructor(
     public dialogRef: MatDialogRef<ModalPermisoComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -96,55 +110,74 @@ export class ModalPermisoComponent implements OnInit {
     this.permiso = {} as PermisoTrabajoAlturas;
     this.permiso.permisoDetalleActividades = [];
 
-    if (this.action === 'edit') {
-      this.dialogTitle = 'Editar Permiso de Trabajo';
-
-      this.consultarPermiso(dialogData.permiso.idPermiso);
+    if (this.action === 'edit' || this.action === 'view') {
+      this.dialogTitle = this.action === 'edit'
+        ? 'Editar Permiso de Trabajo'
+        : 'Detalle Permiso de Trabajo';
     } else {
       this.dialogTitle = 'Nuevo Permiso de Trabajo';
       this.permiso.idPersonal = this.authService.currentUserValue.id;
-
-      const fechaActual = new Date();
-      this.permiso.fechaInicio = fechaActual.toISOString().split('T')[0];
+      this.permiso.fechaInicio = new Date() as any;
     }
   }
 
   ngOnInit(): void {
-    this.cargarNiveles();
-    this.inicializarActividades();
-    this.crearFormulario();
     this.instructorService.find();
 
-    if (this.action === 'view') {
-      this.permisoForm.disable();
+    const permisoId = this.dialogData.permiso?.idPermiso;
+
+    if ((this.action === 'edit' || this.action === 'view') && permisoId) {
+      // Cargar niveles y datos del permiso en paralelo, luego inicializar el form
+      forkJoin({
+        niveles: this.nivelsService.getNivelActivos(),
+        permiso: this.permisoTrabajoService.consultarPermiso(permisoId)
+      }).subscribe({
+        next: ({ niveles, permiso }) => {
+          this.niveles = niveles;
+          this.inicializarActividades();
+          this.crearFormulario();
+          this.cargarPermiso(permiso);
+          if (this.action === 'view') {
+            this.permisoForm.disable();
+          }
+          this.suscribirCambiosFormulario();
+          this.cargando = false;
+        },
+        error: (err) => {
+          console.error('Error al cargar datos del permiso:', err);
+          this.snackBar.open('Error al cargar los datos del permiso', 'Cerrar', {
+            duration: 3000, horizontalPosition: 'center', verticalPosition: 'bottom'
+          });
+          this.cargando = false;
+        }
+      });
+    } else {
+      // Nuevo permiso: solo cargar niveles
+      this.nivelsService.getNivelActivos().subscribe({
+        next: (niveles) => {
+          this.niveles = niveles;
+          this.inicializarActividades();
+          this.crearFormulario();
+          this.suscribirCambiosFormulario();
+          this.cargando = false;
+        },
+        error: () => {
+          this.cargando = false;
+        }
+      });
     }
-    this.cargando = false;
-
-    // Suscribirse a los cambios de pestaña
-    this.permisoForm.valueChanges.subscribe(() => {
-      this.validarCamposVisibles();
-    });
-
-    // Suscribirse a cambios en numerogrupos para actualizar validación de idpersonaautoriza2
-    this.permisoForm.get('numerogrupos')?.valueChanges.subscribe(value => {
-      const idpersonaautoriza2Control = this.permisoForm.get('idpersonaautoriza2');
-      if (value === 2) {
-        idpersonaautoriza2Control?.setValidators([Validators.required]);
-      } else {
-        idpersonaautoriza2Control?.clearValidators();
-      }
-      idpersonaautoriza2Control?.updateValueAndValidity();
-    });
   }
 
-  cargarNiveles(): void {
-    this.nivelsService.getNivelActivos().subscribe({
-      next: (niveles) => {
-        this.niveles = niveles;
-      },
-      error: (error) => {
-        console.error('Error al cargar niveles:', error);
+  private suscribirCambiosFormulario(): void {
+    // Actualizar validación de idpersonaautoriza2 según número de grupos
+    this.permisoForm.get('numerogrupos')?.valueChanges.subscribe(value => {
+      const ctrl = this.permisoForm.get('idpersonaautoriza2');
+      if (value === 2) {
+        ctrl?.setValidators([Validators.required]);
+      } else {
+        ctrl?.clearValidators();
       }
+      ctrl?.updateValueAndValidity();
     });
   }
 
@@ -224,6 +257,13 @@ export class ModalPermisoComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  /** Serializa un valor Date|string a 'YYYY-MM-DD' para el backend. */
+  private serializeDate(value: Date | string | null | undefined): string | null {
+    if (!value) return null;
+    if (value instanceof Date) return this.formatearFecha(value);
+    return value as string;
+  }
+
   guardarPermiso(): void {
     if (this.permisoForm.invalid) {
       this.mostrarCamposInvalidos();
@@ -231,7 +271,13 @@ export class ModalPermisoComponent implements OnInit {
     }
 
     this.guardando = true;
-    const formValues = this.permisoForm.value;
+    const rawValues = this.permisoForm.value;
+    const formValues = {
+      ...rawValues,
+      fechaInicio: this.serializeDate(rawValues.fechaInicio),
+      validodesde: this.serializeDate(rawValues.validodesde),
+      validohasta: this.serializeDate(rawValues.validohasta),
+    };
 
     // Obtener los tipos de trabajo seleccionados de forma segura
     let tiposSeleccionados: string[] = [];
@@ -378,6 +424,13 @@ export class ModalPermisoComponent implements OnInit {
     });
   }
 
+  /** Convierte un string 'YYYY-MM-DD' a Date para los MatDatepicker. */
+  private parseDate(value: string | null | undefined): Date | null {
+    if (!value) return null;
+    const d = new Date(value + 'T00:00:00');
+    return isNaN(d.getTime()) ? null : d;
+  }
+
   cargarPermiso(permiso: PermisoTrabajoAlturas): void {
     if (!permiso) return;
 
@@ -392,9 +445,9 @@ export class ModalPermisoComponent implements OnInit {
     // Cargar los datos del permiso en el formulario
     this.permisoForm.patchValue({
       idNivel: permiso.idNivel,
-      fechaInicio: permiso.fechaInicio,
-      validodesde: permiso.validodesde,
-      validohasta: permiso.validohasta,
+      fechaInicio: this.parseDate(permiso.fechaInicio),
+      validodesde: this.parseDate(permiso.validodesde),
+      validohasta: this.parseDate(permiso.validohasta),
       codigoministerio: permiso.codigoministerio,
       horaInicio: permiso.horaInicio || '',
       horaFinal: permiso.horaFinal || '',
@@ -495,27 +548,7 @@ export class ModalPermisoComponent implements OnInit {
   }
 
   validarCamposVisibles(): void {
-    const controls = this.permisoForm.controls;
-    const camposInvalidos = [];
-
-    for (const name in controls) {
-      if (controls[name].invalid && controls[name].touched) {
-        camposInvalidos.push(name);
-      }
-    }
-
-    if (camposInvalidos.length > 0) {
-      this.snackBar.open(
-        `Campos requeridos: ${camposInvalidos.join(', ')}`,
-        'Cerrar',
-        {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['error-snackbar']
-        }
-      );
-    }
+    // Reservado — la validación se muestra inline en los mat-error del template
   }
 
   generarCalendario(): void {

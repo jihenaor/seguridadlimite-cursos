@@ -16,6 +16,12 @@
 
   <div mat-dialog-content>
 
+    <!-- Spinner mientras cargan los datos -->
+    <div *ngIf="cargando" style="display:flex;justify-content:center;align-items:center;padding:48px 0;">
+      <mat-spinner diameter="48"></mat-spinner>
+      <span style="margin-left:16px;color:#757575;">Cargando datos del permiso…</span>
+    </div>
+
     <form *ngIf="!cargando" [formGroup]="permisoForm" class="register-form m-4">
       <mat-tab-group>
         <!-- Pestaña de Información General -->
@@ -35,9 +41,11 @@
               </mat-form-field>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-              <label for="fechaInicio">Fecha de Inicio (AAAA-MM-DD)</label>
+              <label for="fechaInicio">Fecha de Inicio</label>
               <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <input matInput type="text" formControlName="fechaInicio" placeholder="AAAA-MM-DD" required>
+                <input matInput [matDatepicker]="pickerFechaInicio" formControlName="fechaInicio" required>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFechaInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFechaInicio></mat-datepicker>
                 <mat-error *ngIf="permisoForm.get('fechaInicio')?.hasError('required')">
                   La fecha de inicio es requerida
                 </mat-error>
@@ -62,15 +70,19 @@
 
           <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-              <label for="validodesde">Válido Desde (AAAA-MM-DD)</label>
+              <label for="validodesde">Válido Desde</label>
               <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <input matInput type="text" formControlName="validodesde">
+                <input matInput [matDatepicker]="pickerValidoDesde" formControlName="validodesde">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerValidoDesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickerValidoDesde></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-              <label for="validohasta">Válido Hasta (AAAA-MM-DD)</label>
+              <label for="validohasta">Válido Hasta</label>
               <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <input matInput type="text" formControlName="validohasta">
+                <input matInput [matDatepicker]="pickerValidoHasta" formControlName="validohasta">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerValidoHasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickerValidoHasta></mat-datepicker>
               </mat-form-field>
             </div>
           </div>
@@ -238,6 +250,8 @@
                         <tr>
                           <th class="text-center">#</th>
                           <th class="text-center">Fecha</th>
+                          <th class="text-center">Contexto</th>
+                          <th class="text-center">Dia</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -256,6 +270,8 @@
                               {{ fechaPermiso.fecha | date:'dd/MM/yyyy' }}
                             </span>
                           </td>
+                          <td class="text-center">{{ fechaPermiso.contexto }}</td>
+                          <td class="text-center">{{ fechaPermiso.dia }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -274,11 +290,11 @@
           </div>
         </mat-tab>
 
-        <!-- Pestaña de Verificaciones y Responsables -->
-        <mat-tab label="Verificaciones y Responsables">
+        <!-- Pestaña de Verificaciones -->
+        <mat-tab label="Verificaciones">
           <div class="row mt-3">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-              <h4 class="mb-3 text-primary">Verificaciones de Seguridad:</h4>
+              <h4 class="mb-3 text-primary">Verificaciones de Seguridad</h4>
               <div class="verificaciones-container row">
                 <div class="col-md-6">
                   <mat-checkbox formControlName="verificacionSeguridadSocial" class="mb-3 d-block">
@@ -300,92 +316,115 @@
             </div>
           </div>
 
-          <mat-divider class="my-3"></mat-divider>
+        </mat-tab>
 
-          <div class="row">
-            <div class="col-md-6">
-              <label for="numerogrupos" class="block text-sm font-medium text-gray-700">Número de grupos</label>
-              <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <input matInput type="number" formControlName="numerogrupos" required min="1" max="2" value="1">
-                <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('required')">
-                  El número de grupos es requerido
-                </mat-error>
-                <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('min') || permisoForm.get('numerogrupos')?.hasError('max')">
-                  El número de grupos debe ser 1 o 2
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+        <!-- Pestaña de Responsables (solo visible para Admin y Supervisor) -->
+        <mat-tab label="Responsables" *ngIf="puedeGestionarResponsables">
+          <div class="row mt-3">
+            <div class="col-xl-12">
+              <h4 class="mb-3 text-primary">Responsables del Permiso</h4>
+              <p class="text-muted mb-3" style="font-size: 13px;">
+                Asigne el personal responsable de autorizar y supervisar las actividades del permiso.
+              </p>
 
-          <mat-divider class="my-3"></mat-divider>
-
-          <div class="row">
-            <div class="col-md-6">
-              <label for="idpersonaautoriza1" class="block text-sm font-medium text-gray-700">Coordinador de alturas /
-                Persona que autoriza 1</label>
-              <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <mat-select formControlName="idpersonaautoriza1" required>
-                  <ng-container *ngFor="let personal of instructorService.instructores">
-                    <mat-option [value]="personal.id" class="text-gray-700">
-                      {{ personal.nombrecompleto }}
-                    </mat-option>
-                  </ng-container>
-                </mat-select>
-                <mat-error *ngIf="permisoForm.get('idpersonaautoriza1')?.hasError('required')"
-                  class="text-red-500 text-sm">
-                  La persona de apoyo es requerida
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            @if (permisoForm.get('numerogrupos')?.value === 2) {
-              <div class="col-md-6">
-                <label for="idpersonaautoriza2" class="block text-sm font-medium text-gray-700">Coordinador de alturas /
-                  Persona que autoriza 2</label>
-                <mat-form-field class="example-full-width mb-3" appearance="outline">
-                  <mat-select formControlName="idpersonaautoriza2">
-                    <ng-container *ngFor="let personal of instructorService.instructores">
-                      <mat-option [value]="personal.id" class="text-gray-700">
-                        {{ personal.nombrecompleto }}
-                      </mat-option>
-                    </ng-container>
-                  </mat-select>
-                  <mat-error *ngIf="permisoForm.get('idpersonaautoriza2')?.hasError('required')"
-                    class="text-red-500 text-sm">
-                    El segundo coordinador es requerido cuando hay 2 grupos
-                  </mat-error>
-                </mat-form-field>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label class="block text-sm font-medium text-gray-700">Número de grupos</label>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <input matInput type="number" formControlName="numerogrupos" required min="1" max="2">
+                    <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('required')">
+                      El número de grupos es requerido
+                    </mat-error>
+                    <mat-error *ngIf="permisoForm.get('numerogrupos')?.hasError('min') || permisoForm.get('numerogrupos')?.hasError('max')">
+                      Debe ser 1 o 2
+                    </mat-error>
+                  </mat-form-field>
+                </div>
               </div>
-            }
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label for="idresponsableemeergencias" class="block text-sm font-medium text-gray-700">Responsable de
-                emergencias</label>
-              <mat-form-field class="example-full-width mb-3" appearance="outline">
-                <mat-select formControlName="idresponsableemeergencias" required>
-                  <ng-container *ngFor="let personal of instructorService.personaapoyos">
-                    <mat-option [value]="personal.id" class="text-gray-700">
-                      {{ personal.nombrecompleto }}
-                    </mat-option>
-                  </ng-container>
-                </mat-select>
-                <mat-error *ngIf="permisoForm.get('idresponsableemeergencias')?.hasError('required')"
-                  class="text-red-500 text-sm">
-                  La persona de apoyo es requerida
-                </mat-error>
-              </mat-form-field>
+
+              <mat-divider class="mb-3"></mat-divider>
+
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                  <thead class="thead-light">
+                    <tr>
+                      <th style="width: 40%;">Función</th>
+                      <th>Personal asignado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Coordinador Grupo 1 -->
+                    <tr>
+                      <td>
+                        <strong>Coordinador de alturas</strong>
+                        <span *ngIf="permisoForm.get('numerogrupos')?.value === 2"
+                              class="badge badge-secondary ml-2">Grupo 1</span>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-select formControlName="idpersonaautoriza1" required>
+                            <mat-option *ngFor="let personal of instructorService.instructores"
+                                        [value]="personal.id">
+                              {{ personal.nombrecompleto }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="permisoForm.get('idpersonaautoriza1')?.hasError('required')">
+                            Requerido
+                          </mat-error>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+
+                    <!-- Coordinador Grupo 2 (solo si hay 2 grupos) -->
+                    <tr *ngIf="permisoForm.get('numerogrupos')?.value === 2">
+                      <td>
+                        <strong>Coordinador de alturas</strong>
+                        <span class="badge badge-secondary ml-2">Grupo 2</span>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-select formControlName="idpersonaautoriza2">
+                            <mat-option *ngFor="let personal of instructorService.instructores"
+                                        [value]="personal.id">
+                              {{ personal.nombrecompleto }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="permisoForm.get('idpersonaautoriza2')?.hasError('required')">
+                            Requerido cuando hay 2 grupos
+                          </mat-error>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+
+                    <!-- Responsable de emergencias -->
+                    <tr>
+                      <td><strong>Responsable de emergencias</strong></td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-select formControlName="idresponsableemeergencias" required>
+                            <mat-option *ngFor="let personal of instructorService.personaapoyos"
+                                        [value]="personal.id">
+                              {{ personal.nombrecompleto }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="permisoForm.get('idresponsableemeergencias')?.hasError('required')">
+                            Requerido
+                          </mat-error>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-
-
         </mat-tab>
 
         <!-- Pestaña de Grupos de Chequeo -->
         <mat-tab label="Grupos de Chequeo">
           <div class="row mt-3">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-              <div *ngFor="let grupo of permiso.grupoChequeo; let i = index" class="grupo-chequeo mb-4">
+              <div *ngFor="let grupo of permiso.gruposChequeo; let i = index" class="grupo-chequeo mb-4">
                 <h4>{{grupo.descripcion}}</h4>
                 <p class="text-muted">Valores posibles: {{grupo.posiblesValores || 'C (Cumple), N (No cumple), A (No
                   aplica)'}}</p>

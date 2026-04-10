@@ -21,4 +21,6 @@ public interface PermisoTrabajoAlturasPort {
     Optional<PermisoTrabajoAlturas> findPermisosFechaInicioIdnivelIdpersonaautoriza(String fechaInicio, Integer idNivel, Integer idpersonaautoriza);
     Optional<PermisoTrabajoAlturas> findByCodigoministerio(String codigoministerio);
     List<PermisoTrabajoAlturas> findAll();
+
+    List<PermisoTrabajoAlturas> findByIdNivelSolapamientoRango(Integer idNivel, String desde, String hasta);
 }

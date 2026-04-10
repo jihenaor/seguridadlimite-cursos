@@ -48,7 +48,7 @@ public class PermisoTrabajoAlturasDTO {
 
     private Integer idresponsableemeergencias;
 
-    private List<GrupoChequeoDTO> grupoChequeo;
+    private List<GrupoChequeoDTO> gruposChequeo;
     private List<PermisoTipoTrabajoDTO> tiposTrabajo;
     private List<PermisoDetalleChequeoDTO> permisoDetalleChequeos;
     private List<PermisoDetalleActividadDTO> permisoDetalleActividades;

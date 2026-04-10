@@ -18,8 +18,10 @@ public class StartWorkPermissionsController {
     private final RegistrarPermisosTrabajoPort registrarPermisosTrabajoPort;
 
     @PostMapping("/start-work-permissions")
-    public ResponseEntity<Map<String, String>> updateFechas(@RequestBody List<NivelUpdateDTO> nivelesDTO) {
-        registrarPermisosTrabajoPort.registrarPermisos(nivelesDTO);
+    public ResponseEntity<Map<String, String>> updateFechas(
+            @RequestBody List<NivelUpdateDTO> nivelesDTO,
+            @RequestParam(name = "forzarSolapamiento", defaultValue = "false") boolean forzarSolapamiento) {
+        registrarPermisosTrabajoPort.registrarPermisos(nivelesDTO, forzarSolapamiento);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Permisos registrados correctamente");

@@ -23,6 +23,8 @@ public class AuthenticationResponse {
     private Long idaprendiz;
     
     private String msg;
+
+    private String rolPersonal;
     
     public AuthenticationResponse(String token, Personal p) {
         this.token = token;
@@ -31,6 +33,7 @@ public class AuthenticationResponse {
         this.id = p.getId().toString();
         this.nombreusuario = p.getNombrecompleto();
         this.tienepassword = (p.getPassword() == null || p.getPassword().trim().length() == 0) ? "N": "S";
+        this.rolPersonal = p.getRole();
     }
 
     public AuthenticationResponse(String token, Empresa p) {
@@ -121,5 +124,12 @@ public class AuthenticationResponse {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
+
+	public String getRolPersonal() {
+		return rolPersonal;
+	}
+
+	public void setRolPersonal(String rolPersonal) {
+		this.rolPersonal = rolPersonal;
+	}
 }

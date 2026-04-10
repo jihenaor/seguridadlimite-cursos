@@ -73,4 +73,19 @@ public interface PermisoTrabajoAlturasRepository extends JpaRepository<PermisoTr
             @Param("fechaInicio") String fechaInicio,
             @Param("idNivel") Integer idNivel,
             @Param("idpersonaautoriza1") Integer idpersonaautoriza1);
+
+    /**
+     * Permisos del mismo nivel cuyo [validodesde, validohasta] se solapa con [desdeNuevo, hastaNuevo]
+     * (fechas yyyy-MM-dd). {@code validohasta} nulo se trata como abierto (sigue vigente).
+     * Orden: id_permiso descendente (el primero es el más reciente).
+     */
+    @Query("SELECT p FROM PermisoTrabajoAlturas p " +
+            "WHERE p.idNivel = :idNivel " +
+            "AND p.validodesde <= :hastaNuevo " +
+            "AND (p.validohasta IS NULL OR p.validohasta >= :desdeNuevo) " +
+            "ORDER BY p.idPermiso DESC")
+    List<PermisoTrabajoAlturas> findByIdNivelSolapamientoRango(
+            @Param("idNivel") Integer idNivel,
+            @Param("desdeNuevo") String desdeNuevo,
+            @Param("hastaNuevo") String hastaNuevo);
 } 

@@ -16,4 +16,6 @@ export class User {
   lastName: string;
   role: Role;
   token?: string;
+  /** Rol granular de la tabla sl_personal (ej. ADMINISTRADOR, COORDINADOR, INSTRUCTOR) */
+  rolPersonal?: string;
 }

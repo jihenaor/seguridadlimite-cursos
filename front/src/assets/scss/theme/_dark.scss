@@ -1428,6 +1428,19 @@ body.dark {
     border-color: rgba(255, 255, 255, 0.38);
   }
 
+  // Material añade border-left transparente en el notch para un artefacto de Chrome; al aplicar
+  // border-color arriba ese trazo hereda el color del tema y se ve una línea vertical en el input.
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__notch {
+    border-left-color: transparent !important;
+  }
+
+  [dir='rtl']
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__notch {
+    border-right-color: transparent !important;
+  }
+
   .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
       .mdc-text-field--focused
     ):hover

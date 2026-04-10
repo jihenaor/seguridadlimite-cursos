@@ -23,23 +23,27 @@ export class HttpInterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificacionService.displayError(error.error.message);
-        } else {
-          switch(error?.status) {
-            case 504:
-              this.notificacionService.displayError("Error de comunicacion con el servidor")
-              break;
+        const esSolapamientoInscripcion =
+          error.status === 409 && error.error?.code === 'PERMISO_SOLAPAMIENTO';
 
-            default:
-              this.notificacionService.displayError(error.error.message);
+        if (!esSolapamientoInscripcion) {
+          if (error.error instanceof ErrorEvent) {
+            this.notificacionService.displayError(error.error.message);
+          } else {
+            switch (error?.status) {
+              case 504:
+                this.notificacionService.displayError('Error de comunicacion con el servidor');
+                break;
+
+              default:
+                this.notificacionService.displayError(error.error?.message ?? error.message);
+            }
           }
-          // Server-side errors
+
+          this.errorSubject.next('Error en la solicitud');
         }
 
-        this.errorSubject.next('Error en la solicitud');
-
-        return throwError(error); // Re-throw the error to be handled by the caller
+        return throwError(() => error);
       }),
       finalize(() => {
         this.loadingService.hide();

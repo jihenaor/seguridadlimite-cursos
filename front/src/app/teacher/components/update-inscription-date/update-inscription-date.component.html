@@ -52,23 +52,50 @@
                style="padding: 16px 20px 20px; background: #fff; border-top: 1px solid #e3f2fd;">
 
             <!-- Fechas y número de grupos -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr 160px; gap: 16px; margin-bottom: 4px;">
+            <div class="inscripcion-fechas-grid"
+                 style="display: grid; grid-template-columns: 1fr 1fr 160px; gap: 16px; margin-bottom: 4px; align-items: start;">
 
-              <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Fecha desde</mat-label>
-                <input matInput type="date"
-                       [(ngModel)]="nivel.fechadesde"
-                       (change)="onDateChange(nivel, 'fechadesde', $event)">
-              </mat-form-field>
+              <ng-container *ngIf="nivelUsaRangoDesdeDias(nivel); else fechasDesdeHastaEditables">
+                <mat-form-field appearance="outline" class="inscripcion-date-field">
+                  <mat-label>Fecha desde</mat-label>
+                  <input matInput
+                         readonly
+                         tabindex="-1"
+                         [value]="formatYmd(nivelPickerDates[nivel.id]?.desde ?? null) ?? ''">
+                </mat-form-field>
 
-              <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Fecha hasta</mat-label>
-                <input matInput type="date"
-                       [(ngModel)]="nivel.fechahasta"
-                       (change)="onDateChange(nivel, 'fechahasta', $event)">
-              </mat-form-field>
+                <mat-form-field appearance="outline" class="inscripcion-date-field">
+                  <mat-label>Fecha hasta</mat-label>
+                  <input matInput
+                         readonly
+                         tabindex="-1"
+                         [value]="formatYmd(nivelPickerDates[nivel.id]?.hasta ?? null) ?? ''">
+                </mat-form-field>
+              </ng-container>
 
-              <mat-form-field appearance="outline" style="width: 100%;">
+              <ng-template #fechasDesdeHastaEditables>
+                <mat-form-field appearance="outline" class="inscripcion-date-field">
+                  <mat-label>Fecha desde</mat-label>
+                  <input matInput
+                         [matDatepicker]="pickerDesde"
+                         [(ngModel)]="nivelPickerDates[nivel.id].desde"
+                         (ngModelChange)="onNivelFechaChange(nivel, 'fechadesde', $event)">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerDesde></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inscripcion-date-field">
+                  <mat-label>Fecha hasta</mat-label>
+                  <input matInput
+                         [matDatepicker]="pickerHasta"
+                         [(ngModel)]="nivelPickerDates[nivel.id].hasta"
+                         (ngModelChange)="onNivelFechaChange(nivel, 'fechahasta', $event)">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerHasta></mat-datepicker>
+                </mat-form-field>
+              </ng-template>
+
+              <mat-form-field appearance="outline" class="inscripcion-date-field">
                 <mat-label># Grupos</mat-label>
                 <input matInput type="number" min="1"
                        [(ngModel)]="nivel.numerogrupos"
@@ -76,6 +103,11 @@
               </mat-form-field>
 
             </div>
+
+            <p *ngIf="nivelUsaRangoDesdeDias(nivel)"
+               style="font-size: 12px; color: #757575; margin: -2px 0 10px;">
+              Fecha desde y hasta se calculan automáticamente (mínimo y máximo de los días de diseño curricular).
+            </p>
 
             <!-- Días de diseño curricular -->
             <div *ngIf="nivel.diasdiseno && nivel.diasdiseno.length > 0"
@@ -91,24 +123,36 @@
                      style="display: flex; align-items: center; gap: 12px;
                             background: #f5f5f5; border-radius: 6px; padding: 8px 12px;">
 
-                  <!-- Etiqueta del día -->
-                  <div style="min-width: 80px; flex-shrink: 0;">
-                    <div style="font-size: 13px; font-weight: 600; color: #37474f;">
-                      Día {{ dia.dia }}
+                  <!-- Día + tipo (T teórico / P práctico) + unidad -->
+                  <div class="dia-diseno-label">
+                    <div class="dia-diseno-label__row">
+                      <span class="dia-diseno-label__num">Día {{ dia.dia }}</span>
+                      <span
+                        class="dia-contexto-chip"
+                        [class.dia-contexto-chip--teorico]="esContextoTeorico(dia)"
+                        [class.dia-contexto-chip--practico]="esContextoPractico(dia)"
+                        [class.dia-contexto-chip--otro]="!esContextoTeorico(dia) && !esContextoPractico(dia)"
+                        [attr.title]="esContextoTeorico(dia) ? 'Formación teórica' : (esContextoPractico(dia) ? 'Formación práctica' : null)">
+                        <mat-icon *ngIf="esContextoTeorico(dia)" aria-hidden="true">menu_book</mat-icon>
+                        <mat-icon *ngIf="esContextoPractico(dia)" aria-hidden="true">handyman</mat-icon>
+                        <span>{{ etiquetaContextoDia(dia) }}</span>
+                      </span>
                     </div>
-                    <div style="font-size: 11px; color: #78909c; white-space: nowrap;
-                                overflow: hidden; text-overflow: ellipsis; max-width: 110px;"
-                         [title]="dia.contexto + ' — ' + dia.unidad">
-                      {{ dia.contexto }}
+                    <div class="dia-diseno-label__unidad"
+                         [title]="dia.unidad">
+                      {{ dia.unidad }}
                     </div>
                   </div>
 
                   <!-- Input de fecha -->
-                  <mat-form-field appearance="outline"
-                                  style="flex: 1; font-size: 13px; margin-bottom: -1.25em;">
-                    <input matInput type="date"
-                           [(ngModel)]="dia.fecha"
-                           (change)="onDateChange(dia, 'fecha', $event)">
+                  <mat-form-field appearance="outline" class="inscripcion-dia-date">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput
+                           [matDatepicker]="pickerDia"
+                           [(ngModel)]="diaPickerDates[diaPickerKey(nivel.id, dia.dia)]"
+                           (ngModelChange)="onDiaFechaChange(nivel, dia, $event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerDia"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDia></mat-datepicker>
                   </mat-form-field>
 
                 </div>

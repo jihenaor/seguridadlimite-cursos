@@ -1,5 +1,7 @@
 package com.seguridadlimite.util;
 
+import com.seguridadlimite.models.permiso.application.dto.PermisoSolapamientoResponse;
+import com.seguridadlimite.models.permiso.application.exception.PermisoSolapamientoException;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(PermisoSolapamientoException.class)
+    public ResponseEntity<PermisoSolapamientoResponse> handlePermisoSolapamiento(PermisoSolapamientoException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(PermisoSolapamientoResponse.of(e.getMessage(), e.getConflictos()));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {

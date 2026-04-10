@@ -4,13 +4,14 @@ import com.seguridadlimite.models.chequeo.application.port.in.ConsultarGrupoCheq
 import com.seguridadlimite.models.chequeo.domain.GrupoChequeo;
 import com.seguridadlimite.models.nivel.application.NivelUpdateDTO;
 import com.seguridadlimite.models.nivel.domain.dto.DiaDto;
+import com.seguridadlimite.models.permiso.application.dto.PermisoSolapamientoConflictoDTO;
+import com.seguridadlimite.models.permiso.application.exception.PermisoSolapamientoException;
 import com.seguridadlimite.models.permiso.domain.PermisoDetalleChequeo;
 import com.seguridadlimite.models.permiso.domain.PermisoFechas;
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
 import com.seguridadlimite.models.permiso.domain.port.RegistrarPermisosTrabajoPort;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,17 +24,21 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@AllArgsConstructor
 public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajoPort {
 
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
-
     private final ConsultarGrupoChequeoYDetalleUseCase consultarGrupoChequeoUseCase;
 
+    public RegistrarPermisosTrabajoService(
+            PermisoTrabajoAlturasPort permisoTrabajoAlturasPort,
+            ConsultarGrupoChequeoYDetalleUseCase consultarGrupoChequeoUseCase) {
+        this.permisoTrabajoAlturasPort = permisoTrabajoAlturasPort;
+        this.consultarGrupoChequeoUseCase = consultarGrupoChequeoUseCase;
+    }
 
     @Override
     @Transactional
-    public void registrarPermisos(List<NivelUpdateDTO> nivelesDTO) {
+    public void registrarPermisos(List<NivelUpdateDTO> nivelesDTO, boolean forzarSolapamiento) {
         if (nivelesDTO == null || nivelesDTO.isEmpty()) {
             throw new BusinessException("La lista de niveles no puede estar vacía, debe selecciona por lo meno un nivel de la lista al actualizar");
         }
@@ -45,13 +50,45 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
 
         for (NivelUpdateDTO nivelDTO : nivelesDTO) {
             validarNivelDTO(nivelDTO);
-            
+        }
+
+        if (!forzarSolapamiento) {
+            List<PermisoSolapamientoConflictoDTO> conflictos = new ArrayList<>();
+            for (NivelUpdateDTO nivelDTO : nivelesDTO) {
+                Integer idNivel = nivelDTO.getId().intValue();
+                String fd = nivelDTO.getFechadesde().trim();
+                String fh = nivelDTO.getFechahasta().trim();
+                List<PermisoTrabajoAlturas> solapados =
+                        permisoTrabajoAlturasPort.findByIdNivelSolapamientoRango(idNivel, fd, fh);
+                for (PermisoTrabajoAlturas existente : solapados) {
+                    conflictos.add(new PermisoSolapamientoConflictoDTO(
+                            idNivel,
+                            existente.getIdPermiso(),
+                            existente.getValidodesde(),
+                            existente.getValidohasta(),
+                            fd,
+                            fh));
+                }
+            }
+            if (!conflictos.isEmpty()) {
+                throw new PermisoSolapamientoException(
+                        "Se detectó solapamiento con permisos ya registrados para el mismo nivel. "
+                                + "Revise el detalle en «conflictos» o confirme si desea registrar un permiso adicional.",
+                        conflictos);
+            }
+        }
+
+        for (NivelUpdateDTO nivelDTO : nivelesDTO) {
+            Integer idNivel = nivelDTO.getId().intValue();
+            String fd = nivelDTO.getFechadesde().trim();
+            String fh = nivelDTO.getFechahasta().trim();
+
             PermisoTrabajoAlturas permiso = PermisoTrabajoAlturas.builder()
-                    .idNivel(nivelDTO.getId() == null ? null : nivelDTO.getId().intValue())
-                    .fechaInicio(nivelDTO.getFechadesde())
-                    .validodesde(nivelDTO.getFechadesde())
-                    .validohasta(nivelDTO.getFechahasta())
-                    .cupoinicial(nivelDTO.getCupoInicial() == null ? 10 : nivelDTO.getCupoInicial() )
+                    .idNivel(idNivel)
+                    .fechaInicio(fd)
+                    .validodesde(fd)
+                    .validohasta(fh)
+                    .cupoinicial(nivelDTO.getCupoInicial() == null ? 10 : nivelDTO.getCupoInicial())
                     .cupofinal(10)
                     .numerogrupos(nivelDTO.getNumerogrupos() == null ? 1 : nivelDTO.getNumerogrupos())
                     .dias(nivelDTO.getDias() == null ? 1 : nivelDTO.getDias())
@@ -65,20 +102,21 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
     }
 
     private void registrarPermisoDetalleChequeo(PermisoTrabajoAlturas permiso, List<GrupoChequeo> gruposChequeo ) {
-        List<PermisoDetalleChequeo> permisoDetalleChequeos = new ArrayList<>();
-
-        for (GrupoChequeo grupoChequeo : gruposChequeo) {
-            grupoChequeo.getDetalles().forEach(detalleChequeo -> {
-                permisoDetalleChequeos.add(PermisoDetalleChequeo.builder()
-                        .idGrupo(detalleChequeo.getIdGrupo())
-                        .descripcion(detalleChequeo.getDescripcion())
-                        .respuesta("")
-                        .permisoTrabajoAlturas(permiso)
-                        .build());
-            });
+        if (permiso.getPermisoDetalleChequeos() == null) {
+            permiso.setPermisoDetalleChequeos(new ArrayList<>());
+        } else {
+            permiso.getPermisoDetalleChequeos().clear();
         }
 
-        permiso.setPermisoDetalleChequeos(permisoDetalleChequeos);
+        for (GrupoChequeo grupoChequeo : gruposChequeo) {
+            grupoChequeo.getDetalles().forEach(detalleChequeo ->
+                    permiso.getPermisoDetalleChequeos().add(PermisoDetalleChequeo.builder()
+                            .idGrupo(detalleChequeo.getIdGrupo())
+                            .descripcion(detalleChequeo.getDescripcion())
+                            .respuesta("")
+                            .permisoTrabajoAlturas(permiso)
+                            .build()));
+        }
     }
 
     private void registrarPermisoFechas(PermisoTrabajoAlturas permiso, List<DiaDto> diasdiseno) {
@@ -98,10 +136,15 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
             unicosPorFecha.putIfAbsent(fecha, diaDto);
         }
 
-        List<PermisoFechas> permisoFechasList = new ArrayList<>();
+        if (permiso.getPermisoFechas() == null) {
+            permiso.setPermisoFechas(new ArrayList<>());
+        } else {
+            permiso.getPermisoFechas().clear();
+        }
+
         for (DiaDto diaDto : unicosPorFecha.values()) {
             String fecha = normalizarFechaCalendario(diaDto.getFecha());
-            permisoFechasList.add(PermisoFechas.builder()
+            permiso.getPermisoFechas().add(PermisoFechas.builder()
                     .permisoTrabajoAlturas(permiso)
                     .fecha(fecha)
                     .dia(diaDto.getDia())
@@ -109,8 +152,6 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
                     .unidad(diaDto.getUnidad())
                     .build());
         }
-
-        permiso.setPermisoFechas(permisoFechasList);
     }
 
     /** yyyy-MM-dd normalizado; null si no es una fecha calendario válida de 10 caracteres. */
