@@ -1,3 +1,27 @@
+@use '../../shared/styles/student-inscription';
+
+.inscription-birth-helper {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #37474f !important;
+  background: #e3f2fd;
+  border: 1px solid rgba(25, 118, 210, 0.25);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.student-inscription-nivel-solo.mat-mdc-form-field {
+  .mat-mdc-select-arrow-wrapper {
+    visibility: hidden;
+    width: 0;
+  }
+
+  .mat-mdc-text-field-wrapper.mdc-text-field--disabled {
+    opacity: 0.92;
+  }
+}
+
 // FORZAR COLORES DE BOTONES - Angular Material Button Color Overrides
 .mat-mdc-raised-button, .mat-raised-button, .mat-mdc-unelevated-button {
   &.mat-primary, &[color="primary"] {
@@ -82,7 +106,9 @@ button[mat-raised-button] {
 table, table *, 
 .table, .table *,
 .card, .card *,
-.form-inscription, .form-inscription * {
+/* No pintar la cabecera azul de las tarjetas de inscripción */
+.form-inscription,
+.form-inscription *:not(.student-inscription-card__head) {
   color: #333333 !important;
 }
 
@@ -205,10 +231,13 @@ td {
 }
 
 .cursos-wrapper {
-  width: 90%;
-  max-width: 100%;
+  width: 100%;
+  max-width: min(960px, 100%);
+  margin-left: auto;
+  margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
+  padding: 0 0.75rem;
 }
 
 
@@ -412,10 +441,8 @@ td {
   }
 }
 
-/* Fix text visibility issues */
+/* Fix text visibility issues (sin heredar #333 a cabeceras de tarjeta) */
 .grupos-container {
-  color: #333 !important;
-  
   table {
     color: #333 !important;
     
@@ -449,15 +476,16 @@ td {
     color: #333 !important;
   }
   
-  /* General text elements */
-  p, span, div, label, h1, h2, h3, h4, h5, h6 {
-    color: #333 !important;
-  }
-  
-  /* Button text */
-  button {
-    &:not(.btn-primary):not(.btn-secondary):not(.btn-success):not(.btn-danger):not(.btn-warning):not(.btn-info) {
+  .student-inscription-card__body {
+    p,
+    span,
+    label:not(.student-inscription-field-label) {
       color: #333 !important;
     }
+  }
+
+  button.mat-mdc-raised-button,
+  button.mat-mdc-unelevated-button {
+    color: #fff !important;
   }
 }

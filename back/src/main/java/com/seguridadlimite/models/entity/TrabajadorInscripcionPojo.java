@@ -32,6 +32,8 @@ public class TrabajadorInscripcionPojo {
 	private String correoelectronico;
 	private String adjuntodocumento;
 	private String ext;
+	/** S/N: existe archivo de foto en disco para este trabajador (F{id}.jpg/png…). */
+	private String foto;
 	private String valido;
 	private String base64a;
 	private String base64b;

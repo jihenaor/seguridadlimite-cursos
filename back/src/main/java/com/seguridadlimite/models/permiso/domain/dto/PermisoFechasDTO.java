@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class PermisoFechasDTO {
     private Integer id;
     private Integer idPermiso;
+    private String contexto;
     private String fecha;
     private int dia;
 }

@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
  * Política de autorización:
  *  - /auth/**          → público (login JWT vía AuthenticationController)
  *  - POST /api/authenticate* → público (login legacy en AuthController, usado por los front con proxy /api)
- *  - /api/aprendiz/**  → requiere autenticación JWT válida
+ *  - /api/aprendiz/**  → en su mayoría público (lectura + save); ver reglas abajo
+ *  - POST /api/updateFoto → público (foto en flujo de inscripción sin JWT, análogo a save)
  *  - /api/admin/**     → requiere rol ROLE_ADMIN
- *  - Cualquier otro    → requiere autenticación JWT válida
+ *  - Resto de /api/**  → requiere autenticación JWT válida
  *
  * CSRF deshabilitado intencionalmente: la API es stateless (JWT),
  * no usa cookies de sesión, por lo que CSRF no aplica.
@@ -91,6 +92,8 @@ public class HttpSecurityConfig {
                     "/api/aprendiz/**").permitAll();
             // Guardar inscripción desde el formulario público
             authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/save").permitAll();
+            // Foto del trabajador desde /student/photo (flujo inscripción sin JWT; mismo riesgo modelo que save)
+            authConfig.requestMatchers(HttpMethod.POST, "/api/updateFoto").permitAll();
 
             // ── Endpoints protegidos — cualquier usuario autenticado ──────────
             authConfig.requestMatchers("/api/**").authenticated();

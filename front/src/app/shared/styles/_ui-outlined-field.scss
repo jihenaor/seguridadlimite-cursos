@@ -1,0 +1,100 @@
+// Campo con etiqueta en el borde (estilo outline), sin Angular Material.
+// Usado por app-ui-outlined-field.
+
+.ui-outlined-field {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ui-outlined-field__label {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  transform: translateY(-50%);
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 500;
+  /* !important: vencer reglas globales en styles.scss (.content * { color: !important }) */
+  color: #5c6bc0 !important;
+  background: #fff;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  max-width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-outlined-field__control {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 44px;
+  border: 1px solid rgba(25, 118, 210, 0.45);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ui-outlined-field:not(.ui-outlined-field--disabled):focus-within .ui-outlined-field__control {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 1px rgba(25, 118, 210, 0.2);
+}
+
+.ui-outlined-field--readonly .ui-outlined-field__control {
+  background: #f5f7fb;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.ui-outlined-field--readonly .ui-outlined-field__label {
+  color: #78909c !important;
+  background: #f5f7fb;
+}
+
+.ui-outlined-field--disabled .ui-outlined-field__control {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.ui-outlined-field__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #212121 !important;
+  padding: 10px 12px 10px 12px;
+  font-family: inherit;
+}
+
+.ui-outlined-field__input::placeholder {
+  color: #9e9e9e;
+}
+
+/* type="date": usamos el botón con app-svg-icon; evitar capa invisible que capture clics */
+.ui-outlined-field__input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.ui-outlined-field__suffix {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  color: #757575;
+  cursor: pointer;
+}
+
+.ui-outlined-field__suffix:hover {
+  color: #1976d2;
+}
+
+.ui-outlined-field--readonly .ui-outlined-field__suffix {
+  display: none;
+}

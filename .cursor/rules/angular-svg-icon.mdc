@@ -1,0 +1,40 @@
+---
+description: Angular frontend — iconos SVG vía componente compartido app-svg-icon (sin SVG inline duplicado).
+globs: front/**/*.html,front/**/*.ts
+alwaysApply: false
+---
+
+# Iconos SVG en el frontend Angular
+
+Al generar o refactorizar UI en `front/`, **no** incrustes bloques repetidos de `<svg xmlns="...">` en plantillas ni dupliques spinners con `@keyframes` en estilos de feature.
+
+## Regla obligatoria
+
+1. Usa el componente **`app-svg-icon`** (`selector: app-svg-icon`) definido en  
+   [`front/src/app/shared/components/svg-icon/svg-icon.component.ts`](front/src/app/shared/components/svg-icon/svg-icon.component.ts).
+
+2. **Import** en el componente standalone:
+   - `import { SvgIconComponent } from '@shared/components/svg-icon/svg-icon.component';`
+   - Incluir `SvgIconComponent` en el array `imports` del `@Component`.
+
+3. **Uso en plantilla** (ejemplos):
+   - Icono estático: `<app-svg-icon name="eye" [size]="18" />`
+   - Carga / spinner: `<app-svg-icon name="spinner" [size]="18" [spin]="true" />`  
+     La animación de rotación vive en `SvgIconComponent` (`spin`); **no** añadas otra clase `.spinner` ni `@keyframes spin` en el componente de la feature salvo un caso excepcional documentado.
+
+4. **Nuevo icono**: si el diseño requiere un trazo que no existe:
+   - Añade el literal al union type `SvgIconName`.
+   - Añade un `@case ('nombre') { ... }` en el `@switch` del template de `svg-icon.component.ts` con `viewBox="0 0 24 24"`, `stroke="currentColor"`, etc., coherente con el resto.
+   - **Un solo lugar** para el path; las pantallas solo referencian `name`.
+
+5. **Estilos globales de layout** (alineación en botones, grillas): preferir clases en `front/src/app/shared/styles/` (p. ej. contenedores que ya usan `app-svg-icon` en modales) en lugar de estilos por SVG inline.
+
+## Anti-patrones (evitar)
+
+- Varios `<svg>` idénticos o casi idénticos en el mismo HTML.
+- Spinner como `<svg class="spinner">` + CSS `animation: spin` copiado en cada `.component.ts`.
+- Sprites `<symbol>` / `<use>` locales en un solo feature si el icono puede vivir en `app-svg-icon`.
+
+## Resumen
+
+**Siempre** centralizar iconos outline y spinners en **`app-svg-icon`**; las features solo eligen `name`, `size` y `spin` cuando aplique.

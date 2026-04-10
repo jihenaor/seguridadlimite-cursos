@@ -33,6 +33,7 @@
 
             <mat-checkbox
               [(ngModel)]="nivel.seleccionado"
+              [ngModelOptions]="{standalone: true}"
               (click)="$event.stopPropagation()"
               (change)="onSelectionChange(nivel)"
               style="margin-right: 12px;">
@@ -42,9 +43,10 @@
               {{ nivel.nombre }}
             </span>
 
-            <mat-icon style="color: #757575; font-size: 20px;">
-              {{ nivel.seleccionado ? 'expand_less' : 'expand_more' }}
-            </mat-icon>
+            <app-svg-icon
+              [name]="nivel.seleccionado ? 'chevron-up' : 'chevron-down'"
+              [size]="20"
+              style="color: #757575; flex-shrink: 0;" />
           </div>
 
           <!-- Cuerpo expandido -->
@@ -56,51 +58,58 @@
                  style="display: grid; grid-template-columns: 1fr 1fr 160px; gap: 16px; margin-bottom: 4px; align-items: start;">
 
               <ng-container *ngIf="nivelUsaRangoDesdeDias(nivel); else fechasDesdeHastaEditables">
-                <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-date-field">
-                  <mat-label>Fecha desde</mat-label>
-                  <input matInput
-                         readonly
-                         tabindex="-1"
-                         [value]="formatYmd(nivelPickerDates[nivel.id]?.desde ?? null) ?? ''">
-                </mat-form-field>
+                <app-ui-outlined-field
+                  class="inscripcion-date-field"
+                  label="Fecha desde"
+                  fieldType="date"
+                  [readOnly]="true"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngModel]="formatYmd(nivelPickerDates[nivel.id]?.desde ?? null) ?? ''">
+                </app-ui-outlined-field>
 
-                <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-date-field">
-                  <mat-label>Fecha hasta</mat-label>
-                  <input matInput
-                         readonly
-                         tabindex="-1"
-                         [value]="formatYmd(nivelPickerDates[nivel.id]?.hasta ?? null) ?? ''">
-                </mat-form-field>
+                <app-ui-outlined-field
+                  class="inscripcion-date-field"
+                  label="Fecha hasta"
+                  fieldType="date"
+                  [readOnly]="true"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngModel]="formatYmd(nivelPickerDates[nivel.id]?.hasta ?? null) ?? ''">
+                </app-ui-outlined-field>
               </ng-container>
 
               <ng-template #fechasDesdeHastaEditables>
-                <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-date-field">
-                  <mat-label>Fecha desde</mat-label>
-                  <input matInput
-                         [matDatepicker]="pickerDesde"
-                         [(ngModel)]="nivelPickerDates[nivel.id].desde"
-                         (ngModelChange)="onNivelFechaChange(nivel, 'fechadesde', $event)">
-                  <mat-datepicker-toggle matIconSuffix [for]="pickerDesde"></mat-datepicker-toggle>
-                  <mat-datepicker #pickerDesde></mat-datepicker>
-                </mat-form-field>
+                <app-ui-outlined-field
+                  class="inscripcion-date-field"
+                  [fieldId]="'nivel-' + nivel.id + '-desde'"
+                  label="Fecha desde"
+                  fieldType="date"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngModel]="formatYmd(nivelPickerDates[nivel.id]?.desde ?? null) ?? ''"
+                  (ngModelChange)="onNivelFechaYmdChange(nivel, 'fechadesde', $event)">
+                </app-ui-outlined-field>
 
-                <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-date-field">
-                  <mat-label>Fecha hasta</mat-label>
-                  <input matInput
-                         [matDatepicker]="pickerHasta"
-                         [(ngModel)]="nivelPickerDates[nivel.id].hasta"
-                         (ngModelChange)="onNivelFechaChange(nivel, 'fechahasta', $event)">
-                  <mat-datepicker-toggle matIconSuffix [for]="pickerHasta"></mat-datepicker-toggle>
-                  <mat-datepicker #pickerHasta></mat-datepicker>
-                </mat-form-field>
+                <app-ui-outlined-field
+                  class="inscripcion-date-field"
+                  [fieldId]="'nivel-' + nivel.id + '-hasta'"
+                  label="Fecha hasta"
+                  fieldType="date"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngModel]="formatYmd(nivelPickerDates[nivel.id]?.hasta ?? null) ?? ''"
+                  (ngModelChange)="onNivelFechaYmdChange(nivel, 'fechahasta', $event)">
+                </app-ui-outlined-field>
               </ng-template>
 
-              <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-date-field">
-                <mat-label># Grupos</mat-label>
-                <input matInput type="number" min="1"
-                       [(ngModel)]="nivel.numerogrupos"
-                       placeholder="Ej. 2">
-              </mat-form-field>
+              <app-ui-outlined-field
+                class="inscripcion-date-field"
+                [fieldId]="'nivel-' + nivel.id + '-grupos'"
+                label="# Grupos"
+                fieldType="number"
+                min="1"
+                placeholder="Ej. 2"
+                [ngModelOptions]="{standalone: true}"
+                [ngModel]="nivel.numerogrupos != null ? '' + nivel.numerogrupos : ''"
+                (ngModelChange)="nivel.numerogrupos = $event === '' ? undefined : +$event">
+              </app-ui-outlined-field>
 
             </div>
 
@@ -133,8 +142,8 @@
                         [class.dia-contexto-chip--practico]="esContextoPractico(dia)"
                         [class.dia-contexto-chip--otro]="!esContextoTeorico(dia) && !esContextoPractico(dia)"
                         [attr.title]="esContextoTeorico(dia) ? 'Formación teórica' : (esContextoPractico(dia) ? 'Formación práctica' : null)">
-                        <mat-icon *ngIf="esContextoTeorico(dia)" aria-hidden="true">menu_book</mat-icon>
-                        <mat-icon *ngIf="esContextoPractico(dia)" aria-hidden="true">handyman</mat-icon>
+                        <app-svg-icon *ngIf="esContextoTeorico(dia)" name="book-open" [size]="14" />
+                        <app-svg-icon *ngIf="esContextoPractico(dia)" name="wrench" [size]="14" />
                         <span>{{ etiquetaContextoDia(dia) }}</span>
                       </span>
                     </div>
@@ -144,16 +153,15 @@
                     </div>
                   </div>
 
-                  <!-- Input de fecha -->
-                  <mat-form-field appearance="outline" floatLabel="always" class="inscripcion-dia-date">
-                    <mat-label>Fecha</mat-label>
-                    <input matInput
-                           [matDatepicker]="pickerDia"
-                           [(ngModel)]="diaPickerDates[diaPickerKey(nivel.id, dia.dia)]"
-                           (ngModelChange)="onDiaFechaChange(nivel, dia, $event)">
-                    <mat-datepicker-toggle matIconSuffix [for]="pickerDia"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerDia></mat-datepicker>
-                  </mat-form-field>
+                  <app-ui-outlined-field
+                    class="inscripcion-dia-date"
+                    [fieldId]="'dia-' + nivel.id + '-' + dia.dia"
+                    label="Fecha"
+                    fieldType="date"
+                    [ngModelOptions]="{standalone: true}"
+                    [ngModel]="formatYmd(diaPickerDates[diaPickerKey(nivel.id, dia.dia)] ?? null) ?? ''"
+                    (ngModelChange)="onDiaFechaYmdChange(nivel, dia, $event)">
+                  </app-ui-outlined-field>
 
                 </div>
               </div>
@@ -171,9 +179,10 @@
           <button mat-raised-button color="primary" type="button"
                   [disabled]="!canSaveInscripcion()"
                   (click)="startWorkPermissions()">
-            <mat-icon style="font-size: 18px; height: 18px; width: 18px;
-                         vertical-align: middle; margin-right: 6px;">save</mat-icon>
-            Guardar inscripción
+            <span class="inscripcion-btn-save">
+              <app-svg-icon name="save" [size]="18" />
+              Guardar inscripción
+            </span>
           </button>
         </div>
       </div>

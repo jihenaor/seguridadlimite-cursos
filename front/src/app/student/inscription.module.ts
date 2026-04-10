@@ -23,7 +23,6 @@ import { ProgramaComponent } from './inscription/programa/programa.component';
 import { InscriptionRoutingModule } from './inscription-routing.module';
 import { Header2Component } from './components/header2/header2.component';
 import { CertificateComponent } from './certificate/certificate.component';
-import { TomarFotoComponent } from './inscription/tomar-foto/tomar-foto.component';
 import { SharedModule } from '../shared/shared.module';
 import { GruposAsociadosComponent } from './inscription/gruposAsociados/grupos-asociados.component';
 
@@ -53,7 +52,6 @@ import { GruposAsociadosComponent } from './inscription/gruposAsociados/grupos-a
         ValidarFechaDirective,
         FormSearchComponent,
         ProgramaComponent,
-        TomarFotoComponent,
     ],
     providers: [provideNgxMask()],
 })

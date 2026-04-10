@@ -1,5 +1,6 @@
-<div class="resumen-datos">
-  <h3>Resumen de los datos del aprendiz</h3>
+<div class="student-inscription-card mb-3">
+  <div class="student-inscription-card__head">Resumen del aprendiz</div>
+  <div class="student-inscription-card__body resumen-datos">
   <p><strong>Nombre:</strong> {{ trabajador?.primernombre }} {{ trabajador?.segundonombre }} {{ trabajador?.primerapellido }} {{ trabajador?.segundoapellido }}</p>
   <p><strong>Documento:</strong> {{ trabajador?.numerodocumento }}</p>
   <p><strong>Nivel:</strong> {{ trabajador?.nombrenivel }}</p>
@@ -10,6 +11,7 @@
   }
 
   <p *ngIf="trabajador?.fechaencuesta"><strong>Fecha encuesta:</strong> {{ trabajador?.fechaencuesta }}</p>
+  </div>
 </div>
 
 <div *ngIf="!trabajador?.existeinscripcionabierta" class="tabla-grupos">

@@ -44,6 +44,24 @@ spring:
       max-file-size: 180MB
       max-request-size: 180MB
 
+# ── Almacenamiento en disco (Docker: montar volumen en estas rutas o sobreescribir con env) ─
+path:
+  fotos: ${PATH_FOTOS:/app/storage/fotos/}
+  signatures: ${PATH_SIGNATURES:/app/storage/signatures/}
+  documents: ${PATH_DOCUMENTS:/app/storage/documents/}
+  certificados: ${PATH_CERTIFICADOS:/app/storage/certificates/}
+  windows:
+    fotos: ${PATH_FOTOS_WIN:}
+    signatures: ${PATH_SIGNATURES_WIN:}
+    documents: ${PATH_DOCUMENTS_WIN:}
+    certificados: ${PATH_CERTIFICADOS_WIN:}
+
+app:
+  storage:
+    foto:
+      max-edge-px: ${APP_FOTO_MAX_EDGE_PX:960}
+      jpeg-quality: ${APP_FOTO_JPEG_QUALITY:0.82}
+
 # ── Servidor ──────────────────────────────────────────────────
 server:
   port: 8090

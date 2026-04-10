@@ -90,5 +90,6 @@ public class TrabajadorMapper {
         pojo.setAsistenciacompleta(asistenciaCompleta);
         pojo.setAprendizContinuaAprendizaje(aprendizContinuaAprendizaje);
         pojo.setFechanacimiento(trabajador.getFechanacimiento());
+        pojo.setFoto(trabajador.getFoto());
     }
 }

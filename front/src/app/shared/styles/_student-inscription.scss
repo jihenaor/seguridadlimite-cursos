@@ -1,0 +1,254 @@
+// Flujo estudiante — inscripción (/student/inscription). Unificar tarjetas, tipografía y espaciado.
+
+.student-inscription-page {
+  --si-radius: 12px;
+  --si-primary: #1565c0;
+  --si-primary-mid: #1976d2;
+  --si-surface: #ffffff;
+  --si-border: #d9e2ec;
+  --si-muted: #546e7a;
+  --si-text: #263238;
+  --si-head-fg: #ffffff;
+  --si-shadow: 0 4px 24px rgba(13, 71, 161, 0.08);
+
+  background: linear-gradient(180deg, #eef4f9 0%, #f7fafc 45%, #f0f4f8 100%);
+  min-height: 100%;
+}
+
+.student-inscription-page__stage {
+  padding-bottom: 2rem;
+}
+
+/* Panel que agrupa la ficha / datos frente al fondo de página (menos “plano”). */
+.student-inscription-data-shell {
+  width: 100%;
+  margin-top: 0.35rem;
+  margin-bottom: 1.5rem;
+  padding: 1.35rem 1.15rem 1.6rem;
+  background: linear-gradient(165deg, #ffffff 0%, #f5f9fd 48%, #eef4fa 100%);
+  border: 1px solid #c5d4e8;
+  border-radius: calc(var(--si-radius) + 4px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 14px 42px -18px rgba(13, 71, 161, 0.22),
+    0 4px 16px rgba(21, 101, 192, 0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+.student-inscription-data-shell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0d47a1 0%, #1976d2 45%, #29b6f6 100%);
+  pointer-events: none;
+}
+
+.student-inscription-data-shell--compact {
+  padding: 1.15rem 1rem 1.35rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.student-inscription-data-shell .student-inscription-page__title:first-of-type {
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .student-inscription-data-shell {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .student-inscription-data-shell--compact {
+    padding-left: 1.35rem;
+    padding-right: 1.35rem;
+  }
+}
+
+.student-inscription-page__title {
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: var(--si-primary);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 1.25rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid rgba(25, 118, 210, 0.25);
+}
+
+.student-inscription-card {
+  margin-bottom: 1.5rem;
+  border-radius: var(--si-radius);
+  background: var(--si-surface);
+  border: 1px solid var(--si-border);
+  box-shadow: var(--si-shadow);
+  overflow: hidden;
+}
+
+/* Texto siempre claro; fondo azul más profundo para WCAG con blanco */
+.student-inscription-card__head {
+  background: linear-gradient(90deg, #052e54 0%, #0d47a1 42%, #1565c0 100%);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.25rem;
+  line-height: 1.45;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.student-inscription-card__body {
+  padding: 1.25rem 1.25rem 1.5rem;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.student-inscription-field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--si-text) !important;
+}
+
+.student-inscription-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--si-border);
+}
+
+.student-inscription-lead {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--si-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.student-inscription-btn-search {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, #1e88e5 0%, #1565c0 100%);
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 4px 14px rgba(21, 101, 192, 0.45);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.student-inscription-notice {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--si-muted) !important;
+  padding: 0.75rem 1rem;
+  background: #f5f9fc;
+  border-radius: 8px;
+  border-left: 4px solid var(--si-primary-mid);
+  margin-bottom: 1rem;
+}
+
+/** Texto junto al botón «Tomar foto» (registro fotográfico en inscripción). */
+.student-inscription-photo-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--si-muted);
+  padding: 0.5rem 0.6rem;
+  background: #f0f7ff;
+  border: 1px solid rgba(25, 118, 210, 0.22);
+  border-radius: 8px;
+}
+
+.student-inscription-photo-hint--warn {
+  background: #fff8e1;
+  border-color: rgba(255, 167, 38, 0.45);
+  color: #5d4037;
+}
+
+.student-inscription-photo-hint--muted {
+  background: #eceff1;
+  border-color: #cfd8dc;
+  color: #546e7a;
+  font-size: 0.78rem;
+}
+
+.student-inscription-photo-thumb-wrap {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--si-border);
+  background: #eceff1;
+}
+
+.student-inscription-photo-thumb {
+  display: block;
+  width: 100%;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+.student-inscription-photo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.student-inscription-photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(13, 27, 42, 0.78);
+  box-sizing: border-box;
+}
+
+.student-inscription-photo-lightbox__img {
+  max-width: min(96vw, 900px);
+  max-height: min(88vh, 900px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+}
+
+.student-inscription-photo-lightbox__close {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0d47a1;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}

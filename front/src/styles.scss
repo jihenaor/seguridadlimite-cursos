@@ -63,3 +63,99 @@ td,
     color: #333333 !important;
   }
 }
+
+// ─── Modal fotográfico: estilos globales garantizados ────────────────────────
+// Se definen aquí (global) para evitar problemas de encapsulación de Angular.
+
+// Header compacto: una sola línea, nunca crece
+.ui-modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.5rem !important;
+  padding: 0.4rem 0.75rem !important;
+  min-height: 0 !important;
+  background: linear-gradient(90deg, #052e54 0%, #0d47a1 42%, #1565c0 100%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.ui-modal-title {
+  margin: 0 !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.ui-modal-close {
+  flex-shrink: 0 !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  font-size: 1.1rem !important;
+  cursor: pointer !important;
+}
+
+// Botones ui-btn: también globales para que funcionen en cualquier componente
+.ui-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.35rem !important;
+  min-height: 2.75rem !important;
+  padding: 0 1.25rem !important;
+  border-radius: 8px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  border: 1px solid transparent !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.ui-btn:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+}
+
+.ui-btn--primary {
+  background: linear-gradient(180deg, #1e88e5 0%, #1565c0 100%) !important;
+  color: #fff !important;
+  border-color: #0d47a1 !important;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.35) !important;
+}
+
+.ui-btn--secondary {
+  background: #fff !important;
+  color: #1565c0 !important;
+  border-color: rgba(25, 118, 210, 0.45) !important;
+}
+
+.ui-btn--danger {
+  background: #fff !important;
+  color: #c62828 !important;
+  border-color: rgba(198, 40, 40, 0.45) !important;
+}
+
+// Proteger el color blanco del header del modal contra reglas globales de color
+// Doble clase para mayor especificidad que .content *
+.ui-modal-header .ui-modal-title,
+.ui-modal-header h1, .ui-modal-header h2, .ui-modal-header h3,
+.ui-modal-header h4, .ui-modal-header h5, .ui-modal-header h6 {
+  color: #ffffff !important;
+}
+.ui-modal-close {
+  color: #ffffff !important;
+}

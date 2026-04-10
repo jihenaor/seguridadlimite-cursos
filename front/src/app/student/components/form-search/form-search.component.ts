@@ -15,6 +15,7 @@ import { FindTrabajadorInscripcionNumeroDocumentoService } from '../../../core/s
 @Component({
     selector: 'inscripcion-form-search',
     templateUrl: './form-search.component.html',
+    styleUrl: './form-search.component.scss',
     imports: [
         MatCardModule,
         FormsModule,

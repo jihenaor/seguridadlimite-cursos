@@ -1,0 +1,64 @@
+<app-ui-modal
+  [open]="isOpen"
+  [title]="tituloModal"
+  [hideHeader]="true"
+  (openChange)="onModalOpenChange($event)">
+  <div class="pcm">
+    @if (tituloModal) {
+      <p class="pcm__learner-line">{{ tituloModal }}</p>
+    }
+
+    @if (error) {
+      <div class="pcm__error" role="alert">
+        <p class="mb-2">{{ error }}</p>
+        <button type="button" class="ui-btn ui-btn--secondary" (click)="reintentarCamara()">Reintentar cámara</button>
+      </div>
+    }
+
+    @if (!error) {
+      <div class="pcm__stage">
+        <div class="pcm__ratio">
+          @if (step === 'live') {
+            <video
+              #video
+              class="pcm__video"
+              playsinline
+              autoplay
+              muted
+            ></video>
+          } @else {
+            <img class="pcm__preview" [src]="previewDataUrl" alt="Vista previa de la foto capturada" />
+          }
+        </div>
+      </div>
+
+      @if (step === 'live') {
+        <p class="pcm__hint">Centre el rostro, buena luz de frente y evite contraluz. Luego pulse capturar.</p>
+      } @else {
+        <p class="pcm__hint pcm__hint--preview">Revise la imagen. Si le gusta, guárdela; si no, tome otra.</p>
+      }
+    }
+
+    <canvas #canvas class="pcm__canvas-offscreen" [width]="canvasW" [height]="canvasH"></canvas>
+
+    @if (saving) {
+      <p class="pcm__loading">Guardando imagen…</p>
+    }
+
+    <div class="pcm__actions">
+      @if (!error && step === 'live') {
+        <button type="button" class="ui-btn ui-btn--primary" (click)="capture()" [disabled]="saving">
+          Capturar foto
+        </button>
+      }
+      @if (!error && step === 'preview') {
+        <button type="button" class="ui-btn ui-btn--primary" (click)="guardar()" [disabled]="saving">
+          Guardar foto
+        </button>
+        <button type="button" class="ui-btn ui-btn--secondary" (click)="rechazarPreview()" [disabled]="saving">
+          Tomar otra
+        </button>
+      }
+    </div>
+  </div>
+</app-ui-modal>

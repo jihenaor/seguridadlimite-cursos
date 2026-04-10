@@ -69,16 +69,25 @@ server:
   tomcat:
     max-http-form-post-size: 100MB
 
+# Rutas de archivos en disco (Linux/macOS/Windows). En Windows puede usarse C:/ruta/... o path.windows.*.
+# Variables: PATH_FOTOS, PATH_SIGNATURES, PATH_DOCUMENTS, PATH_CERTIFICADOS, PATH_*_WIN (override solo Windows).
 path:
-  fotos: /root/images/fotos/
-  signatures: /root/images/signatures/
-  documents: /root/images/documents/
-  certificados: /root/images/certificates/
+  fotos: ${PATH_FOTOS:${user.home}/seguridadlimite-data/fotos/}
+  signatures: ${PATH_SIGNATURES:${user.home}/seguridadlimite-data/signatures/}
+  documents: ${PATH_DOCUMENTS:${user.home}/seguridadlimite-data/documents/}
+  certificados: ${PATH_CERTIFICADOS:${user.home}/seguridadlimite-data/certificates/}
   windows:
-    fotos: C:\\Users\\Usuario\\Documents\\images\\fotos\\
-    signatures: C:\\Users\\Usuario\\Documents\\images\\signature\\
-    documents: C:\\Users\\Usuario\\Documents\\images\\documents\\
-    certificados: C:\\Users\\Usuario\\Documents\\images\\certificates\\
+    fotos: ${PATH_FOTOS_WIN:}
+    signatures: ${PATH_SIGNATURES_WIN:}
+    documents: ${PATH_DOCUMENTS_WIN:}
+    certificados: ${PATH_CERTIFICADOS_WIN:}
+
+# Compresión al guardar foto (POST /api/updateFoto): JPEG, borde máximo en px, calidad 0–1.
+app:
+  storage:
+    foto:
+      max-edge-px: ${APP_FOTO_MAX_EDGE_PX:960}
+      jpeg-quality: ${APP_FOTO_JPEG_QUALITY:0.82}
 
 logging:
   file:

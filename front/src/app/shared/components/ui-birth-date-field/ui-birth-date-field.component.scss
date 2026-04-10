@@ -1,0 +1,26 @@
+@use '../../styles/ui-outlined-field';
+
+.ui-birth-date-field__req {
+  color: #c62828;
+  margin-left: 2px;
+}
+
+.ui-outlined-field--invalid .ui-outlined-field__control {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 1px rgba(211, 47, 47, 0.25);
+}
+
+.ui-birth-date-field__input.mat-mdc-input-element {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+:host ::ng-deep .ui-birth-date-field .mdc-line-ripple {
+  display: none;
+}
+
+:host ::ng-deep .ui-birth-date-field .mat-mdc-input-element {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

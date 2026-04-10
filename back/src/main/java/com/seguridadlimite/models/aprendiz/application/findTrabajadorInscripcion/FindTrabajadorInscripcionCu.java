@@ -7,6 +7,7 @@ import com.seguridadlimite.models.dao.ITrabajadorDao;
 import com.seguridadlimite.models.entity.TrabajadorInscripcionPojo;
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
+import com.seguridadlimite.models.trabajador.application.EncodeFoto.ValidarExisteFotoTrabajadorService;
 import com.seguridadlimite.models.trabajador.application.TrabajadorMapper;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -31,6 +32,7 @@ public class FindTrabajadorInscripcionCu {
 	private final FindAsistenciaCompletaCu findAsistenciaCompletaCu;
 	private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
 	private final TrabajadorMapper trabajadorMapper;
+	private final ValidarExisteFotoTrabajadorService validarExisteFotoTrabajadorService;
 
 	@Transactional
 	public TrabajadorInscripcionPojo findTrabajadorInscripcion(String numerodocumento) throws BusinessException {
@@ -42,6 +44,8 @@ public class FindTrabajadorInscripcionCu {
 			pojo.setAprendizContinuaAprendizaje(data.aprendizContinuaAprendizaje);
 			return pojo;
 		}
+
+		validarExisteFotoTrabajadorService.exist(data.trabajador);
 
 		return trabajadorMapper.toPojo(
 				data.trabajador,

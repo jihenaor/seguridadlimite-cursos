@@ -8,6 +8,9 @@
       "@service/*": [
         "./src/app/core/services/*"
       ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ]
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

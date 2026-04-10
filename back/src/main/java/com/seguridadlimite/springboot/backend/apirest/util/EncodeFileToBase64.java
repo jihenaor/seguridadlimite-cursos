@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Base64;
 import java.util.Optional;
 
@@ -37,16 +39,20 @@ public class EncodeFileToBase64 {
 
     public Optional<String> encode(String tipo, String id) {
         String fileName = switch (tipo) {
-            case "F" -> getPathFiles.getFotosPath() + tipo + id + ".png";
+            case "F" -> resolveFotoFilePath(id);
             case "S" -> getPathFiles.getSignaturesPath() + tipo + id + ".png";
             case "C" -> getPathFiles.getCertificadosPath() + id + ".pdf";
             default -> "";
         };
 
+        if (fileName.isEmpty()) {
+            return Optional.empty();
+        }
+
         try {
             Optional<byte[]> fileData = fileRepository.readFile(fileName);
             if (fileData.isEmpty()) {
-                log.info("No se encontró el archivo Tipo: " + tipo + " Id:" + id + " Nombre de archivo:" + fileName);
+                log.info("No se encontró el archivo Tipo: {} Id:{} Nombre de archivo:{}", tipo, id, fileName);
                 return Optional.empty();
             }
 
@@ -56,5 +62,17 @@ public class EncodeFileToBase64 {
             log.error("Error al leer el archivo: " + fileName, ioException);
             return Optional.empty();
         }
+    }
+
+    /** Prioriza JPEG (nuevo flujo); mantiene compatibilidad con PNG histórico. */
+    private String resolveFotoFilePath(String id) {
+        String base = getPathFiles.getFotosPath() + "F" + id;
+        for (String ext : new String[] { "jpg", "jpeg", "png" }) {
+            String candidate = base + "." + ext;
+            if (Files.isRegularFile(Path.of(candidate))) {
+                return candidate;
+            }
+        }
+        return base + ".jpg";
     }
 }

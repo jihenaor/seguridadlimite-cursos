@@ -41,7 +41,6 @@ export class EnfasisService {
     console.log(`Fetching enfasis from (${tipo || 'default'}):`, url);
     this.httpClient.get<Enfasis[]>(url).subscribe({
       next: (data) => {
-        console.log('Enfasis data received:', data);
         if (Array.isArray(data)) {
           this._enfasis = [...data];
           this.initialized = true;

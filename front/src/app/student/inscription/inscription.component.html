@@ -1,4 +1,4 @@
-<div class="px-0 py-0 max-w-7xl mx-auto">
+<div class="student-inscription-page px-0 py-0 max-w-7xl mx-auto">
   <shared-header [textHeader]="'Inscríbete a nuestros cursos'"></shared-header>
 
 
@@ -7,14 +7,14 @@
   }
 
   @if (!horarioSeleccionado && !mostrarformulario) {
-  <div class="grupos-container" *ngIf="!horarioSeleccionado && !mostrarformulario">
+  <div class="student-inscription-page__stage grupos-container">
     <div class="row grupos-main">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2 auth-form-section">
         <div class="form-inscription">
           <div class="inscription-wrapper">
-
-            <inscripcion-form-search (trabajadorEncontrado)="validarTrabajador($event)"></inscripcion-form-search>
-
+            <div class="student-inscription-data-shell student-inscription-data-shell--compact">
+              <inscripcion-form-search (trabajadorEncontrado)="validarTrabajador($event)"></inscripcion-form-search>
+            </div>
           </div>
         </div>
       </div>
@@ -38,12 +38,13 @@
   <div id="titulo_ficha_inscripcion"></div>
 
   @if (mostrardatostrabajador) {
-  <div class="grupos-container">
+  <div class="student-inscription-page__stage grupos-container">
     <div class="row grupos-main">
       <div class="col-sm-12 auth-form-section">
         <div class="form-inscription">
           <div class="cursos-wrapper">
             @if (trabajador?.existeinscripcionabierta && !trabajador?.asistenciacompleta && !trabajador?.aprendizContinuaAprendizaje) {
+            <div class="student-inscription-data-shell student-inscription-data-shell--compact">
             <div class="row">
               <app-grupos-asociados
                 [trabajador]="trabajador"
@@ -56,6 +57,7 @@
                 </button>
               </div>
             </div>
+            </div>
             }
           </div>
         </div>
@@ -65,17 +67,31 @@
   }
 
   @if (mostrarformulario) {
-  <div class="grupos-container">
+  <div class="student-inscription-page__stage grupos-container">
     <div class="row grupos-main">
       <div class="col-sm-12 auth-form-section">
         <div class="form-inscription">
           <div class="cursos-wrapper">
             <div class="row">
-              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
+              <div
+                id="inscription-photo-section"
+                class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
                 *ngIf="trabajador?.existeinscripcionabierta && (trabajador?.aprendizContinuaAprendizaje)">
-                <button mat-raised-button color="secondary" class="w-100" routerLink="/student/photo">
-                  <mat-icon>add_a_photo</mat-icon> Tomar foto
-                </button>
+                <p class="student-inscription-photo-hint">
+                  Foto para el formulario de inscripción: si el sistema ya tiene su foto registrada, puede verla; si no,
+                  tómela con la cámara.
+                </p>
+                <div class="student-inscription-photo-actions">
+                  @if (tieneFotoRegistrada) {
+                    <button mat-stroked-button color="primary" class="w-100 mb-1" type="button" (click)="verMiFoto()">
+                      <mat-icon>photo</mat-icon> Ver mi foto
+                    </button>
+                  }
+                  <button mat-raised-button color="secondary" class="w-100" type="button" (click)="abrirModalFoto()">
+                    <mat-icon>add_a_photo</mat-icon>
+                    {{ tieneFotoRegistrada ? 'Tomar nueva foto' : 'Tomar foto' }}
+                  </button>
+                </div>
               </div>
 
               @if (trabajador.idaprendiz && trabajador?.aprendizContinuaAprendizaje) {
@@ -113,43 +129,50 @@
                 </div>
 
               </div>
-              <div *ngIf="trabajador?.grupo && trabajador?.grupo !== null">
-                <h4 class="login-title">Se encuentra inscrito en el programa {{ trabajador.grupo.programa.nombre
-                  }} Nivel: {{ trabajador.grupo.nivel.nombre }}</h4>
-
-                Nota: Hasta tanto el formulario de inscripción no sea diligenciado en su totalidad y sean
-                adjuntados todos los documentos, no se considerará inscrito el aprendiz y no se generará ningún
-                tipo de certificado
+              <div class="student-inscription-data-shell">
+              <div *ngIf="trabajador?.grupo && trabajador?.grupo !== null" class="mb-3">
+                <h4 class="student-inscription-page__title" style="font-size: 1.05rem; text-transform: none; letter-spacing: normal;">
+                  Se encuentra inscrito en el programa {{ trabajador.grupo.programa.nombre }} — Nivel: {{ trabajador.grupo.nivel.nombre }}
+                </h4>
+                <p class="student-inscription-notice">
+                  Nota: hasta tanto el formulario de inscripción no sea diligenciado en su totalidad y sean adjuntados todos los documentos,
+                  no se considerará inscrito el aprendiz y no se generará ningún tipo de certificado.
+                </p>
               </div>
 
-
-                <h3 id="titulo" class="login-title">FICHA DE INSCRIPCIÓN</h3>
+                <h3 id="titulo" class="student-inscription-page__title">Ficha de inscripción</h3>
 
                 <form [formGroup]="firstFormGroup" [disabled]="fechaLimiteSuperada">
 
-                  <div class="w-full mb-6">
-                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
-                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
-                            PROGRAMA DE FORMACION Y ENTRENAMIENTO A REALIZAR
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                            Programa de formación y entrenamiento a realizar
                       </div>
-                      <div class="p-6">
-                        <mat-form-field class="example-full-width" appearance="outline">
+                      <div class="student-inscription-card__body">
+                        <mat-form-field
+                          class="example-full-width"
+                          [class.student-inscription-nivel-solo]="soloUnNivel"
+                          appearance="outline">
+                          <mat-label>
+                            {{ soloUnNivel ? 'Programa asignado (único disponible)' : 'Seleccione el programa' }}
+                          </mat-label>
                           <mat-select formControlName="idnivel">
                             <mat-option *ngFor="let nivel of niveles" [value]="nivel.id">
                               {{ nivel.nombre }}
                             </mat-option>
                           </mat-select>
+                          @if (soloUnNivel) {
+                            <mat-hint>No requiere cambio: solo hay un programa abierto a inscripción.</mat-hint>
+                          }
                         </mat-form-field>
                       </div>
-                    </div>
                   </div>
 
-                  <div class="w-full mb-6">
-                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
-                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
-                        SECTOR LABORAL O ÉNFASIS AL QUE PERTENECE
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                        Sector laboral o énfasis al que pertenece
                       </div>
-                      <div class="p-6">
+                      <div class="student-inscription-card__body">
                         <mat-form-field class="example-full-width" appearance="outline">
                           <mat-select id="idenfasis" formControlName="idenfasis" required>
                             <mat-option *ngFor="let e of enfasisService.enfasis" [value]="e.id">
@@ -157,24 +180,20 @@
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
-                      </div>
                       @if (mostrarOtroEnfasis) {
-                        <div class="p-6">
-                          <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-form-field class="example-full-width mt-3" appearance="outline">
                             <mat-label>Otro énfasis</mat-label>
                             <input matInput formControlName="otroenfasis">
                           </mat-form-field>
-                        </div>
                       }
-                    </div>
+                      </div>
                   </div>
 
-                  <div class="w-full mb-6">
-                    <div class="rounded-xl shadow-md bg-white border border-gray-200">
-                      <div class="bg-[#777] text-white text-sm font-semibold px-4 py-2 rounded-t-xl">
-                        DATOS PERSONALES DEL APRENDIZ EN FORMACION
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                        Datos personales del aprendiz en formación
                       </div>
-                      <div class="p-6">
+                      <div class="student-inscription-card__body">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-2">
                           <!-- Tipo de documento y Número de documento en la primera fila -->
                           <div>
@@ -269,19 +288,28 @@
                             </div>
                           </div>
 
-                          <!-- Resto de campos con el mismo patrón -->
-                          <div class="w-full">
-                            <label for="fechanacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de nacimiento (AAAA-MM-DD)</label>
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <input matInput formControlName="fechanacimiento" mask="0000-00-00" maxlength="10"
-                                [dropSpecialCharacters]="false">
-                            </mat-form-field>
+                          <!-- Fecha de nacimiento: calendario Material (vista multi-año) + valor ISO en el formulario -->
+                          <div class="w-full inscription-fechanacimiento-wrap">
+                            <p class="inscription-birth-helper" role="note">
+                              <strong>Fecha de nacimiento:</strong> pulse el icono del calendario. Primero elija el
+                              <strong>año</strong> (vista por décadas), luego el mes y el día. El campo muestra la fecha
+                              en el orden habitual <span class="text-nowrap">día / mes / año</span>, igual que usted la
+                              elige; use siempre el calendario y no hace falta escribir otro formato.
+                            </p>
+                            <app-ui-birth-date-field
+                              class="example-full-width inscription-fechanacimiento-field"
+                              formControlName="fechanacimiento"
+                              fieldId="fechanacimiento"
+                              label="Su fecha de nacimiento"
+                              [minIso]="minFechaNacimientoIso"
+                              [maxIso]="maxFechaNacimientoIso"
+                            />
                             <div class="text-red-500 text-sm" [class.active]="isFechanacimientoFieldInvalid">
                               @if (fechanacimientoField.touched && fechanacimientoField.hasError('required')) {
                                 <p>La fecha de nacimiento es requerida</p>
                               }
                               @if (fechanacimientoField.touched && fechanacimientoField.hasError('invalid_date_format')) {
-                                <p>El formato de fecha debe ser AAAA-MM-DD</p>
+                                <p>Elija una fecha válida con el calendario</p>
                               }
                               @if (fechanacimientoField.touched && fechanacimientoField.hasError('invalid_month')) {
                                 <p>El mes debe estar entre 1 y 12</p>
@@ -427,19 +455,13 @@
                           </div>
                         </div>
                       </div>
-                    </div>
                   </div>
 
-                  <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="card">
-                        <div class="header" [style.backgroundColor]="'#56B9FF'">
-                          <h2>
-                            <strong>ULTIMO NIVEL DE FORMACION ACADEMICA </strong>
-                          </h2>
-                        </div>
-                        <div class="body">
-
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                          Último nivel de formación académica
+                      </div>
+                      <div class="student-inscription-card__body">
                           <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                               <label for="niveleducativo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel educativo</label>
@@ -471,20 +493,14 @@
                               </mat-form-field>
                             </div>
                           </div>
-                        </div>
                       </div>
-                    </div>
                   </div>
 
-                  <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="card">
-                        <div class="header" [style.backgroundColor]="'#56B9FF'">
-                          <h2>
-                            <strong>EXPERIENCIA LABORAL TRABAJO EN ALTURAS</strong>
-                          </h2>
-                        </div>
-                        <div class="body">
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                          Experiencia laboral — trabajo en alturas
+                      </div>
+                      <div class="student-inscription-card__body">
                           <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                               <label for="labordesarrolla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Labor que desarrolla</label>
@@ -502,21 +518,14 @@
                             </div>
 
                           </div>
-                        </div>
                       </div>
-                    </div>
                   </div>
 
-
-                  <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="card">
-                        <div class="header" [style.backgroundColor]="'#56B9FF'">
-                          <h2>
-                            <strong>AUTOREPORTE DE CONDICIONES DE SALUD</strong>
-                          </h2>
-                        </div>
-                        <div class="body">
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                          Autoreporte de condiciones de salud
+                      </div>
+                      <div class="student-inscription-card__body">
                           <div class="row">
                             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
                               <div>
@@ -645,20 +654,14 @@
                             </div>
                           </div>
 
-                        </div>
                       </div>
-                    </div>
                   </div>
 
-                  <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="card">
-                        <div class="header" [style.backgroundColor]="'#56B9FF'">
-                          <h2>
-                            <strong>PERSONA DE CONTACTO EN CASO DE EMERGENCIAS</strong>
-                          </h2>
-                        </div>
-                        <div class="body">
+                  <div class="student-inscription-card">
+                      <div class="student-inscription-card__head">
+                          Persona de contacto en caso de emergencias
+                      </div>
+                      <div class="student-inscription-card__body">
                           <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                               <label for="nombrecontacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre y apellido</label>
@@ -701,11 +704,8 @@
                               </div>
                             </div>
                           </div>
-                        </div>
                       </div>
-                    </div>
                   </div>
-
 
                 </form>
 
@@ -713,7 +713,7 @@
                   (checkboxChange)="onCheckboxChange($event)">
                 </inscripcion-terminos-condiciones>
 
-                <div class="row clearfix">
+                <div class="row clearfix student-inscription-actions">
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
                     <button mat-raised-button color="warn" (click)="cancelGrupo()" class="w-100 h-200">
                       <span class="d-flex align-items-center justify-content-center">
@@ -730,14 +730,13 @@
                       </span>
                     </button>
                     }
-
-                    {{ invalid }}
                     <!--
                     {{ mensajedocumentos }}
 
                   -->
                   </div>
                 </div>
+              </div>
 
                 <!-- Final spacer -->
                 <div class="pb-5 mb-5"></div>
@@ -748,5 +747,30 @@
       </div>
     </div>
   </div>
+  }
+
+  <app-photo-capture-modal
+    [(isOpen)]="photoModalOpen"
+    [nombreAprendiz]="nombreAprendizFoto"
+    [idTrabajador]="trabajador?.id ?? 0"
+    (fotoGuardada)="onFotoGuardadaEnModal()"
+  />
+
+  @if (fotoLightboxOpen && mediaService.fotoDataUrl(); as srcLb) {
+    <div
+      class="student-inscription-photo-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Foto del aprendiz ampliada"
+      (click)="cerrarFotoAmpliada()">
+      <button
+        type="button"
+        class="student-inscription-photo-lightbox__close"
+        (click)="cerrarFotoAmpliada(); $event.stopPropagation()"
+        aria-label="Cerrar">
+        ×
+      </button>
+      <img class="student-inscription-photo-lightbox__img" [src]="srcLb" alt="Foto del aprendiz" (click)="$event.stopPropagation()" />
+    </div>
   }
 </div>

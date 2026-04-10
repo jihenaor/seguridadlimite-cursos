@@ -133,6 +133,7 @@ public class PermisoTrabajoAlturasMapper {
                     return PermisoFechasDTO.builder()
                             .id(fecha.getId())
                             .fecha(fecha.getFecha())
+                            .contexto(fecha.getContexto())
                             .dia(fecha.getDia())
                             .build();
                 })

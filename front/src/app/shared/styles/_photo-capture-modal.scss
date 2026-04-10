@@ -1,0 +1,130 @@
+// Modal de foto (pcm = photo capture modal). Flujo: cámara en vivo → vista previa → aceptar / tomar otra.
+
+.pcm {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pcm__learner-line {
+  margin: 0;
+  padding: 0 2.5rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #37474f;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pcm__stage {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+// Marco 4:3 centrado; una sola superficie visible (video O img), sin duplicar feeds.
+.pcm__ratio {
+  position: relative;
+  width: 100%;
+  max-width: min(100%, 640px);
+  margin: 0 auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0a1628;
+  border: 1px solid rgba(100, 181, 246, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 8px 28px rgba(13, 27, 42, 0.35);
+}
+
+.pcm__video,
+.pcm__preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+// Canvas solo para captura en memoria; no compite con reglas del video.
+.pcm__canvas-offscreen {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 4px;
+  height: 3px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pcm__hint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #455a64;
+  text-align: center;
+}
+
+.pcm__hint--preview {
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.pcm__error {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: #fff8e1;
+  border: 1px solid #ffcc80;
+  color: #5d4037;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.pcm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding-top: 0.15rem;
+}
+
+.pcm__loading {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #1565c0;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .pcm {
+    gap: 0.4rem;
+    max-width: none;
+  }
+
+  .pcm__ratio {
+    border-radius: 10px;
+    max-width: 100%;
+  }
+
+  .pcm__hint {
+    font-size: 0.72rem;
+  }
+
+  .pcm__actions .ui-btn {
+    width: 100%;
+  }
+}

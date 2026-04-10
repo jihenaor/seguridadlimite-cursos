@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -41,6 +41,9 @@ import { Trabajador } from '../../core/models/trabajador.model';
 import { InscripcionesAbiertasComponent } from '../../shared/components/inscripciones-abiertas/inscripciones-abiertas.component';
 import { InscripcionesAbiertasService } from '../../core/service/inscripciones-abiertas.service';
 import { EnfasisService } from '../../admin/enfasis/enfasis.service';
+import { UiBirthDateFieldComponent } from '../../shared/components/ui-birth-date-field/ui-birth-date-field.component';
+import { PhotoCaptureModalComponent } from '../../shared/components/photo-capture-modal/photo-capture-modal.component';
+import { MediaService } from '../../core/service/media.service';
 
 @Component({
     selector: 'app-inscription',
@@ -66,7 +69,9 @@ import { EnfasisService } from '../../admin/enfasis/enfasis.service';
         TerminosCondicionesComponent,
         AsyncPipe,
         GruposAsociadosComponent,
-        InscripcionesAbiertasComponent
+        InscripcionesAbiertasComponent,
+        UiBirthDateFieldComponent,
+        PhotoCaptureModalComponent
     ]
 })
 export class InscriptionComponent implements OnInit {
@@ -116,6 +121,41 @@ export class InscriptionComponent implements OnInit {
   niveles: Nivel[] = [];
   public inscripcionesAbiertas = true;
 
+  /** Modal de foto (sin salir de la inscripción). */
+  photoModalOpen = false;
+
+  /** Vista ampliada de la foto ya registrada. */
+  fotoLightboxOpen = false;
+
+  /** Límites `yyyy-MM-DD` para el datepicker de fecha de nacimiento. */
+  readonly maxFechaNacimientoIso = InscriptionComponent.toIsoDateLocal(new Date());
+  readonly minFechaNacimientoIso = InscriptionComponent.toIsoDateLocal(
+    InscriptionComponent.addYears(new Date(), -120),
+  );
+
+  private static addYears(d: Date, delta: number): Date {
+    const x = new Date(d.getTime());
+    x.setFullYear(x.getFullYear() + delta);
+    return x;
+  }
+
+  private static toIsoDateLocal(d: Date): string {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  /** Acepta `yyyy-MM-dd` al inicio de un ISO datetime para el valor del control. */
+  private static normalizeBirthDateYmd(raw: string | null | undefined): string {
+    if (raw == null || raw === '') {
+      return '';
+    }
+    const s = String(raw).trim();
+    const m = s.match(/^(\d{4}-\d{2}-\d{2})/);
+    return m ? m[1] : '';
+  }
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
@@ -127,7 +167,8 @@ export class InscriptionComponent implements OnInit {
     private saveTrabajadorAprendizService: SaveTrabajadorAprendizService,
     private notificacionService: ShowNotificacionService,
     private nivelesServicio: NivelsService,
-    private inscripcionesService: InscripcionesAbiertasService
+    private inscripcionesService: InscripcionesAbiertasService,
+    public mediaService: MediaService,
   ) {
 
     //1094947445
@@ -182,14 +223,53 @@ export class InscriptionComponent implements OnInit {
   }
 
   cargarNiveles(): void {
-    this.nivelesServicio.getNivelActivosFecha().subscribe(
-      (data) => {
-        this.niveles = data;
+    this.nivelesServicio.getNivelActivosFecha().subscribe({
+      next: (data) => {
+        this.niveles = data ?? [];
+        this.aplicarNivelUnicoSiAplica();
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al cargar niveles:', error);
-      }
+      },
+    });
+  }
+
+  /** Hay un único programa/nivel activo: el usuario no debe elegir. */
+  get soloUnNivel(): boolean {
+    return Array.isArray(this.niveles) && this.niveles.length === 1;
+  }
+
+  /**
+   * Si solo existe un nivel, lo asigna a `idnivel` y deshabilita el control (sigue yendo en getRawValue() al guardar).
+   */
+  private aplicarNivelUnicoSiAplica(): void {
+    const g = this.firstFormGroup;
+    if (!g) {
+      return;
+    }
+    const c = g.get('idnivel');
+    if (!c) {
+      return;
+    }
+    if (this.soloUnNivel) {
+      c.setValue(this.niveles[0].id, { emitEvent: false });
+      c.disable({ emitEvent: false });
+    } else {
+      c.enable({ emitEvent: false });
+    }
+  }
+
+  /** Datos para el flujo de foto en modal (quién es y programa si ya está asignado). */
+  private persistFotoPageContext(t: Trabajador): void {
+    const docParts = [t?.tipodocumento, t?.numerodocumento].filter(Boolean);
+    sessionStorage.setItem('fotoContextDocumento', docParts.join(' ').trim());
+    const nombres = [t?.primernombre, t?.segundonombre, t?.primerapellido, t?.segundoapellido].filter(
+      (x) => x != null && String(x).trim() !== '',
     );
+    sessionStorage.setItem('fotoContextNombre', nombres.join(' ').trim() || '—');
+    const g = t?.grupo as { programa?: { nombre?: string }; nivel?: { nombre?: string } } | null | undefined;
+    sessionStorage.setItem('fotoContextPrograma', g?.programa?.nombre?.trim() ?? '');
+    sessionStorage.setItem('fotoContextNivel', g?.nivel?.nombre?.trim() ?? '');
   }
 
   myFilter = (d: Date | null): boolean => {
@@ -310,7 +390,10 @@ export class InscriptionComponent implements OnInit {
       ciudaddomicilio: [this.trabajador.ciudaddomicilio, [Validators.required]],
       direcciondomicilio: [this.trabajador.direcciondomicilio, [Validators.required]],
       celular: [this.trabajador.celular, [Validators.pattern('[0-9]+'), Validators.maxLength(10)]],
-      fechanacimiento: [this.trabajador.fechanacimiento, [Validators.required, Validators.maxLength(10), MyValidators.validBirthDate]],
+      fechanacimiento: [
+        InscriptionComponent.normalizeBirthDateYmd(this.trabajador.fechanacimiento),
+        [Validators.required, Validators.maxLength(10), MyValidators.validBirthDate],
+      ],
       correoelectronico: [this.trabajador.correoelectronico, [Validators.email, Validators.maxLength(80)]],
       eps: [this.trabajador.eps, [Validators.required]],
       arl: [this.trabajador.arl, [Validators.required]],
@@ -376,11 +459,87 @@ export class InscriptionComponent implements OnInit {
       map(value => this._filterEmpresa(value  || ''))
     );
 
+    this.aplicarNivelUnicoSiAplica();
+  }
+
+  get nombreAprendizFoto(): string {
+    const t = this.trabajador;
+    if (!t) {
+      return '';
+    }
+    const parts = [t.primernombre, t.segundonombre, t.primerapellido, t.segundoapellido].filter(
+      (x) => x != null && String(x).trim() !== '',
+    );
+    return parts.join(' ').trim();
+  }
+
+  /** Indicador que ya envía el backend al validar el trabajador (`EncodeFoto` / `foto` en BD). */
+  get tieneFotoRegistrada(): boolean {
+    return this.trabajador?.foto === 'S';
+  }
+
+  /**
+   * Muestra la foto del aprendiz: usa GET existente vía `MediaService.searchFoto`.
+   * Si ya estaba cargada en memoria, abre el visor de inmediato.
+   */
+  verMiFoto(): void {
+    if (!this.trabajador?.id) {
+      return;
+    }
+    if (!this.tieneFotoRegistrada) {
+      return;
+    }
+    if (this.mediaService.fotoDataUrl()) {
+      this.fotoLightboxOpen = true;
+      return;
+    }
+    this.mediaService.searchFoto(this.trabajador.id, (ok) => {
+      if (ok && this.mediaService.fotoDataUrl()) {
+        this.fotoLightboxOpen = true;
+      } else {
+        alert('No se pudo cargar la foto. Intente de nuevo o tome una nueva.');
+      }
+    });
+  }
+
+  cerrarFotoAmpliada(): void {
+    this.fotoLightboxOpen = false;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeCierraFoto(): void {
+    if (this.fotoLightboxOpen) {
+      this.cerrarFotoAmpliada();
+    }
+  }
+
+  /** Al cargar otra ficha no debe quedar en memoria la foto del trabajador anterior. */
+  private resetCacheFotoTrabajador(): void {
+    this.mediaService.clearFoto();
+  }
+
+  abrirModalFoto(): void {
+    if (!this.trabajador?.id) {
+      alert('Busque su documento y espere a que cargue la ficha antes de tomar la foto.');
+      return;
+    }
+    sessionStorage.setItem('idtrabajador', String(this.trabajador.id));
+    this.persistFotoPageContext(this.trabajador);
+    this.photoModalOpen = true;
+  }
+
+  onFotoGuardadaEnModal(): void {
+    this.photoModalOpen = false;
+    if (this.trabajador) {
+      this.trabajador.foto = 'S';
+      this.mediaService.clearFoto();
+    }
   }
 
   async validarTrabajador(trabajador: Trabajador) {
     this.trabajador = trabajador;
     sessionStorage.setItem('idtrabajador', this.trabajador.id + '');
+    this.persistFotoPageContext(this.trabajador);
     const numerodocumento = trabajador.numerodocumento;
 //    const tipodocumento = this.firstFormGroup.get('tipodocumento').value;
 
@@ -411,6 +570,8 @@ export class InscriptionComponent implements OnInit {
     this.mostrardatostrabajador = trabajador.aprendizContinuaAprendizaje;
 
     this.mostrarformulario = trabajador.existeinscripcionabierta;
+
+    this.resetCacheFotoTrabajador();
   }
 
   get numerodocumentoField() {
@@ -635,7 +796,7 @@ export class InscriptionComponent implements OnInit {
       if (fechaControl?.hasError('required')) {
         alert('La fecha de nacimiento es requerida');
       } else if (fechaControl?.hasError('invalid_date_format')) {
-        alert('El formato de fecha debe ser AAAA-MM-DD');
+        alert('Elija una fecha válida con el calendario.');
       } else if (fechaControl?.hasError('invalid_month')) {
         alert('El mes debe estar entre 1 y 12');
       } else if (fechaControl?.hasError('invalid_day')) {
@@ -785,7 +946,7 @@ export class InscriptionComponent implements OnInit {
         if (fechaNacimientoControl.hasError('required')) {
           alert('La fecha de nacimiento es requerida');
         } else if (fechaNacimientoControl.hasError('invalid_date_format')) {
-          alert('El formato de fecha debe ser AAAA-MM-DD');
+          alert('Elija una fecha válida con el calendario.');
         } else if (fechaNacimientoControl.hasError('invalid_month')) {
           alert('El mes debe estar entre 1 y 12. Por favor verifique la fecha de nacimiento.');
         } else if (fechaNacimientoControl.hasError('invalid_day')) {
@@ -795,7 +956,7 @@ export class InscriptionComponent implements OnInit {
         } else if (fechaNacimientoControl.hasError('too_old')) {
           alert('La fecha de nacimiento no puede ser mayor a 120 años');
         } else {
-          alert('La fecha de nacimiento no es válida. Por favor verifique el formato AAAA-MM-DD.');
+          alert('La fecha de nacimiento no es válida. Use el calendario para seleccionarla.');
         }
         document.getElementById('fechanacimiento')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
@@ -810,6 +971,15 @@ export class InscriptionComponent implements OnInit {
           sessionStorage.setItem("idaprendiz", resp.id + '')
           sessionStorage.setItem("numerodocumento", resp.trabajador.numerodocumento)
           sessionStorage.setItem("nombreaprendiz", "")
+
+          if (resp.trabajador) {
+            const t = { ...resp.trabajador } as Trabajador;
+            if (resp.grupo) {
+              t.grupo = resp.grupo;
+            }
+            sessionStorage.setItem('idtrabajador', String(t.id));
+            this.persistFotoPageContext(t);
+          }
 
           if (resp.nivel.tieneevaluacionconocimientos == 'S' && (!resp.eingreso || this.trabajador.eingreso == null || resp.eingreso === 0)) {
             this.notificacionService.displaySuccess('La inscripcion fué exitosa.  Por favor registra el siguiente quiz de conocimientos previos');

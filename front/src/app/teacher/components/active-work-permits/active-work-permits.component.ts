@@ -43,18 +43,16 @@ export class ActiveWorkPermitsComponent implements OnInit {
 
   constructor(public permisoTrabajoService: PermisoTrabajoSignalsService) {
     this.selectedDate = new Date();
-  }
-
-  ngOnInit() {
-    this.loadActivePermits();
-    
-    // Subscribe to permisos changes to initialize them
     effect(() => {
       const permisos = this.permisoTrabajoService.permisos();
       if (permisos && permisos.length > 0) {
         this.initializePermisos();
       }
     });
+  }
+
+  ngOnInit() {
+    this.loadActivePermits();
   }
 
   onDateChange(event: any): void {

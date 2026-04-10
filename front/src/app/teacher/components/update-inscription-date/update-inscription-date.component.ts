@@ -1,15 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EffectRef, OnDestroy, effect, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 
 import { DiaDto, Nivel } from '../../../core/models/nivel.model';
 import {
@@ -19,24 +14,22 @@ import {
 } from '../../../core/service/iniciarPermisoTrabajoAlturas.service';
 import { ActiveWorkPermitsComponent } from '../active-work-permits/active-work-permits.component';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { SvgIconComponent } from '@shared/components/svg-icon/svg-icon.component';
+import { UiOutlinedFieldComponent } from '@shared/components/ui-outlined-field/ui-outlined-field.component';
 
 @Component({
   selector: 'app-update-inscription-date',
   standalone: true,
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-CO' }],
   imports: [
     CommonModule,
-    MatInputModule,
     MatButtonModule,
     FormsModule,
     MatCheckboxModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
     MatDialogModule,
-    MatIconModule,
     MatTabsModule,
-    ActiveWorkPermitsComponent
+    ActiveWorkPermitsComponent,
+    SvgIconComponent,
+    UiOutlinedFieldComponent,
   ],
   styles: [`
     .addContainer {
@@ -79,46 +72,19 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
     .me-2 {
       margin-right: 0.5rem;
     }
-    :host ::ng-deep .inscripcion-date-field {
+    .inscripcion-date-field {
       width: 100%;
     }
-    /* Ocultar hint/error sin colapsar el cálculo de altura del outline (evita etiqueta pegada al borde). */
-    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-subscript-wrapper,
-    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-    :host ::ng-deep .inscripcion-date-field.mat-mdc-form-field,
-    :host ::ng-deep .inscripcion-dia-date.mat-mdc-form-field {
-      --mat-form-field-subscript-text-line-height: 0px;
-      --mat-form-field-subscript-text-tracking: 0;
-    }
-    :host ::ng-deep .inscripcion-dia-date {
+    .inscripcion-dia-date {
       flex: 1;
       width: 100%;
       font-size: 13px;
     }
-    /*
-     * Artefacto MDC: el notch lleva border-left transparente; si un tema pinta border-color
-     * en el notch, aparece una línea vertical en medio del texto (también fuera de .dark).
-     */
-    :host ::ng-deep .inscripcion-date-field .mdc-notched-outline__notch,
-    :host ::ng-deep .inscripcion-dia-date .mdc-notched-outline__notch {
-      border-left-color: transparent !important;
-    }
-    :host ::ng-deep [dir='rtl'] .inscripcion-date-field .mdc-notched-outline__notch,
-    :host ::ng-deep [dir='rtl'] .inscripcion-dia-date .mdc-notched-outline__notch {
-      border-left: none !important;
-      border-right-color: transparent !important;
-    }
-    /* Línea entre zona de texto y botón del calendario (sufijo). */
-    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-icon-suffix,
-    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-icon-suffix {
-      border: none !important;
-      border-inline-start: none !important;
-    }
-    :host ::ng-deep .inscripcion-date-field .mat-mdc-form-field-infix,
-    :host ::ng-deep .inscripcion-dia-date .mat-mdc-form-field-infix {
-      border-inline-end: none !important;
+    .inscripcion-btn-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      vertical-align: middle;
     }
     .dia-diseno-label {
       min-width: 0;
@@ -150,10 +116,8 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
       line-height: 1.25;
       border: 1px solid transparent;
     }
-    .dia-contexto-chip mat-icon {
-      font-size: 14px;
-      width: 14px;
-      height: 14px;
+    .dia-contexto-chip app-svg-icon {
+      flex-shrink: 0;
     }
     .dia-contexto-chip--teorico {
       background: #e3f2fd;
@@ -184,7 +148,7 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 })
 export class UpdateInscriptionDateComponent implements OnDestroy {
   niveles: Nivel[] = [];
-  /** Modelo Date para mat-datepicker (API sigue usando yyyy-MM-dd en Nivel) */
+  /** Modelo Date para inputs nativos type=date (API sigue usando yyyy-MM-dd en Nivel) */
   nivelPickerDates: Record<number, { desde: Date | null; hasta: Date | null }> = {};
   diaPickerDates: Record<string, Date | null> = {};
   /** 0 = Cursos abiertos en la fecha, 1 = Apertura de Inscripción */
@@ -301,6 +265,16 @@ export class UpdateInscriptionDateComponent implements OnDestroy {
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
+  }
+
+  onNivelFechaYmdChange(nivel: Nivel, field: 'fechadesde' | 'fechahasta', ymd: string): void {
+    const d = this.parseYmd(ymd?.trim() || null);
+    this.onNivelFechaChange(nivel, field, d);
+  }
+
+  onDiaFechaYmdChange(nivel: Nivel, dia: DiaDto, ymd: string): void {
+    const d = this.parseYmd(ymd?.trim() || null);
+    this.onDiaFechaChange(nivel, dia, d);
   }
 
   onNivelFechaChange(nivel: Nivel, field: 'fechadesde' | 'fechahasta', value: Date | null): void {
