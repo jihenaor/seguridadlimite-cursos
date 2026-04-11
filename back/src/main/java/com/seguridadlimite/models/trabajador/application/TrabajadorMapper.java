@@ -27,7 +27,7 @@ public class TrabajadorMapper {
             Aprendiz aprendiz,
             TrabajadorInscripcionPojo pojo) {
         pojo.setIdaprendiz(aprendiz.getId());
-        pojo.setIdnivel(aprendiz.getIdnivel());
+        pojo.setIdnivel(aprendiz.getIdnivel() != null ? aprendiz.getIdnivel().longValue() : null);
 
         pojo.setNombrenivel(aprendiz.getNivel().getNombre());
         pojo.setIdenfasis(aprendiz.getIdenfasis());
