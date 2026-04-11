@@ -1,6 +1,8 @@
 
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import com.seguridadlimite.models.nivel.domain.Nivel;
 import jakarta.persistence.*;
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
 
 // @Entity - tabla "planestudio" no existe en BD; clase sin uso activo
 @Table(name = "planestudio")
+@Data
 public class Planestudio implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -75,183 +78,7 @@ public class Planestudio implements Serializable {
     this.modulo = modulo;
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getModulo() {
-    return modulo;
-  }
-
-  public void setModulo(String modulo) {
-    this.modulo = modulo;
-  }
-
-  public String getTema() {
-    return tema;
-  }
-
-  public void setTema(String tema) {
-    this.tema = tema;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
-  }
-
-  public String getHidrocarburos() {
-    return hidrocarburos;
-  }
-
-  public void setHidrocarburos(String hidrocarburos) {
-    this.hidrocarburos = hidrocarburos;
-  }
-
-  public String getConstruccion() {
-    return construccion;
-  }
-
-  public void setConstruccion(String construccion) {
-    this.construccion = construccion;
-  }
-
-  public String getElectrico() {
-    return electrico;
-  }
-
-  public void setElectrico(String electrico) {
-    this.electrico = electrico;
-  }
-
-  public String getContexto() {
-    return contexto;
-  }
-
-  public void setContexto(String contexto) {
-    this.contexto = contexto;
-  }
-
-  public String getInstrumentos() {
-    return instrumentos;
-  }
-
-  public void setInstrumentos(String instrumentos) {
-    this.instrumentos = instrumentos;
-  }
-
-  public String getTecnicaevaluacion() {
-    return tecnicaevaluacion;
-  }
-
-  public void setTecnicaevaluacion(String tecnicaevaluacion) {
-    this.tecnicaevaluacion = tecnicaevaluacion;
-  }
-
-  public String getNivellectoescritura() {
-    return nivellectoescritura;
-  }
-
-  public void setNivellectoescritura(String nivellectoescritura) {
-    this.nivellectoescritura = nivellectoescritura;
-  }
-
-  public String getDia1() {
-    return dia1;
-  }
-
-  public void setDia1(String dia1) {
-    this.dia1 = dia1;
-  }
-
-  public String getDia2() {
-    return dia2;
-  }
-
-  public void setDia2(String dia2) {
-    this.dia2 = dia2;
-  }
-
-  public String getDia3() {
-    return dia3;
-  }
-
-  public void setDia3(String dia3) {
-    this.dia3 = dia3;
-  }
-
-  public String getDia4() {
-    return dia4;
-  }
-
-  public void setDia4(String dia4) {
-    this.dia4 = dia4;
-  }
-
-  public String getDia5() {
-    return dia5;
-  }
-
-  public void setDia5(String dia5) {
-    this.dia5 = dia5;
-  }
-
-  public String getDia6() {
-    return dia6;
-  }
-
-  public void setDia6(String dia6) {
-    this.dia6 = dia6;
-  }
-
-  public String getDia7() {
-    return dia7;
-  }
-
-  public void setDia7(String dia7) {
-    this.dia7 = dia7;
-  }
-
-  public String getDia8() {
-    return dia8;
-  }
-
-  public void setDia8(String dia8) {
-    this.dia8 = dia8;
-  }
-
-  public String getDia9() {
-    return dia9;
-  }
-
-  public void setDia9(String dia9) {
-    this.dia9 = dia9;
-  }
-
-  public String getDia10() {
-    return dia10;
-  }
-
-  public void setDia10(String dia10) {
-    this.dia10 = dia10;
-  }
-
-  public Nivel getIdnivel() {
-    return idnivel;
-  }
-
-  public void setIdnivel(Nivel idnivel) {
-    this.idnivel = idnivel;
-  }
-
-  @Override
+@Override
   public int hashCode() {
     int hash = 0;
     hash += (id != null ? id.hashCode() : 0);

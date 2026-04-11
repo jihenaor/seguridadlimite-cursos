@@ -1,9 +1,12 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Table(name = "trabajadoresfoto")
+@Data
 public class Trabajadorfoto implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,35 +29,4 @@ public class Trabajadorfoto implements Serializable {
   public Trabajadorfoto() {
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getIdtrabajador() {
-    return idtrabajador;
-  }
-
-  public void setIdtrabajador(Long idtrabajador) {
-    this.idtrabajador = idtrabajador;
-  }
-
-  public byte[] getImagen() {
-    return imagen;
-  }
-
-  public void setImagen(byte[] imagen) {
-    this.imagen = imagen;
-  }
-
-  public String getBase64() {
-    return base64;
-  }
-
-  public void setBase64(String base64) {
-    this.base64 = base64;
-  }
 }

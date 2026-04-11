@@ -57,7 +57,7 @@ public class AprendizController {
 	@GetMapping("/asistenciaaprendiz/{idaprendiz}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Asistencia> getAsistenciaAprendiz(@PathVariable Long idaprendiz) throws BusinessException {
-		return asistenciaService.find(idaprendiz);
+		return asistenciaService.find(idaprendiz.intValue());
 	}
 	
 	@GetMapping("/evaluaciongrupo/{idgrupo}")

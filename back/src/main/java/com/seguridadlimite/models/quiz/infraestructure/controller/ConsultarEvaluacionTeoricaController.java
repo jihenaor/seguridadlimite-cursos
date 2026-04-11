@@ -22,7 +22,7 @@ public class ConsultarEvaluacionTeoricaController {
 
 	@GetMapping("/{idaprendiz}/teorica")
 	public ResponseEntity<List<Pregunta>> consultarevaluacionteorica(
-			@PathVariable Long idaprendiz) throws BusinessException {
+			@PathVariable int idaprendiz) throws BusinessException {
 		List<Pregunta> preguntas = service.findPreguntasAprendiz(
 					idaprendiz,
 					TipoevaluacionEnum.TEORICO.getEquivalente());

@@ -24,7 +24,7 @@ public class UpdateDocumentoaprendizServiceImpl {
 	@Transactional
 	public void save(List<Documento> documentos) {
 		for (Documento documento : documentos) {
-			if (documento.getIdaprendiz() == null) {
+			if (documento.getIdaprendiz() == 0) {
 				return;
 			}
 		}

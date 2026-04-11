@@ -29,7 +29,7 @@ public class AprendizUpdateIdPermisoController {
 
 @Data
 class UpdateIdPermisoRequest {
-	private long idAprendiz;
+	private int idAprendiz;
 	private int idPermiso;
 
 }

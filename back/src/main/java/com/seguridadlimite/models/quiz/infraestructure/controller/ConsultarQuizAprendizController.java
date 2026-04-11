@@ -22,7 +22,7 @@ public class ConsultarQuizAprendizController {
 
 	@GetMapping("/{idaprendiz}/{tipoevaluacion}/{numero}/tipoevaluacion")
 	public ResponseEntity<List<Pregunta>> consultarevaluacion(
-			@PathVariable Long idaprendiz,
+			@PathVariable int idaprendiz,
 			@PathVariable String tipoevaluacion,
 			@PathVariable int numero) throws BusinessException {
 		List<Pregunta> preguntas = service.findPreguntasAprendiz(

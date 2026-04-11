@@ -22,7 +22,7 @@ public class ConsultarEvaluacionIngresoController {
 	private final ConsultarEvaluacionTeoricaService service;
 	@GetMapping("/{idaprendiz}/ingreso")
 	public List<Pregunta> consultarevaluacionconocimientostecnicos(
-			@PathVariable Long idaprendiz) throws BusinessException {
+			@PathVariable int idaprendiz) throws BusinessException {
 		return service.findPreguntasAprendiz(idaprendiz,
 				TipoevaluacionEnum.INGRESO.getEquivalente());
 	}

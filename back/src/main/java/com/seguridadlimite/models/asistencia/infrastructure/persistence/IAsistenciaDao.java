@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IAsistenciaDao extends CrudRepository<Asistencia, Long> {
   @Query("select u from Asistencia u where u.idaprendiz = ?1 order by u.modulo, u.dia, u.unidad")
-  List<Asistencia> findByIdaprendiz(Long idaprendiz);
+  List<Asistencia> findByIdaprendiz(int idaprendiz);
 
   @Query("select u from Asistencia u where u.fecha = ?1 and u.idaprendiz = ?2")
   Asistencia findByIdhorarioIdaprendiz(String fecha, Long idaprendiz);

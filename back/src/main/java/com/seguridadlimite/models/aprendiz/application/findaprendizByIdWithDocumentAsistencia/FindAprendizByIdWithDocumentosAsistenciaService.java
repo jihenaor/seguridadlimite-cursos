@@ -51,9 +51,7 @@ public class FindAprendizByIdWithDocumentosAsistenciaService {
 
 	private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
 
-	public FindAprendizByIdWithDocumentosAsistenciaService(IAprendizDao aprendizDao) {
-        this.aprendizDao = aprendizDao;
-	}
+
 
 	@Transactional
 	public Aprendiz find(Long id) {
@@ -114,14 +112,14 @@ public class FindAprendizByIdWithDocumentosAsistenciaService {
 		List<Documento> documentos = documentoService.findByTipo("A");
 
 		for (Documento documento : documentos) {
-			documento.setIdaprendiz(AprendizId.toLong(a.getId()));
+			documento.setIdaprendiz(a.getId());
 			asociarAprendizDocumento(a, documento);
 		}
 		a.setDocumentos(documentos);
 	}
 
 	private void asociarAprendizDocumento(Aprendiz a, Documento documento) {
-		Documentoaprendiz d = documentoAprendizService.findByIdAprendiz(documento.getId(), AprendizId.toLong(a.getId()));
+		Documentoaprendiz d = documentoAprendizService.findByIdAprendiz(documento.getId(), a.getId());
 
 		if (d != null) {
 			documento.setExt(d.getExt());

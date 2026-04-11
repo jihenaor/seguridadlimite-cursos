@@ -23,7 +23,7 @@ public class UpdateIdPermisoAprendizService {
     private final IAprendizDao aprendizDao;
 
     @Transactional
-    public void update(long idAprendiz, int idPermiso) {
+    public void update(int idAprendiz, int idPermiso) {
         List<Asistencia> asistencias = iAsistenciaDao.findByIdaprendiz(idAprendiz);
 
         if (asistencias.isEmpty()) {

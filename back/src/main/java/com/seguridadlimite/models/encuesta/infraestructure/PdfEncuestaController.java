@@ -21,7 +21,7 @@ public class PdfEncuestaController {
     private final GenerarPdfEncuestaService generarPdfEncuestaService;
 
     @GetMapping("/pdf/{idaprendiz}")
-    public ResponseEntity<InputStreamResource> generatePdf(@PathVariable long idaprendiz) {
+    public ResponseEntity<InputStreamResource> generatePdf(@PathVariable int idaprendiz) {
         ByteArrayInputStream bis = generarPdfEncuestaService.execute(idaprendiz);
 
         HttpHeaders headers = new HttpHeaders();

@@ -281,7 +281,7 @@ public class GenerarFormatoInscripcionService {
 		}
 
 		List<Pregunta> preguntas = consultarQuizAprendizService.findPreguntasAprendiz(
-				idaprendiz,
+				idaprendiz.intValue(),
 				tipoevaluacion,
 				numero);
 
@@ -384,7 +384,7 @@ public class GenerarFormatoInscripcionService {
 			
 			for (Pregunta pregunta : preguntas) {
 				Evaluacion e = evaluacionDao.findEvaluacion(
-						AprendizId.toLong(t.getId()),
+						t.getId(),
 						pregunta.getId(),
 						0);
 

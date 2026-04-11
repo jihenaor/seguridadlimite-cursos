@@ -14,7 +14,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 		  		+ " where u.idaprendiz = ?1"
 		  		+ " and u.idpregunta = ?2"
 				+ " and u.numero = ?3")
-	  Evaluacion findEvaluacion(Long idaprendiz,
+	  Evaluacion findEvaluacion(int idaprendiz,
 								Long idpregunta,
 								Integer numero);
 
@@ -34,7 +34,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " and u.idaprendiz = ?1"
 			+ " and u.numero = ?2"
 			+ " order by  u.pregunta.orden")
-	List<Evaluacion> findEvaluacionTeoricaAprendiz(Long idaprendiz,
+	List<Evaluacion> findEvaluacionTeoricaAprendiz(int idaprendiz,
 											Integer numeroevaluacion);
 
 	@Query("select u"
@@ -43,7 +43,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " and u.idaprendiz = ?1"
 			+ " order by u.pregunta.orden")
 	List<Evaluacion> findEvaluacionTipo(
-			Long idaprendiz,
+			int idaprendiz,
 			String tipoEvaluacion);
 
 	@Query("select u"
@@ -52,7 +52,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " and u.idaprendiz = ?1 and u.numero = ?3"
 			+ " order by u.pregunta.grupo.tipoevaluacion, u.pregunta.orden")
 	List<Evaluacion> findEvaluacionTipo(
-			Long idaprendiz,
+			int idaprendiz,
 			List<String> tipoEvaluacion,
 			Integer numero);
 
@@ -60,7 +60,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			"FROM Evaluacion u " +
 			"WHERE u.idaprendiz = :idaprendiz" +
 			" and u.pregunta.grupo.tipoevaluacion = :tipoevaluacion")
-	List<Evaluacion> findEvaluacionAprendiz(@Param("idaprendiz") Long idaprendiz,
+	List<Evaluacion> findEvaluacionAprendiz(@Param("idaprendiz") int idaprendiz,
 											@Param("tipoevaluacion") String tipoevaluacion);
 
 	@Query("select u"

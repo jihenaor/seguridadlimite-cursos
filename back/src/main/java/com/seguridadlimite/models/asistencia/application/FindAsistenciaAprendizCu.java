@@ -13,6 +13,6 @@ public class FindAsistenciaAprendizCu {
     private final IAsistenciaDao dao;
 
     public List<Asistencia> find(Long idaprendiz) {
-        return dao.findByIdaprendiz(idaprendiz);
+        return dao.findByIdaprendiz(idaprendiz.intValue());
     }
 }

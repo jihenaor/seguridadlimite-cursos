@@ -34,7 +34,7 @@ public class RegistrarEncuestaSatisfaccionClienteService {
 			throw new Exception("No se ha seleccionado el aprendiz");
 		}
 
-		aprendiz = aprendizPorId.find(idaprendiz);
+		aprendiz = aprendizPorId.find(idaprendiz.intValue());
 
 		for (Pregunta p : entity) {
 			if (p.getIdevaluacion() == null) {

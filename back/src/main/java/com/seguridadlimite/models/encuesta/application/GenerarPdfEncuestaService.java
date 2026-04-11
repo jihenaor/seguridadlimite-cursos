@@ -23,7 +23,7 @@ public class GenerarPdfEncuestaService {
     private final IAprendizDao aprendizDao;
     private final ConsultarQuizAprendizService service;
 
-    public ByteArrayInputStream execute(long idaprendiz) {
+    public ByteArrayInputStream execute(int idaprendiz) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();

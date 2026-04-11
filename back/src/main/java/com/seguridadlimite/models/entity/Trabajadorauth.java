@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +10,7 @@ import java.io.Serializable;
 
 // @Entity - clase sin uso activo; usar models/trabajador/dominio/Trabajador.java
 @Table(name = "sl_trabajadores")
+@Data
 public class Trabajadorauth implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,63 +56,7 @@ public class Trabajadorauth implements Serializable {
   public Trabajadorauth() {
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getTipodocumento() {
-    return tipodocumento;
-  }
-
-  public void setTipodocumento(String tipodocumento) {
-    this.tipodocumento = tipodocumento;
-  }
-
-  public String getNumerodocumento() {
-    return numerodocumento;
-  }
-
-  public void setNumerodocumento(String numerodocumento) {
-    this.numerodocumento = numerodocumento;
-  }
-
-  public String getPrimernombre() {
-    return primernombre;
-  }
-
-  public void setPrimernombre(String primernombre) {
-    this.primernombre = primernombre;
-  }
-
-  public String getSegundonombre() {
-    return segundonombre;
-  }
-
-  public void setSegundonombre(String segundonombre) {
-    this.segundonombre = segundonombre;
-  }
-
-  public String getPrimerapellido() {
-    return primerapellido;
-  }
-
-  public void setPrimerapellido(String primerapellido) {
-    this.primerapellido = primerapellido;
-  }
-
-  public String getSegundoapellido() {
-    return segundoapellido;
-  }
-
-  public void setSegundoapellido(String segundoapellido) {
-    this.segundoapellido = segundoapellido;
-  }
-
-  public String getNombrecompleto() {
+public String getNombrecompleto() {
     nombrecompleto = primernombre + " " +
         (segundonombre == null ? "" : segundonombre) + " " +
         primerapellido + " " +
@@ -118,11 +65,4 @@ public class Trabajadorauth implements Serializable {
     return nombrecompleto;
   }
 
-  public String getBase64() {
-    return base64;
-  }
-
-  public void setBase64(String base64) {
-    this.base64 = base64;
-  }
 }

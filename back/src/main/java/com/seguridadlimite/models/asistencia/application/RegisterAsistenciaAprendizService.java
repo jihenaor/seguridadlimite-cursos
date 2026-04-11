@@ -59,7 +59,7 @@ public class RegisterAsistenciaAprendizService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Asistencia> find(Long idaprendiz) throws BusinessException {
+	public List<Asistencia> find(int idaprendiz) throws BusinessException {
 		return dao.findByIdaprendiz(idaprendiz);
 	}
 

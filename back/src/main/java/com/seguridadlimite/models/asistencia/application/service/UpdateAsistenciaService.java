@@ -34,7 +34,7 @@ public class UpdateAsistenciaService implements UpdateAsistenciaUseCase {
                     asistencia.getIdaprendiz());
 
             if (asistenciasPendientes == 0) {
-                Aprendiz aprendiz = findAprendizByIdService.find((long) asistencia.getIdaprendiz());
+                Aprendiz aprendiz = findAprendizByIdService.find(asistencia.getIdaprendiz());
 
                 List<PermisoTrabajoAlturas> permisoTrabajoAlturas = permisoTrabajoAlturasPort.findPermisosVigentesEnFecha(asistencia.getFecha(), aprendiz.getIdnivel());
 
