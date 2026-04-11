@@ -277,7 +277,8 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   @Transient
   private int minutosEvaluacion;
 
-  private Integer contadorcertificados;
+  /** Coincide con columna MySQL TINYINT (signed −128…127). */
+  private Byte contadorcertificados;
 
   @Transient
   private List<Documento> documentos;
