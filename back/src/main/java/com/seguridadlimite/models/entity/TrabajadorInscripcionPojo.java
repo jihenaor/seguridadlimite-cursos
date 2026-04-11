@@ -41,7 +41,7 @@ public class TrabajadorInscripcionPojo {
 	private String nit;
 	private String representantelegal;
 	private String exception;
-	private Long idaprendiz;
+	private Integer idaprendiz;
 	private Long idenfasis;
 	private String nombreenfasis;
 	@Size(max = 40)

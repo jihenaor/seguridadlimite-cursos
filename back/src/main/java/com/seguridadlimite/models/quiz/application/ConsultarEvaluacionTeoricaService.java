@@ -6,6 +6,7 @@ import com.seguridadlimite.models.pregunta.application.inicializarimagenes.Inici
 import com.seguridadlimite.models.pregunta.domain.TipoevaluacionEnum;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.*;
 import com.seguridadlimite.models.entity.*;
@@ -36,7 +37,7 @@ public class ConsultarEvaluacionTeoricaService {
 
 	public List<Pregunta> findPreguntasAprendiz(Long idaprendiz,
 												String tipoevaluacion) throws BusinessException {
-		Aprendiz aprendiz = aprendizDao.findById(idaprendiz)
+		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new NoSuchElementException("No se encontró el aprendiz con el ID proporcionado"));
 
 		int numeroevaluacion = 0;

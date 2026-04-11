@@ -1,5 +1,6 @@
 package com.seguridadlimite.models.evaluacion.application;
 
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
@@ -66,7 +67,7 @@ public class SaveEvaluacionPracticaService {
 		}
 
 		try {
-			aprendizDao.updateEvaluacionpractica(nota, idaprendiz);
+			aprendizDao.updateEvaluacionpractica(nota, AprendizId.toInteger(idaprendiz));
 		} catch (Exception e) {
 			throw new DataBaseExecutionException("Error actualizando nota " + nota + " del aprendiz " + idaprendiz, e);
 		}

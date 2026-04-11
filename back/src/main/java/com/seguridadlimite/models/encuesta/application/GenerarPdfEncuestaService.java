@@ -5,6 +5,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.seguridadlimite.config.GlobalConstants;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.encuesta.domain.PdfEncuesta;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
@@ -25,7 +26,7 @@ public class GenerarPdfEncuestaService {
     public ByteArrayInputStream execute(long idaprendiz) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        Aprendiz aprendiz = aprendizDao.findById(idaprendiz).orElseThrow();
+        Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();
         List<Pregunta> preguntas = service.findPreguntasAprendiz(
                 idaprendiz,
                 "C",

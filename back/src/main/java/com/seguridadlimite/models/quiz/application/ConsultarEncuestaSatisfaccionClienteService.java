@@ -2,6 +2,7 @@ package com.seguridadlimite.models.quiz.application;
 
 import com.seguridadlimite.models.aprendiz.application.findById.FindAprendizByIdService;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
@@ -47,7 +48,7 @@ public class ConsultarEncuestaSatisfaccionClienteService {
 	private List<Pregunta> consultarPreguntas(
 			Long idaprendiz
             ) throws BusinessException {
-        String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(idaprendiz);
+        String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
 		List<Pregunta> preguntas = preguntaDao.findTipoevaluacion(
                 TipoevaluacionEnum.ENCUESTA.getEquivalente(),
                 sabeLeerEscribir == null ? "N" : sabeLeerEscribir);

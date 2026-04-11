@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.adapter;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.aprendiz.infraestructure.ports.CertificadoStoragePort;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -28,7 +29,7 @@ public class FileSystemCertificadoAdapter implements CertificadoStoragePort {
 
     @Override
     public void saveCertificado(MultipartFile file, Long idAprendiz) {
-        Aprendiz a = aprendizDao.findById(idAprendiz).orElseThrow(() -> new BusinessException("No se encontro aprendiz con el id " + idAprendiz));
+        Aprendiz a = aprendizDao.findById(AprendizId.toInteger(idAprendiz)).orElseThrow(() -> new BusinessException("No se encontro aprendiz con el id " + idAprendiz));
 
         if (a.getCodigoverificacion() == null || a.getCodigoverificacion().isEmpty()) {
             throw new BusinessException("El aprendiz no tiene codigo de verificacion " + idAprendiz);

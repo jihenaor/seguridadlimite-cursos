@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.evaluacion.application;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
@@ -32,7 +33,7 @@ public class RegistrarEvaluacionIngresoService {
 			throw new Exception("No se ha seleccionado el aprendiz");
 		}
 
-		aprendiz = aprendizDao.findById(idaprendiz).orElse(null);
+		aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 
 		for (Pregunta p : entity) {
 			contador++;
@@ -59,7 +60,7 @@ public class RegistrarEvaluacionIngresoService {
 		nota = (caprobadas / (double) contador) * 5;
 
 		try {
-			aprendizDao.updateEvaluacionIngreso(nota, idaprendiz);
+			aprendizDao.updateEvaluacionIngreso(nota, AprendizId.toInteger(idaprendiz));
 		} catch (Exception e) {
 			throw new Exception("Error actualizando evaluacion teorica del aprendiz " + idaprendiz + " " + e.getMessage());
 		}

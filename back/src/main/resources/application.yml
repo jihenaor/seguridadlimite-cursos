@@ -39,8 +39,9 @@ spring:
     password: ${DB_PASSWORD:DevAppDb_Local_ChangeMe}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      maximum-pool-size: 5
-      minimum-idle: 1
+      # Mismos límites que application-prod.yml (Docker / servidor)
+      maximum-pool-size: 10
+      minimum-idle: 2
       connection-timeout: 30000
 
   jpa:
@@ -49,6 +50,9 @@ spring:
     # Si MySQL devuelve 1045, sin dialecto Hibernate muestra ademas "Unable to determine Dialect" (ruido).
     # Con BD conectada Boot puede inferir dialecto; HHH90000025 es solo informativo.
     database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      # Igual que prod: falla al arrancar si el modelo JPA no coincide con el esquema MySQL (p. ej. INT vs BIGINT).
+      ddl-auto: validate
 
 # OpenAPI / Swagger UI (sustituye Springfox en Boot 3)
 springdoc:
@@ -92,9 +96,10 @@ app:
 logging:
   file:
     name: ../logs/logs.log
+  # Misma gravedad que producción; para más detalle en local: --logging.level.root=INFO --logging.level.com.seguridadlimite=DEBUG
   level:
-    root: INFO
-    com.seguridadlimite: DEBUG
+    root: WARN
+    com.seguridadlimite: INFO
   pattern:
     console: "'%d{yyyy-MM-dd HH:mm} - %msg%n'"
     file: "'%d{yyyy-MM-dd HH:mm} %-5level - %msg%n'"

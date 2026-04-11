@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.evaluacion.application;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
@@ -77,7 +78,7 @@ public class FindEvaluacionPracticaServiceImpl {
 	private List<Evaluacion> asignarPreguntasPreguntasAlAprendiz(
             Long idaprendiz,
             String tipoEvaluacion) {
-        String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(idaprendiz);
+        String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
 		List<Pregunta> preguntas = preguntaDao.findTipoevaluacion(
                 tipoEvaluacion,
                 sabeLeerEscribir);
@@ -111,7 +112,7 @@ public class FindEvaluacionPracticaServiceImpl {
 	@Transactional
 	public List<Grupopregunta> findEvaluacionPracticaIdaprendiz2(Long idaprendiz) throws BusinessException {
 
-		Aprendiz aprendiz = aprendizDao.findById(idaprendiz).orElseThrow();
+		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();
 
 		List<Grupopregunta> gs = grupoDao.findEvaluacionAprendiz("P");
 

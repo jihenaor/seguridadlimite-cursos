@@ -2,6 +2,7 @@ package com.seguridadlimite.models.aprendiz.application.inscribiraprendiz;
 
 import com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz.InicializarEvaluacionAprendiz;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEmpresaDao;
 import com.seguridadlimite.models.entity.Empresa;
@@ -84,12 +85,12 @@ public class InscribirAprendiz {
             aprendiz = new Aprendiz();
             aprendiz.setIdtrabajador(trabajador.getId());
         } else {
-            aprendiz = aprendizService.findById(trabajadorInscripcion.getIdaprendiz());
+            aprendiz = aprendizService.findById(AprendizId.toLong(trabajadorInscripcion.getIdaprendiz()));
 
             if (!Objects.equals(aprendiz.getIdnivel(), trabajadorInscripcion.getIdnivel()) ||
                     !Objects.equals(aprendiz.getIdenfasis(), trabajadorInscripcion.getIdenfasis())
             ) {
-                inicializarEvaluacionAprendiz.update("", "T", aprendiz.getId());
+                inicializarEvaluacionAprendiz.update("", "T", AprendizId.toLong(aprendiz.getId()));
 
                 aprendiz.setEteorica1((double) 0);
                 aprendiz.setEteorica2((double) 0);
@@ -113,7 +114,7 @@ public class InscribirAprendiz {
         }
 */
         aprendiz = aprendizService.save(aprendiz);
-        return aprendizService.findById(aprendiz.getId());
+        return aprendizService.findById(AprendizId.toLong(aprendiz.getId()));
     }
 
     private void inicializarAtributosAprendiz(TrabajadorInscripcionPojo inscripcionPojo,

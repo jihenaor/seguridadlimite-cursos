@@ -2,6 +2,7 @@ package com.seguridadlimite.models.aprendiz.application;
 
 import com.seguridadlimite.models.aprendiz.application.mapper.AprendizMapper;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.domain.AprendizDTO;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.domain.port.out.AsistenciaRepository;
@@ -35,7 +36,7 @@ public class BuscarAprendizUltimaAsistenciaCoincidePorIdPermisoTrabajoService {
 
         for (Aprendiz aprendiz: aprendices) {
             if (aprendiz.getIdPermiso() == null) {
-                Long asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(aprendiz.getId());
+                Long asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(AprendizId.toLong(aprendiz.getId()));
 
                 if (asistenciasPendientes == 0) {
                     aprendiz.setAsistenciaCompleta(true);

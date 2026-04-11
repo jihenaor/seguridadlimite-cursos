@@ -3,6 +3,7 @@ package com.seguridadlimite.models.evaluacion.application;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.*;
 import com.seguridadlimite.models.pojo.RespuestaEvaluacion;
@@ -35,7 +36,7 @@ public class RegistrarEvaluacionTeoricaService {
 			throw new Exception("No se ha seleccionado el aprendiz");
 		}
 
-		aprendiz = aprendizDao.findById(idaprendiz).orElse(null);
+		aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 
 		for (Pregunta p : entity) {
 			if (p.getGrupo().getTipoevaluacion().equals("T")) {
@@ -84,9 +85,9 @@ public class RegistrarEvaluacionTeoricaService {
 
 		try {
 			if (aprendiz.getEteorica1() == 0) {
-				aprendizDao.updateEvaluacionteorica1(notaTeorico, idaprendiz);
+				aprendizDao.updateEvaluacionteorica1(notaTeorico, AprendizId.toInteger(idaprendiz));
 			} else {
-				aprendizDao.updateEvaluacionteorica2(notaTeorico, idaprendiz);
+				aprendizDao.updateEvaluacionteorica2(notaTeorico, AprendizId.toInteger(idaprendiz));
 			}
 
 
@@ -96,7 +97,7 @@ public class RegistrarEvaluacionTeoricaService {
 			throw e;
 		}
 
-		aprendizDao.updateEvaluacionteoricaEnfasis(notaEnfasis, idaprendiz);
+		aprendizDao.updateEvaluacionteoricaEnfasis(notaEnfasis, AprendizId.toInteger(idaprendiz));
 
 		return new RespuestaEvaluacion(notaTeorico,
 				notaEnfasis,

@@ -2,6 +2,7 @@ package com.seguridadlimite.models.aprendiz.application.generarcertificado;
 
 import com.seguridadlimite.models.aprendiz.application.inscribiraprendiz.CertificadoInfo;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -21,7 +22,7 @@ public class GenerarCertificadoService {
 	private IAprendizDao dao;
 
 	public ReportePojo generar(Long idaprendiz) throws FileNotFoundException, JRException, BusinessException {
-		Aprendiz aprendiz = dao.findById(idaprendiz).orElseThrow();
+		Aprendiz aprendiz = dao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();
 
 		JasperReport report = IreportUtil.getJasperReport("certificado.jrxml",
 				"Id aprendiz: " + idaprendiz);

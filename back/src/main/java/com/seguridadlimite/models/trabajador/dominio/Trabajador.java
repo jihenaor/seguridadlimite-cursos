@@ -128,7 +128,7 @@ public class Trabajador implements Serializable {
   private String exception;
   
   @Transient
-  private Long idaprendiz;
+  private Integer idaprendiz;
 
   @Transient
   private Long idenfasis;

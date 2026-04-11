@@ -1,6 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.EvaluacionPojo;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
@@ -34,7 +35,7 @@ public class EvaluacionServiceImpl {
 			Long idnivel) {
 	    EvaluacionPojo e = new EvaluacionPojo();
 
-        String sabeleerescribir = aprendizDao.consultarAprendizSabeLeerEscribir(idaprendiz);
+        String sabeleerescribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
 
         List<Pregunta> preguntas = preguntaDao.findByNiveltipoevaluacionRandom(
                 idnivel,
@@ -68,7 +69,7 @@ public class EvaluacionServiceImpl {
 
 	@Transactional
 	public List<Pregunta> findEvaluacionTeoricaIdaprendiz(Long idaprendiz) {
-		Aprendiz aprendiz = aprendizDao.findById(idaprendiz).orElse(null);
+		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 		
 		return this.findAndRegister("T",
 				idaprendiz,
@@ -96,7 +97,7 @@ public class EvaluacionServiceImpl {
 
 	@Transactional
 	public List<Pregunta> findEvaluacionPracticaMovilIdaprendiz(Long idaprendiz) {
-		Aprendiz aprendiz = aprendizDao.findById(idaprendiz)
+		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new RuntimeException(String.format("El aprendiz es null buscando la evaluacion practica para el id: %s", idaprendiz)));
 
 		List<Pregunta> preguntas = preguntaDao.findByNiveltipoevaluacionOrden(aprendiz.getIdnivel(), "P");
@@ -156,7 +157,7 @@ public class EvaluacionServiceImpl {
 				if (e != null) {
 					if (contador == 1) {
 						idaprendiz = e.getIdaprendiz();
-						aprendiz = aprendizDao.findById(idaprendiz).orElse(null);
+						aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 					}
 					
 					e.setRespuestacorrecta(p.getRespuestacorrecta());
@@ -181,12 +182,12 @@ public class EvaluacionServiceImpl {
 			if (tipoEvaluacion.equals("T")) {
 
 				if (aprendiz.getEteorica1() == 0) {
-					aprendizDao.updateEvaluacionteorica1(nota, idaprendiz);
+					aprendizDao.updateEvaluacionteorica1(nota, AprendizId.toInteger(idaprendiz));
 				} else {
-					aprendizDao.updateEvaluacionteorica2(nota, idaprendiz);
+					aprendizDao.updateEvaluacionteorica2(nota, AprendizId.toInteger(idaprendiz));
 				}
 			} else {
-				aprendizDao.updateEvaluacionpractica(nota, idaprendiz);
+				aprendizDao.updateEvaluacionpractica(nota, AprendizId.toInteger(idaprendiz));
 			}
 
 		} catch (Exception e) {
@@ -235,9 +236,9 @@ public class EvaluacionServiceImpl {
 		nota = ((double)caprobadas / entity.size()) * 5;
 		
 		if (numeroevaluacion == 1) {
-			aprendizDao.updateEvaluacionteorica1(nota, idaprendiz);
+			aprendizDao.updateEvaluacionteorica1(nota, AprendizId.toInteger(idaprendiz));
 		} else {
-			aprendizDao.updateEvaluacionteorica2(nota, idaprendiz);
+			aprendizDao.updateEvaluacionteorica2(nota, AprendizId.toInteger(idaprendiz));
 		}		
 	}
 	
@@ -245,7 +246,7 @@ public class EvaluacionServiceImpl {
 		List<Evaluacion> l = dao.findEvaluacionPractica("P", idaprendiz);
 		Aprendiz aprendiz;
 		
-		aprendiz = aprendizRDao.findById(idaprendiz).orElse(null);
+		aprendiz = aprendizRDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 
 		for (Evaluacion evaluacionR : l) {
 			evaluacionR.setAprendiz(aprendiz);

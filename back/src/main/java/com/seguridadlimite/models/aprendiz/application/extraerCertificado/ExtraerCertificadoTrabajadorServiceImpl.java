@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.extraerCertificado;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import com.seguridadlimite.springboot.backend.apirest.util.EncodeFileToBase64;
@@ -21,7 +22,7 @@ public class ExtraerCertificadoTrabajadorServiceImpl implements ExtraerCertifica
 
     public String buscar(Long idAprendiz) throws BusinessException {
 
-        Aprendiz aprendiz = aprendizDao.findById(idAprendiz).orElseThrow();
+        Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idAprendiz)).orElseThrow();
 
         if (aprendiz.getCodigoverificacion() == null || aprendiz.getCodigoverificacion().isEmpty()) {
             throw new BusinessException("No existe código de verificación");

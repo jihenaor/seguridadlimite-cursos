@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.evaluacion.application.DeleteEvaluacionService;
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.FindParametrosById;
@@ -32,7 +33,7 @@ public class InicializarEvaluacionAprendiz {
             // aprendiz = aprendizDao.findFechaInscripcionNumeroDocumento(parametros.getFechainscripcion(), numeroDocumento);
             aprendiz=null;
         } else {
-            aprendiz = aprendizDao.findById(idaprendiz).orElseThrow();
+            aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();
         }
 
         switch (tipoEvaluacion) {
@@ -40,7 +41,7 @@ public class InicializarEvaluacionAprendiz {
                 aprendizDao.updateEvaluacionteorica1((double)0, aprendiz.getId());
                 aprendizDao.updateEvaluacionteorica2((double)0, aprendiz.getId());
 
-                deleteEvaluacionService.delete("E", aprendiz.getId());
+                deleteEvaluacionService.delete("E", AprendizId.toLong(aprendiz.getId()));
                 break;
             case "I":
                 aprendizDao.updateEvaluacionIngreso((double)0, aprendiz.getId());
@@ -50,7 +51,7 @@ public class InicializarEvaluacionAprendiz {
                 break;
         }
 
-        deleteEvaluacionService.delete(tipoEvaluacion, aprendiz.getId());
+        deleteEvaluacionService.delete(tipoEvaluacion, AprendizId.toLong(aprendiz.getId()));
     }
 }
 

@@ -5,6 +5,7 @@ import java.io.StringWriter;
 
 import com.seguridadlimite.models.entity.Empresa;
 import com.seguridadlimite.models.personal.dominio.Personal;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 
 public class AuthenticationResponse {
@@ -49,7 +50,7 @@ public class AuthenticationResponse {
         this.id = t.getId().toString();
         this.nombreusuario = t.getPrimernombre();
         this.numerodocumento = t.getNumerodocumento();
-        this.idaprendiz = t.getIdaprendiz();
+        this.idaprendiz = AprendizId.toLong(t.getIdaprendiz());
     }
 
     public AuthenticationResponse(Exception e) {

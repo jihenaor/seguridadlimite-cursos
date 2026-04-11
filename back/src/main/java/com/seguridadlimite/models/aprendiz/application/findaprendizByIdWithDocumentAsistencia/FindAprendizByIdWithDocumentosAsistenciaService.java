@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.findaprendizByIdWithDocumentAsistencia;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaAprendizCu;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
@@ -61,7 +62,7 @@ public class FindAprendizByIdWithDocumentosAsistenciaService {
 
 	@Transactional
 	public Aprendiz find(Long id) {
-		Aprendiz aprendiz = aprendizDao.findById(id).orElseThrow();
+		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(id)).orElseThrow();
 
 		consultarDocumentos(aprendiz);
 		encodeFotoTrabajadorService.encodeFoto(aprendiz.getTrabajador());
@@ -118,14 +119,14 @@ public class FindAprendizByIdWithDocumentosAsistenciaService {
 		List<Documento> documentos = documentoService.findByTipo("A");
 
 		for (Documento documento : documentos) {
-			documento.setIdaprendiz(a.getId());
+			documento.setIdaprendiz(AprendizId.toLong(a.getId()));
 			asociarAprendizDocumento(a, documento);
 		}
 		a.setDocumentos(documentos);
 	}
 
 	private void asociarAprendizDocumento(Aprendiz a, Documento documento) {
-		Documentoaprendiz d = documentoAprendizService.findByIdAprendiz(documento.getId(), a.getId());
+		Documentoaprendiz d = documentoAprendizService.findByIdAprendiz(documento.getId(), AprendizId.toLong(a.getId()));
 
 		if (d != null) {
 			documento.setExt(d.getExt());

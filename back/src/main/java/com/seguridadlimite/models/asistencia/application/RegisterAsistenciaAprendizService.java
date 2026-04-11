@@ -25,7 +25,7 @@ public class RegisterAsistenciaAprendizService {
 
 	public List<Asistencia> find(List<Aprendiz> aprendices) {
 		List<Long> aprendizIds = aprendices.stream()
-				.map(Aprendiz::getId)
+				.map(a -> a.getId() == null ? null : a.getId().longValue())
 				.collect(Collectors.toList());
 
 		List<Asistencia> asistencias = dao.findByIdaprendizIn(aprendizIds);
@@ -42,9 +42,12 @@ public class RegisterAsistenciaAprendizService {
 				));
 
 		aprendizIds.forEach(idaprendiz -> {
+			if (idaprendiz == null) {
+				return;
+			}
 			if (asistencias.stream().noneMatch(asistencia -> asistencia.getIdaprendiz().equals(idaprendiz))) {
 				Aprendiz aprendiz = aprendices.stream()
-						.filter(a -> a.getId().equals(idaprendiz))
+						.filter(a -> a.getId() != null && a.getId().longValue() == idaprendiz)
 						.findFirst()
 						.orElseThrow(() -> new BusinessException("Aprendiz no encontrado"));
 				
@@ -66,7 +69,7 @@ public class RegisterAsistenciaAprendizService {
 										   List<Disenocurricular> disenocurriculars) {
 		List<Asistencia> nuevasAsistencias = disenocurriculars.stream()
 			.map(disenocurricular -> Asistencia.builder()
-				.idaprendiz(aprendiz.getId())
+				.idaprendiz(aprendiz.getId() == null ? null : aprendiz.getId().longValue())
 				.modulo(disenocurricular.getModulo())
 				.contexto(disenocurricular.getContexto())
 				.unidad(disenocurricular.getUnidad())

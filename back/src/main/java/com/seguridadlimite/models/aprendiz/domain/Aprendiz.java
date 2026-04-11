@@ -36,7 +36,7 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
-  private Long id;
+  private Integer id;
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date fechaverificacion;
@@ -281,7 +281,7 @@ public class Aprendiz extends AuditableEntity implements Serializable {
 
   @Transient
   private List<Documento> documentos;
-  public Aprendiz(Long id) {
+  public Aprendiz(Integer id) {
     this.id = id;
   }
 

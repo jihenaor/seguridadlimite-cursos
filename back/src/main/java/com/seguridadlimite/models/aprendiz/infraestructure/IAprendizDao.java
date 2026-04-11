@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
+public interface IAprendizDao extends CrudRepository<Aprendiz, Integer>{
   @Query("select u from Aprendiz u where u.trabajador.numerodocumento = :numerodocumento")
   List<Aprendiz> findBynumerodocumento(@Param("numerodocumento") String numerodocumento);
 
@@ -51,45 +51,45 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.codigoverificacion = :codigoverificacion WHERE c.id = :id")
-  int updateCodigoverificacion(@Param("codigoverificacion") String codigoverificacion, @Param("id") Long id);
+  int updateCodigoverificacion(@Param("codigoverificacion") String codigoverificacion, @Param("id") Integer id);
   
   @Modifying
   @Query("UPDATE Aprendiz c SET c.eteorica1 = :nota WHERE c.id = :idaprendiz")
-  int updateEvaluacionteorica1(@Param("nota") Double nota, @Param("idaprendiz") Long idaprendiz);
+  int updateEvaluacionteorica1(@Param("nota") Double nota, @Param("idaprendiz") Integer idaprendiz);
   
   @Modifying
   @Query("UPDATE Aprendiz c SET c.eteorica2 = :nota WHERE c.id = :idaprendiz")
-  int updateEvaluacionteorica2(@Param("nota") Double nota, @Param("idaprendiz") Long idaprendiz);
+  int updateEvaluacionteorica2(@Param("nota") Double nota, @Param("idaprendiz") Integer idaprendiz);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.eenfasis = :nota WHERE c.id = :idaprendiz")
-  int updateEvaluacionteoricaEnfasis(@Param("nota") Double nota, @Param("idaprendiz") Long idaprendiz);
+  int updateEvaluacionteoricaEnfasis(@Param("nota") Double nota, @Param("idaprendiz") Integer idaprendiz);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.epractica = :nota WHERE c.id = :idaprendiz")
   int updateEvaluacionpractica(@Param("nota") Double nota,
-                               @Param("idaprendiz") Long idaprendiz);
+                               @Param("idaprendiz") Integer idaprendiz);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.eingreso = :nota WHERE c.id = :idaprendiz")
   int updateEvaluacionIngreso(@Param("nota") Double nota,
-                              @Param("idaprendiz") Long idaprendiz);
+                              @Param("idaprendiz") Integer idaprendiz);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.exteteorica = :exteteorica WHERE c.id = :idaprendiz")
-  int updateExteteorica(@Param("exteteorica") String exteteorica, @Param("idaprendiz") Long idaprendiz);
+  int updateExteteorica(@Param("exteteorica") String exteteorica, @Param("idaprendiz") Integer idaprendiz);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.extepractica = :extepractica WHERE c.id = :idaprendiz")
-  int updateExtepractica(@Param("extepractica") String extepractica, @Param("idaprendiz") Long idaprendiz);
+  int updateExtepractica(@Param("extepractica") String extepractica, @Param("idaprendiz") Integer idaprendiz);
   
   @Modifying
   @Query("UPDATE Aprendiz c SET c.intentos = c.intentos + 1 WHERE c.id = ?1 and c.intentos < 2")
-  int updateIntentos(@Param("idaprendiz") Long idaprendiz);
+  int updateIntentos(@Param("idaprendiz") Integer idaprendiz);
   
   @Modifying
   @Query("UPDATE Aprendiz c SET c.intentos = 0 WHERE c.id = ?1")
-  int reiniciarIntentos(@Param("idaprendiz") Long idaprendiz);
+  int reiniciarIntentos(@Param("idaprendiz") Integer idaprendiz);
 
   @Query("""
     select u from Aprendiz u 
@@ -174,7 +174,7 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
   @Query("UPDATE Aprendiz c SET c.fechaencuesta = :fechaencuesta " +
           " WHERE c.id = :idaprendiz")
   int updateFechaEncuesta(@Param("fechaencuesta") String fechaencuesta,
-                          @Param("idaprendiz") Long idaprendiz);
+                          @Param("idaprendiz") Integer idaprendiz);
 
   @Query("""
     SELECT a
@@ -220,7 +220,7 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.pagocurso = :pagocurso WHERE c.id = :id")
-  int updatePagoCurso(@Param("pagocurso") String pagocurso, @Param("id") Long id);
+  int updatePagoCurso(@Param("pagocurso") String pagocurso, @Param("id") Integer id);
 /*
   @Query("select u" +
           " from Aprendiz u" +
@@ -254,17 +254,17 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
   @Modifying
   @Query("UPDATE Aprendiz c SET c.fechaUltimaAsistencia = :fechaUltimaAsistencia WHERE c.id = :id")
   int updatefechaUltimaAsistencia(@Param("fechaUltimaAsistencia") String fechaUltimaAsistencia,
-                                  @Param("id") Long id);
+                                  @Param("id") Integer id);
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.comentariosencuesta = :comentariosencuesta WHERE c.id = :id")
-  int updateComentariosencuesta(@Param("comentariosencuesta") String cometariosencuesta, @Param("id") Long id);
+  int updateComentariosencuesta(@Param("comentariosencuesta") String cometariosencuesta, @Param("id") Integer id);
 
   @Query("select u" +
           " from Aprendiz u" +
           " where u.id in :ids and u.idnivel = :idnivel")
   List<Aprendiz> findAprendicesByIds(
-          @Param("ids") List<Long> ids,
+          @Param("ids") List<Integer> ids,
           @Param("idnivel") Long idnivel);
 
 
@@ -274,7 +274,7 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
 
   @Modifying
   @Query("UPDATE Aprendiz c SET c.idPermiso = :idpermiso WHERE c.id = :id")
-  int updatePermisotrabajo(@Param("idpermiso") int idpermiso, @Param("id") Long id);
+  int updatePermisotrabajo(@Param("idpermiso") int idpermiso, @Param("id") Integer id);
 
   @Query("select u from Aprendiz u where u.idPermiso = :idpermiso")
   List<Aprendiz> findByIdPermiso(@Param("idpermiso") int idpermiso);
@@ -306,5 +306,5 @@ public interface IAprendizDao extends CrudRepository<Aprendiz, Long>{
     @Query("select sabeleerescribir " +
             "from Aprendiz u " +
             "where u.id = :id")
-    String consultarAprendizSabeLeerEscribir(@Param("id") long id);
+    String consultarAprendizSabeLeerEscribir(@Param("id") Integer id);
 }

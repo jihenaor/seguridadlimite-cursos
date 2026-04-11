@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.findTrabajadorInscripcion;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaCompletaCu;
 import com.seguridadlimite.models.dao.ITrabajadorDao;
@@ -74,7 +75,7 @@ public class FindTrabajadorInscripcionCu {
 			log.info(String.format("Aprendiz existe: %s", aprendiz != null));
 
 			if (aprendiz != null) {
-				asistenciaCompleta = findAsistenciaCompletaCu.find(aprendiz.getId());
+				asistenciaCompleta = findAsistenciaCompletaCu.find(AprendizId.toLong(aprendiz.getId()));
 
 				log.info(String.format("Asistencia completa: %s", asistenciaCompleta));
 

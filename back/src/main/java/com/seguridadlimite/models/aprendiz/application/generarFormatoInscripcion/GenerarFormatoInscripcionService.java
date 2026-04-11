@@ -3,6 +3,7 @@ package com.seguridadlimite.models.aprendiz.application.generarFormatoInscripcio
 import com.seguridadlimite.config.GlobalConstants;
 import com.seguridadlimite.models.aprendiz.application.extraerfirma.ExtraerFirmaServiceImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.enfasis.domain.Enfasis;
@@ -59,7 +60,7 @@ public class GenerarFormatoInscripcionService {
 
 	@Transactional(readOnly = true)
 	public Aprendiz findById(Long id) {
-		return aprendizDao.findById(id).orElse(null);
+		return aprendizDao.findById(AprendizId.toInteger(id)).orElse(null);
 	}
 
 	private Formatoinscripcion generarFormatoInscripcionPojo(
@@ -165,7 +166,7 @@ public class GenerarFormatoInscripcionService {
 		formatoinscripcion.setMes((calendario.get(Calendar.MONTH) + 1) + "");
 		formatoinscripcion.setAno(calendario.get(Calendar.YEAR) + "");
 
-		formatoinscripcion.setFirmaaprendiz(extaerFirmaService.extraerFirma(t.getId()));
+		formatoinscripcion.setFirmaaprendiz(extaerFirmaService.extraerFirma(AprendizId.toLong(t.getId())));
 		formatoinscripcion.setEingresoexcelente(t.getEingreso() >= 4 ? "X" : "");
 		formatoinscripcion.setEingresobueno(t.getEingreso() <= 3 ? "X" : "");
 
@@ -341,7 +342,7 @@ public class GenerarFormatoInscripcionService {
 		f.setReentrenamiento(t.getCertificadotrabajadorautorizado() == null || t.getCertificadotrabajadorautorizado().equals("N") ? "" : "X");
 		f.setActualizadocoordinador(t.getCertificadonivelcoordinador() == null || t.getCertificadonivelcoordinador().equals("N") ? "" : "X");
 
-		f.setSourcefirma(extaerFirmaService.extraerFirma(t.getId()));
+		f.setSourcefirma(extaerFirmaService.extraerFirma(AprendizId.toLong(t.getId())));
 
 		return f;
 	}
@@ -382,7 +383,7 @@ public class GenerarFormatoInscripcionService {
 			
 			for (Pregunta pregunta : preguntas) {
 				Evaluacion e = evaluacionDao.findEvaluacion(
-						t.getId(),
+						AprendizId.toLong(t.getId()),
 						pregunta.getId(),
 						0);
 

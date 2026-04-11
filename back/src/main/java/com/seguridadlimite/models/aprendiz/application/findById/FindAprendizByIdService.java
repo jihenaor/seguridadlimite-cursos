@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.findById;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ public class FindAprendizByIdService {
 	private IAprendizDao aprendizDao;
 
 	public Aprendiz find(Long idaprendiz) throws BusinessException {
-		return aprendizDao.findById(idaprendiz)
+		return aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new NoSuchElementException("No se encontró el aprendiz con el ID proporcionado"));
 	}
 }

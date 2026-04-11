@@ -5,6 +5,7 @@ import com.seguridadlimite.models.aprendiz.application.extraerfirma.ExtraerFirma
 import com.seguridadlimite.models.aprendiz.application.inscribiraprendiz.PermisotrabajoalturasAprendicesInfo;
 import com.seguridadlimite.models.aprendiz.application.inscribiraprendiz.PermisotrabajoalturasInfo;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaFechaCu;
 import com.seguridadlimite.models.entity.ReportePojo;
@@ -230,7 +231,7 @@ public class PermisoTrabajoAlturasService {
 		aprendizs.forEach(aprendiz -> aprendicesInfos.add(new PermisotrabajoalturasAprendicesInfo(
                 aprendiz.getTrabajador().getNombrecompleto(),
                 aprendiz.getTrabajador().getTipodocumento() + "-" + aprendiz.getTrabajador().getNumerodocumento(),
-				extraerFirmaService.extraerFirma(aprendiz.getId())
+				extraerFirmaService.extraerFirma(AprendizId.toLong(aprendiz.getId()))
         )));
 
 		return aprendicesInfos;

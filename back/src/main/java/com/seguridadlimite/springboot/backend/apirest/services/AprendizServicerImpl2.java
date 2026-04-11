@@ -2,6 +2,7 @@ package com.seguridadlimite.springboot.backend.apirest.services;
 
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.documentos.application.DocumentoServiceImpl;
 import com.seguridadlimite.models.documentos.domain.Documento;
@@ -57,7 +58,7 @@ public class AprendizServicerImpl2 {
 
 	@Transactional(readOnly = true)
 	public Aprendiz findById(Long id) {
-		return dao.findById(id).orElse(null);
+		return id == null ? null : dao.findById(AprendizId.toInteger(id)).orElse(null);
 	}
 
 	public List<Documento> getDocumentos(Long idaprendiz, Boolean documentosEmpresa) throws IOException {

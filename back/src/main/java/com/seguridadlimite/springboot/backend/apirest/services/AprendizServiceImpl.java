@@ -2,6 +2,7 @@ package com.seguridadlimite.springboot.backend.apirest.services;
 
 import com.seguridadlimite.models.aprendiz.application.departamentos.DepartamentoServiceImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.entity.Documentoevaluacion;
@@ -64,7 +65,7 @@ public class AprendizServiceImpl {
 
 	@Transactional(readOnly = true)
 	public Aprendiz findById(Long id) {
-		return dao.findById(id).orElse(null);
+		return id == null ? null : dao.findById(AprendizId.toInteger(id)).orElse(null);
 	}
 
 	@Transactional
@@ -124,7 +125,9 @@ public class AprendizServiceImpl {
 
 	@Transactional
 	public void delete(Long id) {
-		dao.deleteById(id);
+		if (id != null) {
+			dao.deleteById(AprendizId.toInteger(id));
+		}
 	}
 
 	public List<Aprendiz> findByNumerodocumento(String numerodocumento) {
@@ -150,7 +153,7 @@ public class AprendizServiceImpl {
 	
 	public void update(List<Aprendiz> aprendizs) {
 		for(Aprendiz aprendiz : aprendizs) {
-			Aprendiz a = findById(aprendiz.getId());
+			Aprendiz a = aprendiz.getId() == null ? null : dao.findById(aprendiz.getId()).orElse(null);
 			
 			if (a != null) {
 				if (aprendiz.getEenfasis() == null) {
@@ -175,10 +178,10 @@ public class AprendizServiceImpl {
 	public void saveDocumentoevaluacion(Documentoevaluacion t) throws FileNotFoundException {
 		switch (t.getTipo()) {
 			case "T":
-				dao.updateExteteorica(t.getExt(), t.getIdaprendiz());
+				dao.updateExteteorica(t.getExt(), AprendizId.toInteger(t.getIdaprendiz()));
 				break;
 			case "P":
-				dao.updateExtepractica(t.getExt(), t.getIdaprendiz());
+				dao.updateExtepractica(t.getExt(), AprendizId.toInteger(t.getIdaprendiz()));
 				break;
 			default:
 				break;
@@ -225,12 +228,12 @@ public class AprendizServiceImpl {
 
 	@Transactional
 	public int updateIntentos(Long idaprendiz) {
-		return dao.updateIntentos(idaprendiz);
+		return dao.updateIntentos(AprendizId.toInteger(idaprendiz));
 	}
 
 	@Transactional
 	public int reiniciarIntentos(Long idaprendiz) {
-		return dao.reiniciarIntentos(idaprendiz);
+		return dao.reiniciarIntentos(AprendizId.toInteger(idaprendiz));
 	}
 
 }

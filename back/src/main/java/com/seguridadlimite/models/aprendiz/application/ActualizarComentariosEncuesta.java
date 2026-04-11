@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
@@ -20,13 +21,13 @@ public class ActualizarComentariosEncuesta {
             return;
         }
 
-        Aprendiz aprendiz = dao.findById(idAprendiz).orElseThrow();
+        Aprendiz aprendiz = dao.findById(AprendizId.toInteger(idAprendiz)).orElseThrow();
 
         if (aprendiz.getFechaencuesta() != null) {
             return;
         }
 
 
-        dao.updateComentariosencuesta(comentariosencuesta, idAprendiz);
+        dao.updateComentariosencuesta(comentariosencuesta, AprendizId.toInteger(idAprendiz));
     }
 }

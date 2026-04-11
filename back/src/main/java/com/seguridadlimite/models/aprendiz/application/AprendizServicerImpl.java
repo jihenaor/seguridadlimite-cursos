@@ -3,6 +3,7 @@ package com.seguridadlimite.models.aprendiz.application;
 import com.google.zxing.WriterException;
 import com.seguridadlimite.QRCodeGenerator;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.documentoaprendiz.domain.Documentoaprendiz;
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
@@ -54,12 +55,12 @@ public class AprendizServicerImpl {
 
 	@Transactional(readOnly = true)
 	public Aprendiz findById(Long id) {
-		return dao.findById(id).orElse(null);
+		return id == null ? null : dao.findById(AprendizId.toInteger(id)).orElse(null);
 	}
 	
 	@Transactional(readOnly = true)
 	public Aprendiz findByIdEmpresa(Long id) throws IOException {
-		Aprendiz aprendiz = dao.findById(id).orElse(null);
+		Aprendiz aprendiz = id == null ? null : dao.findById(AprendizId.toInteger(id)).orElse(null);
 
 		if (Objects.isNull(aprendiz)) {
 			return null;
@@ -69,7 +70,7 @@ public class AprendizServicerImpl {
 			buscarDocumentoTrabajadorService.getDocumentoLadoALadoB(aprendiz.getTrabajador());
 		}
 
-		var documentos = getDocumentos(aprendiz.getId(), true);
+		var documentos = getDocumentos(aprendiz.getId() == null ? null : aprendiz.getId().longValue(), true);
 		aprendiz.setDocumentos(documentos);
 		
 		return aprendiz;
@@ -158,7 +159,9 @@ public class AprendizServicerImpl {
 
 	@Transactional
 	public void delete(Long id) {
-		dao.deleteById(id);
+		if (id != null) {
+			dao.deleteById(AprendizId.toInteger(id));
+		}
 	}
 	
 	private void generarBase64List(List<Aprendiz> l) {

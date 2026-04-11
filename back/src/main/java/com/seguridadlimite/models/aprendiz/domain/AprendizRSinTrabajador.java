@@ -4,7 +4,18 @@ import com.seguridadlimite.models.asistencia.domain.Asistencia;
 import com.seguridadlimite.models.documentos.domain.Documento;
 import com.seguridadlimite.models.enfasis.domain.Enfasis;
 import com.seguridadlimite.models.nivel.domain.Nivel;
-import jakarta.persistence.*;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -22,7 +33,7 @@ public class AprendizRSinTrabajador implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
-  private Long id;
+  private Integer id;
   
   @Column(name = "fechaverificacion")
   @Temporal(TemporalType.TIMESTAMP)

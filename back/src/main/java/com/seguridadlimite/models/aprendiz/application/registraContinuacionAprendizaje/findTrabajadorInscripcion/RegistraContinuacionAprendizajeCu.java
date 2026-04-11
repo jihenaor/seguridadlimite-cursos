@@ -1,5 +1,6 @@
 package com.seguridadlimite.models.aprendiz.application.registraContinuacionAprendizaje.findTrabajadorInscripcion;
 
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.util.DateUtil;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,9 @@ public class RegistraContinuacionAprendizajeCu {
 
 	@Transactional
 	public void registrarContinuaAprendizaje(long idAprendiz)  {
-		aprendizDao.findById(idAprendiz).orElseThrow(() -> new RuntimeException("Id aprendiz no existe"));
+		aprendizDao.findById(AprendizId.toInteger(idAprendiz)).orElseThrow(() -> new RuntimeException("Id aprendiz no existe"));
 
-		aprendizDao.updatefechaUltimaAsistencia(DateUtil.getCurrentDate(), idAprendiz);
+		aprendizDao.updatefechaUltimaAsistencia(DateUtil.getCurrentDate(), AprendizId.toInteger(idAprendiz));
 	}
 
 }

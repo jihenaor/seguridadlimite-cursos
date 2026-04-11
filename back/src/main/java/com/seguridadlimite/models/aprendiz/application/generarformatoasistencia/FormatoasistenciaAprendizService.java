@@ -4,6 +4,7 @@ import com.seguridadlimite.config.GlobalConstants;
 import com.seguridadlimite.models.aprendiz.application.extraerfirma.ExtraerFirmaServiceImpl;
 import com.seguridadlimite.models.aprendiz.application.inscribiraprendiz.AsistenciaInfo;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaAprendizCu;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
@@ -39,7 +40,7 @@ public class FormatoasistenciaAprendizService {
 			throw new RuntimeException("Error de parametros");
 		}
 
-		Aprendiz l = dao.findById(idaprendiz).orElseThrow();
+		Aprendiz l = dao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();
 
 		List<Asistencia> asistencias = asistenciaAprendiz.find(idaprendiz);
 
@@ -64,7 +65,7 @@ public class FormatoasistenciaAprendizService {
 	private List<AsistenciaInfo> fromAggregate(Aprendiz aprendiz,
 											   List<Asistencia> asistencias) throws IOException {
 		List<AsistenciaInfo> asistenciaInfos = new ArrayList<>();
-		String firma = extaerFirmaService.extraerFirma(aprendiz.getId());
+		String firma = extaerFirmaService.extraerFirma(AprendizId.toLong(aprendiz.getId()));
 
 		if (asistencias.isEmpty()) {
 			throw new BusinessException("Aprendiz sin asistencias");

@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.informeAprendicesInscritosFecha;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.documentoaprendiz.domain.Documentoaprendiz;
 import com.seguridadlimite.models.documentoaprendiz.findDocumentosAprendiz.FindDocumentoaprendizServiceImpl;
@@ -51,7 +52,7 @@ public class InformeAprendicesInscritosEntreFecha {
             registroInformeInscritosDtos.add(
                     RegistroInformeInscritosDto
                             .builder()
-                            .idaprendiz(aprendiz.getId())
+                            .idaprendiz(AprendizId.toLong(aprendiz.getId()))
                             .tipoDocumento(aprendiz.getTrabajador().getTipodocumento())
                             .documento(aprendiz.getTrabajador().getNumerodocumento())
                             .primerNombre(aprendiz.getTrabajador().getPrimernombre())
@@ -94,7 +95,7 @@ public class InformeAprendicesInscritosEntreFecha {
     }
 
     private String seleccionarDocumentosAprendiz(Aprendiz aprendiz) {
-        List<Documentoaprendiz> documentoaprendizs = documentoaprendizService.findByIdAprendiz(aprendiz.getId());
+        List<Documentoaprendiz> documentoaprendizs = documentoaprendizService.findByIdAprendiz(AprendizId.toLong(aprendiz.getId()));
 
         StringBuilder documentos = new StringBuilder();
 

@@ -1,6 +1,7 @@
 package com.seguridadlimite.models.permiso.application.service;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.permiso.application.port.in.ConsultarDatosMinisterioUseCase;
 import com.seguridadlimite.models.permiso.application.port.out.ConsultarDatosMinisterioPort;
 import com.seguridadlimite.models.permiso.domain.InformeministerioDto;
@@ -63,7 +64,7 @@ public class ConsultarDatosMinisterioService implements ConsultarDatosMinisterio
         }
         
         // Datos del aprendiz
-        informe.setAprendizId(aprendiz.getId());
+        informe.setAprendizId(AprendizId.toLong(aprendiz.getId()));
         informe.setAprendizCodigoverificacion(aprendiz.getCodigoverificacion());
         
         // Datos del trabajador
