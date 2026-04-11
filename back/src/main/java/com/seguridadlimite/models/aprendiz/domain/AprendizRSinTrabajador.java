@@ -166,9 +166,10 @@ public class AprendizRSinTrabajador implements Serializable {
   @Size(max = 1)
   private String certificadoformacion;
 
-  @Basic(optional = false)
-  @NotNull
-  private Double eenfasis;
+@Basic(optional = false)
+   @NotNull
+   @Column(name = "eenfasis", columnDefinition = "DECIMAL")
+   private Double eenfasis;
   
   @Basic(optional = false)
   @NotNull

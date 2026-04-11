@@ -195,13 +195,15 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date fechaasistencia;
 
-  @Basic(optional = false)
-  @NotNull
-  private Double eingreso;
+@Basic(optional = false)
+   @NotNull
+   @Column(name = "eingreso", columnDefinition = "DECIMAL")
+   private Double eingreso;
 
-  @Basic(optional = false)
-  @NotNull
-  private Double eenfasis;
+@Basic(optional = false)
+   @NotNull
+   @Column(name = "eenfasis", columnDefinition = "DECIMAL")
+   private Double eenfasis;
   
   @Basic(optional = false)
   @NotNull
@@ -225,7 +227,8 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   
   private String exteenfasis;
 
-  private int duraciontotal;
+  @Column(name = "duraciontotal", columnDefinition = "SMALLINT")
+   private Integer duraciontotal;
   
   @Transient
   private Long idasistencia;
