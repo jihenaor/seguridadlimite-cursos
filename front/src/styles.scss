@@ -92,7 +92,8 @@ td,
   text-overflow: ellipsis !important;
 }
 
-.ui-modal-close {
+/* Solo el × del header azul; no aplicar al flotante (panel blanco). */
+.ui-modal-header .ui-modal-close {
   flex-shrink: 0 !important;
   width: 1.75rem !important;
   height: 1.75rem !important;
@@ -154,8 +155,5 @@ td,
 .ui-modal-header .ui-modal-title,
 .ui-modal-header h1, .ui-modal-header h2, .ui-modal-header h3,
 .ui-modal-header h4, .ui-modal-header h5, .ui-modal-header h6 {
-  color: #ffffff !important;
-}
-.ui-modal-close {
   color: #ffffff !important;
 }

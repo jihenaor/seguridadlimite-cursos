@@ -41,7 +41,8 @@
   overflow: hidden;
 }
 
-.ui-modal-close--floating {
+/* Debe ir con ambas clases: `.ui-modal-close` (header) viene después y dejaba × blanco sobre panel blanco. */
+.ui-modal-close.ui-modal-close--floating {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -51,20 +52,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(25, 118, 210, 0.35);
+  border: 1px solid rgba(25, 118, 210, 0.45);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  color: #0d47a1;
+  background: #fff;
+  color: #0d47a1 !important;
   font-size: 1.25rem;
+  font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(13, 27, 42, 0.18);
-  transition: background 0.15s ease, transform 0.15s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 2px 12px rgba(13, 27, 42, 0.22);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.ui-modal-close--floating:hover {
-  background: #fff;
+.ui-modal-close.ui-modal-close--floating:hover {
+  background: #e3f2fd;
   transform: scale(1.05);
+  border-color: #1565c0;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 4px 16px rgba(21, 101, 192, 0.28);
 }
 
 .ui-modal-header {
@@ -248,7 +256,7 @@
     padding: 2.15rem 0.45rem 0.5rem;
   }
 
-  .ui-modal-close--floating {
+  .ui-modal-close.ui-modal-close--floating {
     top: 6px;
     right: 6px;
     width: 2rem;

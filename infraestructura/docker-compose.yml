@@ -103,16 +103,13 @@ services:
     networks:
       - backend_net
       - gateway_net
+    # GET público (HttpSecurityConfig); curl en imagen (ver Dockerfile backend).
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget -qO- --server-response http://127.0.0.1:8090/cursosback/ 2>&1 | grep -qE 'HTTP/|401|403|200|302' || exit 1",
-        ]
+      test: ["CMD-SHELL", "curl -sf http://127.0.0.1:8090/cursosback/api/arls -o /dev/null || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 90s
+      start_period: 120s
 
   # ────────────────────────────────────────────────────────────
   #  Frontend — Angular App (Nginx)

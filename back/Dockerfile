@@ -18,7 +18,7 @@ RUN mvn clean package -DskipTests --no-transfer-progress
 # ─────────────────────────────────────────────
 FROM eclipse-temurin:21-jre-alpine
 
-RUN apk add --no-cache su-exec \
+RUN apk add --no-cache su-exec curl \
   && addgroup -S appgroup \
   && adduser -S appuser -G appgroup
 
