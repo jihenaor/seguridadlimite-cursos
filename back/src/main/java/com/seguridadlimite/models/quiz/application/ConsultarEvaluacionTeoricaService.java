@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.application;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
@@ -21,8 +23,8 @@ import java.util.*;
 
 import static com.seguridadlimite.models.pregunta.domain.TipoevaluacionEnum.INGRESO;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class ConsultarEvaluacionTeoricaService {
 
 	private final IEvaluacionDao dao;
@@ -68,7 +70,7 @@ public class ConsultarEvaluacionTeoricaService {
 			String tipoevaluacion,
             String sabeleerescribir) throws BusinessException {
 		List<Pregunta> preguntas;
-        System.out.println(sabeleerescribir);
+        log.info(sabeleerescribir);
 		if (tipoevaluacion.equals(TipoevaluacionEnum.TEORICO.getEquivalente())) {
 			preguntas = preguntaDao.findPreguntasEvaluacionTeorica(
                     idnivel,

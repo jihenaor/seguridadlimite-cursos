@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.google.zxing.WriterException;
 import com.seguridadlimite.QRCodeGenerator;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
@@ -23,8 +25,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class AprendizServicerImpl {
 
 	private final GetPathFiles getPathFiles;
@@ -158,7 +160,7 @@ public class AprendizServicerImpl {
 				aprendiz.setBase64(base64);
 			} catch (WriterException | IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Se capturó una excepción: ", e);
 			}
 		}
 	}

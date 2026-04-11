@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -22,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImportarTrabajador {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -72,7 +74,7 @@ public class ImportarTrabajador {
                 .parse();
 
         for (RegistroTrabajador registro : registros) {
-            System.out.println("Importando");
+            log.info("Importando");
 
             getTrabajador(registro);
         }
@@ -109,7 +111,7 @@ public class ImportarTrabajador {
             try {
                 trabajadorSaveCu.save(trabajador);
             } catch (Exception e) {
-                System.out.println(registro.getCedula());
+                log.info(registro.getCedula());
                 throw e;
             }
         }

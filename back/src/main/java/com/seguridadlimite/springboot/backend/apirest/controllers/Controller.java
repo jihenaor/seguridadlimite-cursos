@@ -1,9 +1,12 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+@Slf4j
 public class Controller {
 
 	public void copiarEntidad(Object copy, Object paste, Boolean onlyWithValue) throws NoSuchMethodException, Exception {
@@ -39,7 +42,7 @@ public class Controller {
 				} catch (NoSuchMethodException ex) {
 					continue;
 				} catch (Exception e) {
-					System.out.println("" + nombreCampo);
+					log.info("" + nombreCampo);
 					throw e;
 				}
 
@@ -66,13 +69,13 @@ public class Controller {
 					}
 
 				} catch (NoSuchMethodException ex) {
-					System.out.println("Error copiando el campo " + nombreCampo);
+					log.info("Error copiando el campo " + nombreCampo);
 					continue;
 				}
 
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| SecurityException ex) {
-				// ex.printStackTrace();
+				// log.error("Se capturó una excepción: ", ex);
 				continue;
 			}
 		}

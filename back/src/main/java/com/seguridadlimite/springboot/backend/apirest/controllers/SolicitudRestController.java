@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
@@ -20,9 +22,8 @@ import com.seguridadlimite.models.entity.Solicitud;
 import com.seguridadlimite.springboot.backend.apirest.services.MailServiceImpl;
 import com.seguridadlimite.springboot.backend.apirest.services.SolicitudServiceImpl;
 
-@RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
+@Slf4j
 public class SolicitudRestController extends Controller {
 
 	private final SolicitudServiceImpl service;
@@ -57,7 +58,7 @@ public class SolicitudRestController extends Controller {
 					copiarEntidad(entity, g, false);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.error("Se capturó una excepción: ", e1);
 				}
 				if (g.getCreateAt() == null) {
 					g.setCreateAt(new Date());

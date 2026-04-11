@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
@@ -21,8 +23,8 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class AprendizServicerImpl2 {
 	@Value(value = "${path.documents:/root/images/documents/}")
 	private String documentsPath;
@@ -89,7 +91,7 @@ public class AprendizServicerImpl2 {
 			            documento.setBase64(base64File);
 		            }
 		        } catch (FileNotFoundException e) {
-		            // System.out.println("File not found" + e);
+		            // log.info("File not found" + e);
 		        } catch (IOException ioe) {
 		            throw ioe;
 		        }

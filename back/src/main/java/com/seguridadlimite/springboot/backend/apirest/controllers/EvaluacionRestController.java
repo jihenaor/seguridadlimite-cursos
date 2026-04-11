@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.dao.EvaluacionPojo;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.models.entity.RespuestaWs;
@@ -17,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api")
 @AllArgsConstructor
+@Slf4j
 public class EvaluacionRestController {
 	private final EvaluacionServiceImpl service;
 
@@ -87,7 +88,7 @@ public class EvaluacionRestController {
 			service.update(evaluacions);
 			return new RespuestaWs();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Se capturó una excepción: ", e);
 			return new RespuestaWs(e);
 		}
 	}	

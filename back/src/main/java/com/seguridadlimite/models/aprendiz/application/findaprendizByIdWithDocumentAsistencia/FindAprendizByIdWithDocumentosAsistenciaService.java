@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.findaprendizByIdWithDocumentAsistencia;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
@@ -27,8 +29,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class FindAprendizByIdWithDocumentosAsistenciaService {
 
 	private final GetPathFiles getPathFiles;
@@ -63,7 +65,7 @@ public class FindAprendizByIdWithDocumentosAsistenciaService {
 		try {
 			buscarDocumentoTrabajadorService.getDocumentoLadoALadoB(aprendiz.getTrabajador());
 		} catch (BusinessException businessException) {
-			// Manejo de excepciones, se puede registrar un log
+			log.trace("Excepcion de negocio (manejada): ", businessException);
 		}
 
 		consultarAsistencia(id, aprendiz);

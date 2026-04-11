@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.informeAprendicesInscritosFecha;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -13,8 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class InformeAprendicesInscritosEntreFecha {
 
     private IAprendizDao iAprendizDao;
@@ -143,7 +145,7 @@ public class InformeAprendicesInscritosEntreFecha {
         }
 
         for (Registro registro : registros) {
-            System.out.println("Importando");
+            log.info("Importando");
             if (registro.getIdMinTrabajo() == null) {
                 continue;
             }
@@ -210,24 +212,24 @@ public class InformeAprendicesInscritosEntreFecha {
                         String anof = tokensFechaFinal.nextToken();
 
                         if (mesf.length()>2) {
-                            System.out.println("Error en el mes " + mesf + "  Fila: " + fila);
+                            log.info("Error en el mes " + mesf + "  Fila: " + fila);
 //                            return "";
                         }
 
                         if (diaf.length()>2) {
-                            System.out.println("Error en el dia " + diaf + "  Fila: " + fila);
+                            log.info("Error en el dia " + diaf + "  Fila: " + fila);
 //                            return "";
                         }
 
                         if (anof.length() != 4) {
-                            System.out.println("Error en el año " + anof + "  Fila: " + fila);
+                            log.info("Error en el año " + anof + "  Fila: " + fila);
 //                            return "";
                         }
 
                         try {
                             fechafinal = new SimpleDateFormat("dd/MM/yyyy").parse(diaf + "/" + mesf + "/" + anof);
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            log.error("Se capturó una excepción: ", e);
                         }
 
                         break;
@@ -253,13 +255,13 @@ public class InformeAprendicesInscritosEntreFecha {
                         break;
                 }
 
-//                System.out.println(str);
+//                log.info(str);
                 cont++;
             }
 
             fila++;
 
-            System.out.println("Fila: " + fila);
+            log.info("Fila: " + fila);
         }
 
     private void crearAprendiz(
@@ -349,7 +351,7 @@ public class InformeAprendicesInscritosEntreFecha {
             try {
                 aprendiz = aprendizService.save(aprendiz);
             } catch (Exception e) {
-//                System.out.println( trabajador.getId() + " " + numerodocumento + " " + grupo.getId());
+//                log.info( trabajador.getId() + " " + numerodocumento + " " + grupo.getId());
                 throw e;
             }
 
@@ -390,7 +392,7 @@ public class InformeAprendicesInscritosEntreFecha {
         try {
             trabajador = trabajadorService.save(trabajador);
         } catch (Exception e) {
-            System.out.println(registro.getCedula());
+            log.info(registro.getCedula());
             throw e;
         }
         return trabajador;
@@ -408,7 +410,7 @@ public class InformeAprendicesInscritosEntreFecha {
             dia = tokensFecha.nextToken();
             ano = tokensFecha.nextToken();
         } catch (Exception e) {
-            System.out.println(registro.getCodigo());
+            log.info(registro.getCodigo());
             throw e;
         }
 

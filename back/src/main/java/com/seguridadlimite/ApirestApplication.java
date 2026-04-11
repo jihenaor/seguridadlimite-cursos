@@ -1,5 +1,7 @@
 package com.seguridadlimite;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		"com.seguridadlimite.util",
 		"com.seguridadlimite.security"
 		})
-@EnableJpaRepositories
 @RequiredArgsConstructor
+@Slf4j
 public class ApirestApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -44,8 +46,8 @@ public class ApirestApplication extends SpringBootServletInitializer {
 	@Bean
 	public CommandLineRunner createPasswordsCommand(){
 		return args -> {
-//			System.out.println(passwordEncoder.encode("abc1234"));
-//			System.out.println(passwordEncoder.encode("clave456"));
+//			log.info(passwordEncoder.encode("abc1234"));
+//			log.info(passwordEncoder.encode("clave456"));
 		};
 	}
 

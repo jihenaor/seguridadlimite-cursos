@@ -1,5 +1,7 @@
 package com.seguridadlimite.util.deploy;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-@RestController
 @RequestMapping("/api")
+@Slf4j
 public class DeployController {
 
     // Inyectamos el token secreto definido en application.properties
@@ -35,7 +37,7 @@ public class DeployController {
             // Establecemos el directorio de trabajo como el directorio actual (donde se encuentra el deploy.sh)
             ProcessBuilder processBuilder = new ProcessBuilder();
             File workingDir = new File(".."); // directorio actual (target)
-            System.out.println("Directorio de trabajo absoluto: " + workingDir.getAbsolutePath());
+            log.info("Directorio de trabajo absoluto: " + workingDir.getAbsolutePath());
             processBuilder.directory(workingDir);
 
             // Ejecutamos el script a través de bash para evitar problemas de permisos

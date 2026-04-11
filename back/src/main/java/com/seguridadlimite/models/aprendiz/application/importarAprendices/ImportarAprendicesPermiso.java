@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -19,9 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Service
-@AllArgsConstructor
 @RequiredArgsConstructor
+@Slf4j
 public class ImportarAprendicesPermiso {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -85,14 +86,14 @@ public class ImportarAprendicesPermiso {
                 .toList();
         for (Registro registro : registros) {
 
-            System.out.println(registro.getCodigo());
+            log.info(registro.getCodigo());
 
             if ("G224".equals(registro.getCodigo()) || "E080".equals(registro.getCodigo())) {
                 int x = 0;
             }
 
             if (i % 100 == 0) {
-                System.out.println(i);
+                log.info(i);
             }
             i++;
             if (registro.getTrabajo() == null) {
@@ -110,20 +111,20 @@ public class ImportarAprendicesPermiso {
 
                     for (Aprendiz aprendiz : aprendizs) {
                         if (aprendiz.getIdPermiso() == null) {
-                            System.out.println("Actualizando");
+                            log.info("Actualizando");
                             aprendiz.setIdPermiso(p.get().getIdPermiso());
                             aprendizDao.save(aprendiz);
                         }
                     }
                 } else {
-                    System.out.println("Permiso no existe " + registro.getTrabajo());
+                    log.info("Permiso no existe " + registro.getTrabajo());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(registro.getTrabajo());
+                log.error("Se capturó una excepción: ", e);
+                log.info(registro.getTrabajo());
             }
         }
-        System.out.println("termino");
+        log.info("termino");
     }
 
 

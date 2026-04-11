@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.encuesta.application;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -17,8 +19,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class GenerarPdfEncuestaService {
     private final IAprendizDao aprendizDao;
     private final ConsultarQuizAprendizService service;
@@ -48,7 +50,7 @@ public class GenerarPdfEncuestaService {
 
             document.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Se capturó una excepción: ", e);
         }
 
         return new ByteArrayInputStream(out.toByteArray());

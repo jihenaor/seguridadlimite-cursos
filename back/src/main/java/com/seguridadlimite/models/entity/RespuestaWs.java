@@ -1,11 +1,14 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.Getter;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @Getter
+@Slf4j
 public class RespuestaWs {
 	
 	String msg;
@@ -23,7 +26,7 @@ public class RespuestaWs {
 		PrintWriter pw = new PrintWriter(sw);
 		e.printStackTrace(pw);
 		String sStackTrace = sw.toString(); // stack trace as a string
-		System.out.println(sStackTrace);
+		log.info(sStackTrace);
 		
 		this.msg = e.getMessage() + " " + (e.getCause() != null ? e.getCause().getMessage() : " ")
 				+ sStackTrace;

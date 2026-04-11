@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.trabajador.dominio;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.util.UppercaseTransform;
 import lombok.Data;
 
@@ -11,10 +13,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Date;
 
-@Entity
-@Table(name = "sl_trabajadores")
-@Data
 @UppercaseTransform
+@Slf4j
 public class Trabajador implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -154,7 +154,7 @@ public class Trabajador implements Serializable {
 		  e.printStackTrace(pw);
 		  this.exception = sw.toString();
 	  } catch (Exception ex) {
-		  ex.printStackTrace();
+		  log.error("Se capturó una excepción: ", ex);
 	  }
   }
 

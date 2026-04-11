@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -23,8 +25,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImportarAprendices {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -122,7 +124,7 @@ public class ImportarAprendices {
         }
 //
         for (Registro registro : registros) {
-            System.out.println(i++ + " Trabajo " + registro.getTrabajo());
+            log.info(i++ + " Trabajo " + registro.getTrabajo());
 
             if (registro.getCedula() == null || registro.getCedula().length() < 3) {
                 registro.setCedula(registro.getCodigo());
@@ -135,7 +137,7 @@ public class ImportarAprendices {
 //            try {
 //                fechaInscripcionRegistro = convertirFormatoFecha(registro.getFechaInicial());
 //            } catch (Exception e) {
-//                e.printStackTrace();
+//                log.error("Se capturó una excepción: ", e);
 //                continue;
 //            }
 
@@ -163,7 +165,7 @@ public class ImportarAprendices {
 
 //            if (permisoTrabajoAlturas.isEmpty()) {
 //                throw new BusinessException("Permiso no encontrado " + registro.getTrabajo());
-//                System.out.println("Permiso no encontrado " + registro.getTrabajo());
+//                log.info("Permiso no encontrado " + registro.getTrabajo());
 //                continue;
 //            }
 
@@ -176,7 +178,7 @@ public class ImportarAprendices {
 
             // Si hay duplicados, verificamos cuál tiene evaluación
 //            if (aprendizsDuplicados.size() > 1) {
-//                System.out.println("Mas de un aprendiz " + cedula);
+//                log.info("Mas de un aprendiz " + cedula);
 //                List<Aprendiz> aprendizconEvaluacion = aprendizsDuplicados.stream()
 //                        .filter(aprendiz -> aprendiz.getEteorica1() > 0
 //                                || aprendiz.getEteorica2() > 0
@@ -192,7 +194,7 @@ public class ImportarAprendices {
 //                    // Borrar los registros duplicados excepto el primero
 //                    for (int j = 1; j < aprendizsDuplicados.size(); j++) {
 //                        aprendizService.delete(aprendizsDuplicados.get(j).getId());
-//                        System.out.println("Borrando registro duplicado " + aprendizsDuplicados.get(j).getId());
+//                        log.info("Borrando registro duplicado " + aprendizsDuplicados.get(j).getId());
 //                    }
 //                } else {
 //                    for (Aprendiz aprendiz : aprendizsDuplicados) {
@@ -217,7 +219,7 @@ public class ImportarAprendices {
 
             if (aprendizs.isEmpty()) {
 
-                    System.out.println("Nuevo");
+                    log.info("Nuevo");
                     crearAprendiz(
                             registro, idnivel, Optional.empty());
             } else {
@@ -228,7 +230,7 @@ public class ImportarAprendices {
                         .toList();
 
                 if (aprendizs2.isEmpty()) {
-                    System.out.println("Nuevo");
+                    log.info("Nuevo");
                     crearAprendiz(
                             registro, idnivel, Optional.empty());
                 }
@@ -244,7 +246,7 @@ public class ImportarAprendices {
 //                    aprendizsx.get(0).setCodigoverificacion(registro.getCodigo());
 //                    aprendizsx.get(0).setIdPermiso(permisoTrabajoAlturas.get().getIdPermiso());
 //                    aprendizService.save(aprendizsx.get(0));
-//                    System.out.println("Actualiza");
+//                    log.info("Actualiza");
 //                } else {
 //                    List<Aprendiz> aprendizsx2 = aprendizs.stream()
 //                            .filter(aprendiz -> aprendiz.getTrabajador().getNumerodocumento().equals(cedula)
@@ -253,7 +255,7 @@ public class ImportarAprendices {
 
 //                }
 
-//                System.out.println(cedula);
+//                log.info(cedula);
 //            }
 
 /*
@@ -263,10 +265,10 @@ public class ImportarAprendices {
                             aprendizs.get(0).setCodigoverificacion(registro.getCodigo());
                             aprendizs.get(0).setIdPermiso(permisoTrabajoAlturas.get().getIdPermiso());
                             aprendizService.save(aprendizs.get(0));
-                            System.out.println("Actualiza");
+                            log.info("Actualiza");
                         }
                     } else {
-                        System.out.println(cedula);
+                        log.info(cedula);
                     }
                 }
 
@@ -324,24 +326,24 @@ public class ImportarAprendices {
                         String anof = tokensFechaFinal.nextToken();
 
                         if (mesf.length()>2) {
-                            System.out.println("Error en el mes " + mesf + "  Fila: " + fila);
+                            log.info("Error en el mes " + mesf + "  Fila: " + fila);
 //                            return "";
                         }
 
                         if (diaf.length()>2) {
-                            System.out.println("Error en el dia " + diaf + "  Fila: " + fila);
+                            log.info("Error en el dia " + diaf + "  Fila: " + fila);
 //                            return "";
                         }
 
                         if (anof.length() != 4) {
-                            System.out.println("Error en el año " + anof + "  Fila: " + fila);
+                            log.info("Error en el año " + anof + "  Fila: " + fila);
 //                            return "";
                         }
 
                         try {
                             fechafinal = new SimpleDateFormat("dd/MM/yyyy").parse(diaf + "/" + mesf + "/" + anof);
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            log.error("Se capturó una excepción: ", e);
                         }
 
                         break;
@@ -372,7 +374,7 @@ public class ImportarAprendices {
 
             fila++;
 
-            System.out.println("Fila: " + fila);
+            log.info("Fila: " + fila);
         }
 
  */
@@ -469,7 +471,7 @@ public class ImportarAprendices {
         try {
             aprendiz = aprendizService.save(aprendiz);
         } catch (Exception e) {
-//                System.out.println( trabajador.getId() + " " + numerodocumento + " " + grupo.getId());
+//                log.info( trabajador.getId() + " " + numerodocumento + " " + grupo.getId());
             throw e;
         }
     }
@@ -486,7 +488,7 @@ public class ImportarAprendices {
             dia = tokensFecha.nextToken();
             ano = tokensFecha.nextToken();
         } catch (Exception e) {
-            System.out.println(registro.getCodigo());
+            log.info(registro.getCodigo());
             throw e;
         }
 

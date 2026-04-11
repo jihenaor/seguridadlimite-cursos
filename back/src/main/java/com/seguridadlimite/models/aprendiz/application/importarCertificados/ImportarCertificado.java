@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarCertificados;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +12,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @Service
+@Slf4j
 public class ImportarCertificado {
 
     @Value("${path.certificados}")
@@ -35,7 +38,7 @@ public class ImportarCertificado {
         // Verificar si el archivo ya existe
         File outputFile = new File(uploadDir + File.separator + fileName);
         if (outputFile.exists()) {
-            System.out.println("El archivo ya existe. No se reemplazará.");
+            log.info("El archivo ya existe. No se reemplazará.");
             return;
         }
 

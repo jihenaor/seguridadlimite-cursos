@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import lombok.RequiredArgsConstructor;
 
 import com.seguridadlimite.models.aprendiz.application.AprendizServicerImpl;
@@ -21,10 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api")
-@ResponseBody
 @RequiredArgsConstructor
+@Slf4j
 public class TrabajadorController extends Controller {
 
 	private final TrabajadorService service;
@@ -107,13 +107,13 @@ public class TrabajadorController extends Controller {
 		try {
 			copiarEntidad(entity, t, false);
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			log.error("Se capturó una excepción: ", e1);
 		}
 
 		try {
 			t = trabajadorSaveCu.save(t);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Se capturó una excepción: ", e);
 		}
 
 		return new ResponseEntity<>(t, HttpStatus.OK);

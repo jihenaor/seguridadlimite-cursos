@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.permiso.domain.mapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.chequeo.domain.GrupoChequeo;
 import com.seguridadlimite.models.permiso.domain.PermisoDetalleActividad;
 import com.seguridadlimite.models.permiso.domain.PermisoDetalleChequeo;
@@ -17,6 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class PermisoTrabajoAlturasMapper {
     
     public PermisoTrabajoAlturasDTO toDTO(PermisoTrabajoAlturas entity, boolean incluyeDetalle) {
@@ -177,7 +180,7 @@ public class PermisoTrabajoAlturasMapper {
             if (dtoDetalle != null) {
                 detalle.setRespuesta(dtoDetalle.getRespuesta());
             } else {
-                System.out.println("detalle no existe");
+                log.info("detalle no existe");
             }
         });
 

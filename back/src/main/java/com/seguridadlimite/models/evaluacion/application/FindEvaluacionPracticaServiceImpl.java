@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.evaluacion.application;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -25,8 +27,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class FindEvaluacionPracticaServiceImpl {
 
 	private final IGrupopreguntaDao grupoDao;
@@ -57,7 +59,7 @@ public class FindEvaluacionPracticaServiceImpl {
 		List<EvaluacionDTO> finalEvaluaciones = evaluaciones;
 
 		finalEvaluaciones.forEach(evaluacionDTO -> {
-			System.out.println(evaluacionDTO.getPregunta().getIdgrupo());
+			log.info(evaluacionDTO.getPregunta().getIdgrupo());
 		});
 
 		grupopreguntas.forEach(grupopregunta -> {

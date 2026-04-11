@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
@@ -13,8 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class ImportarPermisoTrabajo {
 
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
@@ -107,14 +109,14 @@ public class ImportarPermisoTrabajo {
                                             getIdEntrenador(registro));
                     //&& pFecha.isPresent()
                     if (p.isEmpty()) {
-                        System.out.println("Consecutivo no existe - fecha existe "
+                        log.info("Consecutivo no existe - fecha existe "
                                 + registro.getTRABAJO()
                                 + " " + registro.getFechaInicial()
                                 + " " + registro.getNivel());
                     }
                     //  && pFecha.isEmpty()
                     if (p.isEmpty()) {
-                        System.out.println("Permiso creado.  " + registro.getTRABAJO());
+                        log.info("Permiso creado.  " + registro.getTRABAJO());
                         PermisoTrabajoAlturas permisoTrabajoAlturas = new PermisoTrabajoAlturas();
 
                         permisoTrabajoAlturas.setCodigoministerio(registro.getTRABAJO());
@@ -138,7 +140,7 @@ public class ImportarPermisoTrabajo {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Se capturó una excepción: ", e);
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.extern.slf4j.Slf4j;
+
 import jakarta.mail.MessagingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @Service
+@Slf4j
 public class MailServiceImpl {
 	/*
 	@Autowired
@@ -36,8 +39,8 @@ public class MailServiceImpl {
 			Logger logger = LogManager.getLogger(origen);
 			logger.error("Se ha producido un error", e);
 		} catch (Exception ex) {
-			e.printStackTrace();
-			ex.printStackTrace();
+			log.error("Se capturó una excepción: ", e);
+			log.error("Se capturó una excepción: ", ex);
 		}
 	}
 
@@ -74,8 +77,8 @@ public class MailServiceImpl {
 //				javaMailSender.send(mailMessage);
 
 			} catch (Exception e1) {
-				e.printStackTrace();
-				e1.printStackTrace();
+				log.error("Se capturó una excepción: ", e);
+				log.error("Se capturó una excepción: ", e1);
 			}
 
 			return mensaje;
@@ -97,7 +100,7 @@ public class MailServiceImpl {
 
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Se capturó una excepción: ", e);
 		}
 	
 		javaMailSender.send(msg);

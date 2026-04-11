@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.extraerfirma;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.springboot.backend.apirest.util.GetPathFiles;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
@@ -10,8 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class ExtraerFirmaServiceImpl implements IExtraerFirmaService {
 	private GetPathFiles getPathFiles;
 
@@ -25,7 +27,7 @@ public class ExtraerFirmaServiceImpl implements IExtraerFirmaService {
 				byte[] fileContent = Files.readAllBytes(fileFirma.toPath());
 				return Base64.getEncoder().encodeToString(fileContent);
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error("Se capturó una excepción: ", e);
 //				WriteException.escribirExcepcion(getMessageException(e));
 				throw new BusinessException("Error al leer el archivo de firma: " + e.getMessage());
 			}

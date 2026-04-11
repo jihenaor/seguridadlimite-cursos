@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendices;
 import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendicesPermiso;
 import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarPermisoTrabajo;

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.application.inicializarimagenes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.seguridadlimite.models.entity.Respuesta;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.util.EncodeFile;
@@ -10,8 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Slf4j
 public class InicializarImagenes {
 
 	private final EncodeFile encodeFile;
@@ -24,7 +26,7 @@ public class InicializarImagenes {
                 getImageResponse(pregunta);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Se capturó una excepción: ", e);
         }
 
 	}
@@ -40,7 +42,7 @@ public class InicializarImagenes {
                         respuesta.setBase64(encodeFile.encodeFromInputStream(is));
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("Se capturó una excepción: ", e);
                 }
             }
         }
@@ -55,7 +57,7 @@ public class InicializarImagenes {
                     pregunta.setBase64(encodeFile.encodeFromInputStream(is));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Se capturó una excepción: ", e);
             }
         }
     }
