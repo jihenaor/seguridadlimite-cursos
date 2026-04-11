@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pojo.RespuestaEvaluacion;
 import com.seguridadlimite.models.evaluacion.application.RegistrarEvaluacionIngresoService;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
@@ -13,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class RegistrarEvaluacionIngresoController {
 
-	@Autowired
-	private RegistrarEvaluacionIngresoService service;
+	private final RegistrarEvaluacionIngresoService service;
 
 	@PostMapping(path = "registrarevaluacioningreso/{idaprendiz}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.CREATED)

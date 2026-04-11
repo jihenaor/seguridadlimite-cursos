@@ -1,64 +1,42 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, Input } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { AprendizEvaluacionService } from '../../services/aprendizevaluacion.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
+/** Mínimo de caracteres del documento para consultar la API (coherente con el backend). */
+const MIN_DOC = 4;
 
 @Component({
     selector: 'quiz-search-aprendiz',
+    standalone: true,
     templateUrl: './search-aprendiz.component.html',
-    imports: [MatFormFieldModule, MatInputModule]
+    styleUrls: ['./search-aprendiz.component.scss'],
 })
-export class SearchAprendizComponent implements AfterViewInit {
-  @ViewChild("txtTagInput")
-  public tagInput!: ElementRef<HTMLInputElement>;
-
+export class SearchAprendizComponent implements OnInit {
   @Input()
   opciones: Record<string, boolean> = {};
 
-  constructor(private aprendizService: AprendizEvaluacionService) {
+  nombreSesion = '';
+  documentoSesion = '';
 
+  constructor(private aprendizService: AprendizEvaluacionService) {}
+
+  ngOnInit(): void {
+    this.nombreSesion = (sessionStorage.getItem('nombreaprendiz') || '').trim();
+    this.documentoSesion = (sessionStorage.getItem('numerodocumento') || '').trim();
+
+    if (this.documentoSesion.length >= MIN_DOC) {
+      this.buscarPorSesion();
+    }
   }
 
-  ngAfterViewInit(): void {
-    const numerodocumento = sessionStorage.getItem('numerodocumento') || ''
-
-    this.tagInput.nativeElement.value = numerodocumento;
-
-    if (numerodocumento && numerodocumento.length > 3) {
-      this.search();
-    }
-
-    fromEvent(this.tagInput.nativeElement, 'input')
-    .pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-    )
-    .subscribe(() => {
-
-    });
-  }
-
-  search() {
-    if (!this.tagInput.nativeElement.value
-      || this.tagInput.nativeElement.value.length < 4) {
-        alert('El número de documento no es válido')
-      return;
-    }
-
+  private buscarPorSesion(): void {
+    const doc = this.documentoSesion.trim();
     if (this.opciones.evaluacionTeorico) {
-      this.aprendizService.searchAprendizevaluacion(this.tagInput.nativeElement.value, 'teorico');
+      this.aprendizService.searchAprendizevaluacion(doc, 'teorico');
     } else if (this.opciones.conocimientosPrevios) {
-      this.aprendizService.searchAprendizevaluacion(this.tagInput.nativeElement.value, 'conocimientosprevios');
+      this.aprendizService.searchAprendizevaluacion(doc, 'conocimientosprevios');
     } else if (this.opciones.satisfaccionCliente) {
-        this.aprendizService.searchAprendizevaluacion(this.tagInput.nativeElement.value, 'satisfaccioncliente');
+      this.aprendizService.searchAprendizevaluacion(doc, 'satisfaccioncliente');
     }
   }
-
-  goBack(): void {
-    window.history.back();
-  }
-
 }

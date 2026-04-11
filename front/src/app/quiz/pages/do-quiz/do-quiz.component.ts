@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf, NgFor, NgStyle } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-do-quiz',
@@ -29,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
         NgFor,
         NgStyle,
         MatButtonModule,
+        MatIconModule,
     ]
 })
 export class DoQuizComponent {
@@ -217,6 +219,15 @@ export class DoQuizComponent {
   updateSidebarText() {
     const newMessage = 'Evaluación de conocimiento';
     this.messageService.updateMessage(newMessage);
+  }
+
+  /** Vuelve a la pantalla de inicio del tipo de evaluación actual (misma sesión). */
+  regresar(): void {
+    if (this.tipoQuiz === TipoQuiz.INGRESO) {
+      void this.router.navigate(['/quiz/inicio-conocimientos-previos']);
+      return;
+    }
+    void this.router.navigate(['/quiz/inicio-teorico']);
   }
 
 }

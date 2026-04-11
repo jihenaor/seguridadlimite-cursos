@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.findTrabajadorInscripcion.FindTrabajadorInscripcionCu;
 import com.seguridadlimite.models.entity.TrabajadorInscripcionPojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @ResponseBody
+@RequiredArgsConstructor
 public class TrabajadorInscripcionController extends Controller {
 
-	@Autowired
-	private FindTrabajadorInscripcionCu service;
+	private final FindTrabajadorInscripcionCu service;
 
 	@GetMapping(path = "/trabajadorinscripcion/{numerodocumento}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.OK)

@@ -1,4 +1,5 @@
 import { AuthService } from '../service/auth.service';
+import { mensajeErrorHttpAmigable } from '../utils/http-error-message';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -33,8 +34,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           return throwError(() => err);
         }
 
-        const error = err.error?.message || err.statusText;
-        return throwError(() => error);
+        return throwError(() => mensajeErrorHttpAmigable(err));
       })
     );
   }

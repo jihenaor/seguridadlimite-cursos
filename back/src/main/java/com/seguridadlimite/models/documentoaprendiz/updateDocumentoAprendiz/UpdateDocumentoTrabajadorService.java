@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.dao.ITrabajadorDao;
 import com.seguridadlimite.models.entity.Trabajadordocumento;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
@@ -14,13 +16,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Service
+@RequiredArgsConstructor
 public class UpdateDocumentoTrabajadorService {
 
 	@Value(value = "${path.documents:/root/images/documents/}")
 	private String documentsPath;
 
-	@Autowired
-	private ITrabajadorDao dao;
+	private final ITrabajadorDao dao;
 
 	@Transactional(readOnly = true)
 	public Trabajador findById(Long id) {

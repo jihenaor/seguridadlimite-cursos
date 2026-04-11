@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
@@ -20,19 +22,17 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AprendizServicerImpl2 {
 	@Value(value = "${path.documents:/root/images/documents/}")
 	private String documentsPath;
 
-	@Autowired
-	private IAprendizDao dao;
+	private final IAprendizDao dao;
 
 
-	@Autowired
-	private DocumentoServiceImpl documentoService;
+	private final DocumentoServiceImpl documentoService;
 	
-	@Autowired
-	private DocumentoaprendizServiceImpl documentoAprendizService;
+	private final DocumentoaprendizServiceImpl documentoAprendizService;
 	
 	@Transactional(readOnly = true)
 	public List<Aprendiz> findAll() {
@@ -61,7 +61,7 @@ public class AprendizServicerImpl2 {
 		return id == null ? null : dao.findById(AprendizId.toInteger(id)).orElse(null);
 	}
 
-	public List<Documento> getDocumentos(Long idaprendiz, Boolean documentosEmpresa) throws IOException {
+	public List<Documento> getDocumentos(int idaprendiz, Boolean documentosEmpresa) throws IOException {
 		List<Documento> documentos;
 		
 		if (documentosEmpresa) {

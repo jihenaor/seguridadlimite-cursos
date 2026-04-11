@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.grupopregunta.infraestructure;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.grupopregunta.application.listargrupopregunta.GrupoPreguntaService;
 import com.seguridadlimite.models.grupopregunta.domain.Grupopregunta;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/grupopregunta")
+@RequiredArgsConstructor
 public class GrupopreguntaController {
 
-	@Autowired
-	private GrupoPreguntaService service;
+	private final GrupoPreguntaService service;
 	
 
 	@GetMapping

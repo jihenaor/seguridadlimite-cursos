@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.extraerCertificado.ExtraerCertificadoTrabajadorService;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -9,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 	@RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AprendizImagenCertificadoController {
 
-	@Autowired
-	private ExtraerCertificadoTrabajadorService service;
+	private final ExtraerCertificadoTrabajadorService service;
 
 	@GetMapping("/{id}/imagencertificado")
 	@ResponseStatus(HttpStatus.OK)

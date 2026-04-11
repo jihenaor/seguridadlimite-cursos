@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.evaluacion.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -14,13 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RegistrarEvaluacionIngresoService {
 
-	@Autowired
-	private IEvaluacionDao dao;
+	private final IEvaluacionDao dao;
 
-	@Autowired
-	private IAprendizDao aprendizDao;
+	private final IAprendizDao aprendizDao;
 	
 	@Transactional
 	public RespuestaEvaluacion saveevaluacion(List<Pregunta> entity, Long idaprendiz) throws Exception {

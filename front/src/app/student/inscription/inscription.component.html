@@ -96,7 +96,7 @@
 
               @if (trabajador.idaprendiz && trabajador?.aprendizContinuaAprendizaje) {
               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2">
-                <button mat-raised-button color="secondary" class="w-100" routerLink="/quiz/inicio-teorico">
+                <button mat-raised-button color="secondary" class="w-100" type="button" (click)="navegarQuizTeorico()">
                   <mat-icon>assignment</mat-icon> Quiz teórico
                 </button>
               </div>
@@ -104,8 +104,8 @@
 
               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
                 *ngIf="trabajador.idaprendiz && trabajador.aprendizContinuaAprendizaje">
-                <button mat-raised-button color="secondary" class="w-100"
-                  routerLink="/quiz/inicio-satisfaccion-cliente">
+                <button mat-raised-button color="secondary" class="w-100" type="button"
+                  (click)="navegarQuizSatisfaccionCliente()">
                   <mat-icon>assignment</mat-icon> Encuesta de satisfacción</button>
               </div>
 

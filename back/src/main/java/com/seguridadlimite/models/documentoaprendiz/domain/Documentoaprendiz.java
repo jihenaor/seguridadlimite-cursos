@@ -28,8 +28,7 @@ public class Documentoaprendiz implements Serializable {
   private Documento documento;
 
   @Basic(optional = false)
-  @NotNull
-  private Long idaprendiz;
+  private int idaprendiz;
   
   private String documentokey;
   

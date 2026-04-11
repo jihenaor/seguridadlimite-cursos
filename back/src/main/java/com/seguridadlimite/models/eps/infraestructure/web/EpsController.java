@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.eps.infraestructure.web;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.eps.application.IEpsService;
 import com.seguridadlimite.models.eps.domain.Eps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class EpsController {
 
-	@Autowired
-	private IEpsService service;
+	private final IEpsService service;
 
 
 	@GetMapping("/epss")

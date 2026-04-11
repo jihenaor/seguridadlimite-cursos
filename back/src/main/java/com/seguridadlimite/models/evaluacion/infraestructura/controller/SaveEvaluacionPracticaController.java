@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.evaluacion.infraestructura.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.evaluacion.application.SaveEvaluacionPracticaService;
 import com.seguridadlimite.models.grupopregunta.domain.Grupopregunta;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evaluacion")
+@RequiredArgsConstructor
 public class SaveEvaluacionPracticaController {
 
-	@Autowired
-	private SaveEvaluacionPracticaService service;
+	private final SaveEvaluacionPracticaService service;
 
 	@PostMapping(path = "/practica", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.NO_CONTENT) // No retorna un cuerpo en caso de éxito

@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.iservices.IProgramaService;
 import com.seguridadlimite.models.programa.model.Programa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ProgramaRestController {
 
-	@Autowired
-	private IProgramaService service;
+	private final IProgramaService service;
 	
 
 

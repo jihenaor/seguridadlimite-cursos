@@ -27,7 +27,7 @@ public class ConsultarEncuestaSatisfaccionClienteService {
 	private final IPreguntaDao preguntaDao;
 	private final FindAprendizByIdService consultarAprendizPorId;
 
-	public RespuestaEncuestaSatisfaccion findPreguntasAprendiz(Long idaprendiz) throws BusinessException {
+	public RespuestaEncuestaSatisfaccion findPreguntasAprendiz(int idaprendiz) throws BusinessException {
 		boolean activacomentarios = false;
 		List<Pregunta> preguntas = consultarPreguntas(idaprendiz);
 
@@ -45,9 +45,7 @@ public class ConsultarEncuestaSatisfaccionClienteService {
 				preguntas);
 	}
 
-	private List<Pregunta> consultarPreguntas(
-			Long idaprendiz
-            ) throws BusinessException {
+	private List<Pregunta> consultarPreguntas(int idaprendiz) throws BusinessException {
         String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
 		List<Pregunta> preguntas = preguntaDao.findTipoevaluacion(
                 TipoevaluacionEnum.ENCUESTA.getEquivalente(),
@@ -70,7 +68,7 @@ public class ConsultarEncuestaSatisfaccionClienteService {
 	}
 
 	@Transactional
-	private List<Evaluacion> getEvaluacions(Long idaprendiz,
+	private List<Evaluacion> getEvaluacions(int idaprendiz,
 											List<Pregunta> preguntas) {
 		List<Evaluacion> l = dao.findEvaluacionTipo(
 				idaprendiz,
@@ -87,7 +85,7 @@ public class ConsultarEncuestaSatisfaccionClienteService {
 		return l;
 	}
 
-	private static Evaluacion getEvaluacion(long idaprendiz,
+	private static Evaluacion getEvaluacion(int idaprendiz,
 											Pregunta pregunta) {
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdaprendiz(idaprendiz);

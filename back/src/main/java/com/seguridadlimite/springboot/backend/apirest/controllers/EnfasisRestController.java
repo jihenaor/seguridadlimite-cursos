@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.enfasis.domain.Enfasis;
 import com.seguridadlimite.springboot.backend.apirest.services.EnfasisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class EnfasisRestController {
 
-	@Autowired
-	private EnfasisServiceImpl service;
+	private final EnfasisServiceImpl service;
 
 	@GetMapping("/enfasis")
 	public List<Enfasis> index() {

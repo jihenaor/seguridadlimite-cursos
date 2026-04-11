@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.RequiredArgsConstructor;
+
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -19,6 +21,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class ImportarAprendicesPermiso {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -63,8 +66,7 @@ public class ImportarAprendicesPermiso {
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
 
 
-    @Autowired
-    private ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
+    private final ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
 
     @Transient
     public void index(String content) throws BusinessException, ParseException {

@@ -15,7 +15,7 @@ public class FindAprendizByIdService {
 
 	private IAprendizDao aprendizDao;
 
-	public Aprendiz find(Long idaprendiz) throws BusinessException {
+	public Aprendiz find(int idaprendiz) throws BusinessException {
 		return aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new NoSuchElementException("No se encontró el aprendiz con el ID proporcionado"));
 	}

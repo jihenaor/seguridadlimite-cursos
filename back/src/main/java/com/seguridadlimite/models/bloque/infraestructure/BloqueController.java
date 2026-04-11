@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.bloque.infraestructure;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.bloque.application.listarbloques.ListarBloqueService;
 import com.seguridadlimite.models.bloque.model.Bloque;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bloque")
+@RequiredArgsConstructor
 public class BloqueController {
 
-	@Autowired
-	private ListarBloqueService service;
+	private final ListarBloqueService service;
 	
 
 	@GetMapping

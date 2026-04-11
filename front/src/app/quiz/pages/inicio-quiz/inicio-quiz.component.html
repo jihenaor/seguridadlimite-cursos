@@ -1,20 +1,32 @@
-<section class="container-section">
-  <quiz-info [opciones] = "opciones"></quiz-info>
+<section class="student-inscription-page quiz-inicio__page max-w-7xl mx-auto">
+  <div class="student-inscription-page__stage grupos-container">
+    <div class="row grupos-main">
+      <div class="col-12 auth-form-section">
+        <div class="form-inscription">
+          <div class="cursos-wrapper">
+            <div class="student-inscription-data-shell student-inscription-data-shell--compact quiz-inicio__bloque-info">
+              <quiz-info [opciones]="opciones"></quiz-info>
+            </div>
+            <div class="student-inscription-data-shell quiz-inicio__bloque-acciones">
+              <div class="container-fluid quiz-inicio__fluid">
+                <div class="row">
+                  <div class="col-12">
+                    <quiz-search-aprendiz [opciones]="opciones"></quiz-search-aprendiz>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <mat-card class="card">
+                    <quiz-show-aprendiz *ngIf="!isEmpty(aprendiz)" [aprendiz]="aprendiz" [opciones]="opciones" />
 
-          <quiz-search-aprendiz [opciones] = "opciones"></quiz-search-aprendiz>
+                    <quiz-buton-iniciar-evaluacion
+                      [opciones]="opciones"
+                      *ngIf="!isEmpty(aprendiz) && puedePresentarEvaluacion"
+                    ></quiz-buton-iniciar-evaluacion>
 
-          <quiz-show-aprendiz *ngIf="!isEmpty(aprendiz)" [aprendiz]="aprendiz" [opciones] = "opciones" />
-
-          <quiz-buton-iniciar-evaluacion [opciones] = "opciones" *ngIf="!isEmpty(aprendiz) && puedePresentarEvaluacion"></quiz-buton-iniciar-evaluacion>
-
-          <app-boton-salir *ngIf="!isEmpty(aprendiz) && !puedePresentarEvaluacion"></app-boton-salir>
-
-        </mat-card>
+                    <app-boton-salir *ngIf="!isEmpty(aprendiz) && !puedePresentarEvaluacion"></app-boton-salir>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

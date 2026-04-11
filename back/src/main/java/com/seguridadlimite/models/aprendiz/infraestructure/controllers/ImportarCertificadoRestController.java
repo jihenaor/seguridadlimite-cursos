@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.importarCertificados.ImportarCertificado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +14,10 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
-public	 class ImportarCertificadoRestController {
+@RequiredArgsConstructor
+public class ImportarCertificadoRestController {
 
-	@Autowired
-	private ImportarCertificado importarCertificado;
+	private final ImportarCertificado importarCertificado;
 
 
 	@PostMapping("/uploadCertificado")

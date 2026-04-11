@@ -31,7 +31,7 @@ public class DocumentoaprendizServiceImpl {
 	}
 	
 	@Transactional(readOnly = true)
-	public Documentoaprendiz findByIdAprendiz(Long iddocumento, Long idapendiz) {
+	public Documentoaprendiz findByIdAprendiz(Long iddocumento, int idapendiz) {
 		return dao.findByIdDocumentoIdaprendiz(iddocumento, idapendiz);
 	}
 

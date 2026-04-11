@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.informpagospendientes;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.Pagopendienteempresa;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -12,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class GeneratePendingPaymentReport {
-    @Autowired
-    private IAprendizDao dao;
+    private final IAprendizDao dao;
 
     public List<Pagopendienteempresa> find() {
         List<Aprendiz> aprendices = dao.findAprendicesPendientesPago();

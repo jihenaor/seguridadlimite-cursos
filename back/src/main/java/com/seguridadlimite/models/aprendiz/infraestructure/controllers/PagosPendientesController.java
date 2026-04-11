@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.informpagospendientes.GeneratePendingPaymentReport;
 import com.seguridadlimite.models.aprendiz.domain.Pagopendienteempresa;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -15,10 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class PagosPendientesController extends Controller {
 
-	@Autowired
-	private GeneratePendingPaymentReport service;
+	private final GeneratePendingPaymentReport service;
 
 	@GetMapping(path = "/pagopendienteempresa", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.OK)

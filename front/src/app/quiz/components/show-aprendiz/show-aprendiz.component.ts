@@ -4,8 +4,9 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'quiz-show-aprendiz',
+    standalone: true,
     templateUrl: './show-aprendiz.component.html',
-    imports: [NgIf]
+    imports: [NgIf],
 })
 export class ShowAprendizComponent {
   @Input()

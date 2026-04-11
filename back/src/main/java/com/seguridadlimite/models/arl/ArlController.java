@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.arl;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.iservices.IArlService;
 import com.seguridadlimite.models.entity.Arl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ArlController {
 
-	@Autowired
-	private IArlService service;
+	private final IArlService service;
 
 	@GetMapping("/arls")
 	public List<Arl> index() {

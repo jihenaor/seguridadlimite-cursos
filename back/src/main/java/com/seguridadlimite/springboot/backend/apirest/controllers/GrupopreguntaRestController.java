@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class GrupopreguntaRestController {
 
-	@Autowired
-	private IGrupopreguntaService service;
+	private final IGrupopreguntaService service;
 
 	@GetMapping("/grupopreguntas")
 	public List<Grupopregunta> index() {

@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.AprendizServicerImpl;
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
 import com.seguridadlimite.models.documentos.application.DocumentoServiceImpl;
@@ -22,10 +24,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @ResponseBody
+@RequiredArgsConstructor
 public class TrabajadorController extends Controller {
 
-	@Autowired
-	private TrabajadorService service;
+	private final TrabajadorService service;
 
 	@Autowired
 	TrabajadorFindByDocumentoCu trabajadorFindByDocumentoCu;
@@ -34,20 +36,15 @@ public class TrabajadorController extends Controller {
 	TrabajadorfindByNumerodocumentoIdGrupoCu trabajadorfindByNumerodocumentoIdGrupoCu;
 
 
-	@Autowired
-	private TrabajadorSaveCu trabajadorSaveCu;
+	private final TrabajadorSaveCu trabajadorSaveCu;
 	
-	@Autowired
-	private AprendizServicerImpl aprendizService;
+	private final AprendizServicerImpl aprendizService;
 	
-	@Autowired
-	private AprendizServiceImpl aprendiService;
+	private final AprendizServiceImpl aprendiService;
 	
-	@Autowired
-	private DocumentoaprendizServiceImpl documentoAprendizService;
+	private final DocumentoaprendizServiceImpl documentoAprendizService;
 	
-	@Autowired
-	private DocumentoServiceImpl documentoService;
+	private final DocumentoServiceImpl documentoService;
 	
 	@Autowired
 	MailServiceImpl mailService;

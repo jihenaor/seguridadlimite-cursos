@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.entity.FirmaAprendiz;
 import com.seguridadlimite.models.trabajador.application.TrabajadorService;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -15,13 +17,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class FirmaRestController extends Controller {
 
-	@Autowired
-	private TrabajadorService service;
+	private final TrabajadorService service;
 
-	@Autowired
-	private EncodeFileToBase64 encodeFile;
+	private final EncodeFileToBase64 encodeFile;
 
 	@GetMapping(path = "/{idaprendiz}/firma", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.OK)

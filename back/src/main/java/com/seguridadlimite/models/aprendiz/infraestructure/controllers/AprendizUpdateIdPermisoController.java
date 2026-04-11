@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.UpdateIdPermisoAprendizService;
 import com.seguridadlimite.models.entity.RespuestaWs;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AprendizUpdateIdPermisoController {
 
-	@Autowired
-	private UpdateIdPermisoAprendizService service;
+	private final UpdateIdPermisoAprendizService service;
 
 	@PostMapping("/updateIdpermiso")
 	@ResponseStatus(HttpStatus.CREATED)

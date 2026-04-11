@@ -6,18 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
-
-// @Entity — clase sin uso activo; usar models/trabajador/dominio/Trabajador.java
+// @Entity - clase sin uso activo; usar models/trabajador/dominio/Trabajador.java
 @Table(name = "sl_trabajadores")
 public class Trabajadorauth implements Serializable {
-
-  private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
-  
+
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 2)
@@ -46,13 +43,13 @@ public class Trabajadorauth implements Serializable {
   @Size(max = 20)
   @Column(name = "segundoapellido")
   private String segundoapellido;
-  
+
   @Transient
   private String nombrecompleto;
-  
+
   @Transient
   private String base64;
-    
+
   public Trabajadorauth() {
   }
 
@@ -113,11 +110,11 @@ public class Trabajadorauth implements Serializable {
   }
 
   public String getNombrecompleto() {
-    nombrecompleto = primernombre + " " + 
-	    (segundonombre == null ? "" : segundonombre) + " " + 
-	    primerapellido +  " " + 
-	    (segundoapellido == null ? "" : segundoapellido);
-	    
+    nombrecompleto = primernombre + " " +
+        (segundonombre == null ? "" : segundonombre) + " " +
+        primerapellido + " " +
+        (segundoapellido == null ? "" : segundoapellido);
+
     return nombrecompleto;
   }
 

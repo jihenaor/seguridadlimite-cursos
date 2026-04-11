@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -11,16 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class InicializarEvaluacionAprendiz {
 
-    @Autowired
-    private IAprendizDao aprendizDao;
+    private final IAprendizDao aprendizDao;
 
-    @Autowired
-    private FindParametrosById findParametrosById;
+    private final FindParametrosById findParametrosById;
 
-    @Autowired
-    private DeleteEvaluacionService deleteEvaluacionService;
+    private final DeleteEvaluacionService deleteEvaluacionService;
 
     @Transactional
     public void update(String numeroDocumento,

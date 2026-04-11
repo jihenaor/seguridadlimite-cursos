@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import com.seguridadlimite.models.dao.IEnfasisDao;
 import com.seguridadlimite.models.enfasis.domain.Enfasis;
 
 @Service
+@RequiredArgsConstructor
 public class EnfasisServiceImpl {
 
-	@Autowired
-	private IEnfasisDao dao;
+	private final IEnfasisDao dao;
 	
 	@Transactional(readOnly = true)
 	public List<Enfasis> findAll() {

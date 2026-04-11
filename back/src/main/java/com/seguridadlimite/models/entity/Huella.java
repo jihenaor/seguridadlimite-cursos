@@ -1,11 +1,14 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "sl_huellas")
 public class Huella implements Serializable {
@@ -36,28 +39,10 @@ public class Huella implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-	return id;
-  }
 
-  public void setId(Long id) {
-	this.id = id;
-  }
 
-  public Long getIdtrabajador() {
-	return idtrabajador;
-  }
 
-  public void setIdtrabajador(Long idtrabajador) {
-	this.idtrabajador = idtrabajador;
-  }
 
-  public String getHuella() {
-	return huella;
-  }
 
-  public void setHuella(String huella) {
-	this.huella = huella;
-	}
 
 }

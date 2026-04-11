@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AuthRestController {
 
-	@Autowired
-	private AprendizServicerImpl serviceAprendiz;
+	private final AprendizServicerImpl serviceAprendiz;
 
-	@Autowired
-	private PersonalService servicePersonal;
+	private final PersonalService servicePersonal;
 
 	@PostMapping("auth")
 	@ResponseStatus(HttpStatus.CREATED)

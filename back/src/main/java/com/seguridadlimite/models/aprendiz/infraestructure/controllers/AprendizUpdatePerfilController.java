@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.updateAprendiz.UpdateAprendizService;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.entity.RespuestaWs;
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AprendizUpdatePerfilController {
 
-	@Autowired
-	private UpdateAprendizService service;
+	private final UpdateAprendizService service;
 
 	@PostMapping("/updatePerfil")
 	@ResponseStatus(HttpStatus.CREATED)

@@ -25,8 +25,8 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " and u.numero = ?3"
 			+ " order by u.pregunta.orden")
 	List<Evaluacion> findEvaluacionAprendiz(String tipoevaluacion,
-											 Long idaprendiz,
-											 Integer numeroevaluacion);
+											 int idaprendiz,
+											 int numeroevaluacion);
 
 	@Query("select u"
 			+ " from Evaluacion u"
@@ -68,7 +68,7 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " where u.pregunta.grupo.tipoevaluacion = ?1"
 			+ " and u.idaprendiz = ?2"
 			+ " order by u.pregunta.grupo.id, u.pregunta.orden")
-	List<Evaluacion> findEvaluacionPractica(String tipoevaluacion, Long idaprendiz);
+	List<Evaluacion> findEvaluacionPractica(String tipoevaluacion, int idaprendiz);
 
 	@Query("select u"
 			+ " from Evaluacion u"

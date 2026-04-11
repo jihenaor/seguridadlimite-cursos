@@ -17,8 +17,8 @@ public class FindDocumentoaprendizServiceImpl {
 	
 
 	@Transactional(readOnly = true)
-	public List<Documentoaprendiz> findByIdAprendiz(Long idapendiz) {
-		return dao.findByIdaprendiz(idapendiz);
+	public List<Documentoaprendiz> findByIdAprendiz(int idaprendiz) {
+		return dao.findByIdaprendiz(idaprendiz);
 	}
 }
 

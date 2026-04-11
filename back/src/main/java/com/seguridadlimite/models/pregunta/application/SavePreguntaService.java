@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.entity.Respuesta;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.models.pregunta.infraestructure.IPreguntaDao;
@@ -10,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SavePreguntaService {
 
-	@Autowired
-	private IPreguntaDao dao;
+	private final IPreguntaDao dao;
 
 	@Transactional
 	public Pregunta save(Pregunta pregunta) {

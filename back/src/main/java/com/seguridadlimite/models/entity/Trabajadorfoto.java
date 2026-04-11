@@ -3,13 +3,8 @@ package com.seguridadlimite.models.entity;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
-
-// @Entity — tabla "trabajadoresfoto" no existe en BD; clase sin uso activo
 @Table(name = "trabajadoresfoto")
 public class Trabajadorfoto implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)

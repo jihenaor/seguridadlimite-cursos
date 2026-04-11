@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.application.findByNiveltipoevaluacion;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pregunta.infraestructure.IPreguntaDao;
 import com.seguridadlimite.models.pregunta.application.inicializarimagenes.InicializarImagenes;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
@@ -9,13 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BuscarPreguntasNivelTipoEvaluacion {
 
-	@Autowired
-	private IPreguntaDao dao;
+	private final IPreguntaDao dao;
 
-	@Autowired
-	private InicializarImagenes inicializarImagenes;
+	private final InicializarImagenes inicializarImagenes;
 
 	public List<Pregunta> findByNiveltipoevaluacion(Long idnivel, String tipoevaluacion) {
 		List<Pregunta> l = dao.findByNiveltipoevaluacionOrden(idnivel, tipoevaluacion);

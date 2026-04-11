@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +13,10 @@ import com.seguridadlimite.models.dao.ISolicitudDao;
 import com.seguridadlimite.models.entity.Solicitud;
 
 @Service
+@RequiredArgsConstructor
 public class SolicitudServiceImpl{
 
-	@Autowired
-	private ISolicitudDao dao;
+	private final ISolicitudDao dao;
 
 	@Transactional(readOnly = true)
 	public List<Solicitud> findAll(String aucodestad) {

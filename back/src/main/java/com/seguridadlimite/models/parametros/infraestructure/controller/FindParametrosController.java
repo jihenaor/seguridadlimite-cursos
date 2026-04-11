@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.parametros.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.FindParametrosById;
 import com.seguridadlimite.models.parametros.dominio.Parametros;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/parametros")
+@RequiredArgsConstructor
 public class FindParametrosController extends Controller {
 
-	@Autowired
-	private FindParametrosById service;
+	private final FindParametrosById service;
 
 
 	@GetMapping()

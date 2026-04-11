@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.entity.Empresa;
 import com.seguridadlimite.springboot.backend.apirest.services.EmpresaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class EmpresaController {
 
-	@Autowired
-	private EmpresaServiceImpl service;
+	private final EmpresaServiceImpl service;
 
 	@GetMapping("/empresas")
 	public List<Empresa> index() {

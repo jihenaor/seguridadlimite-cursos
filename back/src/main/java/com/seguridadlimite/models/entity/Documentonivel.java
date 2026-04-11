@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import com.seguridadlimite.models.documentos.domain.Documento;
 
 import jakarta.persistence.*;
@@ -7,7 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
-// @Entity — tabla "documentosnivel" no existe en BD; clase sin uso activo
+// @Data
+// @Entity - tabla "documentosnivel" no existe en BD; clase sin uso activo
 @Table(name = "documentosnivel")
 public class Documentonivel implements Serializable {
 
@@ -31,29 +34,11 @@ public class Documentonivel implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public Long getIdnivel() {
-    return idnivel;
-  }
 
-  public void setIdnivel(Long idnivel) {
-    this.idnivel = idnivel;
-  }
 
-  public Documento getDocumento() {
-    return documento;
-  }
 
-  public void setDocumento(Documento documento) {
-    this.documento = documento;
-  }
 
   @Override
   public int hashCode() {

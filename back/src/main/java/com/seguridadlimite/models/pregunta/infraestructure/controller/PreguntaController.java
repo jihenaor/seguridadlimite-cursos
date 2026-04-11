@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pregunta.application.PreguntaServiceImpl;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/pregunta")
+@RequiredArgsConstructor
 public class PreguntaController extends Controller {
 
-	@Autowired
-	private PreguntaServiceImpl service;
+	private final PreguntaServiceImpl service;
 
 
 	@GetMapping("/{id}")

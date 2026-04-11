@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface IDocumentoaprendizDao extends CrudRepository<Documentoaprendiz, Long>{
 	@Query("select u from Documentoaprendiz u where u.iddocumento = ?1 and u.idaprendiz = ?2")
-	Documentoaprendiz findByIdDocumentoIdaprendiz(Long iddocumento, Long idaprendiz);
+	Documentoaprendiz findByIdDocumentoIdaprendiz(Long iddocumento, int idaprendiz);
 
-	List<Documentoaprendiz> findByIdaprendiz(Long idaprendiz);
+	List<Documentoaprendiz> findByIdaprendiz(int idaprendiz);
 }
 

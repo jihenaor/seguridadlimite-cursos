@@ -159,22 +159,6 @@ public class Trabajador implements Serializable {
   }
 
 
-  public String getNombrecompleto() {
-    StringBuilder nombrecompleto = new StringBuilder();
-    if (primernombre != null) {
-      nombrecompleto.append(primernombre);
-    }
-    if (segundonombre != null && !segundonombre.isEmpty()) {
-      nombrecompleto.append(" ").append(segundonombre);
-    }
-    if (primerapellido != null) {
-      nombrecompleto.append(" ").append(primerapellido);
-    }
-    if (segundoapellido != null && !segundoapellido.isEmpty()) {
-      nombrecompleto.append(" ").append(segundoapellido);
-    }
-    return nombrecompleto.toString().trim();
-  }
 
 
   @Override

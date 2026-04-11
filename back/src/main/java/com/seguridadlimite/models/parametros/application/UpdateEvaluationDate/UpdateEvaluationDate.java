@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.parametros.application.UpdateEvaluationDate;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.parametros.dominio.Parametros;
 import com.seguridadlimite.models.parametros.infraestructure.IParametrosDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class UpdateEvaluationDate {
 
-	@Autowired
-	private IParametrosDao dao;
+	private final IParametrosDao dao;
 
 	@Transactional
 	public Parametros update() {

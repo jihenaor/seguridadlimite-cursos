@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,10 @@ import com.seguridadlimite.models.programa.infraestructure.IProgramaDao;
 import com.seguridadlimite.models.programa.model.Programa;
 
 @Service
+@RequiredArgsConstructor
 public class ProgramaServiceImpl implements IProgramaService{
 
-	@Autowired
-	private IProgramaDao dao;
+	private final IProgramaDao dao;
 	
 	@Override
 	@Transactional(readOnly = true)

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.arl;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.iservices.IArlService;
 import com.seguridadlimite.models.dao.IArlDao;
 import com.seguridadlimite.models.entity.Arl;
@@ -10,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ArlServiceImpl implements IArlService {
 
-    @Autowired
-    private IArlDao dao;
+    private final IArlDao dao;
 
     @Override
     @Transactional(readOnly = true)

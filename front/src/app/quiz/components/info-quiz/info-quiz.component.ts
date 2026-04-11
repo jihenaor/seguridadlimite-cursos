@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'quiz-info',
+    standalone: true,
     templateUrl: './info-quiz.component.html',
-    imports: [NgFor]
+    imports: [NgFor],
 })
-export class InfoQuizComponent {
+export class InfoQuizComponent implements OnInit {
   @Input()
   opciones: Record<string, boolean> = {};
 

@@ -1,0 +1,101 @@
+// Tablas de datos reutilizables (admin y otras pantallas).
+// Uso en el componente:
+//   @use '../../shared/styles/data-table' as sst;
+//   :host { @include sst.host-data-table-page; }   // opcional
+// En la plantilla: contenedor .sst-data-table, tabla .sst-data-table__grid, filas .sst-data-table__row
+
+@mixin host-data-table-page {
+  display: block;
+}
+
+.sst-data-table {
+  --sst-table-radius: 10px;
+  --sst-table-border: 1px solid #e2e8f0;
+  --sst-table-head-bg: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  --sst-table-head-fg: #334155;
+  --sst-table-row-hover-bg: #eff6ff;
+  --sst-table-row-hover-border: #bfdbfe;
+  --sst-table-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.sst-data-table__scroll {
+  overflow-x: auto;
+  border-radius: var(--sst-table-radius);
+  border: var(--sst-table-border);
+  box-shadow: var(--sst-table-shadow);
+  background: #fff;
+}
+
+table.sst-data-table__grid {
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+}
+
+.sst-data-table__grid thead th {
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--sst-table-head-fg) !important;
+  background: var(--sst-table-head-bg) !important;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+}
+
+.sst-data-table__grid thead th:first-child {
+  border-top-left-radius: var(--sst-table-radius);
+}
+
+.sst-data-table__grid thead th:last-child {
+  border-top-right-radius: var(--sst-table-radius);
+}
+
+.sst-data-table__grid .sst-data-table__th--actions {
+  text-align: right;
+  width: 1%;
+}
+
+.sst-data-table__row td {
+  padding: 0.65rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.sst-data-table__row:last-child td {
+  border-bottom: none;
+}
+
+// Hover en filas (prioridad sobre reglas globales de styles.scss)
+.sst-data-table__row.sst-data-table__row--hoverable:hover td,
+.sst-data-table__row.sst-data-table__row--hoverable:focus-within td {
+  background-color: var(--sst-table-row-hover-bg) !important;
+  box-shadow: inset 0 0 0 1px var(--sst-table-row-hover-border);
+}
+
+.sst-data-table__cell--actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sst-data-table__cell--muted {
+  color: #64748b !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.sst-data-table__cell--strong {
+  font-weight: 500;
+  color: #0f172a !important;
+}
+
+.sst-data-table__hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+}

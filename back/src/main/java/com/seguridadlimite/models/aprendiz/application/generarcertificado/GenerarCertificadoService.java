@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.generarcertificado;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.inscribiraprendiz.CertificadoInfo;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
@@ -16,10 +18,10 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class GenerarCertificadoService {
 
-	@Autowired
-	private IAprendizDao dao;
+	private final IAprendizDao dao;
 
 	public ReportePojo generar(Long idaprendiz) throws FileNotFoundException, JRException, BusinessException {
 		Aprendiz aprendiz = dao.findById(AprendizId.toInteger(idaprendiz)).orElseThrow();

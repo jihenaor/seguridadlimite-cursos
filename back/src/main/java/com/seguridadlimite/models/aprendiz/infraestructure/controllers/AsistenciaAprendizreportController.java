@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.generarformatoasistencia.FormatoasistenciaAprendizService;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -14,10 +16,10 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AsistenciaAprendizreportController {
 
-	@Autowired
-	private FormatoasistenciaAprendizService formatoasistenciaAprendizService;
+	private final FormatoasistenciaAprendizService formatoasistenciaAprendizService;
 
 
 	@GetMapping("/{idaprendiz}/asistenciaaprendizreport")

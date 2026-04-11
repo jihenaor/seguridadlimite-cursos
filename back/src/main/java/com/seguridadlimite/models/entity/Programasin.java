@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 import jakarta.persistence.*;
@@ -7,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
+@Data
 @Entity
 @Table(name="sl_programas")
 public class Programasin implements Serializable {
@@ -29,19 +32,7 @@ public class Programasin implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public String getNombre() {
-    return nombre;
-  }
 
-  public void setNombre(final String nombre) {
-    this.nombre = nombre;
-  }
 }

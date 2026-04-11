@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 
-// @Entity — tabla "planestudio" no existe en BD; clase sin uso activo
+// @Entity - tabla "planestudio" no existe en BD; clase sin uso activo
 @Table(name = "planestudio")
 public class Planestudio implements Serializable {
 

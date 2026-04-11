@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +22,10 @@ import com.seguridadlimite.springboot.backend.apirest.services.SolicitudServiceI
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class SolicitudRestController extends Controller {
 
-	@Autowired
-	private SolicitudServiceImpl service;
+	private final SolicitudServiceImpl service;
 	
 
 	@Autowired

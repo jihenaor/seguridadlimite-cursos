@@ -6,32 +6,77 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Nombre del formulario</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of grupopreguntaService.grupopreguntas" (contextmenu)="onContextMenu($event, row)">
-                  <td>{{ row.id }}</td>
-                  <td>{{ row.nombre }}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="sst-data-table">
+            <div class="all-grupopregunta__toolbar">
+              <p class="all-grupopregunta__toolbar-title">Formularios registrados</p>
+            </div>
 
-            <div style="visibility: hidden; position: fixed"
-                [style.left]="contextMenuPosition.x"
-                [style.top]="contextMenuPosition.y"
-                [matMenuTriggerFor]="contextMenu">
-              </div>
+            <div class="sst-data-table__scroll">
+              <table class="sst-data-table__grid">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre del formulario</th>
+                    <th scope="col" class="sst-data-table__th--actions">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (grupopreguntaService.grupopreguntas === null) {
+                    <tr>
+                      <td colspan="3" class="sst-data-table__cell--muted">Cargando…</td>
+                    </tr>
+                  } @else {
+                    @for (row of grupopreguntaService.grupopreguntas; track row.id) {
+                      <tr
+                        class="sst-data-table__row sst-data-table__row--hoverable"
+                        (contextmenu)="onContextMenu($event, row)"
+                      >
+                        <td class="sst-data-table__cell--muted">{{ row.id }}</td>
+                        <td class="sst-data-table__cell--strong">{{ row.nombre }}</td>
+                        <td class="sst-data-table__cell--actions">
+                          <button
+                            type="button"
+                            mat-flat-button
+                            color="primary"
+                            (click)="loadPreguntas(row); $event.stopPropagation()"
+                          >
+                            <mat-icon>quiz</mat-icon>
+                            Ver preguntas
+                          </button>
+                          <button
+                            type="button"
+                            mat-icon-button
+                            class="all-grupopregunta__menu-btn"
+                            matTooltip="Más opciones (o clic derecho en la fila)"
+                            (click)="onRowMenuButton($event, row)"
+                            aria-label="Más opciones"
+                          >
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    } @empty {
+                      <tr>
+                        <td colspan="3" class="sst-data-table__cell--muted">No hay formularios para mostrar.</td>
+                      </tr>
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <span class="sst-data-table__hint">Tip: también puedes usar el menú contextual con clic derecho sobre una fila.</span>
+
+            <div
+              style="visibility: hidden; position: fixed"
+              [style.left]="contextMenuPosition.x"
+              [style.top]="contextMenuPosition.y"
+              [matMenuTriggerFor]="contextMenu"
+            ></div>
 
             <mat-menu #contextMenu="matMenu">
               <ng-template matMenuContent let-item="item">
-
-                <button mat-menu-item (click)="loadPreguntas(item)">
+                <button mat-menu-item type="button" (click)="loadPreguntas(item)">
                   <mat-icon>text_format</mat-icon>
                   <span>Preguntas</span>
                 </button>

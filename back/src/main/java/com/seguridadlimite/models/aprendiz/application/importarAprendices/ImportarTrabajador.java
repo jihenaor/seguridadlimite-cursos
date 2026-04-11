@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.RequiredArgsConstructor;
+
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.seguridadlimite.models.asistencia.application.RegisterAsistenciaAprendizService;
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.DocumentoaprendizServiceImpl;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ImportarTrabajador {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -44,26 +47,19 @@ public class ImportarTrabajador {
     }
 
 
-    @Autowired
-    private TrabajadorService trabajadorService;
+    private final TrabajadorService trabajadorService;
 
-    @Autowired
-    private TrabajadorSaveCu trabajadorSaveCu;
+    private final TrabajadorSaveCu trabajadorSaveCu;
 
-    @Autowired
-    private AprendizServiceImpl aprendizService;
+    private final AprendizServiceImpl aprendizService;
 
-    @Autowired
-    private DocumentoaprendizServiceImpl documentoaprendizService;
+    private final DocumentoaprendizServiceImpl documentoaprendizService;
 
-    @Autowired
-    private RegisterAsistenciaAprendizService asistenciaService;
+    private final RegisterAsistenciaAprendizService asistenciaService;
 
-    @Autowired
-    private EvaluacionServiceImpl evaluacionService;
+    private final EvaluacionServiceImpl evaluacionService;
 
-    @Autowired
-    private TrabajadorFindByDocumentoCu trabajadorFindByDocumento;
+    private final TrabajadorFindByDocumentoCu trabajadorFindByDocumento;
 
     public void index(String content) throws BusinessException, ParseException {
         int fila = 0;

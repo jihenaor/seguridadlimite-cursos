@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.findByFiltro.AprendizFindByFilter;
 import com.seguridadlimite.models.aprendiz.domain.AprendizEvaluacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/aprendiz/")
+@RequiredArgsConstructor
 public class AprendizPorFiltroController {
 
-	@Autowired
-	private AprendizFindByFilter service;
+	private final AprendizFindByFilter service;
 
 	@GetMapping("/{filtro}/filtro")
 	@ResponseStatus(HttpStatus.OK)

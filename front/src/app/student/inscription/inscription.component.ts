@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SaveTrabajadorAprendizService } from './../../core/service/savetrabajadoraprendiz.service';
@@ -38,6 +38,7 @@ import { NivelsService } from '../../core/service/nivels.service';
 import { Nivel } from '../../core/models/nivel.model';
 import { Aprendiz } from '../../core/models/aprendiz.model';
 import { Trabajador } from '../../core/models/trabajador.model';
+import { nombreCompletoDesdeTrabajador } from '../../core/utils/nombre-trabajador';
 import { InscripcionesAbiertasComponent } from '../../shared/components/inscripciones-abiertas/inscripciones-abiertas.component';
 import { InscripcionesAbiertasService } from '../../core/service/inscripciones-abiertas.service';
 import { EnfasisService } from '../../admin/enfasis/enfasis.service';
@@ -54,7 +55,6 @@ import { MediaService } from '../../core/service/media.service';
         FormSearchComponent,
         NgIf,
         MatButtonModule,
-        RouterLink,
         MatIconModule,
         FormsModule,
         ReactiveFormsModule,
@@ -326,7 +326,8 @@ export class InscriptionComponent implements OnInit {
 //    this.mostrarListadoHorarios = false;
     this.mostrarlistadocursos = false;
 
-    sessionStorage.removeItem("numerodocumento")      
+    sessionStorage.removeItem("numerodocumento");
+    sessionStorage.removeItem("nombreaprendiz");
   }
 
   crearFormGroup(trabajador: Trabajador, numerodocumento: string) {
@@ -539,6 +540,7 @@ export class InscriptionComponent implements OnInit {
   async validarTrabajador(trabajador: Trabajador) {
     this.trabajador = trabajador;
     sessionStorage.setItem('idtrabajador', this.trabajador.id + '');
+    sessionStorage.setItem('nombreaprendiz', nombreCompletoDesdeTrabajador(trabajador));
     this.persistFotoPageContext(this.trabajador);
     const numerodocumento = trabajador.numerodocumento;
 //    const tipodocumento = this.firstFormGroup.get('tipodocumento').value;
@@ -572,6 +574,31 @@ export class InscriptionComponent implements OnInit {
     this.mostrarformulario = trabajador.existeinscripcionabierta;
 
     this.resetCacheFotoTrabajador();
+  }
+
+  /** Sincroniza documento, id de aprendiz y nombre en sessionStorage antes del quiz. */
+  private sincronizarSesionQuizDesdeTrabajador(): void {
+    if (!this.trabajador) {
+      return;
+    }
+    const doc = this.trabajador.numerodocumento?.trim();
+    if (doc) {
+      sessionStorage.setItem('numerodocumento', doc);
+    }
+    if (this.trabajador.idaprendiz != null) {
+      sessionStorage.setItem('idaprendiz', String(this.trabajador.idaprendiz));
+    }
+    sessionStorage.setItem('nombreaprendiz', nombreCompletoDesdeTrabajador(this.trabajador));
+  }
+
+  navegarQuizTeorico(): void {
+    this.sincronizarSesionQuizDesdeTrabajador();
+    void this.router.navigate(['/quiz/inicio-teorico']);
+  }
+
+  navegarQuizSatisfaccionCliente(): void {
+    this.sincronizarSesionQuizDesdeTrabajador();
+    void this.router.navigate(['/quiz/inicio-satisfaccion-cliente']);
   }
 
   get numerodocumentoField() {
@@ -970,7 +997,10 @@ export class InscriptionComponent implements OnInit {
 
           sessionStorage.setItem("idaprendiz", resp.id + '')
           sessionStorage.setItem("numerodocumento", resp.trabajador.numerodocumento)
-          sessionStorage.setItem("nombreaprendiz", "")
+          sessionStorage.setItem(
+            "nombreaprendiz",
+            nombreCompletoDesdeTrabajador(resp.trabajador),
+          )
 
           if (resp.trabajador) {
             const t = { ...resp.trabajador } as Trabajador;

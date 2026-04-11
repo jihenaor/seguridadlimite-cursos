@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.UpdateDocumentoTrabajadorService;
 import com.seguridadlimite.models.entity.Trabajadordocumento;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -13,10 +15,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api")
 @ResponseBody
+@RequiredArgsConstructor
 public class SaveDocumentoTrabajadorController extends Controller {
 
-	@Autowired
-	private UpdateDocumentoTrabajadorService service;
+	private final UpdateDocumentoTrabajadorService service;
 
 	@PostMapping("/saveDocumentotrabajador")
 	@ResponseStatus(HttpStatus.CREATED)

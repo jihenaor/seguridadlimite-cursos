@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.registrarpagopendiente.RegistrarPagoPendienteService;
 import com.seguridadlimite.models.aprendiz.domain.Pagopendienteempresa;
 import com.seguridadlimite.models.entity.RespuestaWs;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class RegistrarPagosPendientesController extends Controller {
 
-	@Autowired
-	private RegistrarPagoPendienteService service;
+	private final RegistrarPagoPendienteService service;
 
 	@PostMapping(path = "/registrarpagopendienteempresa")
 	@ResponseStatus(HttpStatus.OK)

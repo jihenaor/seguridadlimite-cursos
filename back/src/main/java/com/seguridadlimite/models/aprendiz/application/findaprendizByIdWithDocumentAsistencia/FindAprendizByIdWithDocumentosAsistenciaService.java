@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.findaprendizByIdWithDocumentAsistencia;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -26,35 +28,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FindAprendizByIdWithDocumentosAsistenciaService {
 
-	@Autowired
-	private GetPathFiles getPathFiles;
+	private final GetPathFiles getPathFiles;
 
 
-	@Autowired
-	private IAprendizDao aprendizDao;
+	private final IAprendizDao aprendizDao;
 
-	@Autowired
-	private DocumentoServiceImpl documentoService;
+	private final DocumentoServiceImpl documentoService;
 
-	@Autowired
-	private DocumentoaprendizServiceImpl documentoAprendizService;
+	private final DocumentoaprendizServiceImpl documentoAprendizService;
 
-	@Autowired
-	private FindAsistenciaAprendizCu asistenciaAprendiz;
+	private final FindAsistenciaAprendizCu asistenciaAprendiz;
 
-	@Autowired
-	private EncodeFotoTrabajadorService encodeFotoTrabajadorService;
+	private final EncodeFotoTrabajadorService encodeFotoTrabajadorService;
 
-	@Autowired
-	private BuscarDocumentoTrabajadorService buscarDocumentoTrabajadorService;
+	private final BuscarDocumentoTrabajadorService buscarDocumentoTrabajadorService;
 
 	@Autowired
 	EncodeFileToBase64 encodeFile;
 
-	@Autowired
-	private PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
+	private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
 
 	public FindAprendizByIdWithDocumentosAsistenciaService(IAprendizDao aprendizDao) {
         this.aprendizDao = aprendizDao;

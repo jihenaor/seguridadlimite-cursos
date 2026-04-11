@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.generarcertificado.GenerarCertificadoService;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -14,10 +16,10 @@ import java.io.FileNotFoundException;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CertificadoQueryController {
 
-	@Autowired
-	private GenerarCertificadoService generarCertificadoService;
+	private final GenerarCertificadoService generarCertificadoService;
 
 	@GetMapping("/certificado/{idaprendiz}")
 	public ReportePojo certificadoReport(@PathVariable Long idaprendiz) throws JRException, FileNotFoundException, BusinessException {

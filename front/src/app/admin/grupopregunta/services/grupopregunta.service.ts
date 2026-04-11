@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class GrupopreguntaService {
   public dataReadySubject: Subject<boolean> = new Subject<boolean>();
 
-  private _grupopreguntas: Grupopregunta[] | null;
+  private _grupopreguntas: Grupopregunta[] | null = null;
 
   constructor(private http: HttpClient) {}
 

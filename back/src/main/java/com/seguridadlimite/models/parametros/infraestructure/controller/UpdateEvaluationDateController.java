@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.parametros.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.ActualizarFechaLimiteEvaluacion;
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.UpdateEvaluationDate;
 import com.seguridadlimite.models.parametros.dominio.Parametros;
@@ -19,14 +21,13 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/parametros")
+@RequiredArgsConstructor
 public class UpdateEvaluationDateController extends Controller {
 
-	@Autowired
-	private UpdateEvaluationDate service;
+	private final UpdateEvaluationDate service;
 
 
-	@Autowired
-	private ActualizarFechaLimiteEvaluacion actualizarFechaLimiteEvaluacion;
+	private final ActualizarFechaLimiteEvaluacion actualizarFechaLimiteEvaluacion;
 
 
 	@PostMapping(path = "/updateEvaluationDate", produces = {MediaType.APPLICATION_JSON_VALUE})

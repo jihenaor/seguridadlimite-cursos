@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz.InicializarEvaluacionAprendiz;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class AprendizIniciarEvaluacionController extends Controller {
 
-	@Autowired
-	private InicializarEvaluacionAprendiz service;
+	private final InicializarEvaluacionAprendiz service;
 
 	@PutMapping(path = "/{numerodocumento}/{tipoevaluacion}/inicializar", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.OK)

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pojo.RespuestaEncuestaSatisfaccion;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.models.quiz.application.ConsultarEncuestaSatisfaccionClienteService;
@@ -16,14 +18,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evaluacion")
+@RequiredArgsConstructor
 public class ConsultarEncuestaSatisfaccionClienteController {
 
-	@Autowired
-	private ConsultarEncuestaSatisfaccionClienteService service;
+	private final ConsultarEncuestaSatisfaccionClienteService service;
 
 	@GetMapping("/{idaprendiz}/satisfaccioncliente")
 	public ResponseEntity<RespuestaEncuestaSatisfaccion> consultarevaluacionteorica(
-			@PathVariable Long idaprendiz) throws BusinessException {
+			@PathVariable int idaprendiz) throws BusinessException {
 
 		RespuestaEncuestaSatisfaccion respuestaEncuestaSatisfaccion = service.findPreguntasAprendiz(
 					idaprendiz);

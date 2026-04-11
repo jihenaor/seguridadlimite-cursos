@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.informeAprendicesInscritosFecha.InformeAprendicesInscritosEntreFecha;
 import com.seguridadlimite.models.aprendiz.application.informeAprendicesInscritosFecha.RegistroInformeInscritosDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class InformeAprendicesInscritosEntreFechasController {
 
-	@Autowired
-	private InformeAprendicesInscritosEntreFecha informeAprendicesInscritosEntreFecha;
+	private final InformeAprendicesInscritosEntreFecha informeAprendicesInscritosEntreFecha;
 
 	@GetMapping("/informeaprendicesinscritos/{fechaInicial}/{fechaFinal}/{origen}")
 	public List<RegistroInformeInscritosDto> asistenciareport(

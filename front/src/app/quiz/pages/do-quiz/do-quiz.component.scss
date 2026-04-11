@@ -1,25 +1,56 @@
+@use '../../../shared/styles/student-inscription';
+
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 
-@media (max-width: 599px) {
-  .custom-card {
-    width: 100%;
+/* Márgenes/padding como inscripción e inicio-quiz (encapsulado en este componente). */
+.quiz-do__page {
+  padding-top: 0;
+  padding-bottom: 0.5rem;
+}
+
+.cursos-wrapper {
+  width: 100%;
+  max-width: min(960px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 576px) {
+  .cursos-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
-@media (min-width: 600px) and (max-width: 959px) {
-  .custom-card {
-    width: 80%;
-  }
+.quiz-do__shell {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-@media (min-width: 960px) {
-  .custom-card {
-    width: 70%;
-  }
+.quiz-do__toolbar {
+  background: transparent;
+}
+
+.quiz-do__btn-regresar mat-icon {
+  margin-right: 0.25rem;
+  vertical-align: middle;
+  font-size: 1.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* La tarjeta ocupa el ancho útil dentro del shell (antes el :host centraba un 70–80%). */
+.custom-card {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 

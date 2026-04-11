@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.dao.IEmpresaDao;
 import com.seguridadlimite.models.entity.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmpresaServiceImpl {
 
-	@Autowired
-	private IEmpresaDao dao;
+	private final IEmpresaDao dao;
 	
 	@Transactional(readOnly = true)
 	public List<Empresa> findAll() {

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.generarformatoasistencia.FormatoasistenciaService;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -13,10 +15,10 @@ import java.io.FileNotFoundException;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AsistenciainscritosreportController {
 
-	@Autowired
-	private FormatoasistenciaService formatoasistenciaService;
+	private final FormatoasistenciaService formatoasistenciaService;
 
 	@GetMapping("/asistenciainscritosreport")
 	public ReportePojo asistenciareport() throws JRException, FileNotFoundException, BusinessException {

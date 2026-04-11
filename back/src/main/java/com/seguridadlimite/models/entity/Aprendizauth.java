@@ -1,9 +1,12 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import jakarta.persistence.*;
 import java.io.Serializable;
 
-// @Entity — tabla "aprendices" no existe; clase sin uso activo
+// @Data
+// @Entity - tabla "aprendices" no existe; clase sin uso activo
 @Table(name = "sl_aprendices")
 public class
 Aprendizauth implements Serializable {
@@ -24,20 +27,8 @@ Aprendizauth implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public Trabajadorauth getTrabajador() {
-    return this.trabajador;
-  }  
 
-  public void setIdtrabajador(Trabajadorauth trabajador) {
-    this.trabajador = trabajador;
-  }
 
 }

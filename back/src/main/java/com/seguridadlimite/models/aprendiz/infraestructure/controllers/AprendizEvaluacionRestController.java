@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.FindByNumerodocumentoEvaluacion;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class AprendizEvaluacionRestController extends Controller {
 
-	@Autowired
-	private FindByNumerodocumentoEvaluacion service;
+	private final FindByNumerodocumentoEvaluacion service;
 
 	@Autowired
 	MailServiceImpl mailService;

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Aprendiz } from 'src/app/core/models/aprendiz.model';
+import { nombreCompletoDesdeTrabajador } from 'src/app/core/utils/nombre-trabajador';
 
 @Injectable({
   providedIn: 'root',
@@ -35,11 +36,10 @@ export class AprendizEvaluacionService {
         } else {
           sessionStorage.setItem('idaprendiz', this.aprendiz.id + '');
           sessionStorage.setItem('numerodocumento', numerodocumento);
-          sessionStorage.setItem('nombreaprendiz',
-            this.aprendiz.trabajador.primernombre + ' ' +
-            this.aprendiz.trabajador.segundonombre + ' ' +
-            this.aprendiz.trabajador.primerapellido + ' ' +
-            this.aprendiz.trabajador.segundoapellido);
+          sessionStorage.setItem(
+            'nombreaprendiz',
+            nombreCompletoDesdeTrabajador(this.aprendiz.trabajador),
+          );
         }
       });
   }

@@ -1,5 +1,7 @@
 package com.seguridadlimite;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		"com.seguridadlimite.security"
 		})
 @EnableJpaRepositories
+@RequiredArgsConstructor
 public class ApirestApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -36,8 +39,7 @@ public class ApirestApplication extends SpringBootServletInitializer {
 	}
 
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	@Bean
 	public CommandLineRunner createPasswordsCommand(){

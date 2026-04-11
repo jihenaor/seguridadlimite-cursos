@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.entity.Empresa;
 import com.seguridadlimite.models.personal.application.PersonalService;
 import com.seguridadlimite.models.personal.dominio.Personal;
@@ -23,24 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AuthController {
-	@Autowired
-	private PersonalService personalService;
+	private final PersonalService personalService;
 	
-	@Autowired
-	private EmpresaServiceImpl empresaService;
+	private final EmpresaServiceImpl empresaService;
 	
-	@Autowired
-	private TrabajadorService trabajadorService;
+	private final TrabajadorService trabajadorService;
 
-	@Autowired
-	private TrabajadorFindByDocumentoCu trabajadorFindByDocumentoCu;
+	private final TrabajadorFindByDocumentoCu trabajadorFindByDocumentoCu;
 
 	@Autowired
 	MailServiceImpl mailService;
 
-	@Autowired
-	private JwtService jwtService;
+	private final JwtService jwtService;
 
 
     @PostMapping("/authenticate")

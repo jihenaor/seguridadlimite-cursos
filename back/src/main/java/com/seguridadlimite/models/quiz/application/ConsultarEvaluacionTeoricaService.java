@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
 import com.seguridadlimite.models.pregunta.infraestructure.IPreguntaDao;
 import com.seguridadlimite.models.pregunta.application.inicializarimagenes.InicializarImagenes;
@@ -20,24 +22,21 @@ import java.util.*;
 import static com.seguridadlimite.models.pregunta.domain.TipoevaluacionEnum.INGRESO;
 
 @Service
+@RequiredArgsConstructor
 public class ConsultarEvaluacionTeoricaService {
 
-	@Autowired
-	private IEvaluacionDao dao;
+	private final IEvaluacionDao dao;
 
-	@Autowired
-	private IPreguntaDao preguntaDao;
+	private final IPreguntaDao preguntaDao;
 
-	@Autowired
-	private IAprendizDao aprendizDao;
+	private final IAprendizDao aprendizDao;
 
-	@Autowired
-	private InicializarImagenes inicializarImagenes;
+	private final InicializarImagenes inicializarImagenes;
 
 
-	public List<Pregunta> findPreguntasAprendiz(Long idaprendiz,
+	public List<Pregunta> findPreguntasAprendiz(int idaprendiz,
 												String tipoevaluacion) throws BusinessException {
-		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz))
+		Aprendiz aprendiz = aprendizDao.findById(idaprendiz)
 				.orElseThrow(() -> new NoSuchElementException("No se encontró el aprendiz con el ID proporcionado"));
 
 		int numeroevaluacion = 0;
@@ -48,24 +47,24 @@ public class ConsultarEvaluacionTeoricaService {
 
         List<Pregunta> preguntas = consultarPreguntas(idaprendiz,
 					numeroevaluacion,
-					aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue(),
-					aprendiz.getIdenfasis() == null ? null : aprendiz.getIdenfasis().longValue(),
+					aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel(),
+					aprendiz.getIdenfasis() == null ? null : aprendiz.getIdenfasis(),
 					tipoevaluacion,
                     aprendiz.getSabeleerescribir() == null ? "S" : aprendiz.getSabeleerescribir());
 
 		if (TipoevaluacionEnum.TEORICO.getEquivalente().equals(tipoevaluacion)) {
 			if (!existeTipoEvaluacionE(preguntas)) {
-				throw new BusinessException("No existe una pregunta de tipo énfasis en la lista de preguntas para el sector laboral (nivel): " + aprendiz.getEnfasis().getNombre());
+				throw new BusinessException("No existe una pregunta Teorica para el nivel: " + aprendiz.getNivel().getNombre() + " y enfasis: " + aprendiz.getEnfasis().getNombre());
 			}
 		}
 		return preguntas;
 	}
 
 	private List<Pregunta> consultarPreguntas(
-			Long idaprendiz,
-		 	Integer numeroevaluacion,
-			Long idnivel,
-			Long idenfasis,
+			int idaprendiz,
+		 	int numeroevaluacion,
+			int idnivel,
+			int idenfasis,
 			String tipoevaluacion,
             String sabeleerescribir) throws BusinessException {
 		List<Pregunta> preguntas;
@@ -130,8 +129,8 @@ public class ConsultarEvaluacionTeoricaService {
 	}
 
 	@Transactional
-	private List<Evaluacion> getEvaluacions(Long idaprendiz,
-											Integer numeroevaluacion,
+	private List<Evaluacion> getEvaluacions(int idaprendiz,
+											int numeroevaluacion,
 											List<Pregunta> preguntas,
 											String tipoevaluacion) {
 		List<Evaluacion> l = null;
@@ -155,7 +154,7 @@ public class ConsultarEvaluacionTeoricaService {
 		return l;
 	}
 
-	private static Evaluacion getEvaluacion(Long idaprendiz, Integer numeroevaluacion, Pregunta pregunta) {
+	private static Evaluacion getEvaluacion(int idaprendiz, int numeroevaluacion, Pregunta pregunta) {
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdaprendiz(idaprendiz);
 		evaluacion.setIdpregunta(pregunta.getId());

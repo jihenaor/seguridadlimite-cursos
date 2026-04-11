@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.AprendizServicerImpl;
 import com.seguridadlimite.models.aprendiz.application.generarFormatoInscripcion.GenerarFormatoInscripcionService;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
@@ -21,19 +23,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AprendizController {
 
-	@Autowired
-	private AprendizServicerImpl servicer;
+	private final AprendizServicerImpl servicer;
 	
-	@Autowired
-	private RegisterAsistenciaAprendizService asistenciaService;
+	private final RegisterAsistenciaAprendizService asistenciaService;
 
-	@Autowired
-	private AprendizServiceImpl service;
+	private final AprendizServiceImpl service;
 
-	@Autowired
-	private GenerarFormatoInscripcionService generarFormatoInscripcionService;
+	private final GenerarFormatoInscripcionService generarFormatoInscripcionService;
 	
 	@Autowired
 	MailServiceImpl mailService;

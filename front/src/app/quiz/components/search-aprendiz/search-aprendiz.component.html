@@ -1,27 +1,21 @@
-<div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-  <div class="flex flex-col items-center justify-center">
-    <div class="w-full max-w-lg">
-      <div class="w-full">
-        <mat-form-field class="w-full" appearance="fill">
-          <mat-label>Número de documento *</mat-label>
-          <input
-            matInput
-            #txtTagInput
-            autofocus
-            maxlength="20"
-            (keyup.enter)="search()">
-        </mat-form-field>
-      </div>
+<div class="quiz-search-identidad">
+  @if (nombreSesion || documentoSesion) {
+    <div
+      class="quiz-search-identidad__banner px-3 py-2 rounded-md border border-blue-200 bg-blue-50 text-sm text-slate-800"
+      role="status"
+    >
+      <span class="text-slate-600">Aprendiz:</span>
+      @if (nombreSesion) {
+        <span class="font-semibold text-slate-900 ms-1">{{ nombreSesion }}</span>
+      }
+      @if (documentoSesion) {
+        <span class="text-slate-600">
+          @if (nombreSesion) {
+            <span> · </span>
+          }
+          Documento: <span class="font-medium text-slate-900">{{ documentoSesion }}</span>
+        </span>
+      }
     </div>
-    <div class="mt-2">
-      <div class="text-center">
-        <button mat-raised-button
-          class="bg-white hover:bg-blue-700 text-black px-6 py-2 rounded-md shadow-md"
-          color="primary"
-          (click)="goBack()">Regresar</button>
-      </div>
-    </div>
-  </div>
+  }
 </div>
-
-

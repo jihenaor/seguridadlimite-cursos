@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.personal.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.personal.dominio.Personal;
 import com.seguridadlimite.models.personal.infraestructure.PersonalRepository;
 import net.sf.jasperreports.engine.*;
@@ -17,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class PersonalService {
 
-	@Autowired
-	private PersonalRepository dao;
+	private final PersonalRepository dao;
 	
 	@Transactional(readOnly = true)
 	public List<Personal> findAll() {

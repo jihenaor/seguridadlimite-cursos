@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.application.findByGrupo;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pregunta.infraestructure.IPreguntaDao;
 import com.seguridadlimite.models.pregunta.application.inicializarimagenes.InicializarImagenes;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
@@ -9,13 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BuscarPreguntasGrupoService {
 
-	@Autowired
-	private IPreguntaDao dao;
+	private final IPreguntaDao dao;
 
-	@Autowired
-	private InicializarImagenes inicializarImagenes;
+	private final InicializarImagenes inicializarImagenes;
 
 	public List<Pregunta> find(Long idgrupo) {
 		List<Pregunta> l = dao.findByIdgrupo(idgrupo);

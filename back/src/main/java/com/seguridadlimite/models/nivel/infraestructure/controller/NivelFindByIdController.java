@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.nivel.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.nivel.domain.Nivel;
 import com.seguridadlimite.models.nivel.application.FindNivelByIdService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ap/nivel")
+@RequiredArgsConstructor
 public class NivelFindByIdController {
 
-	@Autowired
-	private FindNivelByIdService findNivelByIdService;
+	private final FindNivelByIdService findNivelByIdService;
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)

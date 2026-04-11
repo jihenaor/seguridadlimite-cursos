@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.parametros.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.ActualizarFechaLimiteEncuesta;
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.UpdateEncuestaDate;
 import com.seguridadlimite.models.parametros.dominio.Parametros;
@@ -16,13 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/parametros")
+@RequiredArgsConstructor
 public class UpdateEncuestaDateController extends Controller {
 
-	@Autowired
-	private UpdateEncuestaDate service;
+	private final UpdateEncuestaDate service;
 
-	@Autowired
-	private ActualizarFechaLimiteEncuesta actualizarFechaLimiteEncuesta;
+	private final ActualizarFechaLimiteEncuesta actualizarFechaLimiteEncuesta;
 
 	@PostMapping(path = "/updateEncuestaDate", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.OK)

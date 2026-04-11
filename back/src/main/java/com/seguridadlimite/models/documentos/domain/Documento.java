@@ -1,11 +1,14 @@
 package com.seguridadlimite.models.documentos.domain;
 
+import lombok.Data;
+
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
+@Data
 @Entity
 @Table(name = "sl_documentos")
 
@@ -34,7 +37,7 @@ public class Documento implements Serializable {
   private String ext;
   
   @Transient
-  private Long idaprendiz;
+  private int idaprendiz;
   
   @Transient
   private Long iddocumentoaprendiz;
@@ -45,72 +48,24 @@ public class Documento implements Serializable {
   public Documento() {
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public String getNombre() {
-    return nombre;
-  }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
 
-  public String getTipo() {
-	return tipo;
-  }
 
-  public void setTipo(String tipo) {
-	this.tipo = tipo;
-  }
 
   
-  public String getBase64() {
-	return base64;
-  }
 
-  public void setBase64(String base64) {
-	this.base64 = base64;
-  }
 
-  public String getExt() {
-	return ext;
-  }
-
-  public void setExt(String ext) {
-	this.ext = ext;
-  }
-  
-
-  public Long getIdaprendiz() {
-	return idaprendiz;
-  }
-
-  public void setIdaprendiz(Long idaprendiz) {
-	this.idaprendiz = idaprendiz;
-  }
-  
-  public Long getIddocumentoaprendiz() {
-	return iddocumentoaprendiz;
-  }
-
-  public void setIddocumentoaprendiz(Long iddocumentoaprendiz) {
-	this.iddocumentoaprendiz = iddocumentoaprendiz;
-  }
 
   
-  public String getSavedmsg() {
-	return savedmsg;
-  }
 
-  public void setSavedmsg(String savedmsg) {
-	this.savedmsg = savedmsg;
-  }
+
+  
+
+
+  
+
 
   @Override
   public int hashCode() {

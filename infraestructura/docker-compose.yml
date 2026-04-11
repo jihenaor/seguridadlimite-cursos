@@ -95,6 +95,8 @@ services:
       PATH_SIGNATURES: ${PATH_SIGNATURES:-/app/storage/signatures/}
       PATH_DOCUMENTS: ${PATH_DOCUMENTS:-/app/storage/documents/}
       PATH_CERTIFICADOS: ${PATH_CERTIFICADOS:-/app/storage/certificates/}
+      # Opcional: tope de heap JVM (por defecto lo fija docker-entrypoint.sh del backend)
+      JAVA_TOOL_OPTIONS: ${JAVA_TOOL_OPTIONS:-}
     volumes:
       - backend_logs:/app/logs
       - backend_storage:/app/storage

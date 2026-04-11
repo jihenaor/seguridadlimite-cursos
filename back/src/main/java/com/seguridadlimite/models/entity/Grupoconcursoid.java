@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import com.seguridadlimite.models.personal.dominio.Personal;
 import jakarta.persistence.*;
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+@Data
 @Entity
 @Table(name = "sl_grupos")
 
@@ -66,53 +69,17 @@ public class Grupoconcursoid implements Serializable {
     this.cupofinal = cupofinal;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public int getCupoinicial() {
-    return cupoinicial;
-  }
 
-  public void setCupoinicial(int cupoinicial) {
-    this.cupoinicial = cupoinicial;
-  }
 
-  public int getCupofinal() {
-    return cupofinal;
-  }
 
-  public void setCupofinal(int cupofinal) {
-    this.cupofinal = cupofinal;
-  }
 
-  public String getCodigoministerio() {
-    return codigoministerio;
-  }
 
-  public void setCodigoministerio(String codigoministerio) {
-    this.codigoministerio = codigoministerio;
-  }
 
-  public Personal getEntrenador() {
-    return entrenador;
-  }
 
-  public void setEntrenador(Personal entrenador) {
-    this.entrenador = entrenador;
-  }
 
-  public Personal getSupervisor() {
-    return supervisor;
-  }
 
-  public void setSupervisor(Personal supervisor) {
-    this.supervisor = supervisor;
-  }
 
   @Override
   public int hashCode() {

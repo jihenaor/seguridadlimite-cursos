@@ -17,7 +17,7 @@ public class EvaluacionService {
     private final IEvaluacionDao evaluacionDao;
     private final EvaluacionMapper evaluacionMapper;
 
-    public List<EvaluacionDTO> findByAprendiz(Long idaprendiz, String tipoevaluacion) {
+    public List<EvaluacionDTO> findByAprendiz(int idaprendiz, String tipoevaluacion) {
         return evaluacionDao.findEvaluacionAprendiz(idaprendiz, tipoevaluacion).stream()
                 .map(evaluacionMapper::toDto)
                 .collect(Collectors.toList());

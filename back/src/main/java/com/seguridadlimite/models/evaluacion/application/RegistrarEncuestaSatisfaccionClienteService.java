@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.evaluacion.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.findById.FindAprendizByIdService;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
@@ -15,16 +17,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RegistrarEncuestaSatisfaccionClienteService {
 
-	@Autowired
-	private IEvaluacionDao dao;
+	private final IEvaluacionDao dao;
 
-	@Autowired
-	private IAprendizDao aprendizDao;
+	private final IAprendizDao aprendizDao;
 
-	@Autowired
-	private FindAprendizByIdService aprendizPorId;
+	private final FindAprendizByIdService aprendizPorId;
 
 	@Transactional
 	public void saveEncuesta(List<Pregunta> entity, Long idaprendiz) throws Exception {

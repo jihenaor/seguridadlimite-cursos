@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.trabajador.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaCompletaCu;
 import com.seguridadlimite.models.asistencia.application.RegisterAsistenciaAprendizService;
@@ -16,28 +18,23 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TrabajadorService {
 
-	@Autowired
-	private ITrabajadorDao trabajadorDao;
+	private final ITrabajadorDao trabajadorDao;
 
-	@Autowired
-	private IAprendizDao aprendizDao;
+	private final IAprendizDao aprendizDao;
 
-	@Autowired
-	private AprendizServicerImpl2 aprendizService;
+	private final AprendizServicerImpl2 aprendizService;
 
-	@Autowired
-	private RegisterAsistenciaAprendizService asistenciaService;
+	private final RegisterAsistenciaAprendizService asistenciaService;
 
 	@Autowired
 	FindAsistenciaCompletaCu findAsistenciaCompletaCu;
 
-	@Autowired
-	private FindInscripcionesAbiertasCu validaExisteInscripcionAbierta;
+	private final FindInscripcionesAbiertasCu validaExisteInscripcionAbierta;
 
-	@Autowired
-	private TrabajadorMapper trabajadorMapper;
+	private final TrabajadorMapper trabajadorMapper;
 
 	@Transactional(readOnly = true)
 	public List<Trabajador> findAll() {

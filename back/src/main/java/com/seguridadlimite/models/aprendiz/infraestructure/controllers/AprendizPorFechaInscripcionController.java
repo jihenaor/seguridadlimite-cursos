@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.buscarporidgrupo.BuscarAprendizInscripcion;
 import com.seguridadlimite.models.aprendiz.domain.AprendizEvaluacionDTO;
 import com.seguridadlimite.util.DateUtil;
@@ -14,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AprendizPorFechaInscripcionController {
 
-	@Autowired
-	private BuscarAprendizInscripcion service;
+	private final BuscarAprendizInscripcion service;
 
 	@GetMapping("/inscripcion")
 	@ResponseStatus(HttpStatus.OK)

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application.importarAprendices;
 
+import lombok.RequiredArgsConstructor;
+
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.seguridadlimite.iservices.IProgramaService;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
@@ -22,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ImportarAprendices {
 
     private static final Map<String, Long> NIVEL_ID_MAP;
@@ -53,29 +56,21 @@ public class ImportarAprendices {
 
         NIVEL_ID_MAP.put("BASICO ADMINISTRATIVO", 5L);
     }
-    @Autowired
-    private IProgramaService programaService;
+    private final IProgramaService programaService;
 
-    @Autowired
-    private TrabajadorService trabajadorService;
+    private final TrabajadorService trabajadorService;
 
-    @Autowired
-    private TrabajadorSaveCu trabajadorSaveCu;
+    private final TrabajadorSaveCu trabajadorSaveCu;
 
-    @Autowired
-    private AprendizServiceImpl aprendizService;
+    private final AprendizServiceImpl aprendizService;
 
-    @Autowired
-    private DocumentoaprendizServiceImpl documentoaprendizService;
+    private final DocumentoaprendizServiceImpl documentoaprendizService;
 
-    @Autowired
-    private RegisterAsistenciaAprendizService asistenciaService;
+    private final RegisterAsistenciaAprendizService asistenciaService;
 
-    @Autowired
-    private TrabajadorFindByDocumentoCu trabajadorFindByDocumento;
+    private final TrabajadorFindByDocumentoCu trabajadorFindByDocumento;
 
-    @Autowired
-    private ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
+    private final ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
 
     public void index(String content) throws BusinessException, ParseException {
         int fila = 0;

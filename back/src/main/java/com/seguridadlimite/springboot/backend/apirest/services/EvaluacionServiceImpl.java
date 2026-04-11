@@ -30,12 +30,12 @@ public class EvaluacionServiceImpl {
 	@Transactional
 	public EvaluacionPojo findAndRegister(
 			String tipoevaluacion,
-			Long idaprendiz, 
-			Integer numeroevaluacion,
+			int idaprendiz,
+			int numeroevaluacion,
 			Long idnivel) {
 	    EvaluacionPojo e = new EvaluacionPojo();
 
-        String sabeleerescribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
+        String sabeleerescribir = aprendizDao.consultarAprendizSabeLeerEscribir(idaprendiz);
 
         List<Pregunta> preguntas = preguntaDao.findByNiveltipoevaluacionRandom(
                 idnivel,
@@ -68,7 +68,7 @@ public class EvaluacionServiceImpl {
 	}
 
 	@Transactional
-	public List<Pregunta> findEvaluacionTeoricaIdaprendiz(Long idaprendiz) {
+	public List<Pregunta> findEvaluacionTeoricaIdaprendiz(int idaprendiz) {
 		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz)).orElse(null);
 		
 		return this.findAndRegister("T",
@@ -77,7 +77,7 @@ public class EvaluacionServiceImpl {
 				aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue()).getPreguntas();
 	}
 
-	private static void creevaluacion(Long idaprendiz,
+	private static void creevaluacion(int idaprendiz,
 									  List<Evaluacion> l,
 									  Pregunta pregunta,
 									  int numeroEvaluacion) {
@@ -96,7 +96,7 @@ public class EvaluacionServiceImpl {
 	}
 
 	@Transactional
-	public List<Pregunta> findEvaluacionPracticaMovilIdaprendiz(Long idaprendiz) {
+	public List<Pregunta> findEvaluacionPracticaMovilIdaprendiz(int idaprendiz) {
 		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new RuntimeException(String.format("El aprendiz es null buscando la evaluacion practica para el id: %s", idaprendiz)));
 
@@ -141,7 +141,7 @@ public class EvaluacionServiceImpl {
 
 	@Transactional
 	public void saveevaluacion(List<Pregunta> entity, String tipoEvaluacion) {
-		Long idaprendiz = null;
+		int idaprendiz = 0;
 		Double nota;
 		Aprendiz aprendiz = null;
 		
@@ -173,7 +173,7 @@ public class EvaluacionServiceImpl {
 			}
 		}
 
-		if (idaprendiz == null || aprendiz == null) {
+		if (idaprendiz == 0 || aprendiz == null) {
 			throw new RuntimeException("No se ha seleccionado el aprendiz");
 		}
 
@@ -216,7 +216,7 @@ public class EvaluacionServiceImpl {
 		Double nota;
 		int caprobadas = 0;
 		int numeroevaluacion;
-		Long idaprendiz;
+		int idaprendiz;
 		
 		idaprendiz = entity.get(0).getIdaprendiz();
 		numeroevaluacion = entity.get(0).getNumero();
@@ -243,7 +243,7 @@ public class EvaluacionServiceImpl {
 		}		
 	}
 	
-	public String exporterFormatoevaluacionpracticaReport(Long idaprendiz) throws FileNotFoundException, JRException {
+	public String exporterFormatoevaluacionpracticaReport(int idaprendiz) throws FileNotFoundException, JRException {
 		List<Evaluacion> l = dao.findEvaluacionPractica("P", idaprendiz);
 		Aprendiz aprendiz;
 		

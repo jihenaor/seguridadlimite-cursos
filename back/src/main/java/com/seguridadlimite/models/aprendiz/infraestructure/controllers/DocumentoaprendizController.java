@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.documentoaprendiz.updateDocumentoAprendiz.UpdateDocumentoaprendizServiceImpl;
 import com.seguridadlimite.models.documentos.domain.Documento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class DocumentoaprendizController {
 
-	@Autowired
-	private UpdateDocumentoaprendizServiceImpl service;
+	private final UpdateDocumentoaprendizServiceImpl service;
 
 	@PostMapping(path = "/saveDocumentoaprendiz", produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.CREATED)

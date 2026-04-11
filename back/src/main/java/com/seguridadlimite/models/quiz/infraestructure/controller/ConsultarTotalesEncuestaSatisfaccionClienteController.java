@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.quiz.application.ConsultarTotalesEncuestaSatisfaccionService;
 import com.seguridadlimite.models.quiz.infraestructure.projection.TotalesEncuestaSatisfaccion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/totalesencuesta")
+@RequiredArgsConstructor
 public class ConsultarTotalesEncuestaSatisfaccionClienteController {
 
-	@Autowired
-	private ConsultarTotalesEncuestaSatisfaccionService service;
+	private final ConsultarTotalesEncuestaSatisfaccionService service;
 
 	@GetMapping("")
 	public ResponseEntity<List<TotalesEncuestaSatisfaccion>> consultarevaluacionteorica(

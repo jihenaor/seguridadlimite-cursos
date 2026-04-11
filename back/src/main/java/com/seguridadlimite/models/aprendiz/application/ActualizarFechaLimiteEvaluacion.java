@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.FindParametrosById;
 import com.seguridadlimite.models.parametros.dominio.Parametros;
@@ -13,10 +15,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class ActualizarFechaLimiteEvaluacion {
 
-    @Autowired
-    private IAprendizDao dao;
+    private final IAprendizDao dao;
 
     @Autowired
     IParametrosDao iParametrosDao;

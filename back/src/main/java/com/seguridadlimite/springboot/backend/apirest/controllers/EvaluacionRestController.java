@@ -28,8 +28,8 @@ public class EvaluacionRestController {
 	@GetMapping("/evaluacion/{tipoevaluacion}/{idaprendiz}/{numeroevaluacion}/{idnivel}")
 	public List<Evaluacion> index(
             @PathVariable String tipoevaluacion,
-			@PathVariable Long idaprendiz, 
-			@PathVariable Integer numeroevaluacion,
+			@PathVariable int idaprendiz,
+			@PathVariable int numeroevaluacion,
 			@PathVariable Long idnivel) {
 		EvaluacionPojo e = service.findAndRegister(
                 tipoevaluacion,
@@ -42,12 +42,12 @@ public class EvaluacionRestController {
 
 	@GetMapping("/evaluacionteorica/{idaprendiz}")
 	public List<Pregunta> evaluacionteorica(
-			@PathVariable Long idaprendiz) {
+			@PathVariable int idaprendiz) {
 		return service.findEvaluacionTeoricaIdaprendiz(idaprendiz);
 	}
 
 	@GetMapping("/evaluacionpracticamovil/{idaprendiz}")
-	public ResponseEntity<List<Pregunta>> evaluacionpracticamovil(@PathVariable Long idaprendiz) {
+	public ResponseEntity<List<Pregunta>> evaluacionpracticamovil(@PathVariable int idaprendiz) {
 		List<Pregunta> l;
 		try {
 			l = service.findEvaluacionPracticaMovilIdaprendiz(idaprendiz);
@@ -99,7 +99,7 @@ public class EvaluacionRestController {
 	}
 
 	@GetMapping("/formatoevaluacionpractica/{idaprendiz}")
-	public ReportePojo formatoevaluacionpractica(@PathVariable Long idaprendiz) throws JRException, FileNotFoundException {
+	public ReportePojo formatoevaluacionpractica(@PathVariable int idaprendiz) throws JRException, FileNotFoundException {
 
 
 		return new ReportePojo( service.exporterFormatoevaluacionpracticaReport(idaprendiz));

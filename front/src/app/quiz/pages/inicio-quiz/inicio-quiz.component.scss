@@ -1,77 +1,42 @@
-.header {
-  background-color: #f1f1f1;
-  padding: 20px;
-  height: 80px;
-  line-height: 40px;
-}
-
-.top {
-  display: flex;
-  align-items: flex-start;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
-  margin-right: 20px;
-}
-
-.header-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-title {
-  margin: 0;
-  font-size: 24px;
-  text-align: start;
-}
-
-.login-title:last-child {
-  font-size: 18px;
-  color: #666;
-}
-
-.mat-table-responsive {
-  overflow-x: auto;
-}
-
-.mat-table {
-  width: 100%;
-  table-layout: auto;
-}
-
-.tableBody {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.table-responsive {
-  overflow-y: hidden;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-td {
-  text-align: left;
-}
+@use '../../../shared/styles/student-inscription';
 
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 
+/* Igual que inscription: .cursos-wrapper no aplica aquí por encapsulación; reproducimos márgenes y padding lateral. */
+.quiz-inicio__page {
+  padding-top: 0;
+  padding-bottom: 0.5rem;
+}
+
+.cursos-wrapper {
+  width: 100%;
+  max-width: min(960px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+}
+
+.quiz-inicio__fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 576px) {
+  .cursos-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.quiz-inicio__bloque-info {
+  margin-bottom: 1rem;
+}
+
+.quiz-inicio__bloque-acciones {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

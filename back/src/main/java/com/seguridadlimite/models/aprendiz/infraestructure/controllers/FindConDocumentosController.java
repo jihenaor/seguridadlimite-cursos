@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.findaprendizByIdWithDocumentAsistencia.FindAprendizByIdWithDocumentosAsistenciaService;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -13,10 +15,10 @@ import java.io.FileNotFoundException;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class FindConDocumentosController extends Controller {
 
-	@Autowired
-	private FindAprendizByIdWithDocumentosAsistenciaService aprendizService;
+	private final FindAprendizByIdWithDocumentosAsistenciaService aprendizService;
 
 	/**
 	 * id = identificador del aprendiz (no del trabajador). Incluye documentos tipo "A" y, vía

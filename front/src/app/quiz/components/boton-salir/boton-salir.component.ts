@@ -4,9 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-boton-salir',
+    standalone: true,
     templateUrl: './boton-salir.component.html',
     styleUrls: ['./boton-salir.component.sass'],
-    imports: [MatButtonModule]
+    imports: [MatButtonModule],
 })
 export class BotonSalirComponent {
   @Input()
@@ -18,7 +19,8 @@ export class BotonSalirComponent {
 
   irPrincipal(): void {
     if (this.tipoEvaluacion !== 'INGRESO') {
-      sessionStorage.removeItem('numerodocumento')
+      sessionStorage.removeItem('numerodocumento');
+      sessionStorage.removeItem('nombreaprendiz');
     }
     window.location.href = 'https://seguridadallimite.com';
   }

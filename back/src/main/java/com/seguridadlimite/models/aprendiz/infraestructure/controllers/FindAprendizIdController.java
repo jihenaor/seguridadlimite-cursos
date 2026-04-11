@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.AprendizServicerImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class FindAprendizIdController {
 
-	@Autowired
-	private AprendizServicerImpl service;
+	private final AprendizServicerImpl service;
 
 	@GetMapping("/{id}")
 	public Aprendiz getById(@PathVariable Long id) {

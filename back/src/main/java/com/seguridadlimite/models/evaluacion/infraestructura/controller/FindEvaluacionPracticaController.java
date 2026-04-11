@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.evaluacion.infraestructura.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.evaluacion.application.FindEvaluacionPracticaServiceImpl;
 import com.seguridadlimite.models.grupopregunta.domain.GrupopreguntaDTO;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -15,13 +17,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evaluacion")
+@RequiredArgsConstructor
 public class FindEvaluacionPracticaController {
 
-	@Autowired
-	private FindEvaluacionPracticaServiceImpl service;
+	private final FindEvaluacionPracticaServiceImpl service;
 
 	@GetMapping("/{idaprendiz}/practica")
-	public ResponseEntity<List<GrupopreguntaDTO>> evaluacionpractica(@PathVariable Long idaprendiz) throws BusinessException {
+	public ResponseEntity<List<GrupopreguntaDTO>> evaluacionpractica(@PathVariable int idaprendiz) throws BusinessException {
 		List<GrupopreguntaDTO> l = service.findEvaluacionPracticaIdaprendiz(idaprendiz);
 
 		 return new ResponseEntity<>(l, HttpStatus.OK);

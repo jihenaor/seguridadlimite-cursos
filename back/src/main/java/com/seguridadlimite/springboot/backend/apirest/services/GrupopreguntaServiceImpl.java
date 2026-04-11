@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.iservices.IGrupopreguntaService;
 import com.seguridadlimite.models.grupopregunta.domain.Grupopregunta;
 import com.seguridadlimite.models.grupopregunta.infraestructure.IGrupopreguntaDao;
@@ -10,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class GrupopreguntaServiceImpl implements IGrupopreguntaService {
 
-	@Autowired
-	private IGrupopreguntaDao dao;
+	private final IGrupopreguntaDao dao;
 	
 	@Override
 	@Transactional(readOnly = true)

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.validaExisteCertificado.extraerCertificado.ValidaExisteCertificadoTrabajadorService;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,10 @@ import java.util.List;
 
 @RestController
 	@RequestMapping("/api/aprendiz")
+@RequiredArgsConstructor
 public class AprendizValidaImagenCertificadoController {
 
-	@Autowired
-	private ValidaExisteCertificadoTrabajadorService service;
+	private final ValidaExisteCertificadoTrabajadorService service;
 
 	@GetMapping("/validarcertificados")
 	@ResponseStatus(HttpStatus.OK)

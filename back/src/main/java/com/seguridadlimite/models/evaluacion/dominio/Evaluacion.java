@@ -33,7 +33,7 @@ public class Evaluacion implements Serializable {
   
   @Basic(optional = false)
   @NotNull
-  private Long idaprendiz;
+  private int idaprendiz;
   
   @Basic(optional = false)
   @NotNull
@@ -69,77 +69,23 @@ public class Evaluacion implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public Integer getNumerorespuesta() {
-    return numerorespuesta;
-  }
 
-  public void setNumerorespuesta(Integer numerorespuesta) {
-    this.numerorespuesta = numerorespuesta;
-  }
 
-  public String getTextorespuesta() {
-    return textorespuesta;
-  }
 
-  public void setTextorespuesta(String textorespuesta) {
-    this.textorespuesta = textorespuesta;
-  }
 
-  public String getRespuestacorrecta() {
-    return respuestacorrecta;
-  }
 
-  public void setRespuestacorrecta(String respuestacorrecta) {
-    this.respuestacorrecta = respuestacorrecta;
-  }
 
-  public Date getCreateAt() {
-    return createAt;
-  }
 
-  public void setCreateAt(Date createAt) {
-    this.createAt = createAt;
-  }
 
-  public Date getUpdateAt() {
-    return updateAt;
-  }
 
-  public void setUpdateAt(Date updateAt) {
-    this.updateAt = updateAt;
-  }
 
-  public Long getIdaprendiz() {
-    return idaprendiz;
-  }
 
-  public void setIdaprendiz(Long idaprendiz) {
-    this.idaprendiz = idaprendiz;
-  }
 
-  public Long getIdpregunta() {
-	return idpregunta;
-  }
 
-  public void setIdpregunta(Long idpregunta) {
-	this.idpregunta = idpregunta;
-  }
   
-  public Integer getNumero() {
-	return numero;
-  }
 
-  public void setNumero(Integer numero) {
-	this.numero = numero;
-  }
 
   @Override
   public int hashCode() {

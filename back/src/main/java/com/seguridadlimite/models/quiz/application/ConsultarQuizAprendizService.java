@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.dao.IEvaluacionDao;
 import com.seguridadlimite.models.evaluacion.dominio.Evaluacion;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
@@ -12,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ConsultarQuizAprendizService {
 
-	@Autowired
-	private IEvaluacionDao dao;
+	private final IEvaluacionDao dao;
 
 
 	public List<Pregunta> findPreguntasAprendiz(
-			Long idaprendiz,
+			int idaprendiz,
 			String tipoEvaluacion,
 			int numero) throws BusinessException {
 		List<Evaluacion> evaluaciones = getEvaluaciones(idaprendiz, tipoEvaluacion, numero);
@@ -34,7 +36,7 @@ public class ConsultarQuizAprendizService {
 				.collect(Collectors.toList());
 	}
 
-	private List<Evaluacion> getEvaluaciones(Long idaprendiz,
+	private List<Evaluacion> getEvaluaciones(int idaprendiz,
 											 String tipoEvaluacion,
 											 Integer numero) {
 		if (numero == null) {

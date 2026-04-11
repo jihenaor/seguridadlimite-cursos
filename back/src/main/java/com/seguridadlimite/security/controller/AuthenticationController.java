@@ -1,5 +1,7 @@
 package com.seguridadlimite.security.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.security.dto.AuthenticationRequest;
 import com.seguridadlimite.security.dto.AuthenticationResponse;
 import com.seguridadlimite.security.service.AuthenticationService;
@@ -11,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PreAuthorize("permitAll")
     @PostMapping("/authenticate")

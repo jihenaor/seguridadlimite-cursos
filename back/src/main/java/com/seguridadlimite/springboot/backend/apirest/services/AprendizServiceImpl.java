@@ -1,5 +1,7 @@
 package com.seguridadlimite.springboot.backend.apirest.services;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.aprendiz.application.departamentos.DepartamentoServiceImpl;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
@@ -22,22 +24,18 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AprendizServiceImpl {
 
-	@Autowired
-	private IAprendizDao dao;
+	private final IAprendizDao dao;
 
-	@Autowired
-	private IGrupopreguntaDao grupoDao;
+	private final IGrupopreguntaDao grupoDao;
 	
-	@Autowired
-	private IPreguntaDao preguntaDao;
+	private final IPreguntaDao preguntaDao;
 	
-	@Autowired
-	private IEvaluacionDao evaluacionDao;
+	private final IEvaluacionDao evaluacionDao;
 
-	@Autowired
-	private DepartamentoServiceImpl departamentoService;
+	private final DepartamentoServiceImpl departamentoService;
 
 	@Transactional(readOnly = true)
 	public List<Aprendiz> findAll() {

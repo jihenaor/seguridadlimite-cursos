@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.documentos.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.dao.IDocumentoDao;
 import com.seguridadlimite.models.documentos.domain.Documento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DocumentoServiceImpl {
 
-	@Autowired
-	private IDocumentoDao dao;
+	private final IDocumentoDao dao;
 
 	@Transactional(readOnly = true)
 	public List<Documento> findAll() {

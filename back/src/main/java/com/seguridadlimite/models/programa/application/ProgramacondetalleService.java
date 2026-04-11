@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.programa.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.personal.infraestructure.PersonalRepository;
 import com.seguridadlimite.models.programa.infraestructure.IProgramaDao;
 import com.seguridadlimite.models.programa.model.Programa;
@@ -12,13 +14,12 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProgramacondetalleService {
 
-	@Autowired
-	private IProgramaDao dao;
+	private final IProgramaDao dao;
 
-	@Autowired
-	private PersonalRepository personalDao;
+	private final PersonalRepository personalDao;
 
 	@Transactional(readOnly = true)
 	public List<Programa> findAll() {

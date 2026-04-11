@@ -95,7 +95,7 @@ public class InformeAprendicesInscritosEntreFecha {
     }
 
     private String seleccionarDocumentosAprendiz(Aprendiz aprendiz) {
-        List<Documentoaprendiz> documentoaprendizs = documentoaprendizService.findByIdAprendiz(AprendizId.toLong(aprendiz.getId()));
+        List<Documentoaprendiz> documentoaprendizs = documentoaprendizService.findByIdAprendiz(aprendiz.getId());
 
         StringBuilder documentos = new StringBuilder();
 

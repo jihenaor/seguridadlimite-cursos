@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.pregunta.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pregunta.application.findByNiveltipoevaluacion.BuscarPreguntasNivelTipoEvaluacion;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class PreguntaNivelTipoEvaluacionController extends Controller {
 
-	@Autowired
-	private BuscarPreguntasNivelTipoEvaluacion service;
+	private final BuscarPreguntasNivelTipoEvaluacion service;
 
 	@GetMapping("/preguntarniveltipoevaluacion/{idnivel}/{tipoevaluacion}")
 	public ResponseEntity<List<Pregunta>> index(@PathVariable Long idnivel, @PathVariable String tipoevaluacion) {

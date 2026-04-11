@@ -97,53 +97,17 @@ public class Grupoevaluacion implements Serializable {
   public Grupoevaluacion() {
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public String getNombre() {
-    return nombre;
-  }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
 
-  public String getTipoevaluacion() {
-    return tipoevaluacion;
-  }
 
-  public void setTipoevaluacion(String tipoevaluacion) {
-    this.tipoevaluacion = tipoevaluacion;
-  }
 
-  public int getOrden() {
-    return orden;
-  }
 
-  public void setOrden(int orden) {
-    this.orden = orden;
-  }
 
-  public Long getIdprograma() {
-    return idprograma;
-  }
 
-  public void setIdprograma(Long idprograma) {
-    this.idprograma = idprograma;
-  }
 
-  public List<Evaluacion> getEvaluacions() {
-	return evaluacions;
-  }
 
-  public void setEvaluacions(List<Evaluacion> evaluacions) {
-	this.evaluacions = evaluacions;
-  }
 
   @Override
   public int hashCode() {

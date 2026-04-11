@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.eps.application;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.eps.domain.Eps;
 import com.seguridadlimite.models.eps.infraestructure.EpsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EpsService implements IEpsService {
 
-	@Autowired
-	private EpsRepository dao;
+	private final EpsRepository dao;
 	
 	@Override
 	@Transactional(readOnly = true)

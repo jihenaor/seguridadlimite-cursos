@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "sl_solicitudes")
 
@@ -80,110 +83,32 @@ public class Solicitud implements Serializable {
     this.id = id;
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
 
-  public String getNumerodocumento() {
-	return numerodocumento;
-}
 
-public void setNumerodocumento(String numerodocumento) {
-	this.numerodocumento = numerodocumento;
-}
 
-public String getNombrecontacto() {
-	return nombrecontacto;
-}
 
-public void setNombrecontacto(String nombrecontacto) {
-	this.nombrecontacto = nombrecontacto;
-}
 
-public String getEmail() {
-	return email;
-}
 
-public void setEmail(String email) {
-	this.email = email;
-}
 
-public String getCelular() {
-	return celular;
-}
 
-public void setCelular(String celular) {
-	this.celular = celular;
-}
 
-public String getHorario() {
-	return horario;
-}
 
-public void setHorario(String horario) {
-	this.horario = horario;
-}
 
-public int getCupo() {
-	return cupo;
-}
 
-public void setCupo(int cupo) {
-	this.cupo = cupo;
-}
 
-public String getPrograma() {
-	return programa;
-}
 
-public void setPrograma(String programa) {
-	this.programa = programa;
-}
 
-public String getNivel() {
-	return nivel;
-}
 
-public void setNivel(String nivel) {
-	this.nivel = nivel;
-}
 
-public String getEmpresa() {
-	return empresa;
-}
 
-public void setEmpresa(String empresa) {
-	this.empresa = empresa;
-}
 
-public String getAucodestad() {
-	return aucodestad;
-}
 
-public void setAucodestad(String aucodestad) {
-	this.aucodestad = aucodestad;
-}
 
-public Date getCreateAt() {
-	return createAt;
-}
 
-public void setCreateAt(Date createAt) {
-	this.createAt = createAt;
-}
 
-public Date getUpdateAt() {
-	return updateAt;
-}
 
-public void setUpdateAt(Date updateAt) {
-	this.updateAt = updateAt;
-}
+
 
 @Override
   public int hashCode() {

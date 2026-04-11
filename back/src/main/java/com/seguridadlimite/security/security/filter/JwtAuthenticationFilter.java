@@ -1,5 +1,7 @@
 package com.seguridadlimite.security.security.filter;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.personal.application.PersonalService;
 import com.seguridadlimite.models.personal.dominio.Personal;
 import com.seguridadlimite.security.service.JwtService;
@@ -22,15 +24,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private PersonalService personalService;
+    private final PersonalService personalService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.quiz.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
 import com.seguridadlimite.models.pregunta.domain.TipoevaluacionEnum;
 import com.seguridadlimite.models.quiz.application.ConsultarEvaluacionTeoricaService;
@@ -14,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evaluacion")
+@RequiredArgsConstructor
 public class ConsultarEvaluacionIngresoController {
 
-	@Autowired
-	private ConsultarEvaluacionTeoricaService service;
+	private final ConsultarEvaluacionTeoricaService service;
 	@GetMapping("/{idaprendiz}/ingreso")
 	public List<Pregunta> consultarevaluacionconocimientostecnicos(
 			@PathVariable Long idaprendiz) throws BusinessException {

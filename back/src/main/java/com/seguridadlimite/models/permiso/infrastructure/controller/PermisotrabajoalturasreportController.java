@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.permiso.infrastructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.permiso.application.service.PermisoTrabajoAlturasService;
 import com.seguridadlimite.models.entity.ReportePojo;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class PermisotrabajoalturasreportController {
 
-	@Autowired
-	private PermisoTrabajoAlturasService permisoTrabajoAlturasService;
+	private final PermisoTrabajoAlturasService permisoTrabajoAlturasService;
 
 	@GetMapping("/{idPermiso}/{grupo}/permisotrabajoalturas")
 	public ReportePojo asistenciareport(

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { GrupopreguntaService } from '../services/grupopregunta.service';
@@ -6,12 +6,21 @@ import { GrupopreguntaService } from '../services/grupopregunta.service';
 import { Grupopregunta } from '../../../core/models/grupopregunta.model';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
 
 @Component({
+    standalone: true,
     templateUrl: './all-grupopregunta.component.html',
-    imports: [PagetitleComponent, NgFor, MatMenuModule, MatIconModule]
+    styleUrls: ['./all-grupopregunta.component.scss'],
+    imports: [
+        PagetitleComponent,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
+    ],
 })
 export class AllGrupopreguntaComponent implements OnInit {
   dataSource: Grupopregunta[] = [];
@@ -45,7 +54,19 @@ export class AllGrupopreguntaComponent implements OnInit {
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menuData = { item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  }
+
+  onRowMenuButton(event: MouseEvent, item: Grupopregunta) {
+    event.preventDefault();
+    event.stopPropagation();
+    const el = event.currentTarget as HTMLElement;
+    const r = el.getBoundingClientRect();
+    this.contextMenuPosition.x = `${Math.max(0, r.right - 8)}px`;
+    this.contextMenuPosition.y = `${Math.max(0, r.bottom + 4)}px`;
+    this.contextMenu.menuData = { item };
     this.contextMenu.menu.focusFirstItem('mouse');
     this.contextMenu.openMenu();
   }

@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.programa.infraestructure;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.programa.application.ProgramaDto;
 import com.seguridadlimite.models.programa.application.ProgramacondetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/programas")
+@RequiredArgsConstructor
 public class ProgramaConDetalleController {
 
-	@Autowired
-	private ProgramacondetalleService servicecondetalle;
+	private final ProgramacondetalleService servicecondetalle;
 
 	@GetMapping("/activoscondetalle")
 	public List<ProgramaDto> indexcondetalle() {

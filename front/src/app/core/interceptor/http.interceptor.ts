@@ -4,6 +4,7 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { LoadingService } from '../service/loading.service';
 import { ShowNotificacionService } from '../service/show-notificacion.service';
+import { mensajeErrorHttpAmigable } from '../utils/http-error-message';
 
 @Injectable({
   providedIn: 'root',
@@ -28,19 +29,14 @@ export class HttpInterceptorService implements HttpInterceptor {
 
         if (!esSolapamientoInscripcion) {
           if (error.error instanceof ErrorEvent) {
-            this.notificacionService.displayError(error.error.message);
+            this.notificacionService.displayError(
+              error.error.message || 'Error de red o de configuración del navegador.',
+            );
           } else {
-            switch (error?.status) {
-              case 504:
-                this.notificacionService.displayError('Error de comunicacion con el servidor');
-                break;
-
-              default:
-                this.notificacionService.displayError(error.error?.message ?? error.message);
-            }
+            this.notificacionService.displayError(mensajeErrorHttpAmigable(error));
           }
 
-          this.errorSubject.next('Error en la solicitud');
+          this.errorSubject.next(null);
         }
 
         return throwError(() => error);

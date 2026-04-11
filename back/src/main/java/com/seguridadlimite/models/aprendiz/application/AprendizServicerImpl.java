@@ -12,7 +12,7 @@ import com.seguridadlimite.models.documentos.domain.Documento;
 import com.seguridadlimite.models.trabajador.application.BuscarDocumentoTrabajador.BuscarDocumentoTrabajadorService;
 import com.seguridadlimite.models.trabajador.application.TrabajadorService;
 import com.seguridadlimite.springboot.backend.apirest.util.GetPathFiles;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,29 +24,15 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class AprendizServicerImpl {
 
-
-	@Autowired
-	private GetPathFiles getPathFiles;
-
-	@Autowired
-	private IAprendizDao dao;
-
-	@Autowired
-	private TrabajadorService trabajadorService;
-
-	@Autowired
-	private BuscarDocumentoTrabajadorService buscarDocumentoTrabajadorService;
-	
-	@Autowired
-	private DocumentoServiceImpl documentoService;
-	
-	@Autowired
-	private DocumentoaprendizServiceImpl documentoAprendizService;
-
-	public AprendizServicerImpl() {
-	}
+	private final GetPathFiles getPathFiles;
+	private final IAprendizDao dao;
+	private final TrabajadorService trabajadorService;
+	private final BuscarDocumentoTrabajadorService buscarDocumentoTrabajadorService;
+	private final DocumentoServiceImpl documentoService;
+	private final DocumentoaprendizServiceImpl documentoAprendizService;
 
 	@Transactional(readOnly = true)
 	public List<Aprendiz> findByIdtrabajador(Long idtrabajador) {
@@ -70,7 +56,7 @@ public class AprendizServicerImpl {
 			buscarDocumentoTrabajadorService.getDocumentoLadoALadoB(aprendiz.getTrabajador());
 		}
 
-		var documentos = getDocumentos(aprendiz.getId() == null ? null : aprendiz.getId().longValue(), true);
+		var documentos = getDocumentos(aprendiz.getId() == null ? null : aprendiz.getId(), true);
 		aprendiz.setDocumentos(documentos);
 		
 		return aprendiz;
@@ -191,7 +177,7 @@ public class AprendizServicerImpl {
  */
 	}
 
-	public List<Documento> getDocumentos(Long idaprendiz, Boolean documentosEmpresa) throws IOException {
+	public List<Documento> getDocumentos(int idaprendiz, Boolean documentosEmpresa) throws IOException {
 		List<Documento> documentos;
 		
 		if (documentosEmpresa) {

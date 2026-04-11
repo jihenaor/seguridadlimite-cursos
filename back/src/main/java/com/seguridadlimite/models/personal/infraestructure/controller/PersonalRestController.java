@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.personal.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.personal.application.PersonalService;
 import com.seguridadlimite.models.personal.dominio.Personal;
 import net.sf.jasperreports.engine.JRException;
@@ -12,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class PersonalRestController {
 
-	@Autowired
-	private PersonalService service;
+	private final PersonalService service;
 
 	@GetMapping("/personals")
 	public List<Personal> index() {

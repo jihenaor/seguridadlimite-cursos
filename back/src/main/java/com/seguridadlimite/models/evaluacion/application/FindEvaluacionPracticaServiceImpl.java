@@ -41,7 +41,7 @@ public class FindEvaluacionPracticaServiceImpl {
 	private final IAprendizDao aprendizDao;
 
 	@Transactional
-	public List<GrupopreguntaDTO> findEvaluacionPracticaIdaprendiz(Long idaprendiz) {
+	public List<GrupopreguntaDTO> findEvaluacionPracticaIdaprendiz(int idaprendiz) {
 		List<Grupopregunta> grupopreguntas = Optional.ofNullable(grupoDao.findEvaluacionAprendiz(Constants.EVALUACION_PRACTICA))
 				.filter(list -> !list.isEmpty())
 				.orElseThrow(() -> new BusinessException("No se encontraron los grupos de preguntas"));
@@ -76,7 +76,7 @@ public class FindEvaluacionPracticaServiceImpl {
 	}
 
 	private List<Evaluacion> asignarPreguntasPreguntasAlAprendiz(
-            Long idaprendiz,
+            int idaprendiz,
             String tipoEvaluacion) {
         String sabeLeerEscribir = aprendizDao.consultarAprendizSabeLeerEscribir(AprendizId.toInteger(idaprendiz));
 		List<Pregunta> preguntas = preguntaDao.findTipoevaluacion(
@@ -93,7 +93,7 @@ public class FindEvaluacionPracticaServiceImpl {
 				.collect(Collectors.toList());
 	}
 
-	private Evaluacion getEvaluacion(Long idaprendiz, Pregunta pregunta) {
+	private Evaluacion getEvaluacion(int idaprendiz, Pregunta pregunta) {
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdaprendiz(idaprendiz);
 		evaluacion.setIdpregunta(pregunta.getId());
@@ -153,7 +153,7 @@ public class FindEvaluacionPracticaServiceImpl {
  */
 	}
 
-	private static void creevaluacion(Long idaprendiz,
+	private static void creevaluacion(int idaprendiz,
 									  List<Evaluacion> l,
 									  Pregunta pregunta) {
 		Evaluacion evaluacion = new Evaluacion();

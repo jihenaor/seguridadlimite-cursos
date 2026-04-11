@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.trabajador.infraestructure.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.entity.Fototrabajador;
 import com.seguridadlimite.springboot.backend.apirest.controllers.Controller;
 import com.seguridadlimite.springboot.backend.apirest.util.EncodeFileToBase64;
@@ -13,10 +15,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/aprendiz")
 @ResponseBody
+@RequiredArgsConstructor
 public class TrabajadorFotoGetController extends Controller {
 
-	@Autowired
-	private EncodeFileToBase64 encodeFile;
+	private final EncodeFileToBase64 encodeFile;
 
 	@GetMapping(path = "/foto/{trabajadorid}")
 	@ResponseStatus(HttpStatus.OK)

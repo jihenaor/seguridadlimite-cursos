@@ -10,14 +10,21 @@ import { ButonIniciarEvaluacionComponent } from '../../components/buton-iniciar-
 import { ShowAprendizComponent } from '../../components/show-aprendiz/show-aprendiz.component';
 import { NgIf } from '@angular/common';
 import { SearchAprendizComponent } from '../../components/search-aprendiz/search-aprendiz.component';
-import { MatCardModule } from '@angular/material/card';
 import { InfoQuizComponent } from '../../components/info-quiz/info-quiz.component';
 
 @Component({
     selector: 'app-inicio-quiz',
+    standalone: true,
     templateUrl: './inicio-quiz.component.html',
     styleUrls: ['./inicio-quiz.component.scss'],
-    imports: [InfoQuizComponent, MatCardModule, SearchAprendizComponent, NgIf, ShowAprendizComponent, ButonIniciarEvaluacionComponent, BotonSalirComponent]
+    imports: [
+        InfoQuizComponent,
+        SearchAprendizComponent,
+        NgIf,
+        ShowAprendizComponent,
+        ButonIniciarEvaluacionComponent,
+        BotonSalirComponent,
+    ],
 })
 export class InicioQuizComponent implements OnInit {
   @ViewChild('numerodocumento') numerodocumento!: ElementRef;

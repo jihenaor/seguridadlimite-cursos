@@ -1,5 +1,7 @@
 package com.seguridadlimite.security.service;
 
+import lombok.RequiredArgsConstructor;
+
 import com.seguridadlimite.models.personal.application.PersonalService;
 import com.seguridadlimite.models.personal.dominio.Personal;
 import com.seguridadlimite.security.dto.AuthenticationRequest;
@@ -14,13 +16,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    @Autowired
-    private PersonalService personalService;
+    private final PersonalService personalService;
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     /**
      * Login usado por {@code /auth/authenticate}: misma fuente que el flujo principal ({@code sl_personal}),

@@ -1,7 +1,18 @@
-<tr>
-  <td colspan="2" class="text-center">
-    <button mat-flat-button color="primary" (click)="onClick()">
-      <mat-icon>play_arrow</mat-icon> {{ textoBoton }}
+<div class="quiz-acciones-evaluacion">
+  <div class="quiz-acciones-evaluacion__row">
+    <button
+      mat-stroked-button
+      type="button"
+      color="warn"
+      class="quiz-acciones-evaluacion__cancel"
+      (click)="salirSinEvaluar()"
+    >
+      <mat-icon>not_interested</mat-icon>
+      {{ textoSalirSinEvaluar }}
     </button>
-  </td>
-</tr>
+    <button mat-flat-button color="primary" type="button" class="quiz-acciones-evaluacion__primary" (click)="onClick()">
+      <mat-icon>play_arrow</mat-icon>
+      {{ textoBoton }}
+    </button>
+  </div>
+</div>

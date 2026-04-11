@@ -1,5 +1,7 @@
 package com.seguridadlimite.models.entity;
 
+import lombok.Data;
+
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-// @Entity — clase sin uso activo; usar models/asistencia/domain/Asistencia.java
+// @Data
 @Table(name = "sl_asistencias")
 public class Asistenciar implements Serializable {
 
@@ -51,51 +53,15 @@ public class Asistenciar implements Serializable {
   public Asistenciar() {
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public int getHoras() {
-    return horas;
-  }
 
-  public void setHoras(int horas) {
-    this.horas = horas;
-  }
 
-  public String getFecha() {
-	return fecha;
-  }
 
-  public void setFecha(String fecha) {
-	this.fecha = fecha;
-}
 
-  public String getObservacion() {
-    return observacion;
-  }
 
-  public void setObservacion(String observacion) {
-    this.observacion = observacion;
-  }
 
-  public Aprendiz getAprendiz() {
-    return aprendiz;
-  }
 
-  public void setIAprendiz(Aprendiz aprendiz) {
-    this.aprendiz = aprendiz;
-  }
 
-  public void setCreateAt(Date createAt) {
-    this.createAt = createAt;
-  }
 
-  public void setUpdateAt(Date updateAt) {
-    this.updateAt = updateAt;
-  }
 }
