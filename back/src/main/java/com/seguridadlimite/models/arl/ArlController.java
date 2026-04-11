@@ -35,7 +35,7 @@ public class ArlController {
 /*
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Arl getById(@PathVariable Long id) {
+	public Arl getById(@PathVariable Integer id) {
 		return service.findById(id);
 	}
 
@@ -47,7 +47,7 @@ public class ArlController {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Arl update(@RequestBody Arl entity, @PathVariable Long id) {
+	public Arl update(@RequestBody Arl entity, @PathVariable Integer id) {
 		Arl arl = service.findById(id);
 		arl.setNombre(entity.getNombre());
 
@@ -56,7 +56,7 @@ public class ArlController {
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable Integer id) {
 		service.delete(id);
 	}
 

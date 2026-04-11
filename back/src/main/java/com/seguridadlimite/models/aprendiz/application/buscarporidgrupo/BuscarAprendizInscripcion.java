@@ -2,7 +2,7 @@ package com.seguridadlimite.models.aprendiz.application.buscarporidgrupo;
 
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizEvaluacionDTO;
-import com.seguridadlimite.models.aprendiz.domain.AprendizEvaluacionMapper;
+import com.seguridadlimite.models.aprendiz.application.mapper.AprendizEvaluacionMapper;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.application.FindAsistenciaAprendizParaCapturaService;
 import com.seguridadlimite.models.parametros.application.UpdateEvaluationDate.FindParametrosById;

@@ -45,7 +45,7 @@ public class RegisterAsistenciaAprendizService {
 			if (idaprendiz == null) {
 				return;
 			}
-			if (asistencias.stream().noneMatch(asistencia -> asistencia.getIdaprendiz().equals(idaprendiz))) {
+			if (asistencias.stream().noneMatch(asistencia -> asistencia.getIdaprendiz() == idaprendiz)) {
 				Aprendiz aprendiz = aprendices.stream()
 						.filter(a -> a.getId() != null && a.getId().longValue() == idaprendiz)
 						.findFirst()
@@ -69,11 +69,11 @@ public class RegisterAsistenciaAprendizService {
 										   List<Disenocurricular> disenocurriculars) {
 		List<Asistencia> nuevasAsistencias = disenocurriculars.stream()
 			.map(disenocurricular -> Asistencia.builder()
-				.idaprendiz(aprendiz.getId() == null ? null : aprendiz.getId().longValue())
-				.modulo(disenocurricular.getModulo())
+				.idaprendiz(aprendiz.getId() != null ? aprendiz.getId() : 0)
+				.modulo(disenocurricular.getModulo() == null ? 0 : disenocurricular.getModulo().shortValue())
 				.contexto(disenocurricular.getContexto())
 				.unidad(disenocurricular.getUnidad())
-				.dia(disenocurricular.getDia())
+				.dia(disenocurricular.getDia() == null ? 0 : disenocurricular.getDia().shortValue())
 				.horas(disenocurricular.getHoras())
 				.observacion("")
 				.build())

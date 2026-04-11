@@ -22,17 +22,18 @@ public class Asistencia implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private Long id;
+  private int id;
 
   @Basic(optional = false)
   @NotNull
-  private Long idaprendiz;
+  private int idaprendiz;
 
   private String fecha;
 
+  /** Columna MySQL SMALLINT. */
   @Basic(optional = false)
   @NotNull
-  private Integer modulo;
+  private Short modulo;
 
   @Basic(optional = false)
   @NotNull
@@ -42,9 +43,10 @@ public class Asistencia implements Serializable {
   @NotNull
   private String unidad;
 
+  /** Columna MySQL SMALLINT. */
   @Basic(optional = false)
   @NotNull
-  private Integer dia;
+  private Short dia;
 
   @Basic(optional = false)
   @NotNull

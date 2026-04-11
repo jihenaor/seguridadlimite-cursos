@@ -9,8 +9,8 @@ public class AsistenciaMapper {
     
     public Asistencia toDomain(AsistenciaDTO dto) {
         return Asistencia.builder()
-                .id(dto.getId())
-                .idaprendiz(dto.getIdaprendiz())
+                .id(dto.getId() != null ? dto.getId().intValue() : 0)
+                .idaprendiz(dto.getIdaprendiz() != null ? dto.getIdaprendiz().intValue() : 0)
                 .fecha(dto.getFecha())
                 .selected(dto.getSelected())
                 .build();

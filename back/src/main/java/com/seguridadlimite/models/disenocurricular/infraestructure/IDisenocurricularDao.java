@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface IDisenocurricularDao extends CrudRepository<Disenocurricular, Long> {
+public interface IDisenocurricularDao extends CrudRepository<Disenocurricular, Integer> {
 
     List<Disenocurricular> findByIdnivelOrderByDiaAsc(Long idnivel);
 }

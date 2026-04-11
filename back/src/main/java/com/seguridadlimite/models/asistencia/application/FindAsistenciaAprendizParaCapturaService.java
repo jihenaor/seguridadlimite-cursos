@@ -76,7 +76,7 @@ public class FindAsistenciaAprendizParaCapturaService {
         List<Dia> dias = new ArrayList<>();
         Set<Integer> diasUnicos = new HashSet<>();
 
-        if (!modulosUnicos.contains(asistencia.getModulo())) {
+        if (!modulosUnicos.contains(asistencia.getModulo().intValue())) {
             List<Asistencia> asistenciasDelModulo = asistencias.stream()
                     .filter(asistenciaModulo -> Objects.equals(asistenciaModulo.getModulo(), asistencia.getModulo()))
                     .collect(Collectors.toList());
@@ -85,10 +85,10 @@ public class FindAsistenciaAprendizParaCapturaService {
                 generarListadoUnidades(asistenciaModulo, diasUnicos, asistenciasDelModulo, dias, permisoFechas);
             }
 
-            modules.add(new Modulo(asistencia.getModulo(), dias));
+            modules.add(new Modulo(asistencia.getModulo().intValue(), dias));
         }
 
-        modulosUnicos.add(asistencia.getModulo());
+        modulosUnicos.add(asistencia.getModulo().intValue());
     }
 
     private void generarListadoUnidades(Asistencia asistenciaModulo,
@@ -98,7 +98,7 @@ public class FindAsistenciaAprendizParaCapturaService {
                                         List<PermisoFechas> permisoFechas) {
         List<Unidad> unidads = new ArrayList<>();
 
-        if (!diasUnicos.contains(asistenciaModulo.getDia())) {
+        if (!diasUnicos.contains(asistenciaModulo.getDia().intValue())) {
 
             List<Asistencia> unidadesDelDia = asistenciasDelModulo.stream()
                     .filter(asistenciaDia -> Objects.equals(asistenciaDia.getDia(),
@@ -113,16 +113,16 @@ public class FindAsistenciaAprendizParaCapturaService {
             Optional<PermisoFechas> permisoFechas1 = Optional.empty();
             if (permisoFechas != null) {
                 permisoFechas1 = permisoFechas.stream()
-                        .filter(permisoFechas2 -> permisoFechas2.getDia() == asistenciaModulo.getDia())
+                        .filter(permisoFechas2 -> permisoFechas2.getDia() == asistenciaModulo.getDia().intValue())
                         .findFirst();
             }
 
             String fechaProgramada = permisoFechas1.isEmpty() ? "xx" : permisoFechas1.get().getFecha();
-            dias.add(new Dia(asistenciaModulo.getDia(),
+            dias.add(new Dia(asistenciaModulo.getDia().intValue(),
                     fechaProgramada,
                     unidads));
         }
 
-        diasUnicos.add(asistenciaModulo.getDia());
+        diasUnicos.add(asistenciaModulo.getDia().intValue());
     }
 }

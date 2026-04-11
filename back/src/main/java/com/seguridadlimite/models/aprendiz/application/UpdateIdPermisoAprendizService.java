@@ -4,7 +4,6 @@ import com.seguridadlimite.models.aprendiz.application.findById.FindAprendizById
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
-import com.seguridadlimite.models.asistencia.domain.port.out.AsistenciaRepository;
 import com.seguridadlimite.models.asistencia.infrastructure.persistence.IAsistenciaDao;
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
@@ -19,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UpdateIdPermisoAprendizService {
     private final IAsistenciaDao iAsistenciaDao;
-    private final AsistenciaRepository asistenciaRepository;
     private final FindAprendizByIdService findAprendizByIdService;
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
     private final IAprendizDao aprendizDao;

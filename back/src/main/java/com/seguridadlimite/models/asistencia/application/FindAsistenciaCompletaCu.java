@@ -10,7 +10,7 @@ public class FindAsistenciaCompletaCu {
 
     private final IAsistenciaDao dao;
 
-    public boolean find(Long idaprendiz) {
+    public boolean find(int idaprendiz) {
         return dao.countByIdaprendiz(idaprendiz) > 0 &&
                 dao.countByIdaprendizAndFechaIsNull(idaprendiz) == 0;
     }

@@ -3,7 +3,7 @@ package com.seguridadlimite.models.asistencia.domain.port.out;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
 
 public interface AsistenciaRepository {
-    Asistencia findById(long id);
+    Asistencia findById(int id);
     void updateFecha(Asistencia asistencia);
-    Long countByIdaprendizAndFechaIsNull(Long idaprendiz);
+    int countByIdaprendizAndFechaIsNull(int idaprendiz);
 } 

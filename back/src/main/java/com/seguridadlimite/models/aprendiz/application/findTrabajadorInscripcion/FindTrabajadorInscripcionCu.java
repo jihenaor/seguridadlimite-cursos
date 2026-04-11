@@ -75,7 +75,7 @@ public class FindTrabajadorInscripcionCu {
 			log.info(String.format("Aprendiz existe: %s", aprendiz != null));
 
 			if (aprendiz != null) {
-				asistenciaCompleta = findAsistenciaCompletaCu.find(AprendizId.toLong(aprendiz.getId()));
+				asistenciaCompleta = findAsistenciaCompletaCu.find(aprendiz.getId());
 
 				log.info(String.format("Asistencia completa: %s", asistenciaCompleta));
 

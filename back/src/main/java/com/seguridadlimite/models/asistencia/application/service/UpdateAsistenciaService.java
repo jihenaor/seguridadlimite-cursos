@@ -30,10 +30,11 @@ public class UpdateAsistenciaService implements UpdateAsistenciaUseCase {
         // 1. Actualizar la fecha de asistencia
 
         if (asistencia.getSelected()) {
-            Long asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(asistencia.getIdaprendiz());
+            int asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(
+                    asistencia.getIdaprendiz());
 
             if (asistenciasPendientes == 0) {
-                Aprendiz aprendiz = findAprendizByIdService.find(asistencia.getIdaprendiz());
+                Aprendiz aprendiz = findAprendizByIdService.find((long) asistencia.getIdaprendiz());
 
                 List<PermisoTrabajoAlturas> permisoTrabajoAlturas = permisoTrabajoAlturasPort.findPermisosVigentesEnFecha(asistencia.getFecha(), aprendiz.getIdnivel());
 

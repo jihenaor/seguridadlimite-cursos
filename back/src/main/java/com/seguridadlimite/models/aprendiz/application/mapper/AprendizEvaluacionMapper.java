@@ -1,5 +1,11 @@
-package com.seguridadlimite.models.aprendiz.domain;
+package com.seguridadlimite.models.aprendiz.application.mapper;
 
+import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
+import com.seguridadlimite.models.aprendiz.domain.AprendizEvaluacionDTO;
+import com.seguridadlimite.models.aprendiz.domain.AsistenciaDTO;
+import com.seguridadlimite.models.aprendiz.domain.DiaDTO;
+import com.seguridadlimite.models.aprendiz.domain.ModuloDTO;
+import com.seguridadlimite.models.aprendiz.domain.UnidadDTO;
 import com.seguridadlimite.models.asistencia.domain.Asistencia;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,7 +19,7 @@ import java.util.List;
     unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface AprendizEvaluacionMapper {
-    
+
     AprendizEvaluacionMapper INSTANCE = Mappers.getMapper(AprendizEvaluacionMapper.class);
 
     @Mapping(target = "nombreCompletoTrabajador", source = "trabajador.nombrecompleto")
@@ -27,56 +33,46 @@ public interface AprendizEvaluacionMapper {
     @Mapping(target = "eteorica2", source = "eteorica2")
     @Mapping(target = "epractica", source = "epractica")
     @Mapping(target = "pagocurso", source = "pagocurso")
-    @Mapping(target = "fechainscripcion", source = "fechainscripcion", dateFormat = "yyyy-MM-dd")    // @Mapping(target = "asistencias", source = "asistencias")
+    @Mapping(target = "fechainscripcion", source = "fechainscripcion", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "modulos", expression = "java(mapModulos(aprendiz))")
     @Mapping(target = "foto", source = "trabajador.foto")
     @Mapping(target = "fechareentrenamiento", source = "fechareentrenamiento")
     @Mapping(target = "fechaemision", source = "fechaemision")
     @Mapping(target = "idpermiso", source = "permisoTrabajoAlturas.idPermiso")
     @Mapping(target = "codigoministerio", source = "permisoTrabajoAlturas.codigoministerio")
-
     AprendizEvaluacionDTO toDto(Aprendiz aprendiz);
 
     @Mapping(target = "nivel", source = "nivel")
     Aprendiz toEntity(AprendizEvaluacionDTO dto);
 
-    // Métodos para mapear Nivel <-> NivelDTO
-/*
-    @Mapping(source = "nivel", target = "nivel")
-    NivelDTO nivelToNivelDto(Nivel nivel);
-    @Mapping(source = "nivel", target = "nivel")
-    Nivel nivelDtoToNivel(NivelDTO nivelDTO);
-*/
     default List<ModuloDTO> mapModulos(Aprendiz aprendiz) {
         if (aprendiz.getModulos() == null) {
             return null;
-        }else {
-            return aprendiz.getModulos().stream().map(modulo -> {
-                ModuloDTO moduloDTO = new ModuloDTO();
-                moduloDTO.setModulo(String.valueOf(modulo.getModulo()));
-                moduloDTO.setDias(modulo.getDias().stream().map(dia -> {
-                    return new DiaDTO(String.valueOf(dia.getDia()),
+        }
+        return aprendiz.getModulos().stream().map(modulo -> {
+            ModuloDTO moduloDTO = new ModuloDTO();
+            moduloDTO.setModulo(String.valueOf(modulo.getModulo()));
+            moduloDTO.setDias(modulo.getDias().stream().map(dia ->
+                    new DiaDTO(String.valueOf(dia.getDia()),
                             dia.getFechaProgramada(),
                             dia.getUnidads().stream().map(unidad -> {
 
                                 Asistencia asistencia = aprendiz.getAsistencias().stream().filter(
-                                                asistencia1 -> asistencia1.getModulo().equals(modulo.getModulo()) &&
-                                                        asistencia1.getDia().equals(dia.getDia()) &&
+                                                asistencia1 -> asistencia1.getModulo().intValue() == modulo.getModulo() &&
+                                                        asistencia1.getDia().intValue() == dia.getDia() &&
                                                         asistencia1.getUnidad().equals(unidad.getUnidad()))
                                         .findFirst().get();
 
                                 return new UnidadDTO(
                                         unidad.getUnidad(),
-                                        new AsistenciaDTO(asistencia.getId(),
-                                                asistencia.getIdaprendiz(),
+                                        new AsistenciaDTO((long) asistencia.getId(),
+                                                (long) asistencia.getIdaprendiz(),
                                                 asistencia.getFecha() != null,
                                                 asistencia.getFecha()));
-                            }).toList());
-                }).toList());
-                return moduloDTO;
+                            }).toList())
+            ).toList());
+            return moduloDTO;
 
-            }).toList();
-        }
+        }).toList();
     }
-
-} 
+}

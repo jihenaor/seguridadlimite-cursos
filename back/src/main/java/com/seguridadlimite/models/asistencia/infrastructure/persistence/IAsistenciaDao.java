@@ -16,13 +16,13 @@ public interface IAsistenciaDao extends CrudRepository<Asistencia, Long> {
 
   @Modifying
   @Query("Update Asistencia u set u.fecha = ?1 where u.id = ?2")
-  int updateFecha(String fecha, Long id);
+  int updateFecha(String fecha, int id);
 
   @Query("select count(u) from Asistencia u where u.idaprendiz = ?1")
-  Long countByIdaprendiz(Long idaprendiz);
+  Long countByIdaprendiz(int idaprendiz);
 
   @Query("select count(u) from Asistencia u where u.idaprendiz = ?1 and u.fecha is null")
-  Long countByIdaprendizAndFechaIsNull(Long idaprendiz);
+  int countByIdaprendizAndFechaIsNull(int idaprendiz);
 
   List<Asistencia> findByIdaprendizIn(List<Long> aprendizIds);
 

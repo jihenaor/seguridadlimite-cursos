@@ -36,7 +36,7 @@ public class BuscarAprendizUltimaAsistenciaCoincidePorIdPermisoTrabajoService {
 
         for (Aprendiz aprendiz: aprendices) {
             if (aprendiz.getIdPermiso() == null) {
-                Long asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(AprendizId.toLong(aprendiz.getId()));
+                int asistenciasPendientes = asistenciaRepository.countByIdaprendizAndFechaIsNull(aprendiz.getId());
 
                 if (asistenciasPendientes == 0) {
                     aprendiz.setAsistenciaCompleta(true);

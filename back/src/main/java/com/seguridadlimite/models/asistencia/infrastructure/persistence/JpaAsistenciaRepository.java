@@ -12,8 +12,8 @@ public class JpaAsistenciaRepository implements AsistenciaRepository {
     private final IAsistenciaDao asistenciaDao;
 
     @Override
-    public Asistencia findById(long id) {
-        return asistenciaDao.findById(id).orElseThrow();
+    public Asistencia findById(int id) {
+        return asistenciaDao.findById((long) id).orElseThrow();
     }
 
     @Override
@@ -22,7 +22,7 @@ public class JpaAsistenciaRepository implements AsistenciaRepository {
     }
 
     @Override
-    public Long countByIdaprendizAndFechaIsNull(Long idaprendiz) {
+    public int countByIdaprendizAndFechaIsNull(int idaprendiz) {
         return asistenciaDao.countByIdaprendizAndFechaIsNull(idaprendiz);
     }
 
