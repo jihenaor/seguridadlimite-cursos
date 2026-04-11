@@ -49,9 +49,10 @@ public class AprendizRSinTrabajador implements Serializable {
   @Size(min = 1, max = 1)
   private String pagocurso;
   
-  @Basic(optional = false)
-  @NotNull
-  private Double evaluacionformacion;
+@Basic(optional = false)
+   @NotNull
+   @Column(name = "evaluacionformacion", columnDefinition = "DECIMAL")
+   private Double evaluacionformacion;
   
   @Basic(optional = false)
   @NotNull
@@ -171,17 +172,20 @@ public class AprendizRSinTrabajador implements Serializable {
    @Column(name = "eenfasis", columnDefinition = "DECIMAL")
    private Double eenfasis;
   
-  @Basic(optional = false)
-  @NotNull
-  private Double eteorica1;
-  
-  @Basic(optional = false)
-  @NotNull
-  private Double eteorica2;
-  
-  @Basic(optional = false)
-  @NotNull
-  private Double epractica;
+@Basic(optional = false)
+   @NotNull
+   @Column(name = "eteorica1", columnDefinition = "DECIMAL")
+   private Double eteorica1;
+   
+   @Basic(optional = false)
+   @NotNull
+   @Column(name = "eteorica2", columnDefinition = "DECIMAL")
+   private Double eteorica2;
+   
+   @Basic(optional = false)
+   @NotNull
+   @Column(name = "epractica", columnDefinition = "DECIMAL")
+   private Double epractica;
   
   private String exteteorica;
   
