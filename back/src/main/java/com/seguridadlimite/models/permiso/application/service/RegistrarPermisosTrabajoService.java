@@ -251,7 +251,7 @@ public class RegistrarPermisosTrabajoService implements RegistrarPermisosTrabajo
                 throw new BusinessException(
                         "Las fechas de diseño deben estar entre la fecha de inicio y la fecha fin del permiso");
             }
-            if (diaDto.getDia() == null) {
+            if (diaDto.getDia() == 0) {
                 throw new BusinessException(
                         "El día del cronograma es obligatorio para cada fecha de diseño (posición " + (i + 1) + ")");
             }

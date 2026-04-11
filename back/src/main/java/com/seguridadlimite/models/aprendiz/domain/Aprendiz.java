@@ -234,10 +234,10 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   private String exteenfasis;
 
   @Column(name = "duraciontotal", columnDefinition = "SMALLINT")
-   private Integer duraciontotal;
+  private int duraciontotal;
   
   @Transient
-  private Long idasistencia;
+  private int idasistencia;
   
   @Transient
   private Integer horas;

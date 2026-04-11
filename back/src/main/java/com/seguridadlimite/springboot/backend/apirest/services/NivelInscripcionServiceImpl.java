@@ -32,7 +32,7 @@ public class NivelInscripcionServiceImpl implements INivelInscripcionService {
 
 			List<Disenocurricular> disenocurriculars = findDisenocurricularByIdnivelService.find(nivel.getId());
 			for (Disenocurricular disenocurricular : disenocurriculars) {
-				Integer dia = disenocurricular.getDia();
+				short dia = disenocurricular.getDia();
 				
 				// Si el día ya existe, actualizar contexto y unidad (tomar el último)
 				// Si no existe, crear nuevo DiaDto
@@ -45,7 +45,7 @@ public class NivelInscripcionServiceImpl implements INivelInscripcionService {
 						disenocurricular.getContexto(),
 						disenocurricular.getUnidad()
 					);
-					diasMap.put(dia, diaDto);
+					diasMap.put((int) dia, diaDto);
 				} else {
 					// Actualizar contexto y unidad con los valores más recientes
 					diaDto.setContexto(disenocurricular.getContexto());

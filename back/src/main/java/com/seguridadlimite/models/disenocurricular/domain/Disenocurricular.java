@@ -2,9 +2,11 @@ package com.seguridadlimite.models.disenocurricular.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "sl_disenocurricular")
@@ -31,13 +33,14 @@ public class Disenocurricular implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    private Integer dia;
+    private short dia;
+
+    @Column(name = "horas", nullable = false, precision = 4, scale = 2)
+    @NotNull
+    @PositiveOrZero
+    private BigDecimal horas;
 
     @Basic(optional = false)
     @NotNull
-    private Double horas;
-
-    @Basic(optional = false)
-    @NotNull
-    private Long idnivel;
+    private int idnivel;
 }

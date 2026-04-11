@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DiaDto {
-    private Integer dia;
+    private short dia;
     private String fecha;
     private boolean seleccionado;
     private String contexto;

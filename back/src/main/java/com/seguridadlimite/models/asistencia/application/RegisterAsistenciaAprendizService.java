@@ -73,8 +73,8 @@ public class RegisterAsistenciaAprendizService {
 				.modulo(disenocurricular.getModulo() == null ? 0 : disenocurricular.getModulo().shortValue())
 				.contexto(disenocurricular.getContexto())
 				.unidad(disenocurricular.getUnidad())
-				.dia(disenocurricular.getDia() == null ? 0 : disenocurricular.getDia().shortValue())
-				.horas(disenocurricular.getHoras())
+				.dia(disenocurricular.getDia())
+				.horas(disenocurricular.getHoras() == null ? 0d : disenocurricular.getHoras().doubleValue())
 				.observacion("")
 				.build())
 			.collect(Collectors.toList());

@@ -8,6 +8,7 @@ import com.seguridadlimite.models.dao.IEmpresaDao;
 import com.seguridadlimite.models.entity.Empresa;
 import com.seguridadlimite.models.entity.TrabajadorInscripcionPojo;
 import com.seguridadlimite.models.nivel.application.FindNivelByIdService;
+import com.seguridadlimite.models.nivel.domain.Nivel;
 import com.seguridadlimite.models.trabajador.application.TrabajadorFindByDocumentoCu;
 import com.seguridadlimite.models.trabajador.application.TrabajadorSaveCu;
 import com.seguridadlimite.models.trabajador.application.TrabajadorService;
@@ -56,8 +57,11 @@ public class InscribirAprendiz {
 
         Aprendiz aprendiz = actualizarAprendiz(trabajadorInscripcionPojo, trabajador);
 
-        aprendiz.setNivel(findNivelByIdService.findById(
+        Nivel nivel = (findNivelByIdService.findById(
                 aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue()));
+
+        aprendiz.setNivel(nivel);
+        aprendiz.setTotalhoras(nivel.getDuraciontotal());
 
         return aprendiz;
     }
@@ -99,7 +103,6 @@ public class InscribirAprendiz {
         }
 
         inicializarAtributosAprendiz(trabajadorInscripcion, trabajador, aprendiz);
-
 
         if (aprendiz.getEmpresa() != null) {
             Optional<Empresa> empresa = iEmpresaDao.findFirstByNombreContainingIgnoreCase(aprendiz.getEmpresa());
@@ -168,8 +171,6 @@ public class InscribirAprendiz {
 
             aprendiz.setEmbarazo(inscripcionPojo.getEmbarazo());
             aprendiz.setMesesgestacion(inscripcionPojo.getMesesgestacion());
-
-
 
             aprendiz.setDirecciondomicilio(inscripcionPojo.getDirecciondomicilio());
             aprendiz.setDepartamentodomicilio(inscripcionPojo.getDepartamentodomicilio());
