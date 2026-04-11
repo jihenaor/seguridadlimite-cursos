@@ -3,7 +3,6 @@ package com.seguridadlimite.models.aprendiz.application.inscribiraprendiz;
 import com.seguridadlimite.models.aprendiz.application.inicializarEvaluacionAprendiz.InicializarEvaluacionAprendiz;
 import com.seguridadlimite.models.aprendiz.domain.Aprendiz;
 import com.seguridadlimite.models.aprendiz.domain.AprendizId;
-import com.seguridadlimite.models.aprendiz.infraestructure.IAprendizDao;
 import com.seguridadlimite.models.dao.IEmpresaDao;
 import com.seguridadlimite.models.entity.Empresa;
 import com.seguridadlimite.models.entity.TrabajadorInscripcionPojo;
@@ -11,44 +10,27 @@ import com.seguridadlimite.models.nivel.application.FindNivelByIdService;
 import com.seguridadlimite.models.nivel.domain.Nivel;
 import com.seguridadlimite.models.trabajador.application.TrabajadorFindByDocumentoCu;
 import com.seguridadlimite.models.trabajador.application.TrabajadorSaveCu;
-import com.seguridadlimite.models.trabajador.application.TrabajadorService;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import com.seguridadlimite.springboot.backend.apirest.services.AprendizServiceImpl;
 import com.seguridadlimite.util.DateUtil;
 import com.seguridadlimite.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class InscribirAprendiz {
-    @Autowired
-    private TrabajadorService trabajadorService;
 
-    @Autowired
-    private TrabajadorFindByDocumentoCu trabajadorFindByDocumentoCu;
-
-    @Autowired
-    private TrabajadorSaveCu trabajadorSaveCu;
-
-    @Autowired
-    private AprendizServiceImpl aprendizService;
-
-    @Autowired
-    private InicializarEvaluacionAprendiz inicializarEvaluacionAprendiz;
-
-    @Autowired
-    private FindNivelByIdService findNivelByIdService;
-
-    @Autowired
-    private IAprendizDao dao;
-
-    @Autowired
-    private IEmpresaDao iEmpresaDao;
-
+    private final TrabajadorFindByDocumentoCu trabajadorFindByDocumentoCu;
+    private final TrabajadorSaveCu trabajadorSaveCu;
+    private final AprendizServiceImpl aprendizService;
+    private final InicializarEvaluacionAprendiz inicializarEvaluacionAprendiz;
+    private final FindNivelByIdService findNivelByIdService;
+    private final IEmpresaDao iEmpresaDao;
 
     public Aprendiz inscribir(TrabajadorInscripcionPojo trabajadorInscripcionPojo) {
         validarDatosInscripcion(trabajadorInscripcionPojo);
@@ -165,7 +147,6 @@ public class InscribirAprendiz {
             aprendiz.setNombrecontacto((inscripcionPojo.getNombrecontacto() == null ? "" : inscripcionPojo.getNombrecontacto()).toUpperCase());
             aprendiz.setTelefonocontacto(inscripcionPojo.getTelefonocontacto() == null ? "" : inscripcionPojo.getTelefonocontacto());
             aprendiz.setParentescocontacto((inscripcionPojo.getParentescocontacto() == null ? "" : inscripcionPojo.getParentescocontacto()).toUpperCase());
-            aprendiz.setParentescocontacto((inscripcionPojo.getParentescocontacto() == null ? "" : inscripcionPojo.getParentescocontacto()).toUpperCase());
             aprendiz.setRegimenafiliacionseguridadsocial((inscripcionPojo.getRegimenafiliacionseguridadsocial() == null ? "" : inscripcionPojo.getRegimenafiliacionseguridadsocial()).toUpperCase());
             aprendiz.setTipovinculacionlaboral((inscripcionPojo.getTipovinculacionlaboral() == null ? "" : inscripcionPojo.getTipovinculacionlaboral()).toUpperCase());
 
@@ -211,5 +192,3 @@ public class InscribirAprendiz {
         return trabajador;
     }
 }
-
-
