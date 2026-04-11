@@ -71,7 +71,7 @@ public class Aprendiz extends AuditableEntity implements Serializable {
   
   @Basic(optional = false)
   @NotNull
-  private Long idenfasis;
+  private Integer idenfasis;
 
   @JoinColumn(name = "idenfasis", referencedColumnName = "id", insertable = false, updatable = false)
   @ManyToOne
@@ -90,7 +90,7 @@ public class Aprendiz extends AuditableEntity implements Serializable {
 
   @Basic(optional = false)
   @NotNull
-  private Long idnivel;
+  private Integer idnivel;
 
   @JoinColumn(name = "idnivel", referencedColumnName = "id", insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER)
@@ -183,7 +183,7 @@ public class Aprendiz extends AuditableEntity implements Serializable {
 
   @Basic(optional = false)
   @NotNull
-  private Long idtrabajador;
+  private Integer idtrabajador;
 
   @OneToOne(optional = false)
   @JoinColumn(name = "idtrabajador", referencedColumnName = "id", insertable = false, updatable = false)
@@ -222,9 +222,10 @@ public class Aprendiz extends AuditableEntity implements Serializable {
    @Column(name = "epractica", columnDefinition = "DECIMAL")
    private Double epractica;
   
+  /** Columna MySQL TINYINT (p. ej. 0–2 intentos de verificación). */
   @Basic(optional = false)
   @NotNull
-  private Integer intentos;
+  private Byte intentos;
 
   private String exteteorica;
   

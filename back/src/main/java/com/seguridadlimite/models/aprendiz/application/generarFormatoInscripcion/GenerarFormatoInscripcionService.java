@@ -132,7 +132,7 @@ public class GenerarFormatoInscripcionService {
 		formatoinscripcion.setActualizacioncoordinador(t.getIdnivel() == NivelEnum.ACTUALIZACION_COORDINADOR.getCodigo() ? "X" : "");
 		formatoinscripcion.setAdministrativojefearea(t.getIdnivel() == NivelEnum.JEFE_DE_AREA.getCodigo() ? "X" : "");
 
-		if (t.getIdenfasis() >= 1L && t.getIdenfasis() <= 4L) {
+		if (t.getIdenfasis() != null && t.getIdenfasis() >= 1 && t.getIdenfasis() <= 4) {
 			String[] enfasisValues = new String[]{
 					t.getIdenfasis() == EnfasisEnum.HIDROCARBUROS.getCodigo() ? "X" : "",
 					t.getIdenfasis() == EnfasisEnum.TELECOMUNICACIONES.getCodigo() ? "X" : "",
@@ -153,7 +153,8 @@ public class GenerarFormatoInscripcionService {
 			formatoinscripcion.setConstruccion("");
 			formatoinscripcion.setElectrico("");
 			// Obtener el nombre del enfasis correspondiente al id de enfasis
-			formatoinscripcion.setOtros(EnfasisEnum.getNombrePorCodigo(enfasisList, t.getIdenfasis().intValue()));
+			formatoinscripcion.setOtros(EnfasisEnum.getNombrePorCodigo(enfasisList,
+					t.getIdenfasis() != null ? t.getIdenfasis() : 0));
 		}
 
 		formatoinscripcion.setEmbarazo(t.getEmbarazo());
@@ -379,7 +380,7 @@ public class GenerarFormatoInscripcionService {
 			List<Pregunta> preguntas;
 
 			preguntas = preguntaDao.findByIdgrupoIdnivel(g.getId(),
-					t.getIdnivel());
+					t.getIdnivel() == null ? null : t.getIdnivel().longValue());
 			
 			for (Pregunta pregunta : preguntas) {
 				Evaluacion e = evaluacionDao.findEvaluacion(

@@ -56,7 +56,8 @@ public class InscribirAprendiz {
 
         Aprendiz aprendiz = actualizarAprendiz(trabajadorInscripcionPojo, trabajador);
 
-        aprendiz.setNivel(findNivelByIdService.findById(aprendiz.getIdnivel()));
+        aprendiz.setNivel(findNivelByIdService.findById(
+                aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue()));
 
         return aprendiz;
     }
@@ -83,7 +84,7 @@ public class InscribirAprendiz {
         Aprendiz aprendiz;
         if (trabajadorInscripcion.getIdaprendiz() == null) {
             aprendiz = new Aprendiz();
-            aprendiz.setIdtrabajador(trabajador.getId());
+            aprendiz.setIdtrabajador(trabajador.getId() == null ? null : trabajador.getId().intValue());
         } else {
             aprendiz = aprendizService.findById(AprendizId.toLong(trabajadorInscripcion.getIdaprendiz()));
 

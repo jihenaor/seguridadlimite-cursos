@@ -74,7 +74,7 @@ public class EvaluacionServiceImpl {
 		return this.findAndRegister("T",
 				idaprendiz,
 				1,
-				aprendiz.getIdnivel()).getPreguntas();
+				aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue()).getPreguntas();
 	}
 
 	private static void creevaluacion(Long idaprendiz,
@@ -100,7 +100,8 @@ public class EvaluacionServiceImpl {
 		Aprendiz aprendiz = aprendizDao.findById(AprendizId.toInteger(idaprendiz))
 				.orElseThrow(() -> new RuntimeException(String.format("El aprendiz es null buscando la evaluacion practica para el id: %s", idaprendiz)));
 
-		List<Pregunta> preguntas = preguntaDao.findByNiveltipoevaluacionOrden(aprendiz.getIdnivel(), "P");
+		List<Pregunta> preguntas = preguntaDao.findByNiveltipoevaluacionOrden(
+				aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue(), "P");
 
 		if (preguntas == null || preguntas.isEmpty()) {
 			throw new RuntimeException(String.format("No existen preguntas para la evaluacion practica en el nivel %s", aprendiz.getIdnivel()));

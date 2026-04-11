@@ -396,7 +396,7 @@ public class ImportarAprendices {
 
         Aprendiz aprendiz = new Aprendiz();
 
-        aprendiz.setIdtrabajador(trabajador.getId());
+        aprendiz.setIdtrabajador(trabajador.getId() == null ? null : trabajador.getId().intValue());
 
         aprendiz.setCodigoverificacion(registro.getCodigo());
         aprendiz.setPagocurso(registro.getPagado());
@@ -410,9 +410,9 @@ public class ImportarAprendices {
         }
         aprendiz.setCreateAt(new Date());
         aprendiz.setUpdateAt(new Date());
-        aprendiz.setIdenfasis(0l);
+        aprendiz.setIdenfasis(0);
 
-        aprendiz.setIdnivel(idnivel);
+        aprendiz.setIdnivel(Math.toIntExact(idnivel));
 //                	aprendiz.setidempresa
         aprendiz.setTrabajador(trabajador);
 
@@ -433,7 +433,7 @@ public class ImportarAprendices {
         aprendiz.setNombrecontacto("");
         aprendiz.setTelefonocontacto("");
         aprendiz.setParentescocontacto("");;
-        aprendiz.setIntentos(0);
+        aprendiz.setIntentos((byte) 0);
 
         aprendiz.setDepartamentodomicilio("ARMENIA");
         aprendiz.setCiudaddomicilio("QUINDIO");

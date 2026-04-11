@@ -139,7 +139,7 @@ public class AprendizServicerImpl {
 		}
 
 		if (t.getIntentos() == null) {
-			t.setIntentos(0);
+			t.setIntentos((byte) 0);
 		}
 		
 		if (t.getNiveleducativo() == null) {

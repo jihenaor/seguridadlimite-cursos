@@ -48,8 +48,8 @@ public class ConsultarEvaluacionTeoricaService {
 
         List<Pregunta> preguntas = consultarPreguntas(idaprendiz,
 					numeroevaluacion,
-					aprendiz.getIdnivel(),
-					aprendiz.getIdenfasis(),
+					aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel().longValue(),
+					aprendiz.getIdenfasis() == null ? null : aprendiz.getIdenfasis().longValue(),
 					tipoevaluacion,
                     aprendiz.getSabeleerescribir() == null ? "S" : aprendiz.getSabeleerescribir());
 

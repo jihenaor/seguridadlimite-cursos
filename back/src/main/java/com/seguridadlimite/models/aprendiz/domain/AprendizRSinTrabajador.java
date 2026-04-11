@@ -75,13 +75,13 @@ public class AprendizRSinTrabajador implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updateAt;
   
-  private Long idenfasis;
+  private Integer idenfasis;
   
   @JoinColumn(name = "idenfasis", referencedColumnName = "id", insertable = false, updatable = false)
   @ManyToOne
   private Enfasis enfasis;
   
-  private Long idnivel;
+  private Integer idnivel;
   
   @JoinColumn(name = "idnivel", referencedColumnName = "id", insertable = false, updatable = false)
   @ManyToOne
@@ -195,7 +195,7 @@ public class AprendizRSinTrabajador implements Serializable {
 
   @Basic(optional = false)
   @NotNull
-  private Long idtrabajador;
+  private Integer idtrabajador;
   
   @Basic(optional = false)
   @NotNull

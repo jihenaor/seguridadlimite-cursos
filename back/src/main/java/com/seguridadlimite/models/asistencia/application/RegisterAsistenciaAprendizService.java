@@ -31,14 +31,14 @@ public class RegisterAsistenciaAprendizService {
 		List<Asistencia> asistencias = dao.findByIdaprendizIn(aprendizIds);
 
 		// Agrupar aprendices por nivel
-Map<Long, List<Aprendiz>> aprendicesPorNivel = aprendices.stream()
- 				.collect(Collectors.groupingBy(Aprendiz::getIdnivel));
- 
- 		// Obtener diseños curriculares por nivel una sola vez
- 		Map<Long, List<Disenocurricular>> disenosPorNivel = aprendicesPorNivel.keySet().stream()
- 				.collect(Collectors.toMap(
- 						nivel -> nivel,
- 						nivel -> disenocurricular.find(nivel)
+		Map<Integer, List<Aprendiz>> aprendicesPorNivel = aprendices.stream()
+				.collect(Collectors.groupingBy(Aprendiz::getIdnivel));
+
+		// Obtener diseños curriculares por nivel una sola vez
+		Map<Integer, List<Disenocurricular>> disenosPorNivel = aprendicesPorNivel.keySet().stream()
+				.collect(Collectors.toMap(
+						nivel -> nivel,
+						nivel -> disenocurricular.find(nivel == null ? null : nivel.longValue())
 				));
 
 		aprendizIds.forEach(idaprendiz -> {

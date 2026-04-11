@@ -23,7 +23,7 @@ public class ArlServiceImpl implements IArlService {
 
     @Override
     @Transactional(readOnly = true)
-    public Arl findById(Long id) {
+    public Arl findById(Integer id) {
         return dao.findById(id).orElse(null);
     }
 
@@ -35,7 +35,7 @@ public class ArlServiceImpl implements IArlService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(Integer id) {
         dao.deleteById(id);
     }
 }

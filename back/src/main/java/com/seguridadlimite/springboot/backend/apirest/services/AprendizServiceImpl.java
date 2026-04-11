@@ -118,7 +118,7 @@ public class AprendizServiceImpl {
       	if (entity.getTienefirma() == null) {
       		entity.setTienefirma("N");
   	  	}
-		entity.setIntentos(entity.getIntentos() == null ? 0 : entity.getIntentos());
+		entity.setIntentos(entity.getIntentos() == null ? (byte) 0 : entity.getIntentos());
 		entity.setContadorcertificados(
 				entity.getContadorcertificados() == null ? (byte) 0 : entity.getContadorcertificados());
 		return dao.save(entity);

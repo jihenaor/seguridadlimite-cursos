@@ -42,12 +42,12 @@ public class TrabajadorInscripcionPojo {
 	private String representantelegal;
 	private String exception;
 	private Integer idaprendiz;
-	private Long idenfasis;
+	private Integer idenfasis;
 	private String nombreenfasis;
 	@Size(max = 40)
 	private String otroenfasis;
 	private String nombrenivel;
-	private Long idnivel;
+	private Integer idnivel;
 	private String inscripcionconscaner;
 	private String pagocurso;
 	private String tieneexperienciaaltura;

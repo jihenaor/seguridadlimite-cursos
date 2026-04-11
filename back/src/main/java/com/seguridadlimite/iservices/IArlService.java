@@ -8,9 +8,9 @@ public interface IArlService {
 
 	public List<Arl> findAll();
 
-	public Arl findById(Long id);
+	public Arl findById(Integer id);
 
 	public Arl save(Arl t);
 
-	public void delete(Long id);
+	public void delete(Integer id);
 }

@@ -26,8 +26,8 @@ public class TrabajadorfindByNumerodocumentoIdGrupoCu {
         aprendiz = aprendizDao.findByIdtrabajadorIdgrupo(t.getId(), idgrupo);
 
         t.setIdaprendiz(aprendiz.getId());
-        t.setIdenfasis(aprendiz.getEnfasis().getId());
-        t.setIdnivel(aprendiz.getNivel().getId());
+        t.setIdenfasis(aprendiz.getEnfasis().getId() == null ? null : aprendiz.getEnfasis().getId().intValue());
+        t.setIdnivel(aprendiz.getNivel().getId() == null ? null : aprendiz.getNivel().getId().intValue());
 */
         return t;
     }

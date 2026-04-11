@@ -46,7 +46,7 @@ public class AprendizSinRelaciones implements Serializable {
   @Column(name = "cumplehoras")
   private String cumplehoras;
   
-  private Long idgrupo;
+  private Integer idgrupo;
   
   @Basic(optional = false)
   @NotNull
@@ -58,7 +58,7 @@ public class AprendizSinRelaciones implements Serializable {
 
   @Basic(optional = false)
   @NotNull
-  private Long idtrabajador;
+  private Integer idtrabajador;
 
   public AprendizSinRelaciones() {
   }
