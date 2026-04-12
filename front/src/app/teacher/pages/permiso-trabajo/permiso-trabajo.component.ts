@@ -2,11 +2,9 @@ import { Component, OnInit, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { SvgIconComponent } from '../../../shared/components/svg-icon/svg-icon.component';
 
-import { PermisoTrabajoHeaderComponent } from './components/header/header.component';
 import { PermisoTrabajoFiltrosComponent } from './components/filtros/filtros.component';
 import { PermisoTrabajoTablaComponent } from './components/tabla/tabla.component';
 import { ModalPermisoComponent } from './components/modal-permiso/modal-permiso.component';
@@ -29,10 +27,9 @@ export interface PermisoTrabajo {
     imports: [
         CommonModule,
         RouterLink,
-        MatButtonModule,
-        MatIconModule,
         MatDialogModule,
         MatSnackBarModule,
+        SvgIconComponent,
         PermisoTrabajoFiltrosComponent,
         PermisoTrabajoTablaComponent
     ]

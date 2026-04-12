@@ -1,8 +1,6 @@
-// Vista consulta aprendices (admin dashboard / main)
-// — Toolbar sin `.row` dentro de `.materialTableHeader` (flex del tema + Bootstrap solapaba botones).
+// Vista consulta aprendices (admin dashboard / main): mismo patrón de tarjeta/cabecera que instructores/empresas.
 // — Scroll horizontal solo en la tabla; sin recortar el área útil del viewport.
 
-// Host del dashboard `app-main`: evita que el min-content de la tabla ensanche el viewport.
 app-main {
   display: block;
   width: 100%;
@@ -17,7 +15,7 @@ section.content.sl-dashboard-aprendices {
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  // No overflow-x aquí: el scroll horizontal queda en .sl-aprendices-table-wrap
+  background: rgb(249 250 251) !important;
 
   .container-fluid {
     max-width: 100%;
@@ -25,94 +23,90 @@ section.content.sl-dashboard-aprendices {
     box-sizing: border-box;
   }
 
-  .card {
+  .sl-dashboard-main-card {
+    color: rgb(17 24 39);
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
     overflow-x: visible;
   }
 
-  .card .body {
+  .sl-dashboard-main-card h2,
+  .sl-dashboard-main-card h2 strong {
+    color: rgb(17 24 39) !important;
+  }
+
+  .sl-dashboard-main-card .sl-dashboard-aprendices-subtitle {
+    color: rgb(107 114 128) !important;
+  }
+
+  /* Buscador + acciones: fila bajo el título para máximo ancho del input */
+  .sl-dash-main-search-row {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sl-dash-main-toolbar-actions .sl-tw-btn-primary,
+  .sl-dash-main-toolbar-actions .sl-tw-btn-primary span {
+    color: #fff !important;
+  }
+
+  .sl-dash-main-toolbar-actions .sl-tw-btn-primary app-svg-icon {
+    color: #fff !important;
+  }
+
+  .sl-dash-main-toolbar-actions .sl-tw-btn-refresh,
+  .sl-dash-main-toolbar-actions .sl-tw-btn-refresh app-svg-icon {
+    color: rgb(55 65 81) !important;
+  }
+
+  .sl-dash-main-toolbar-actions .sl-tw-btn-primary,
+  .sl-dash-main-toolbar-actions .sl-tw-btn-refresh {
+    border-radius: 1.5rem !important;
+  }
+
+  .sl-dashboard-main-card .sl-dash-main-search {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0.65rem 1rem 0.65rem 2.75rem;
+    border: 1px solid rgb(229 231 235);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255);
+    font-size: 1rem;
+    color: rgb(17 24 39) !important;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+    /* Sin min-width fijo: en flex row un min-width grande hacía que el input invadiera los botones (solapamiento). */
+  }
+
+  .sl-dashboard-main-card .sl-dash-main-search:focus {
+    border-color: rgb(59 130 246);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  .sl-dashboard-main-card .sl-dash-main-search-icon-slot {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: rgb(156 163 175) !important;
+  }
+
+  .sl-dashboard-main-card .sl-dash-main-search-icon-slot app-svg-icon {
+    color: rgb(156 163 175) !important;
+  }
+
+  .sl-dashboard-main-card .body {
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
     overflow-x: visible;
-  }
-
-  // Barra búsqueda + acciones (reemplaza row/col)
-  .materialTableHeader.sl-aprendices-toolbar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem 1rem;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-
-    .sl-aprendices-toolbar__search {
-      flex: 1 1 32rem;
-      min-width: 0;
-      max-width: 100%;
-    }
-
-    .sl-aprendices-toolbar__actions {
-      flex: 0 0 auto;
-      margin-left: auto;
-    }
-
-    .header-buttons-left {
-      display: flex;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    // El tema usa `li { display: inline-block }`, lo que encoge el input; aquí el buscador usa todo el ancho útil.
-    .header-buttons-left li.dropdown {
-      display: block;
-      flex: 1 1 auto;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      position: relative;
-      box-sizing: border-box;
-    }
-  }
-
-  .materialTableHeader .search-field {
-    max-width: 100%;
-    box-sizing: border-box;
-    min-width: 0;
-    width: 100%;
-
-    @media (min-width: 576px) {
-      min-width: 18rem;
-    }
-
-    @media (min-width: 768px) {
-      min-width: 26rem;
-    }
-
-    @media (min-width: 1200px) {
-      min-width: 34rem;
-    }
-  }
-
-  .materialTableHeader .tbl-export-btn {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    list-style: none;
-    margin: 0 !important;
-    padding: 0;
-    max-width: 100%;
-    float: none !important;
   }
 
   .sl-aprendices-table-wrap {
@@ -131,7 +125,6 @@ section.content.sl-dashboard-aprendices {
     box-sizing: border-box;
   }
 
-  // Tabla fluida: todas las columnas visibles en el ancho del card (salto de línea en textos largos).
   .sl-aprendices-table {
     table-layout: fixed;
     width: 100%;
@@ -225,10 +218,30 @@ section.content.sl-dashboard-aprendices {
       height: 22px;
     }
 
-    .sl-cell-actions .mat-mdc-mini-fab,
-    .sl-cell-actions .mat-mini-fab {
-      transform: scale(0.92);
-      transform-origin: center;
+    /* Editar: mismo patrón que instructores (icono redondeado, sin mini-fab). */
+    .sl-cell-actions .sl-inv-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.65rem;
+      height: 2.65rem;
+      border: 0;
+      border-radius: 1.5rem;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.15s ease;
+    }
+
+    .sl-cell-actions .sl-inv-btn-icon app-svg-icon {
+      color: inherit !important;
+    }
+
+    .sl-cell-actions .sl-inv-btn-icon--edit {
+      color: rgb(37 99 235) !important;
+    }
+
+    .sl-cell-actions .sl-inv-btn-icon--edit:hover {
+      background: rgb(219 234 254);
     }
 
     tbody tr:hover td,

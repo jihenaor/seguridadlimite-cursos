@@ -40,7 +40,7 @@ public class GuardarFotoTrabajadorService {
 
 		byte[] decodedString = Base64.getDecoder().decode(f.getBase64().getBytes(StandardCharsets.UTF_8));
 
-		Path dir = Path.of(getPathFiles.getFotosPath());
+		Path dir = Path.of(getPathFiles.getFotosPath()).normalize();
 		Files.createDirectories(dir);
 
 		String baseName = FOTO_PREFIX + f.getId();

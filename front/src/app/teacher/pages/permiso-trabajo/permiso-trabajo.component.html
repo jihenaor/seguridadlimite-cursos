@@ -1,27 +1,38 @@
-<section class="content mt-1 ml-64 mr-2 min-h-[calc(100vh-76px)] transition-all duration-500">
-  <div class="pt-1 pl-6">
+<section class="content sl-permiso-trabajo-page">
+  <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card shadow-lg rounded-lg">
-            <div class="header bg-gray-100 p-2 border-b border-gray-300 flex flex-wrap items-center justify-between gap-2">
-              <h2 class="text-lg font-bold mb-0">
-                <strong>Permisos de Trabajo</strong>
+        <div class="card sl-pt-card shadow-lg rounded-3xl border border-gray-100">
+          <div
+            class="header flex min-w-0 flex-col gap-4 border-b border-gray-200 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div class="min-w-0 shrink">
+              <h2 class="m-0 text-xl font-bold tracking-tight sm:text-2xl">
+                <strong>Permisos de trabajo</strong>
               </h2>
-              <button type="button" mat-raised-button color="primary" routerLink="/teacher/evaluar">
-                <mat-icon style="font-size: 20px; height: 20px; width: 20px; margin-right: 4px; vertical-align: middle;">add</mat-icon>
-                Nuevo
-              </button>
+              <p class="sl-pt-subtitle mt-1 mb-0 text-sm sm:text-base">
+                Consulta y gestión de permisos de trabajo en alturas
+              </p>
             </div>
-          <div class="body p-6">
-            <!-- Componente de filtros -->
-            <app-permiso-trabajo-filtros (filtroAplicado)="aplicarFiltro($event)"></app-permiso-trabajo-filtros>
+            <div class="sl-pt-toolbar-actions flex min-w-0 flex-wrap items-center justify-end gap-3">
+              <a
+                routerLink="/teacher/evaluar"
+                class="sl-tw-btn-primary inline-flex min-w-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:bg-blue-700 sm:px-6 no-underline">
+                <app-svg-icon name="plus" [size]="20" />
+                <span>Nuevo</span>
+              </a>
+            </div>
+          </div>
 
-            <!-- Componente de tabla con datos y estado de carga -->
+          <div class="body p-0">
+            <div class="border-b border-gray-200 bg-white px-4 py-4 sm:px-5 sm:py-5">
+              <app-permiso-trabajo-filtros (filtroAplicado)="aplicarFiltro($event)"></app-permiso-trabajo-filtros>
+            </div>
+
             <app-permiso-trabajo-tabla
               [dataSource]="dataSource()"
               [cargando]="permisoService.cargando()"
               (verDetalleEvent)="verDetalle($event)"
-              (editarPermisoEvent)="editarPermiso($event.id)"
+              (editarPermisoEvent)="editarPermiso($event)"
               (eliminarPermisoEvent)="eliminarPermiso($event)">
             </app-permiso-trabajo-tabla>
           </div>

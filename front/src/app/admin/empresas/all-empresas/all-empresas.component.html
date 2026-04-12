@@ -1,93 +1,166 @@
-<section class="content">
+<section class="content sl-empresas-page">
   <div class="container-fluid">
-    <app-pagetitle [title]="'Empresas'"></app-pagetitle>
-
-    <div class="card">
-      <div class="body">
-        <div class="materialTableHeader">
-          <div class="row">
-            <div class="col-8">
-              <ul class="header-buttons-left ml-0">
-                <li class="dropdown m-l-20">
-                  <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                  <input placeholder="Buscar" type="text" #filter class="browser-default search-field"
-                    aria-label="Search box">
-                </li>
-              </ul>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card sl-empresas-card shadow-lg rounded-3xl border border-gray-100">
+          <div
+            class="header flex min-w-0 flex-col gap-4 border-b border-gray-200 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div class="min-w-0 shrink">
+              <h2 class="m-0 text-xl font-bold tracking-tight sm:text-2xl">
+                <strong>Empresas</strong>
+              </h2>
+              <p class="sl-empresas-subtitle mt-1 mb-0 text-sm sm:text-base">
+                Consulta y administración de empresas registradas
+              </p>
             </div>
-            <div class="col-4">
-              <ul class="header-buttons tbl-export-btn">
-                <li>
-                  <div class="icon-button-demo">
-                    <button mat-mini-fab color="primary" (click)="addNew()">
-                      <mat-icon class="col-white">add</mat-icon>
-                    </button>
-                  </div>
-                </li>
-                <li>
-                  <div class="icon-button-demo">
-                    <button mat-mini-fab color="primary" (click)="refresh()">
-                      <mat-icon class="col-white">refresh
-                      </mat-icon>
-                    </button>
-                  </div>
-                </li>
-              </ul>
+            <div
+              class="flex w-full min-w-0 max-w-full flex-col gap-3 sm:w-auto sm:min-w-0 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+              <div class="relative min-w-0 w-full flex-1 sm:max-w-md lg:max-w-lg">
+                <span class="sl-emp-search-icon-slot" aria-hidden="true">
+                  <app-svg-icon name="search" [size]="20" />
+                </span>
+                <input
+                  type="text"
+                  class="sl-emp-search text-base"
+                  placeholder="Buscar por nombre o número de documento…"
+                  aria-label="Buscar empresas"
+                  [value]="searchTerm()"
+                  (input)="onSearchInput($any($event.target).value)" />
+              </div>
+              <div class="sl-empresas-toolbar-actions flex min-w-0 flex-wrap items-center justify-end gap-3">
+                <button
+                  type="button"
+                  class="sl-tw-btn-primary inline-flex min-w-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:bg-blue-700 sm:px-6"
+                  (click)="addNew()">
+                  <app-svg-icon name="plus" [size]="20" />
+                  <span>Nueva empresa</span>
+                </button>
+                <button
+                  type="button"
+                  class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+                  (click)="refresh()"
+                  aria-label="Actualizar lista de empresas"
+                  title="Actualizar lista de empresas">
+                  <app-svg-icon name="refresh" [size]="20" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="overflow-x-auto bg-white rounded-lg shadow">
-          <table class="w-full border-collapse" #table>
-            <thead>
-              <tr class="bg-gray-50 border-b border-gray-200">
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Tipo de documento</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nro de documento</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Dirección</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Teléfono</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre de contacto</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Nombre representante legal</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Enfasis</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Seleccion</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider">Certificado sin pago</th>
-                <th class="p-3 text-left text-gray-600 text-sm font-medium uppercase tracking-wider"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let row of empresaService.empresas; let i = index">
-                <tr (contextmenu)="onContextMenu($event, row)"
-                    class="border-b border-gray-100 text-gray-700 transition-colors duration-150 ease-in-out hover:bg-gray-50/80">
-                  <td class="p-3">{{ row.tipodocumento }}</td>
-                  <td class="p-3">{{ row.numerodocumento }}</td>
-                  <td class="p-3">{{ row.nombre }}</td>
-                  <td class="p-3">{{ row.direccion }}</td>
-                  <td class="p-3">{{ row.telefono }}</td>
-                  <td class="p-3">{{ row.nombrecontacto }}</td>
-                  <td class="p-3">{{ row.nombrerepresentantelegal }}</td>
-                  <td class="p-3">{{ row.enfasis?.nombre }}</td>
-                  <td class="p-3">{{ row.seleccion }}</td>
-                  <td class="p-3">{{ row.certificadosinpago }}</td>
-                  <td class="p-3 pr-4">
-                    <div class="flex gap-2">
-                      <button
-                        class="w-8 h-8 rounded-full flex items-center justify-center bg-blue-100 hover:bg-blue-200 transition-colors duration-200"
-                        (click)="editCall(row)"
-                      >
-                        <mat-icon class="text-blue-600 text-sm">edit</mat-icon>
-                      </button>
-                      <button
-                        class="w-8 h-8 rounded-full flex items-center justify-center bg-red-50 hover:bg-red-100 transition-colors duration-200"
-                        (click)="deleteItem(row)"
-                      >
-                        <mat-icon class="text-red-500 text-sm">delete</mat-icon>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-container>
-            </tbody>
-          </table>
+          <div class="body p-0">
+            <div class="table-responsive sl-empresas-table-wrap min-w-0">
+              <table class="sl-empresas-table mb-0 w-full border-collapse text-left text-sm">
+                <thead class="sticky top-0 z-[1] bg-gray-100">
+                  <tr>
+                    <th class="sl-emp-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Tipo documento
+                    </th>
+                    <th class="sl-emp-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      N.º documento
+                    </th>
+                    <th class="sl-emp-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">Nombre</th>
+                    <th class="sl-emp-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">Dirección</th>
+                    <th class="sl-emp-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Teléfono
+                    </th>
+                    <th class="sl-emp-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">Contacto</th>
+                    <th class="sl-emp-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">Representante legal</th>
+                    <th class="sl-emp-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">Énfasis</th>
+                    <th class="sl-emp-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Selección
+                    </th>
+                    <th class="sl-emp-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Certif. sin pago
+                    </th>
+                    <th
+                      class="sl-emp-th sl-empresas-actions-col px-1 py-3 text-center font-semibold sm:px-2 sm:py-3.5">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @if ((empresaService.empresas ?? []).length === 0) {
+                    <tr>
+                      <td colspan="11" class="px-6 py-16 text-center">
+                        <p class="text-base font-medium text-gray-700">No hay empresas para mostrar</p>
+                        <p class="sl-empresas-subtitle mt-1 text-sm">
+                          Ajuste la búsqueda o cree una empresa nueva.
+                        </p>
+                      </td>
+                    </tr>
+                  } @else {
+                    @for (row of empresaService.empresas ?? []; track row.id) {
+                      <tr
+                        (contextmenu)="onContextMenu($event, row)"
+                        class="transition-colors hover:bg-blue-50/30 group">
+                        <td class="sl-emp-td whitespace-nowrap px-2 py-3 sm:px-3 sm:py-3.5">
+                          {{ row.tipodocumento }}
+                        </td>
+                        <td class="sl-emp-td whitespace-nowrap px-2 py-3 font-medium sm:px-3 sm:py-3.5">
+                          {{ row.numerodocumento }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-emp-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"
+                          [title]="row.nombre">
+                          {{ row.nombre }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-emp-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"
+                          [title]="row.direccion">
+                          {{ row.direccion }}
+                        </td>
+                        <td class="sl-emp-td whitespace-nowrap px-2 py-3 sm:px-3 sm:py-3.5">
+                          {{ row.telefono }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-emp-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"
+                          [title]="row.nombrecontacto">
+                          {{ row.nombrecontacto }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-emp-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"
+                          [title]="row.nombrerepresentantelegal">
+                          {{ row.nombrerepresentantelegal }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-emp-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"
+                          [title]="row.enfasis?.nombre">
+                          {{ row.enfasis?.nombre }}
+                        </td>
+                        <td class="sl-emp-td whitespace-nowrap px-2 py-3 sm:px-3 sm:py-3.5">
+                          {{ row.seleccion }}
+                        </td>
+                        <td class="sl-emp-td whitespace-nowrap px-2 py-3 sm:px-3 sm:py-3.5">
+                          {{ row.certificadosinpago }}
+                        </td>
+                        <td
+                          class="sl-emp-td sl-empresas-actions-col px-1 py-3 sm:px-2 sm:py-3.5"
+                          (click)="$event.stopPropagation()">
+                          <div
+                            class="flex justify-center gap-1 opacity-80 transition-opacity group-hover:opacity-100">
+                            <button
+                              type="button"
+                              class="sl-emp-btn-icon sl-emp-btn-icon--edit"
+                              (click)="editCall(row)"
+                              aria-label="Editar empresa">
+                              <app-svg-icon name="pencil" [size]="20" />
+                            </button>
+                            <button
+                              type="button"
+                              class="sl-emp-btn-icon sl-emp-btn-icon--delete"
+                              (click)="deleteItem(row)"
+                              aria-label="Eliminar empresa">
+                              <app-svg-icon name="trash" [size]="20" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@
           <div class="m-b-20">
             <div class="contact-grid">
               <div class="profile-header bg-dark">
-                <div class="user-name">{{ student.nombrecompleto }}</div>
+                <div class="user-name">{{ student?.nombrecompleto }}</div>
                 <!--
                                 <div class="name-center">Trabajo en alturas</div>
                               -->
@@ -34,22 +34,22 @@
               <!--
                           <img src="assets/images/user/usrbig4.jpg" class="user-img" alt="">
                           -->
-              <ng-container *ngIf="student.foto === 'S'">
-                <img src="http://3.16.43.222:82/F{{student.id}}.jpeg" class="user-img" alt="">
+              <ng-container *ngIf="student?.foto === 'S'">
+                <img src="http://3.16.43.222:82/F{{student?.id}}.jpeg" class="user-img" alt="">
               </ng-container>
-              <ng-container *ngIf="student.foto === 'N'">
+              <ng-container *ngIf="student?.foto === 'N'">
                 <img src="assets/images/user/usrbig4.jpg" class="user-img" alt="">
               </ng-container>
               <p>
-                {{ student.tipodocumento }} {{ student.numerodocumento }}
+                {{ student?.tipodocumento }} {{ student?.numerodocumento }}
               </p>
               <div>
                 <span class="mail">
-                  <i class="material-icons">mail</i>{{ student.correoelectronico }}</span>
+                  <i class="material-icons">mail</i>{{ student?.correoelectronico }}</span>
               </div>
               <div>
                 <span class="phone">
-                  <i class="material-icons">phone</i>{{ student.celular }}</span>
+                  <i class="material-icons">phone</i>{{ student?.celular }}</span>
               </div>
               <div class="row" *ngIf="false">
                 <div class="col-4">
@@ -536,58 +536,87 @@
                             </div>
                           </div>
 
-                          <div class="card">
+                          <div class="card sl-ev-doc" *ngIf="student">
                             <div class="header">
-                              <h2>Documento del trabajador <b>Lado A</b></h2>
+                              <h2>Documento de identidad del trabajador</h2>
+                              <p class="sl-ev-doc__intro">
+                                Vista de solo lectura. Para subir o reemplazar archivos use la ficha del aprendiz
+                                <a [routerLink]="['/admin/students/about-aprendiz', aprendiz.id]">Información personal → documento del trabajador</a>.
+                              </p>
                             </div>
                             <div class="body">
-                              <div class="example-container">
-
-                                <form [formGroup]="fileUploadForm">
-                                  <div class="row">
-                                    <div class="col-4"
-                                      *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf'">
-                                      <ng-container>
-                                        <button mat-raised-button color="primary"
-                                          (click)="showPdf(student.base64a)">PDF</button>
-                                      </ng-container>
-                                    </div>
-                                  </div>
-                                  <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S'">
-                                    <div class="col-12">
-                                      <ng-container *ngIf="student !== undefined">
-                                        <img [src]="'data:image/jpeg;base64,' + student.base64a"/>
-                                      </ng-container>
-                                    </div>
-                                  </div>
-                                </form>
+                              <div
+                                class="sl-ev-doc__estado"
+                                [ngClass]="{
+                                  'sl-ev-doc__estado--ok': student.adjuntodocumento === 'S',
+                                  'sl-ev-doc__estado--pendiente': student.adjuntodocumento !== 'S'
+                                }"
+                              >
+                                <ng-container *ngIf="student.adjuntodocumento === 'S'; else docPendiente">
+                                  <strong>Estado:</strong> documento registrado.
+                                  <span class="sl-ev-doc__meta">Formato: {{ student.ext | uppercase }}.</span>
+                                  <span class="sl-ev-doc__meta" *ngIf="tieneVistaDocumentoBase64(student.base64a)">Lado A: disponible.</span>
+                                  <span class="sl-ev-doc__meta" *ngIf="tieneVistaDocumentoBase64(student.base64b)">Lado B: disponible.</span>
+                                  <span class="sl-ev-doc__meta sl-ev-doc__meta--aviso" *ngIf="!tieneVistaDocumentoBase64(student.base64b) && student.ext === 'pdf'">
+                                    Lado B: no hay vista previa en este panel (solo descarga si existe archivo).
+                                  </span>
+                                </ng-container>
+                                <ng-template #docPendiente>
+                                  <strong>Estado:</strong> aún no consta documento cargado en el sistema.
+                                  <span class="sl-ev-doc__meta">Suba el frente (lado A) y el reverso (lado B) desde la ficha del aprendiz.</span>
+                                </ng-template>
                               </div>
-                            </div>
-                          </div>
 
-                          <div class="card">
-                            <div class="header">
-                              <h2><b>Lado B</b></h2>
-                            </div>
-                            <div class="body">
                               <div class="example-container">
                                 <form [formGroup]="fileUploadForm">
-                                  <div class="row">
-                                    <div class="col-4"
-                                      *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf'">
-                                      <ng-container>
-                                        <button mat-raised-button color="primary"
-                                          (click)="showPdf(student.base64b)">PDF</button>
-                                      </ng-container>
+                                  <div class="card sl-ev-doc__lado">
+                                    <div class="header">
+                                      <h3>Lado A (frente)</h3>
+                                    </div>
+                                    <div class="body">
+                                      <div class="row">
+                                        <div class="col-12 col-md-6" *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf' && tieneVistaDocumentoBase64(student.base64a)">
+                                          <button type="button" mat-stroked-button color="primary" (click)="showPdf(student.base64a)">
+                                            Descargar / abrir PDF lado A
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S' && tieneVistaDocumentoBase64(student.base64a)">
+                                        <div class="col-12">
+                                          <p class="sl-ev-doc__caption">Vista previa imagen — lado A</p>
+                                          <img class="sl-ev-doc__img" [src]="'data:image/' + mimeImagenDocumento(student.ext) + ';base64,' + student.base64a" alt="Documento identidad lado A" />
+                                        </div>
+                                      </div>
+                                      <p class="sl-ev-doc__vacío" *ngIf="student.adjuntodocumento === 'S' && !tieneVistaDocumentoBase64(student.base64a)">
+                                        No hay datos de vista previa para el lado A (puede deberse a permisos de lectura o a que el archivo aún no se ha sincronizado).
+                                      </p>
                                     </div>
                                   </div>
-                                  <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S'">
-                                    <div class="col-12">
-                                      @if ("student !== undefined") {
-                                        <ng-container>
-                                          <img [src]="'data:image/jpeg;base64,' + student.base64b"/>
-                                        </ng-container>
-                                      }
+
+                                  <div class="card sl-ev-doc__lado">
+                                    <div class="header">
+                                      <h3>Lado B (reverso)</h3>
+                                    </div>
+                                    <div class="body">
+                                      <div class="row">
+                                        <div class="col-12 col-md-6" *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf' && tieneVistaDocumentoBase64(student.base64b)">
+                                          <button type="button" mat-stroked-button color="primary" (click)="showPdf(student.base64b)">
+                                            Descargar / abrir PDF lado B
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <div class="row" *ngIf="student.ext !== 'pdf' && student.adjuntodocumento === 'S' && tieneVistaDocumentoBase64(student.base64b)">
+                                        <div class="col-12">
+                                          <p class="sl-ev-doc__caption">Vista previa imagen — lado B</p>
+                                          <img class="sl-ev-doc__img" [src]="'data:image/' + mimeImagenDocumento(student.ext) + ';base64,' + student.base64b" alt="Documento identidad lado B" />
+                                        </div>
+                                      </div>
+                                      <p class="sl-ev-doc__vacío" *ngIf="student.adjuntodocumento === 'S' && student.ext === 'pdf' && !tieneVistaDocumentoBase64(student.base64b)">
+                                        PDF lado B: use el botón de descarga arriba cuando el archivo exista en servidor.
+                                      </p>
+                                      <p class="sl-ev-doc__vacío" *ngIf="student.adjuntodocumento === 'S' && student.ext !== 'pdf' && !tieneVistaDocumentoBase64(student.base64b)">
+                                        No hay vista previa para el lado B.
+                                      </p>
                                     </div>
                                   </div>
                                 </form>

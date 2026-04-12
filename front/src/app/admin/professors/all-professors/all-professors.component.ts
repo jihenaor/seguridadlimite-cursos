@@ -74,6 +74,16 @@ export class AllprofessorsComponent implements AfterViewInit {
     return this.dataSource?.filteredData.length ?? 0;
   }
 
+  /** Muestra el pie con paginador solo si hay más registros que caben en la página actual. */
+  get showPaginator(): boolean {
+    const total = this.filteredTotal;
+    if (total === 0) {
+      return false;
+    }
+    const pageSize = this.paginator?.pageSize ?? 20;
+    return total > pageSize;
+  }
+
   get pageRangeLabel(): string {
     if (!this.dataSource || this.loading()) {
       return '';

@@ -1,69 +1,95 @@
 <section class="content sl-dashboard-aprendices">
   <div class="container-fluid">
-    <app-pagetitle [title]="pageTitle"></app-pagetitle>
-
-    <div class="card">
-      <div class="body">
-        <div class="materialTableHeader sl-aprendices-toolbar">
-          <div class="sl-aprendices-toolbar__search">
-            <ul class="header-buttons-left ml-0">
-              <li class="dropdown m-l-20">
-                <label for="dashboard-aprendices-search-input">
-                  <i class="material-icons search-icon">search</i>
-                </label>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card sl-dashboard-main-card shadow-lg rounded-3xl border border-gray-100">
+          <div
+            class="header flex min-w-0 flex-col gap-4 border-b border-gray-200 bg-gray-50 p-4 sm:p-5">
+            <div class="min-w-0 w-full">
+              <h2 class="m-0 text-xl font-bold tracking-tight sm:text-2xl">
+                <strong>{{ pageTitle }}</strong>
+              </h2>
+              <p class="sl-dashboard-aprendices-subtitle mt-1 mb-0 text-sm sm:text-base">
+                {{ pageSubtitle }}
+              </p>
+            </div>
+            <!-- Fila propia: el buscador usa todo el ancho disponible (nombres largos) y los botones no se solapan -->
+            <div
+              class="sl-dash-main-search-row flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
+              <div class="relative min-w-0 w-full flex-1">
+                <span class="sl-dash-main-search-icon-slot" aria-hidden="true">
+                  <app-svg-icon name="search" [size]="20" />
+                </span>
                 <input
                   id="dashboard-aprendices-search-input"
-                  class="browser-default search-field"
                   type="text"
+                  class="sl-dash-main-search text-base"
                   [formControl]="searchField"
-                  placeholder="Documento, nombre o fecha inscripción (yyyy-MM-dd)"
+                  placeholder="Documento, nombre completo o fecha (yyyy-MM-dd)"
                   aria-label="Filtro de búsqueda de aprendices"
-                  autofocus
-                />
-              </li>
-            </ul>
+                  autofocus />
+              </div>
+              <div
+                class="sl-dash-main-toolbar-actions flex w-full shrink-0 flex-wrap items-center justify-end gap-3 sm:w-auto">
+                <button
+                  type="button"
+                  class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+                  (click)="search()"
+                  matTooltip="Buscar"
+                  aria-label="Buscar">
+                  <app-svg-icon name="search" [size]="20" />
+                </button>
+                <button
+                  type="button"
+                  class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+                  (click)="searchInscritos()"
+                  matTooltip="Listar inscritos hoy"
+                  aria-label="Listar inscritos hoy">
+                  <app-svg-icon name="list" [size]="20" />
+                </button>
+                @if (hasAprendices()) {
+                  <button
+                    type="button"
+                    class="sl-tw-btn-primary inline-flex min-w-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:bg-blue-700 sm:px-6"
+                    (click)="mostrarResumen()">
+                    <app-svg-icon name="bar-chart" [size]="20" />
+                    <span>Ver resumen</span>
+                  </button>
+                }
+              </div>
+            </div>
           </div>
-          <div class="sl-aprendices-toolbar__actions">
-            <ul class="header-buttons tbl-export-btn">
-              <li>
-                <button mat-mini-fab color="primary" type="button" (click)="search()" matTooltip="Buscar">
-                  <mat-icon class="col-white">search</mat-icon>
-                </button>
-              </li>
-              <li>
-                <button mat-mini-fab color="primary" type="button" (click)="searchInscritos()" matTooltip="Listar inscritos hoy">
-                  <mat-icon class="col-white">list</mat-icon>
-                </button>
-              </li>
-              <li *ngIf="hasAprendices()">
-                <button mat-raised-button color="primary" type="button" (click)="mostrarResumen()">
-                  <mat-icon>assessment</mat-icon>
-                  Ver resumen
-                </button>
-              </li>
-            </ul>
+
+          <div class="body p-0">
+            @if (aprendizInscritoFindService.loading()) {
+              <div class="text-center sl-aprendices-loading">
+                <mat-spinner diameter="40" aria-label="Cargando"></mat-spinner>
+              </div>
+            } @else {
+              @if (aprendizInscritoFindService.aprendizs(); as list) {
+                @if (list.length > 0) {
+                  <div class="px-4 pb-4 pt-2 sm:px-5 sm:pb-5">
+                    <app-aprendices-table [aprendices]="list"></app-aprendices-table>
+                  </div>
+                } @else {
+                  <div class="px-6 py-14 text-center text-gray-600">
+                    <p class="m-0 text-base font-medium text-gray-700">No se encontraron resultados.</p>
+                    <p class="sl-dashboard-aprendices-subtitle mt-2 mb-0 text-sm">
+                      Pruebe con otro documento, nombre o fecha (yyyy-MM-dd).
+                    </p>
+                  </div>
+                }
+              } @else {
+                <div class="px-6 py-14 text-center text-gray-600">
+                  <p class="m-0 text-base font-medium text-gray-700">No se encontraron resultados.</p>
+                  <p class="sl-dashboard-aprendices-subtitle mt-2 mb-0 text-sm">
+                    Realice una búsqueda para ver aprendices.
+                  </p>
+                </div>
+              }
+            }
           </div>
         </div>
-
-        @if (aprendizInscritoFindService.loading()) {
-          <div class="text-center sl-aprendices-loading">
-            <mat-spinner diameter="40" aria-label="Cargando"></mat-spinner>
-          </div>
-        } @else {
-          @if (aprendizInscritoFindService.aprendizs(); as list) {
-            @if (list.length > 0) {
-              <app-aprendices-table [aprendices]="list"></app-aprendices-table>
-            } @else {
-              <div class="text-center mt-4 mb-4 text-muted">
-                <p>No se encontraron resultados.</p>
-              </div>
-            }
-          } @else {
-            <div class="text-center mt-4 mb-4 text-muted">
-              <p>No se encontraron resultados.</p>
-            </div>
-          }
-        }
       </div>
     </div>
   </div>

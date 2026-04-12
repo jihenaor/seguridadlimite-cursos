@@ -4,13 +4,14 @@ import com.seguridadlimite.models.dao.IDocumentoaprendizDao;
 import com.seguridadlimite.models.documentoaprendiz.domain.Documentoaprendiz;
 import com.seguridadlimite.models.documentos.domain.Documento;
 import com.seguridadlimite.springboot.backend.apirest.util.GetPathFiles;
+import com.seguridadlimite.util.StorageDirectories;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Base64;
 import java.util.List;
 
@@ -58,9 +59,11 @@ public class UpdateDocumentoaprendizServiceImpl {
 
 	private void saveFile(Documentoaprendiz documentoaprendiz, Documento documento) {
 		byte[] decodedString = Base64.getDecoder().decode(documento.getBase64().getBytes(StandardCharsets.UTF_8));
-
-		try (FileOutputStream fos = new FileOutputStream(getPathFiles.getDocumentsPath() + "A" + documentoaprendiz.getId() + "." + documento.getExt())) {
-			fos.write(decodedString);
+		Path target = StorageDirectories.resolveUnder(
+				getPathFiles.getDocumentsPath(),
+				"A" + documentoaprendiz.getId() + "." + documento.getExt());
+		try {
+			StorageDirectories.writeBytes(target, decodedString);
 		} catch (IOException e) {
 			throw new RuntimeException("Error al guardar el archivo: " + e.getMessage(), e);
 		}

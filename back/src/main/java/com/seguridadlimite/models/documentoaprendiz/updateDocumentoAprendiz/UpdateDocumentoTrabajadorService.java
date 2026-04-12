@@ -5,14 +5,15 @@ import lombok.RequiredArgsConstructor;
 import com.seguridadlimite.models.dao.ITrabajadorDao;
 import com.seguridadlimite.models.entity.Trabajadordocumento;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileOutputStream;
+import com.seguridadlimite.util.StorageDirectories;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Base64;
 
 @Service
@@ -42,20 +43,16 @@ public class UpdateDocumentoTrabajadorService {
 		dao.save(trabajador);
 	}
 
-	private void saveFile(Long id, String base64,
-						  String lado,
-						  String ext)  {
-		if (base64 != null && !base64.isEmpty()) {
-			byte[] decodedString = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
-
-			try (FileOutputStream fos = new FileOutputStream(documentsPath + "D"
-					+ lado
-					+ id + "." + ext)) {
-				fos.write(decodedString);
-				//fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
-			} catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+	private void saveFile(Long id, String base64, String lado, String ext) {
+		if (base64 == null || base64.isEmpty()) {
+			return;
+		}
+		byte[] decoded = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
+		Path target = StorageDirectories.resolveUnder(documentsPath, "D" + lado + id + "." + ext);
+		try {
+			StorageDirectories.writeBytes(target, decoded);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

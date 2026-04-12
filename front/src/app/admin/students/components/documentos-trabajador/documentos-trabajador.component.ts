@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { Trabajador } from 'src/app/core/models/trabajador.model';
 import { Trabajadordocumento } from 'src/app/core/models/trabajadordocumento.model';
@@ -6,6 +6,7 @@ import { Trabajadordocumento } from 'src/app/core/models/trabajadordocumento.mod
 import { ServicesService } from 'src/app/core/service/services.service';
 import { Filebase64Service } from './../../../../core/service/filebase64.service';
 import { Aprendiz } from 'src/app/core/models/aprendiz.model';
+import { AprendizDocumentosService } from '../../about-student/aprendiz-documentos.service';
 import { FileUploadBase64Component } from '../../../../shared/components/file-upload-base64/file-upload-base64.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
@@ -15,7 +16,7 @@ import { NgIf } from '@angular/common';
     templateUrl: './documentos-trabajador.component.html',
     imports: [NgIf, MatButtonModule, FileUploadBase64Component]
 })
-export class DocumentosTrabajadorComponent implements OnInit {
+export class DocumentosTrabajadorComponent implements OnInit, OnChanges {
   @Input()
   aprendiz: Aprendiz;
   public trabajador: Trabajador;
@@ -27,18 +28,30 @@ export class DocumentosTrabajadorComponent implements OnInit {
 
   constructor(
     public service: ServicesService,
-    private filebase64Service: Filebase64Service) { }
+    private filebase64Service: Filebase64Service,
+    private aprendizDocumentosService: AprendizDocumentosService
+  ) {}
 
   ngOnInit() {
-    this.trabajador = this.aprendiz.trabajador;
+    this.syncFromAprendiz();
+  }
 
-    if (this.trabajador) {
-      this.trabajadordocumento = new Trabajadordocumento({
-        id: this.trabajador.id,
-        adjuntodocumento: this.trabajador.adjuntodocumento,
-        ext: this.trabajador.ext
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['aprendiz']) {
+      this.syncFromAprendiz();
     }
+  }
+
+  private syncFromAprendiz(): void {
+    if (!this.aprendiz?.trabajador) {
+      return;
+    }
+    this.trabajador = this.aprendiz.trabajador;
+    this.trabajadordocumento = new Trabajadordocumento({
+      id: this.trabajador.id,
+      adjuntodocumento: this.trabajador.adjuntodocumento,
+      ext: this.trabajador.ext
+    });
   }
 
   async updateDocumentoTrabajador() {
@@ -61,9 +74,11 @@ export class DocumentosTrabajadorComponent implements OnInit {
       return;
     }
     try {
-        const ra = await this.service.post('/saveDocumentotrabajador', this.trabajadordocumento);
-
-        alert('Actualización exitosa');
+      await this.service.post('/saveDocumentotrabajador', this.trabajadordocumento);
+      this.aprendizDocumentosService.getAprendiz(this.aprendiz.id);
+      this.ladoa = '';
+      this.ladob = '';
+      alert('Documento guardado. La ficha se ha actualizado con los archivos registrados.');
     } catch (error) {
       alert(error);
     }
@@ -74,7 +89,7 @@ export class DocumentosTrabajadorComponent implements OnInit {
       alert("El archivo no tiene un formato válido")
       return;
     }
-    const linkSource = 'data:application/pdf;base64,' + ' ' + base64;
+    const linkSource = 'data:application/pdf;base64,' + base64.trim();
     const downloadLink = document.createElement("a");
     const fileName = "doc.pdf";
 
@@ -83,7 +98,11 @@ export class DocumentosTrabajadorComponent implements OnInit {
     downloadLink.click();
   }
 
-  inicializarDocumentos() {
+  /**
+   * Permite elegir archivos nuevos. No borra nada en servidor hasta que pulse «Guardar documento»;
+   * en ese momento {@code saveDocumentotrabajador} vuelve a escribir las mismas rutas y sustituye el documento anterior.
+   */
+  inicializarDocumentos(): void {
     this.trabajador.adjuntodocumento = 'N';
   }
 

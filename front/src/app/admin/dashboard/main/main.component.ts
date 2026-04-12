@@ -3,35 +3,33 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { debounceTime} from 'rxjs/operators';
 
-import { NgIf } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AprendizInscritoFindService } from '../../../core/service/aprendizInscritoFind.service';
-import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
 import { AprendicesTableComponent } from '../components/aprendices-table/aprendices-table.component';
 import { ResumenInscritosModalComponent } from '../components/resumen-inscritos-modal/resumen-inscritos-modal.component';
+import { SvgIconComponent } from '../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './main.component.html',
-    imports: [
-      FormsModule,
-      ReactiveFormsModule,
-      MatButtonModule,
-      MatTooltipModule,
-      MatIconModule,
-      NgIf,
-      MatProgressSpinnerModule,
-      PagetitleComponent,
-      AprendicesTableComponent,
-    ]
+  standalone: true,
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    SvgIconComponent,
+    AprendicesTableComponent,
+  ],
 })
 export class MainComponent implements OnInit {
   readonly pageTitle = 'Consulta de aprendices';
+  readonly pageSubtitle =
+    'Busque por número de documento, nombre o fecha de inscripción (yyyy-MM-dd).';
   searchField = new FormControl('');
   public aprendizInscritoFindService = inject(AprendizInscritoFindService);
   private readonly dialog = inject(MatDialog);

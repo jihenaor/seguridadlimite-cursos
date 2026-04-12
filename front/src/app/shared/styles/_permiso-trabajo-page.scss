@@ -1,0 +1,197 @@
+// Permisos de trabajo (docente): mismo patrón visual que instructores (all-professors / sl-instructors-page).
+
+section.content.sl-permiso-trabajo-page {
+  background: rgb(249 250 251) !important;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-card {
+  color: rgb(17 24 39);
+  max-width: 100%;
+  min-width: 0;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-card h2,
+section.content.sl-permiso-trabajo-page .sl-pt-card h2 strong {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-card .sl-pt-subtitle {
+  color: rgb(107 114 128) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-primary,
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-primary span,
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions a.sl-tw-btn-primary {
+  color: #fff !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-primary app-svg-icon {
+  color: #fff !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-refresh,
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-refresh app-svg-icon {
+  color: rgb(55 65 81) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-primary,
+section.content.sl-permiso-trabajo-page .sl-pt-toolbar-actions .sl-tw-btn-refresh {
+  border-radius: 1.5rem !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-filtros-root .sl-pt-filtros-title {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-filtros-root label {
+  color: rgb(55 65 81) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-filtros-actions .sl-tw-btn-refresh,
+section.content.sl-permiso-trabajo-page .sl-pt-filtros-actions .sl-tw-btn-refresh app-svg-icon {
+  color: rgb(55 65 81) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-filtros-actions .sl-tw-btn-refresh {
+  border-radius: 1.5rem !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-section-title,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-section-title strong {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-selection-alert {
+  color: rgb(30 64 175) !important;
+  background-color: rgb(239 246 255) !important;
+  border: 1px solid rgb(191 219 254);
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-selection-alert .sl-tw-btn-primary,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-selection-alert .sl-tw-btn-primary span {
+  color: #fff !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-selection-alert .sl-tw-btn-primary app-svg-icon {
+  color: #fff !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-selection-alert .sl-tw-btn-primary {
+  border-radius: 1.5rem !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-table-wrap.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root table.mat-mdc-table,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root table.mat-table {
+  table-layout: fixed;
+  width: 100%;
+  max-width: 100%;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-mdc-header-cell,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-header-cell {
+  color: rgb(55 65 81) !important;
+  background-color: rgb(243 244 246) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-mdc-cell,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-cell {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-column-acciones {
+  width: 11rem;
+  min-width: 11rem;
+  max-width: 11rem;
+  text-align: center;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root th.mat-column-acciones,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root td.mat-column-acciones {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: -8px 0 12px -8px rgba(15, 23, 42, 0.14);
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root thead .mat-column-acciones,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root thead th.mat-column-acciones {
+  z-index: 4;
+  background: rgb(243 244 246) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-mdc-row:hover td.mat-column-acciones,
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-row:hover td.mat-column-acciones {
+  background: rgb(239 246 255) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 0;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon app-svg-icon {
+  color: inherit !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit {
+  color: rgb(37 99 235) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit:hover {
+  background: rgb(219 234 254);
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf {
+  color: rgb(220 38 38) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf:hover {
+  background: rgb(254 226 226);
+}
+
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear {
+  color: rgb(107 114 128) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear:hover {
+  background: rgb(243 244 246);
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-footer-meta {
+  color: rgb(107 114 128) !important;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-paginator {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-paginator .mat-mdc-paginator-container {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 0.35rem;
+}

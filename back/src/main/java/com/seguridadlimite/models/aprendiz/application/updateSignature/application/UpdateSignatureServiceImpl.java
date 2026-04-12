@@ -3,13 +3,14 @@ package com.seguridadlimite.models.aprendiz.application.updateSignature.applicat
 import com.seguridadlimite.models.entity.FirmaAprendiz;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import com.seguridadlimite.springboot.backend.apirest.util.GetPathFiles;
+import com.seguridadlimite.util.StorageDirectories;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Base64;
 import java.util.regex.Pattern;
 
@@ -57,10 +58,9 @@ public class UpdateSignatureServiceImpl implements IUpdateSignatureService {
                 throw new BusinessException("Contenido de firma vacío");
             }
 
-            try (FileOutputStream fos = new FileOutputStream(getPathFiles.getSignaturesPath()
-                    + "S" + f.getId() + ".png")) {
-                fos.write(decodedString);
-            }
+            Path firmaPath = StorageDirectories.resolveUnder(
+                    getPathFiles.getSignaturesPath(), "S" + f.getId() + ".png");
+            StorageDirectories.writeBytes(firmaPath, decodedString);
 
             log.info("Firma guardada exitosamente para aprendiz ID: {}", f.getId());
 

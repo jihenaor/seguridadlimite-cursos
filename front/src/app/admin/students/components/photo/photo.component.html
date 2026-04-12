@@ -1,10 +1,10 @@
 <div class="card">
   <div class="body d-flex flex-column align-items-center">
     <app-foto-trabajador [base64]="base64"></app-foto-trabajador>
-    <div class="snap-container">
-      <button class="btn btn-primary" *ngIf="!isCaptured" (click)="capture()">Tomar foto</button>
-      <button class="btn btn-primary" *ngIf="isCaptured" (click)="updateFotoTrabajador()">Guardar foto</button>
-      <button class="btn btn-danger" *ngIf="isCaptured" (click)="removeCurrent()">Tomar otra foto</button>
+    <div class="snap-container d-flex flex-wrap justify-content-center gap-2">
+      <button type="button" mat-raised-button color="primary" *ngIf="!isCaptured" (click)="capture()">Tomar foto</button>
+      <button type="button" mat-raised-button color="primary" *ngIf="isCaptured" (click)="updateFotoTrabajador()">Guardar foto</button>
+      <button type="button" mat-stroked-button color="warn" *ngIf="isCaptured" (click)="removeCurrent()">Tomar otra foto</button>
     </div>
     <div class="video-container" *ngIf="!error">
       <video [class.show]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT" autoplay></video>

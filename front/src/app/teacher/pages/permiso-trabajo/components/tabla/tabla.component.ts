@@ -2,11 +2,9 @@ import { Component, EventEmitter, Input, Output, OnInit, AfterViewInit } from '@
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SvgIconComponent } from '../../../../../shared/components/svg-icon/svg-icon.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { ServicesService } from '../../../../../core/service/services.service';
@@ -36,12 +34,9 @@ export interface PermisoTrabajo {
         CommonModule,
         MatTableModule,
         MatPaginatorModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
         MatCheckboxModule,
-        AprendicesMinisterioComponent
+        MatTooltipModule,
+        SvgIconComponent
     ]
 })
 export class PermisoTrabajoTablaComponent implements OnInit, AfterViewInit {

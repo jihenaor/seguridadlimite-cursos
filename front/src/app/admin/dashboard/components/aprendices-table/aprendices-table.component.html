@@ -49,13 +49,12 @@
           <td>{{ aprendiz.idtrabajador }} — {{ aprendiz.id }}</td>
           <td class="sl-cell-actions">
             <button
-              mat-mini-fab
-              color="primary"
               type="button"
+              class="sl-inv-btn-icon sl-inv-btn-icon--edit"
               (click)="irTrabajador(aprendiz.idtrabajador, aprendiz.id)"
               matTooltip="Editar ficha"
-            >
-              <mat-icon aria-hidden="true" class="col-white">edit</mat-icon>
+              aria-label="Editar ficha del aprendiz">
+              <app-svg-icon name="pencil" [size]="20" />
             </button>
           </td>
         </tr>

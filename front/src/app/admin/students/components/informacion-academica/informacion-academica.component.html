@@ -19,7 +19,7 @@
 
       </mat-panel-description>
 
-      <div class="sl-inscripcion-toolbar">
+      <div class="sl-inscripcion-toolbar sl-inscripcion-toolbar--docs">
         <div class="sl-inscripcion-toolbar__meta">
           <span class="sl-inscripcion-toolbar__label">Aprendiz</span>
           <span class="sl-inscripcion-toolbar__id">#{{ aprendiz.id }}</span>
@@ -29,19 +29,40 @@
             type="button"
             mat-stroked-button
             color="primary"
-            [matMenuTriggerFor]="menuInformesPdf"
+            [matMenuTriggerFor]="menuFormatosInformes"
             aria-haspopup="menu"
-            aria-label="Abrir menú de informes en PDF">
+            aria-label="Abrir menú de formatos e informes en PDF">
             <mat-icon>picture_as_pdf</mat-icon>
-            <span class="sl-inscripcion-toolbar__btn-text">Informes PDF</span>
+            <span class="sl-inscripcion-toolbar__btn-text">Formatos e informes PDF</span>
           </button>
-          <mat-menu #menuInformesPdf="matMenu">
-            <student-informe-formato-inscripcion [idaprendiz]="aprendiz.id" />
-            <aprendiz-informe-perfil-ingreso [idaprendiz]="aprendiz.id" />
-            <app-formato-evaluacion [idaprendiz]="aprendiz.id" />
+          <mat-menu #menuFormatosInformes="matMenu">
+            <button mat-menu-item type="button" [disabled]="loading" (click)="showPdf('formatoinscripcion')">
+              <mat-icon>description</mat-icon>
+              <span>Formato de inscripción</span>
+            </button>
+            <button mat-menu-item type="button" [disabled]="loading" (click)="showPdf('perfilingreso')">
+              <mat-icon>person_outline</mat-icon>
+              <span>Perfil de ingreso</span>
+            </button>
+            <button mat-menu-item type="button" [disabled]="loading" (click)="downloadFormatoEvaluacionPdf()">
+              <mat-icon>assessment</mat-icon>
+              <span>Formato de evaluación</span>
+            </button>
+            <button mat-menu-item type="button" [disabled]="loading" (click)="showPdf('asistenciaaprendizreport')">
+              <mat-icon>event_note</mat-icon>
+              <span>Asistencia</span>
+            </button>
+            <button mat-menu-item type="button" [disabled]="loadingEncuesta" (click)="downloadEncuesta()">
+              <mat-icon>poll</mat-icon>
+              <span>Encuesta</span>
+            </button>
           </mat-menu>
         </div>
       </div>
+      <p class="sl-inscripcion-toolbar__loading-hint" *ngIf="loading || loadingEncuesta">
+        <mat-spinner diameter="18" />
+        <span>Generando o descargando documento…</span>
+      </p>
 
       @if (aprendiz.idPermiso) {
         <div class="mb-6">
@@ -487,144 +508,68 @@
       </div>
 
       <div class="row">
-        <div class="card">
+        <div class="card sl-inscripcion-certificados">
           <div class="header">
-            <h2>DOCUMENTOS Y ACCIONES</h2>
+            <h2>Certificados</h2>
+            <p class="sl-inscripcion-certificados__subtitle text-muted">
+              Los formatos e informes en PDF están en el menú <strong>Formatos e informes PDF</strong> arriba.
+            </p>
           </div>
           <div class="body">
-            <!-- Documentos -->
-            <div class="row mb-4">
-              <h4 class="text-muted mb-2">Formatos</h4>
-              <div class="d-flex gap-2 flex-wrap">
+            <div class="d-flex gap-2 flex-wrap align-items-start">
+              <input
+                type="file"
+                accept="application/pdf"
+                (change)="subirCertificadoPDF($event)"
+                style="display: none"
+                #fileInput>
 
-                <!-- En la sección de botones -->
-                <button mat-raised-button color="basic" [disabled]="loading" (click)="showPdf('formatoinscripcion')"
-                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                  <mat-icon class="text-gray-600">description</mat-icon>
-                  @if (!loading) {
-                    <span class="text-gray-700">Formato de inscripción</span>
-                  } @else {
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <mat-spinner diameter="20"></mat-spinner>
-                      <span>Descargando...</span>
-                    </div>
-                  }
-                </button>
+              <button
+                mat-stroked-button
+                color="primary"
+                [disabled]="!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0"
+                (click)="fileInput.click()"
+                class="sl-about-student-doc-btn inline-flex items-center gap-2">
+                <mat-icon>upload</mat-icon>
+                <span class="text-gray-700">Subir certificado</span>
+              </button>
 
-                <button mat-raised-button color="basic" [disabled]="loading" (click)="showPdf('asistenciaaprendizreport')"
-                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                  <mat-icon class="text-gray-600">description</mat-icon>
-                  @if (!loading) {
-                    <span class="text-gray-700">Asistencia</span>
-                  } @else {
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <mat-spinner diameter="20"></mat-spinner>
-                      <span>Descargando...</span>
-                    </div>
-                  }
-                </button>
-
-                <button mat-raised-button color="basic" [disabled]="loadingEncuesta" (click)="downloadEncuesta()"
-                        class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                  <mat-icon class="text-gray-600">description</mat-icon>
-                  @if (!loadingEncuesta) {
-                    <span class="text-gray-700">Encuesta</span>
-                  } @else {
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <mat-spinner diameter="20"></mat-spinner>
-                      <span>Descargando...</span>
-                    </div>
-                  }
-                </button>
-
-<!--
-                <button
-                  mat-raised-button
-                  color="basic"
-                  (click)="showPerfilIngreso()">
-                  <mat-icon>person_outline</mat-icon>
-                  Perfil de ingreso
-                </button>
-
-                <button
-                  mat-raised-button
-                  color="basic"
-                  (click)="showFormatoEvaluacion()">
-                  <mat-icon>assessment</mat-icon>
-                  Formato de evaluación
-                </button>
-
-                <button
-                  mat-raised-button
-                  color="basic"
-                  (click)="showFormatoAsistencia()">
-                  <mat-icon>event_note</mat-icon>
-                  Formato de Asistencia
-                </button>
-              </div>
+              <button
+                mat-stroked-button
+                color="primary"
+                [disabled]="loadingCertificado"
+                (click)="descargarCertificadoPDF()"
+                class="sl-about-student-doc-btn inline-flex items-center gap-2">
+                <mat-icon>download</mat-icon>
+                @if (!loadingCertificado) {
+                  <span class="text-gray-700">Descargar certificado</span>
+                } @else {
+                  <span class="inline-flex items-center gap-2 text-gray-600">
+                    <mat-spinner diameter="20" />
+                    <span>Descargando…</span>
+                  </span>
+                }
+              </button>
             </div>
--->
-          </div>
-
-          <div class="row mt-4">
-            <div class="col-12">
-              <h4 class="text-muted mb-2">Certificados</h4>
-              <div>
-
-                <div class="d-flex gap-2 flex-wrap">
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    (change)="subirCertificadoPDF($event)"
-                    style="display: none"
-                    #fileInput>
-
-                  <button
-                    mat-raised-button
-                    color="basic"
-                    [disabled]="!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0"
-                    (click)="fileInput.click()"
-                    class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                    <mat-icon class="text-gray-600">upload</mat-icon>
-                    <span class="text-gray-700">Subir Certificado</span>
-                  </button>
-                  @if (!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0) {
-                  <p class="text-red-500 text-sm mt-2">
-                    Debe ingresar un código de verificación antes de subir el certificado
-                  </p>
-                  }
-
-                  <button
-                    mat-raised-button
-                    color="basic"
-                    [disabled]="loading"
-                    (click)="descargarCertificadoPDF()"
-                    class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                    <mat-icon class="text-gray-600">download</mat-icon>
-                    @if (!loading) {
-                      <span class="text-gray-700">Descargar certificado</span>
-                    } @else {
-                      <div class="flex items-center gap-2 text-gray-600">
-                        <mat-spinner diameter="20"></mat-spinner>
-                        <span>Descargando...</span>
-                      </div>
-                    }
-                  </button>
-                </div>
-              </div>
-            </div>
+            @if (!aprendiz.codigoverificacion || aprendiz.codigoverificacion?.length === 0) {
+              <p class="text-red-500 text-sm mt-2 mb-0">
+                Debe ingresar un código de verificación antes de subir el certificado.
+              </p>
+            }
           </div>
         </div>
       </div>
+    </mat-accordion>
   </div>
 
   <div class="row mt-3">
     <div class="col-12">
       <button
+        type="button"
         mat-raised-button
         (click)="updateAprendiz()"
         color="primary"
-        class="btn-lg">
+        class="inline-flex items-center gap-2">
         <mat-icon>save</mat-icon>
         Guardar
       </button>

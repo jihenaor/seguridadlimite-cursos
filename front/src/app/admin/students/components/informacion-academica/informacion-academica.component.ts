@@ -19,10 +19,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormatoEvaluacionComponent } from '../formato-evaluacion/formato-evaluacion.component';
-import { InformePerfilIngresoComponent } from '../informe-perfil-ingreso/informe-perfil-ingreso.component';
-import { InformeFormatoInscripcionComponent } from '../informe-formato-inscripcion/informe-formato-inscripcion.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -44,10 +42,7 @@ import { MatCardModule } from '@angular/material/card';
     imports: [
         MatExpansionModule,
         NgIf,
-        RouterLink, MatButtonModule, MatMenuModule, MatIconModule,
-        InformeFormatoInscripcionComponent,
-        InformePerfilIngresoComponent,
-        FormatoEvaluacionComponent,
+        RouterLink, MatButtonModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule,
         MatFormFieldModule,
         MatSelectModule,
         MatCardModule,
@@ -72,6 +67,8 @@ export class InformacionAcademicaComponent implements OnInit {
   public nivels: Nivel[];
   public loading = false;
   public loadingEncuesta = false;
+  /** Descarga de certificado (independiente de `loading` de PDFs de formatos). */
+  public loadingCertificado = false;
 
   constructor(
     private datevalidatorService: DatevalidatorService,
@@ -152,17 +149,17 @@ export class InformacionAcademicaComponent implements OnInit {
   }
 
   descargarCertificadoPDF() {
-    this.loading = true;
+    this.loadingCertificado = true;
 
     this.descargarCertificadoService.downloadCertificado(this.aprendiz.id).subscribe({
       next: (reporte) => {
         this.downloadPDF(reporte, 'certificado.pdf');
         this.notificacionService.displaySuccess('Certificado descargado exitosamente');
 
-        this.loading = false;
+        this.loadingCertificado = false;
       },
       error: (error) => {
-        this.loading = false;
+        this.loadingCertificado = false;
 
         if (error === 'No existe código de verificación' || error === 'No se encontro el certificado del aprendiz') {
           this.notificacionService.displayWarning(error);
@@ -199,6 +196,25 @@ export class InformacionAcademicaComponent implements OnInit {
       downloadLink.download = fileName;
       downloadLink.click();
     } catch (error) {
+      this.loading = false;
+    }
+  }
+
+  /** Misma API que el antiguo `app-formato-evaluacion` (ruta distinta a `showPdf`). */
+  async downloadFormatoEvaluacionPdf(): Promise<void> {
+    this.loading = true;
+    try {
+      const r = await this.service.executeFetch('/formatoevaluacion/' + this.aprendiz.id);
+      this.loading = false;
+      if (!r?.base64) {
+        return;
+      }
+      const linkSource = 'data:application/pdf;base64,' + r.base64 + '\n';
+      const downloadLink = document.createElement('a');
+      downloadLink.href = linkSource;
+      downloadLink.download = 'formatoevaluacion.pdf';
+      downloadLink.click();
+    } catch {
       this.loading = false;
     }
   }

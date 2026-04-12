@@ -1,68 +1,99 @@
 <div class="body">
   <div class="card">
-
     <div class="row">
       <div class="col-lg-6 col-md-6">
-
         <div class="card m-b-20">
-
-          
           @if (mediaService.firmaObtenida()) {
-            <img style="width: 200px; height: 100px;" [src]="transformFirma()" alt="firma">
+            <img style="width: 200px; height: 100px;" [src]="transformFirma()" alt="firma" />
           } @else {
             <div class="text-center p-3">
               <p class="text-muted">No hay firma disponible</p>
             </div>
           }
         </div>
-        <div class="card m-b-20">
-          <canvas id="cnv" name="cnv" width="500" height="100"></canvas>
-          <canvas #sigImg width="500" height="100"></canvas>
-        </div>
       </div>
+    </div>
 
-      <div class="col-lg-6 col-md-6">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card">
+    <mat-tab-group
+      class="firma-tabs"
+      animationDuration="200ms"
+      (selectedIndexChange)="onFirmaTabChange($event)"
+    >
+      <mat-tab label="Tablet Topaz (principal)">
+        <div class="pt-4">
+          <p class="text-muted small mb-3">
+            Dispositivo Topaz: pulse Capturar, firme en la tableta y luego Guardar.
+          </p>
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="card m-b-20">
+                <canvas id="cnv" name="cnv" width="500" height="100"></canvas>
+                <canvas #sigImg width="500" height="100"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                  <div style="text-align: center">
+                    <div class="snap-container">
+                      <div class="flex flex-wrap items-center justify-center gap-2">
+                        <button type="button" mat-raised-button color="primary" (click)="onSign()">
+                          <span class="inline-flex items-center gap-2">
+                            <app-svg-icon name="pencil" [size]="18" />
+                            <span>Capturar</span>
+                          </span>
+                        </button>
+                        <button type="button" mat-stroked-button color="primary" (click)="onClear()">
+                          <span class="inline-flex items-center gap-2">
+                            <app-svg-icon name="trash" [size]="18" />
+                            <span>Limpiar</span>
+                          </span>
+                        </button>
+                        <button type="button" mat-raised-button color="primary" (click)="onDone()">
+                          <span class="inline-flex items-center gap-2">
+                            <app-svg-icon name="save" [size]="18" />
+                            <span>Guardar</span>
+                          </span>
+                        </button>
+                      </div>
+                      <br />
+                      <br />
+                      <ng-container [formGroup]="formGroup">
+                        <mat-form-field>
+                          <mat-label>bioSigData</mat-label>
+                          <textarea matInput formControlName="bioSigData" placeholder="bioSigData:"></textarea>
+                        </mat-form-field>
 
-              <div style="text-align:center">
+                        <mat-form-field>
+                          <mat-label>sigImgData</mat-label>
+                          <textarea matInput formControlName="sigImgData" placeholder="sigImgData:"></textarea>
+                        </mat-form-field>
 
-                <div class="snap-container">
-                  <div>
-                    <button mat-raised-button (click)="onSign()">  Capturar
-                    </button>
-                    <button mat-raised-button (click)="onClear()">Limpiar</button>
-                    <button mat-raised-button (click)="onDone()">Guardar</button>
-                    <br>
-                    <br>
-                    <ng-container [formGroup]="formGroup">
-                      <mat-form-field>
-                        <mat-label>bioSigData</mat-label>
-                        <textarea matInput formControlName="bioSigData" placeholder="bioSigData:"></textarea>
-                      </mat-form-field>
-
-                      <mat-form-field>
-                        <mat-label>sigImgData</mat-label>
-                        <textarea matInput formControlName="sigImgData" placeholder="sigImgData:"></textarea>
-                      </mat-form-field>
-
-                      <br>
-                      <br>
-                      <mat-form-field>
-                        <mat-label>SigString</mat-label>
-                        <textarea matInput formControlName="sigStringData" placeholder="SigString:"></textarea>
-                      </mat-form-field>
-                      <mat-form-field>
-                        <mat-label>Base64 String</mat-label>
-                        <textarea matInput formControlName="sigImageData" placeholder="Base64 String:"></textarea>
-                      </mat-form-field>
-                    </ng-container>
+                        <br />
+                        <br />
+                        <mat-form-field>
+                          <mat-label>SigString</mat-label>
+                          <textarea matInput formControlName="sigStringData" placeholder="SigString:"></textarea>
+                        </mat-form-field>
+                        <mat-form-field>
+                          <mat-label>Base64 String</mat-label>
+                          <textarea matInput formControlName="sigImageData" placeholder="Base64 String:"></textarea>
+                        </mat-form-field>
+                      </ng-container>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+
+      <mat-tab label="Firma en pantalla (alternativa)">
+        <div class="pt-4">
+          <app-firma-canvas-capture [ancho]="700" [alto]="240" (firmaBase64)="onFirmaPantalla($event)" />
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

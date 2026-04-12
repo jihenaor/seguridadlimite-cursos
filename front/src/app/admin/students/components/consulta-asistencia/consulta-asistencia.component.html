@@ -58,7 +58,7 @@
 
             <td>
               @if(!asistencia.fecha || asistencia.fecha.length !== 10) {
-                <button mat-raised-button color="secondary"
+                <button type="button" mat-raised-button color="primary"
                   (click)="onChangeAsistencia(asistencia)"
                   [disabled]="isLoading()">
                   Registrar

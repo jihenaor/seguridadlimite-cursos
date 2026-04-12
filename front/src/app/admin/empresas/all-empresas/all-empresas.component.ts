@@ -1,59 +1,42 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 import { EmpresasService } from './empresas.service';
-
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
-
-import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { NgFor } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
+import { Empresa } from '../../../core/models/empresa.model';
+import { SvgIconComponent } from '../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
-    selector: 'app-all-empresas',
-    templateUrl: './all-empresas.component.html',
-    imports: [
-        PagetitleComponent,
-        MatButtonModule,
-        MatIconModule,
-        NgFor,
-    ]
+  standalone: true,
+  selector: 'app-all-empresas',
+  templateUrl: './all-empresas.component.html',
+  imports: [MatDialogModule, SvgIconComponent],
 })
 export class AllEmpresasComponent implements OnInit {
-  id: number;
+  id!: number;
+  readonly searchTerm = signal('');
 
   constructor(
     public dialog: MatDialog,
     public empresaService: EmpresasService,
-  ) {
-  }
-  @ViewChild('filter', { static: true }) filter: ElementRef;
+  ) {}
 
-//  isExpansionDetailRow = (i: number, row: Curso) => this.expandedElement !== undefined && row.id === this.expandedElement.id;
-
-  ngOnInit() {
-    this.loadData();
-
-    const searchInput = this.filter.nativeElement;
-
-    fromEvent(searchInput, 'input')
-      .pipe(
-        map((event: Event) => (event.target as HTMLInputElement).value),
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe((searchTerm: string) => {
-        this.empresaService.filter(searchTerm);
-      });
-  }
-
-  refresh() {
+  ngOnInit(): void {
     this.loadData();
   }
 
-  async addNew() {
+  onSearchInput(value: string): void {
+    this.searchTerm.set(value);
+    this.empresaService.filter(value);
+  }
+
+  refresh(): void {
+    this.searchTerm.set('');
+    this.empresaService.filter('');
+    this.loadData();
+  }
+
+  addNew(): void {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         action: 'add',
@@ -61,10 +44,12 @@ export class AllEmpresasComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
+        this.empresaService.getAllEmpresas();
       }
     });
   }
-  editCall(row) {
+
+  editCall(row: Empresa): void {
     this.id = row.id;
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
@@ -80,8 +65,17 @@ export class AllEmpresasComponent implements OnInit {
     });
   }
 
-  public loadData() {
+  /** Sin menú contextual por defecto (evita el menú nativo del navegador). */
+  onContextMenu(event: MouseEvent, _row: Empresa): void {
+    event.preventDefault();
+  }
+
+  /** El borrado en backend no está cableado en este módulo; mantiene la UI coherente. */
+  deleteItem(_row: Empresa): void {
+    void _row;
+  }
+
+  loadData(): void {
     this.empresaService.getAllEmpresas();
   }
 }
-

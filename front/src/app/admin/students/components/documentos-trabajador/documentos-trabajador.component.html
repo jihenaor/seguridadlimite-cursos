@@ -19,7 +19,7 @@
                 @if (trabajador.adjuntodocumento === 'S' && trabajador.ext === 'pdf') {
                   <div class="col-8">
                     <ng-container>
-                      <button mat-raised-button color="secondary" (click)="showPdf(trabajador.base64a)">PDF</button>
+                      <button type="button" mat-stroked-button color="primary" (click)="showPdf(trabajador.base64a)">PDF</button>
                     </ng-container>
                   </div>
                 }
@@ -49,7 +49,7 @@
                   @if (trabajador.adjuntodocumento === 'S' && trabajador.ext === 'pdf') {
                     <div class="col-8">
                       <ng-container>
-                        <button mat-raised-button color="secondary" (click)="showPdf(trabajador.base64b)">PDF</button>
+                        <button type="button" mat-stroked-button color="primary" (click)="showPdf(trabajador.base64b)">PDF</button>
                       </ng-container>
                     </div>
                   }
@@ -80,8 +80,14 @@
                 </button>
               </div>
               <div class="example-container" *ngIf="trabajador.adjuntodocumento === 'S'">
+                <p class="sl-doc-trabajador__reemplazo">
+                  Solo puede haber <strong>un</strong> documento de identidad por trabajador. Si sube archivos nuevos y guarda,
+                  los archivos en servidor <strong>sustituyen</strong> al documento actual (mismas rutas de almacenamiento).
+                </p>
                 <button *ngIf="trabajadordocumento !== undefined || trabajadordocumento.ext !== undefined"
-                  mat-raised-button color="secondary" (click)="inicializarDocumentos()">Subir otro documento
+                  type="button" mat-stroked-button color="primary" (click)="inicializarDocumentos()"
+                  title="Muestra los selectores de archivo; al guardar, el nuevo documento reemplaza al anterior.">
+                  Subir otro documento (reemplaza el documento anterior)
                 </button>
               </div>
         </div>

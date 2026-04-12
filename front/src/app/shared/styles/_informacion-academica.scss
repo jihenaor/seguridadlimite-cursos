@@ -53,3 +53,20 @@
     display: none;
   }
 }
+
+.sl-inscripcion-toolbar__loading-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0 0 0.75rem;
+  padding: 0 0.15rem;
+}
+
+.sl-inscripcion-certificados__subtitle {
+  font-size: 0.8125rem;
+  margin: 0.35rem 0 0;
+  font-weight: 400;
+  line-height: 1.4;
+}

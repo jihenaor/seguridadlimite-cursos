@@ -151,7 +151,50 @@ public class Trabajador implements Serializable {
   public Trabajador(Long id) {
     this.id = id;
   }
-  
+
+  /**
+   * {@code nombrecompleto} no es columna en BD; se arma al cargar la entidad para que DTOs
+   * (p. ej. {@code AprendizEvaluacionMapper}) y APIs como {@code /api/aprendiz/{filtro}/filtro} lo reciban poblado.
+   */
+  @PostLoad
+  private void rellenarNombreCompleto() {
+    this.nombrecompleto = construirNombreCompleto();
+  }
+
+  private static String construirNombreCompleto(
+      String primernombre,
+      String segundonombre,
+      String primerapellido,
+      String segundoapellido) {
+    StringBuilder sb = new StringBuilder();
+    appendNombreParte(sb, primernombre);
+    appendNombreParte(sb, segundonombre);
+    appendNombreParte(sb, primerapellido);
+    appendNombreParte(sb, segundoapellido);
+    if (sb.length() == 0) {
+      return null;
+    }
+    return sb.toString().trim().replaceAll("\\s+", " ");
+  }
+
+  private String construirNombreCompleto() {
+    return construirNombreCompleto(primernombre, segundonombre, primerapellido, segundoapellido);
+  }
+
+  private static void appendNombreParte(StringBuilder sb, String parte) {
+    if (parte == null) {
+      return;
+    }
+    String t = parte.trim();
+    if (t.isEmpty()) {
+      return;
+    }
+    if (sb.length() > 0) {
+      sb.append(' ');
+    }
+    sb.append(t);
+  }
+
   public Trabajador(Exception e) {
 	  try {
 		  StringWriter sw = new StringWriter();

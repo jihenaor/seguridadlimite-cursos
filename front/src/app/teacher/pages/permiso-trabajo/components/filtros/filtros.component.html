@@ -1,44 +1,53 @@
-<div class="row mb-2">
-  <div class="col-md-12">
-    <div class="shadow-md rounded-lg border-none">
-      <div class="p-2">
-        <h5 class="text-indigo-600 font-medium mb-2">Filtros</h5>
-        <div class="row">
+<div class="sl-pt-filtros-root min-w-0">
+  <h3 class="sl-pt-filtros-title m-0 mb-3 text-base font-semibold tracking-tight sm:text-lg">Filtros</h3>
+  <div class="row g-3">
+    <div class="col-12 col-sm-6 col-lg-2">
+      <label for="codigoMinisterio" class="block mb-1">Código ministerio</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <input id="codigoMinisterio" matInput [(ngModel)]="codigoministerio" />
+      </mat-form-field>
+    </div>
 
-          <div class="col-md-2">
-            <label for="fechaDesde" class="block mb-1">Código Ministerio</label>
-            <mat-form-field appearance="outline" class="w-full">
-              <input matInput [(ngModel)]="codigoministerio">
-            </mat-form-field>
-          </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <label for="fechaDesde" class="block mb-1">Válido desde inicial</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <input id="fechaDesde" matInput [matDatepicker]="pickerDesde" [(ngModel)]="fechaDesde" />
+        <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDesde></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-          <div class="col-md-3">
-            <label for="fechaDesde" class="block mb-1">Valido Desde incial</label>
-            <mat-form-field appearance="outline" class="w-full">
-              <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="fechaDesde">
-              <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
-              <mat-datepicker #pickerDesde></mat-datepicker>
-            </mat-form-field>
-          </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <label for="fechaHasta" class="block mb-1">Válido desde final</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <input id="fechaHasta" matInput [matDatepicker]="pickerHasta" [(ngModel)]="fechaHasta" />
+        <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+        <mat-datepicker #pickerHasta></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-
-          <div class="col-md-3">
-            <label for="fechaHasta" class="block mb-1">Valido desde final</label>
-            <mat-form-field appearance="outline" class="w-full">
-              <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="fechaHasta">
-              <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
-              <mat-datepicker #pickerHasta></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 flex items-center">
-            <button mat-raised-button color="primary" (click)="aplicarFiltro()" class="mr-2">
-              <mat-icon>search</mat-icon> Buscar
-            </button>
-            <button mat-icon-button color="warn" (click)="limpiarFiltros()" matTooltip="Limpiar filtros">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </div>
-        </div>
+    <div class="col-12 col-lg-4 sl-pt-filtros-actions">
+      <!-- Misma franja que label + campo en las demás columnas (evita que los botones caigan al fondo de la fila). -->
+      <label class="mb-1 block select-none" aria-hidden="true">
+        <span class="invisible">Válido desde inicial</span>
+      </label>
+      <div class="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+          (click)="aplicarFiltro()"
+          matTooltip="Buscar"
+          aria-label="Buscar">
+          <app-svg-icon name="search" [size]="20" />
+        </button>
+        <button
+          type="button"
+          class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+          (click)="limpiarFiltros()"
+          matTooltip="Limpiar filtros"
+          aria-label="Limpiar filtros">
+          <app-svg-icon name="close" [size]="20" />
+        </button>
       </div>
     </div>
   </div>

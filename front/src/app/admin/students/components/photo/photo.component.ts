@@ -4,6 +4,7 @@ import { Fototrabajador } from '../../../../core/models/fototrabajador.model';
 
 import { AfterViewInit, ElementRef, ViewChild } from "@angular/core";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { FotoTrabajadorComponent } from '../foto-trabajador/foto-trabajador.component';
 
@@ -15,6 +16,7 @@ import { FotoTrabajadorComponent } from '../foto-trabajador/foto-trabajador.comp
         FotoTrabajadorComponent,
         NgIf,
         MatProgressBarModule,
+        MatButtonModule,
     ]
 })
 export class PhotoComponent implements OnInit, AfterViewInit {

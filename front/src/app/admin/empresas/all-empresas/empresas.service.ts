@@ -30,14 +30,14 @@ export class EmpresasService {
   }
 
   filter(filter: string) {
+    const base = this._empresas ?? [];
     if (!filter || filter.length === 0) {
-      this._empresasFiltered = this._empresas;
+      this._empresasFiltered = [...base];
     } else {
-      this._empresasFiltered = this._empresasFiltered = this.empresas
-      .filter((empresa: Empresa) => {
+      const searchTerm = filter.toLowerCase();
+      this._empresasFiltered = base.filter((empresa: Empresa) => {
         const searchStr = (empresa.nombre || '').toLowerCase();
         const nitStr = (empresa.numerodocumento || '').toLowerCase();
-        const searchTerm = filter.toLowerCase();
         return searchStr.indexOf(searchTerm) !== -1 || nitStr.indexOf(searchTerm) !== -1;
       });
     }

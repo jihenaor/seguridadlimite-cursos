@@ -21,7 +21,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { NgIf, NgFor, DecimalPipe, NgClass, UpperCasePipe } from '@angular/common';
 
 @Component({
     selector: 'app-evaluacion-perfil',
@@ -73,12 +73,32 @@ export class EvaluacionperfilComponent implements OnInit {
     });
   }
 
+  /** Alias de plantilla: datos del trabajador enlazados al aprendiz. */
+  get student(): Trabajador | undefined {
+    return this.aprendiz?.trabajador;
+  }
+
+  tieneVistaDocumentoBase64(value?: string | null): boolean {
+    return !!value && value.trim().length > 40;
+  }
+
+  mimeImagenDocumento(ext?: string | null): string {
+    const e = (ext || 'jpeg').toLowerCase();
+    if (e === 'png') {
+      return 'png';
+    }
+    if (e === 'jpg' || e === 'jpeg') {
+      return 'jpeg';
+    }
+    return 'jpeg';
+  }
+
   transform(base64) {
     return this.sanitizer.bypassSecurityTrustResourceUrl('data:image/' + this.aprendiz.trabajador.ext + ';base64,' + base64);
   }
 
   showPdf(base64: string) {
-    const linkSource = 'data:application/pdf;base64,' + ' ' + base64;
+    const linkSource = 'data:application/pdf;base64,' + (base64?.trim() ?? '');
     const downloadLink = document.createElement("a");
     const fileName = "doc.pdf";
 
@@ -89,7 +109,8 @@ export class EvaluacionperfilComponent implements OnInit {
 
   async loadData() {
     if (this.idaprendiz) {
-      this.aprendiz = await this.service.executeFetch('/aprendize/' + this.idaprendiz);
+      // Misma carga que la ficha about-aprendiz: incluye documento identidad (lados A/B) en base64.
+      this.aprendiz = await this.service.executeFetch('/aprendiz/' + this.idaprendiz + '/documentos');
 
       this.trabajadordocumento = new Trabajadordocumento({
         id: this.aprendiz.trabajador.id,

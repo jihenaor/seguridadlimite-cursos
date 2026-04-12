@@ -190,7 +190,8 @@
             </div>
 
             <div
-              class="flex min-w-0 flex-col gap-2 border-t border-gray-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
+              class="flex min-w-0 flex-col gap-2 border-t border-gray-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4"
+              [hidden]="!showPaginator">
               <span class="sl-instructors-footer-meta shrink-0 text-sm">{{ pageRangeLabel }}</span>
               <mat-paginator
                 #paginator

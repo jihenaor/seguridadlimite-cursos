@@ -9,19 +9,24 @@ import { Subject } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FirmaCanvasCaptureComponent } from '../../../../shared/components/firma-canvas-capture/firma-canvas-capture.component';
+import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
     selector: 'app-firma',
+    standalone: true,
     templateUrl: './firma.component.html',
     styleUrls: ['./firma.component.scss'],
     imports: [
-        NgIf,
         MatButtonModule,
+        MatTabsModule,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        FirmaCanvasCaptureComponent,
+        SvgIconComponent,
     ]
 })
 export class FirmaComponent implements AfterViewInit, OnDestroy{
@@ -77,7 +82,17 @@ export class FirmaComponent implements AfterViewInit, OnDestroy{
   }
 
   get sigImageDataCtrl(): UntypedFormControl {
-      return <UntypedFormControl>this.formGroup.get('sigStringData');
+      return <UntypedFormControl>this.formGroup.get('sigImageData');
+  }
+
+  onFirmaTabChange(index: number): void {
+    if (index !== 0) {
+      this.closingSigWeb();
+    }
+  }
+
+  onFirmaPantalla(base64: string): void {
+    void this.updateFirma(base64);
   }
 
   closingSigWeb() {

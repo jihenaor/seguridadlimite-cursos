@@ -3,11 +3,14 @@ package com.seguridadlimite.models.aprendiz.application.importarCertificados;
 import lombok.extern.slf4j.Slf4j;
 
 
+import com.seguridadlimite.util.StorageDirectories;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -19,11 +22,7 @@ public class ImportarCertificado {
     private String certificadosPath;
 
     public void saveFile(String fileName, MultipartFile multipartFile) throws IOException {
-        File uploadPath = new File(certificadosPath);
-
-        if (!uploadPath.exists()) {
-            uploadPath.mkdirs();
-        }
+        Files.createDirectories(Path.of(certificadosPath));
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             if (fileName.toLowerCase().endsWith(".zip")) {
@@ -35,20 +34,20 @@ public class ImportarCertificado {
     }
 
     private static void extractPDF(String uploadDir, String fileName, InputStream inputStream) throws IOException {
-        // Verificar si el archivo ya existe
-        File outputFile = new File(uploadDir + File.separator + fileName);
-        if (outputFile.exists()) {
+        Path candidatoExistente = StorageDirectories.resolveUnder(uploadDir, fileName);
+        if (Files.exists(candidatoExistente)) {
             log.info("El archivo ya existe. No se reemplazará.");
             return;
         }
 
-        // Si no es un archivo ZIP, guardar el archivo normalmente
         String newFileName = fileName;
         if (fileName.contains(" CERT")) {
             newFileName = fileName.replace(" CERT", "");
         }
 
-        try (OutputStream outputStream = new FileOutputStream(uploadDir + File.separator + newFileName)) {
+        Path target = StorageDirectories.resolveUnder(uploadDir, newFileName);
+        StorageDirectories.ensureParentExists(target);
+        try (OutputStream outputStream = Files.newOutputStream(target)) {
             int read;
             byte[] bytes = new byte[1024];
             while ((read = inputStream.read(bytes)) != -1) {
@@ -65,11 +64,16 @@ public class ImportarCertificado {
                 String entryFileName = entry.getName();
 
                 entryFileName = entryFileName.replaceAll("\\s+(?=\\.pdf)", "");
-                File entryFile = new File(uploadDir, entryFileName);
+                Path base = Path.of(uploadDir).normalize();
+                Path entryPath = base.resolve(entryFileName).normalize();
+                if (!entryPath.startsWith(base)) {
+                    throw new IOException("Entrada ZIP fuera del directorio destino: " + entryFileName);
+                }
                 if (entry.isDirectory()) {
-                    entryFile.mkdirs();
+                    Files.createDirectories(entryPath);
                 } else {
-                    try (OutputStream outputStream = new FileOutputStream(entryFile)) {
+                    StorageDirectories.ensureParentExists(entryPath);
+                    try (OutputStream outputStream = Files.newOutputStream(entryPath)) {
                         byte[] buffer = new byte[1024];
                         int length;
                         while ((length = zipInputStream.read(buffer)) > 0) {
