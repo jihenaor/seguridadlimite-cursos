@@ -14,7 +14,8 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Configuración de seguridad HTTP.
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
  *  - /auth/**          → público (login JWT vía AuthenticationController)
  *  - POST /api/authenticate* → público (login legacy en AuthController, usado por los front con proxy /api)
  *  - /api/aprendiz/**  → en su mayoría público (lectura + save); ver reglas abajo
- *  - /api/evaluacion/** → público (todos los métodos, incl. OPTIONS preflight CORS; quiz sin JWT)
+ *  - /api/evaluacion/** → público (PathPatternRequestMatcher, rutas relativas al context-path; p. ej. GET …/{id}/teorica)
  *  - POST /api/registrarevaluacion* → público (envío de respuestas del mismo flujo)
  *  - POST /api/updateFoto → público (foto en flujo de inscripción sin JWT, análogo a save)
  *  - /api/admin/**     → requiere rol ROLE_ADMIN
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Component;
  * CSRF deshabilitado intencionalmente: la API es stateless (JWT),
  * no usa cookies de sesión, por lo que CSRF no aplica.
  */
-@Component
+@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
@@ -54,7 +55,7 @@ public class HttpSecurityConfig {
         return http.build();
     }
 
-    private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>
+    private Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>
             .AuthorizationManagerRequestMatcherRegistry> builderRequestMatchers() {
 
         return authConfig -> {
@@ -77,9 +78,14 @@ public class HttpSecurityConfig {
             // Los trabajadores acceden directamente con su número de documento
             authConfig.requestMatchers(HttpMethod.GET,  "/api/aprendiz/evaluacion/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/evaluacion/**").permitAll();
-            // Preguntas y envío bajo /api/evaluacion (p. ej. GET .../ingreso, .../teorica).
-            // Sin método: incluye OPTIONS (preflight CORS); si solo GET/POST, el navegador recibe 403.
-            authConfig.requestMatchers("/api/evaluacion/**").permitAll();
+            // Preguntas bajo /api/evaluacion (p. ej. GET …/{id}/teorica, …/ingreso).
+            // PathPatternRequestMatcher: patrones relativos al context-path (p. ej. /cursosback).
+            authConfig.requestMatchers(
+                    PathPatternRequestMatcher.withDefaults().matcher("/api/evaluacion/**")).permitAll();
+            // Ruta explícita del cuestionario teórico (misma semántica que /**; útil si un proxy acorta la ruta).
+            authConfig.requestMatchers(
+                    PathPatternRequestMatcher.withDefaults().matcher("/api/evaluacion/{id}/teorica")).permitAll();
+            authConfig.requestMatchers(HttpMethod.OPTIONS, "/api/evaluacion/**").permitAll();
             // Registro de respuestas (controladores con @RequestMapping("/api"))
             authConfig.requestMatchers(HttpMethod.POST, "/api/registrarevaluacioningreso/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/registrarevaluacionteorica/**").permitAll();
