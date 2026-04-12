@@ -3,7 +3,8 @@ package com.seguridadlimite.models.trabajador.dominio;
 import lombok.extern.slf4j.Slf4j;
 
 import com.seguridadlimite.util.UppercaseTransform;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +14,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Date;
 
+@Getter
+@Setter
 @UppercaseTransform
 @Slf4j
 public class Trabajador implements Serializable {
