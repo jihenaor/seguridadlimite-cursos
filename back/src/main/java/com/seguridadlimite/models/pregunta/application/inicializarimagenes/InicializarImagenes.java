@@ -20,20 +20,17 @@ public class InicializarImagenes {
 	private final EncodeFile encodeFile;
 
 	public void inicializarImagenes(List<Pregunta> l) {
-        try {
-            for (Pregunta pregunta : l) {
-                getImageQuestion(pregunta);
-
-                getImageResponse(pregunta);
-            }
-        } catch (Exception e) {
-            log.error("Se capturó una excepción: ", e);
+        for (Pregunta pregunta : l) {
+            getImageQuestion(pregunta);
+            getImageResponse(pregunta);
         }
-
 	}
 
     private void getImageResponse(Pregunta pregunta) {
         List<Respuesta> respuestas = pregunta.getRespuestas();
+        if (respuestas == null || respuestas.isEmpty()) {
+            return;
+        }
         for (Respuesta respuesta : respuestas) {
             if ("S".equals(respuesta.getTieneimagen()) && respuesta.getNombreimagen() != null) {
                 String resourceName = "/images/" + respuesta.getNombreimagen() + ".png"; // Ajusta la ruta según tu estructura

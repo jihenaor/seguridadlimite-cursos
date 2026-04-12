@@ -43,12 +43,11 @@ public interface IPreguntaDao extends CrudRepository<Pregunta, Long>{
             )
     List<Pregunta> findAllOrder();
 
-    @Query("select u from Pregunta u "
-            + "where u.grupo.id = ?1 "
-)
+    @Query("select distinct u from Pregunta u left join fetch u.respuestas "
+            + "where u.grupo.id = ?1 order by u.orden")
     List<Pregunta> findByIdgrupo(Long idgrupo);
 
-    @Query("select u from Pregunta u "
-            + "where u.grupo.id = ?1 and u.nivel.id = ?2 ")
+    @Query("select distinct u from Pregunta u left join fetch u.respuestas "
+            + "where u.grupo.id = ?1 and u.nivel.id = ?2 order by u.orden")
     List<Pregunta> findByIdgrupoIdnivel(Long idgrupo, Long idnivel);
 }
