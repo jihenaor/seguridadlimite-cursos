@@ -94,7 +94,7 @@ call :INSTALL_FRONT
 if errorlevel 1 goto MENU
 echo.
 start "Frontend [:4200]" cmd /k "cd /d ..\front && npm start"
-echo Frontend -> :4200   phpMyAdmin -> http://localhost:8080
+echo Frontend -> :4200   phpMyAdmin -> http://localhost:8180
 echo Backend en Docker -> http://localhost:8090/cursosback
 echo Usa opcion 6 para detener Docker.
 echo.

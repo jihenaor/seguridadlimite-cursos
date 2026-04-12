@@ -1,7 +1,8 @@
 # ══════════════════════════════════════════════════════════════
 #  CI/CD — Backend Spring Boot (Seguridad Al Límite)
-#  Monorepo: se dispara cuando cambia código/recursos/build del backend.
-#  No incluye back/.env.example ni otros archivos sueltos (evita doble CI en commits “solo front”).
+#  Monorepo: se dispara cuando cambia código/recursos/build del backend o la carpeta
+#  infraestructura (compose, nginx, migraciones SQL, scripts de deploy/backup).
+#  No dispara por cambios solo en front/ (evita CI duplicado en commits de UI).
 #
 #  Flujo:
 #    1. Compilar con Maven (Java 21), saltar tests
@@ -36,6 +37,7 @@ on:
       - 'back/mvn-java21.cmd'
       - 'back/deploy.sh'
       - 'back/scripts/**'
+      - 'infraestructura/**'
       - '.github/workflows/ci-cd-backend.yml'
   pull_request:
     branches: [main]
@@ -52,6 +54,7 @@ on:
       - 'back/mvn-java21.cmd'
       - 'back/deploy.sh'
       - 'back/scripts/**'
+      - 'infraestructura/**'
       - '.github/workflows/ci-cd-backend.yml'
 
 env:

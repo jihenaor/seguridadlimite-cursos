@@ -13,7 +13,7 @@
 #    http://localhost:4200  → Portal Trabajador (directo)
 #    http://localhost:4201  → Panel Admin       (directo)
 #    http://localhost:8090  → Backend API       (Postman/debug)
-#    http://localhost:8080  → phpMyAdmin        (MySQL)
+#    http://localhost:8180  → phpMyAdmin        (MySQL)
 # ══════════════════════════════════════════════════════════════
 
 set -e
@@ -49,7 +49,7 @@ echo "   Portal Trabajador → http://localhost:4200"
 echo "   Panel Admin       → http://localhost:4201"
 echo "   API Backend       → http://localhost:8090/cursosback"
 echo "   Gateway           → http://localhost"
-echo "   phpMyAdmin        → http://localhost:8080"
+echo "   phpMyAdmin        → http://localhost:8180"
 echo ""
 echo "   Para ver logs: docker compose logs -f"
 echo "   Para detener:  docker compose down"
