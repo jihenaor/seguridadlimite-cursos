@@ -7,7 +7,7 @@ import { Eps } from 'src/app/core/models/eps.model';
 import { Grupo } from 'src/app/core/models/grupo.model';
 
 import { DatevalidatorService } from 'src/app/utils/datevalidator.service';
-import { ServicesService } from 'src/app/core/service/services.service';
+import { ServicesService } from '../../../../core/service/services.service';
 import { CertificadoService } from 'src/app/core/service/certificado.service';
 import { Observable, of } from 'rxjs';
 import { PermisotrabajoalturasService } from '../../../../core/service/permisotrabajoalturas.service';

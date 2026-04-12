@@ -7,7 +7,6 @@ import { Fototrabajador } from './../../../core/models/fototrabajador.model';
 
 import { Aprendiz } from 'src/app/core/models/aprendiz.model';
 
-import { ServicesService } from './../../../core/service/services.service';
 import { DatevalidatorService } from './../../../utils/datevalidator.service';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { AprendizDocumentosService } from './aprendiz-documentos.service';
@@ -39,13 +38,8 @@ export class AboutStudentComponent implements OnInit {
   public fototrabajador: Fototrabajador;
   public documento: Documento;
 
-  breadscrums = [
-    {
-      title: 'Actualizar aprendiz',
-      items: [],
-      active: 'All Student',
-    },
-  ];
+  /** Título de página (`app-pagetitle`), coherente con la ruta about-aprendiz / about-student */
+  readonly pageTitle = 'Ficha del aprendiz';
 
   constructor(
     private route: ActivatedRoute,

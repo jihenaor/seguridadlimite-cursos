@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ServicesService } from 'src/app/core/service/services.service';
+import { ServicesService } from '../../../../core/service/services.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'app-formato-evaluacion',
     templateUrl: './formato-evaluacion.component.html',
-    imports: [MatIconModule]
+    imports: [MatIconModule, MatMenuModule]
 })
 export class FormatoEvaluacionComponent implements OnInit {
   @Input()

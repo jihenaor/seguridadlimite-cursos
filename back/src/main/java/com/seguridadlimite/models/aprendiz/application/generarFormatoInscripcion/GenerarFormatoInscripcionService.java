@@ -206,10 +206,6 @@ public class GenerarFormatoInscripcionService {
 		formatoinscripcion.setConceptoapto("");
 		formatoinscripcion.setCertificadovigente("");
 
-		formatoinscripcion.setRegimenafiliacionseguridadsocialcontributivo(t.getRegimenafiliacionseguridadsocial().equals("C") ? "X" : "");
-		formatoinscripcion.setRegimenafiliacionseguridadsocialsubsidiado(t.getRegimenafiliacionseguridadsocial().equals("S") ? "X" : "");
-		formatoinscripcion.setRegimenafiliacionseguridadsocialotro(t.getRegimenafiliacionseguridadsocial().equals("O") ? "X" : "");
-
 		formatoinscripcion.setCopiadocumentoidentidad("S".equals(t.getDocumentoidentidad()) ? "X" : "");
 		formatoinscripcion.setCopiapagoseguridadsocial("S".equals(t.getUltimopagoseguridadsocial()) ? "X" : "");
 		formatoinscripcion.setAfiliciacionseguridadsocial("S".equals(t.getAfiliacionseguridadsocial()) ? "X" : "");
@@ -231,13 +227,25 @@ public class GenerarFormatoInscripcionService {
 		return formatoinscripcion;
 	}
 
-	private String generarStringEvaluacionConocimiento(List<Pregunta> preguntas, int orden){
-		Pregunta p = preguntas.stream()
+	private String generarStringEvaluacionConocimiento(List<Pregunta> preguntas, int orden) {
+		if (preguntas == null || preguntas.isEmpty()) {
+			return "";
+		}
+		List<Pregunta> coinciden = preguntas.stream()
 				.filter(pregunta -> pregunta.getIdgrupo() == 0 && pregunta.getOrden() == orden)
-				.toList().get(0);
+				.toList();
+		if (coinciden.isEmpty()) {
+			log.warn("Formato inscripción: sin pregunta de conocimiento idgrupo=0 orden={} (lista {} preguntas)",
+					orden, preguntas.size());
+			return "";
+		}
+		Pregunta p = coinciden.get(0);
 
-		String texto = p.getOrden() + ". " + p.getPregunta() + "<br />";
+		String texto = p.getOrden() + ". " + (p.getPregunta() == null ? "" : p.getPregunta()) + "<br />";
 
+		if (p.getRespuestas() == null) {
+			return texto;
+		}
 		for (Respuesta respuesta : p.getRespuestas()) {
 			texto += respuesta.getNumero() + ") " + respuesta.getRespuesta();
 			if (respuesta.getNumero() == p.getNumerorespuesta()) {

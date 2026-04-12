@@ -1,0 +1,55 @@
+// Programas / información académica: barra de referencia + menú de informes PDF
+.sl-inscripcion-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(105deg, #f8fafc 0%, #ffffff 55%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  box-sizing: border-box;
+}
+
+.sl-inscripcion-toolbar__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+  min-width: 0;
+}
+
+.sl-inscripcion-toolbar__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.sl-inscripcion-toolbar__id {
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #0f172a;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  background: #e2e8f0;
+  line-height: 1.2;
+}
+
+.sl-inscripcion-toolbar__actions {
+  flex-shrink: 0;
+}
+
+.sl-inscripcion-toolbar__btn-text {
+  margin-left: 0.25rem;
+}
+
+@media (max-width: 575.98px) {
+  .sl-inscripcion-toolbar__btn-text {
+    display: none;
+  }
+}

@@ -54,7 +54,7 @@ section.content.sl-dashboard-aprendices {
     margin-bottom: 1rem;
 
     .sl-aprendices-toolbar__search {
-      flex: 1 1 16rem;
+      flex: 1 1 32rem;
       min-width: 0;
       max-width: 100%;
     }
@@ -65,8 +65,21 @@ section.content.sl-dashboard-aprendices {
     }
 
     .header-buttons-left {
+      display: flex;
       width: 100%;
       max-width: 100%;
+      min-width: 0;
+    }
+
+    // El tema usa `li { display: inline-block }`, lo que encoge el input; aquí el buscador usa todo el ancho útil.
+    .header-buttons-left li.dropdown {
+      display: block;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      position: relative;
+      box-sizing: border-box;
     }
   }
 
@@ -76,8 +89,16 @@ section.content.sl-dashboard-aprendices {
     min-width: 0;
     width: 100%;
 
+    @media (min-width: 576px) {
+      min-width: 18rem;
+    }
+
     @media (min-width: 768px) {
-      min-width: 14rem;
+      min-width: 26rem;
+    }
+
+    @media (min-width: 1200px) {
+      min-width: 34rem;
     }
   }
 

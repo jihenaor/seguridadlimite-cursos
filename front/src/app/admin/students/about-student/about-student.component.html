@@ -1,60 +1,64 @@
-<section class="content">
-  <div class="container-block">
+<section class="content sl-about-student">
+  <div class="container-fluid">
+    <app-pagetitle [title]="pageTitle"></app-pagetitle>
 
-    <app-pagetitle [title]="'Actualizar aprendiz'"></app-pagetitle>
-
-    <div class="user-name">{{ aprendiz?.trabajador?.nombrecompleto }}</div>
-    <div class="row clearfix">
-
-      <div class="col-xl-12 col-lg-12 col-md-12">
-        <div class="card">
-          <div class="body">
-            @if (aprendiz) {
-              <ng-container>
-                <mat-tab-group (selectedTabChange)="onTabChange($event)">
-
-                  <mat-tab label="Información personal">
-
-                      <trabajador-form-edit-trabajador [aprendiz]="aprendiz"></trabajador-form-edit-trabajador>
-                      <app-documentos-trabajador [aprendiz]="aprendiz"></app-documentos-trabajador>
-                  </mat-tab>
-
-                  <mat-tab label="Ficha de inscripción">
-                      <aprendiz-informacion-academica [aprendiz]="aprendiz"></aprendiz-informacion-academica>
-                  </mat-tab>
-                  <mat-tab label="Evaluación/Encuesta">
-                    @defer (when selectedTab === 2) {
-                      <aprendiz-informacion-evaluacion [aprendiz]="aprendiz"></aprendiz-informacion-evaluacion>
-                    }
-                  </mat-tab>
-                  <mat-tab label="Documentos">
-                    @defer (when selectedTab === 3) {
-                      <aprendiz-documentos-aprendiz [aprendiz]="aprendiz"></aprendiz-documentos-aprendiz>
-                    }
-                  </mat-tab>
-                  <mat-tab label="Firma">
-                    @defer (when selectedTab === 4) {
-                      <app-firma [idaprendiz]="aprendiz.id" [idtrabajador]="aprendiz.trabajador.id"></app-firma>
-                    }
-                  </mat-tab>
-
-                  <mat-tab label="Foto">
-                    @defer (when selectedTab === 5) {
-                      <app-photo [base64]="aprendiz.trabajador.base64" [idtrabajador]="aprendiz.trabajador.id" ></app-photo>
-                    }
-                  </mat-tab>
-
-                  <mat-tab label="Asistencia">
-                    @defer (when selectedTab === 6) {
-                      <aprendiz-asistencia [aprendiz]="aprendiz"></aprendiz-asistencia>
-                    }
-                  </mat-tab>
-
-                </mat-tab-group>
-              </ng-container>
-            }
-          </div>
+    @if (aprendiz; as ap) {
+      @if (ap.trabajador) {
+        <div class="sl-about-student__meta">
+          <span class="sl-about-student__meta-label">Trabajador</span>
+          <span class="sl-about-student__meta-name">{{ ap.trabajador.nombrecompleto }}</span>
         </div>
+      }
+    }
+
+    <div class="card sl-about-student__card">
+      <div class="body">
+        @if (aprendiz) {
+          <mat-tab-group
+            class="sl-about-student-tabs"
+            animationDuration="200ms"
+            (selectedTabChange)="onTabChange($event)"
+          >
+            <mat-tab label="Información personal">
+              <trabajador-form-edit-trabajador [aprendiz]="aprendiz"></trabajador-form-edit-trabajador>
+              <app-documentos-trabajador [aprendiz]="aprendiz"></app-documentos-trabajador>
+            </mat-tab>
+
+            <mat-tab label="Ficha de inscripción">
+              <aprendiz-informacion-academica [aprendiz]="aprendiz"></aprendiz-informacion-academica>
+            </mat-tab>
+
+            <mat-tab label="Evaluación/Encuesta">
+              @defer (when selectedTab === 2) {
+                <aprendiz-informacion-evaluacion [aprendiz]="aprendiz"></aprendiz-informacion-evaluacion>
+              }
+            </mat-tab>
+
+            <mat-tab label="Documentos">
+              @defer (when selectedTab === 3) {
+                <aprendiz-documentos-aprendiz [aprendiz]="aprendiz"></aprendiz-documentos-aprendiz>
+              }
+            </mat-tab>
+
+            <mat-tab label="Firma">
+              @defer (when selectedTab === 4) {
+                <app-firma [idaprendiz]="aprendiz.id" [idtrabajador]="aprendiz.trabajador.id"></app-firma>
+              }
+            </mat-tab>
+
+            <mat-tab label="Foto">
+              @defer (when selectedTab === 5) {
+                <app-photo [base64]="aprendiz.trabajador.base64" [idtrabajador]="aprendiz.trabajador.id"></app-photo>
+              }
+            </mat-tab>
+
+            <mat-tab label="Asistencia">
+              @defer (when selectedTab === 6) {
+                <aprendiz-asistencia [aprendiz]="aprendiz"></aprendiz-asistencia>
+              }
+            </mat-tab>
+          </mat-tab-group>
+        }
       </div>
     </div>
   </div>

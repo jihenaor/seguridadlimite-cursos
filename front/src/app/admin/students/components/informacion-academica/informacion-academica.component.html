@@ -19,21 +19,26 @@
 
       </mat-panel-description>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          id: {{ aprendiz.id }}
+      <div class="sl-inscripcion-toolbar">
+        <div class="sl-inscripcion-toolbar__meta">
+          <span class="sl-inscripcion-toolbar__label">Aprendiz</span>
+          <span class="sl-inscripcion-toolbar__id">#{{ aprendiz.id }}</span>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
+        <div class="sl-inscripcion-toolbar__actions">
+          <button
+            type="button"
+            mat-stroked-button
+            color="primary"
+            [matMenuTriggerFor]="menuInformesPdf"
+            aria-haspopup="menu"
+            aria-label="Abrir menú de informes en PDF">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <span class="sl-inscripcion-toolbar__btn-text">Informes PDF</span>
           </button>
-          <mat-menu #menu="matMenu">
-            <student-informe-formato-inscripcion [idaprendiz]="aprendiz.id"></student-informe-formato-inscripcion>
-
-            <aprendiz-informe-perfil-ingreso [idaprendiz]="aprendiz.id"></aprendiz-informe-perfil-ingreso>
-
-            <app-formato-evaluacion [idaprendiz]="aprendiz.id"></app-formato-evaluacion>
-
+          <mat-menu #menuInformesPdf="matMenu">
+            <student-informe-formato-inscripcion [idaprendiz]="aprendiz.id" />
+            <aprendiz-informe-perfil-ingreso [idaprendiz]="aprendiz.id" />
+            <app-formato-evaluacion [idaprendiz]="aprendiz.id" />
           </mat-menu>
         </div>
       </div>
