@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+@Service
 @AllArgsConstructor
 @Slf4j
 public class InicializarImagenes {

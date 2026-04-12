@@ -8,8 +8,7 @@ import java.io.Serializable;
 // @Data
 // @Entity - tabla "aprendices" no existe; clase sin uso activo
 @Table(name = "sl_aprendices")
-public class
-Aprendizauth implements Serializable {
+public class Aprendizauth implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

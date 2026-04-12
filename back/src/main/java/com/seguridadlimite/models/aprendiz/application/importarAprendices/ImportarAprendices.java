@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class ImportarAprendices {

@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Date;
 
+@Entity
+@Table(name = "sl_trabajadores")
 @Getter
 @Setter
 @UppercaseTransform

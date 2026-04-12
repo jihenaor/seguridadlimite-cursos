@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+@Service
 @AllArgsConstructor
 @Slf4j
 public class GenerarPdfEncuestaService {

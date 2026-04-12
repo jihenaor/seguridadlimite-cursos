@@ -11,8 +11,6 @@ import com.seguridadlimite.models.permiso.application.port.in.ConsultarPermisoTr
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
@@ -21,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class ImportarAprendicesPermiso {
@@ -61,11 +60,9 @@ public class ImportarAprendicesPermiso {
 
 
 
-    private IAprendizDao aprendizDao;
+    private final IAprendizDao aprendizDao;
 
-    @Autowired
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
-
 
     private final ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
 
@@ -86,14 +83,14 @@ public class ImportarAprendicesPermiso {
                 .toList();
         for (Registro registro : registros) {
 
-            log.info(registro.getCodigo());
+            log.info("codigo={}", registro.getCodigo());
 
             if ("G224".equals(registro.getCodigo()) || "E080".equals(registro.getCodigo())) {
                 int x = 0;
             }
 
             if (i % 100 == 0) {
-                log.info(i);
+                log.info("Importar permisos: {} registros procesados", i);
             }
             i++;
             if (registro.getTrabajo() == null) {
@@ -121,7 +118,7 @@ public class ImportarAprendicesPermiso {
                 }
             } catch (Exception e) {
                 log.error("Se capturó una excepción: ", e);
-                log.info(registro.getTrabajo());
+                log.info("trabajo={}", registro.getTrabajo());
             }
         }
         log.info("termino");

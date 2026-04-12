@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
+@Service
 @AllArgsConstructor
 @Slf4j
 public class ExtraerFirmaServiceImpl implements IExtraerFirmaService {

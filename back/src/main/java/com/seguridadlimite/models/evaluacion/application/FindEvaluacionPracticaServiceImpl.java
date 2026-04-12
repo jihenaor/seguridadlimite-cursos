@@ -27,6 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 @AllArgsConstructor
 @Slf4j
 public class FindEvaluacionPracticaServiceImpl {
@@ -58,9 +59,8 @@ public class FindEvaluacionPracticaServiceImpl {
 
 		List<EvaluacionDTO> finalEvaluaciones = evaluaciones;
 
-		finalEvaluaciones.forEach(evaluacionDTO -> {
-			log.info(evaluacionDTO.getPregunta().getIdgrupo());
-		});
+		finalEvaluaciones.forEach(evaluacionDTO ->
+				log.debug("Evaluación práctica: idgrupo={}", evaluacionDTO.getPregunta().getIdgrupo()));
 
 		grupopreguntas.forEach(grupopregunta -> {
 			List<EvaluacionDTO> evaluacionesFilter = finalEvaluaciones.stream()

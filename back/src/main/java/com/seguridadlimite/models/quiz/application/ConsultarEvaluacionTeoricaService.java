@@ -23,6 +23,7 @@ import java.util.*;
 
 import static com.seguridadlimite.models.pregunta.domain.TipoevaluacionEnum.INGRESO;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class ConsultarEvaluacionTeoricaService {

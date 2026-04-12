@@ -14,7 +14,6 @@ import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
 import com.seguridadlimite.springboot.backend.apirest.services.AprendizServiceImpl;
 import com.seguridadlimite.springboot.backend.apirest.services.EvaluacionServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.StringReader;
@@ -24,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class ImportarTrabajador {

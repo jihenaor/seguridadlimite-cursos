@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
+@Entity
 @Table(name = "trabajadoresfoto")
 @Data
 public class Trabajadorfoto implements Serializable {

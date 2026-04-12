@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class AprendizServicerImpl2 {

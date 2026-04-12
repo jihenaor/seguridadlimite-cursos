@@ -12,6 +12,6 @@ public class AuditAprendizListener {
     @PostPersist
     @PostUpdate
     public void onPostPersist(Aprendiz aprendiz) {
-        log.info(aprendiz.getId());
+        log.info("Aprendiz persistido o actualizado: id={}", aprendiz.getId());
     }
 }
