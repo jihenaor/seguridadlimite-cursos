@@ -30,6 +30,8 @@ export class SigninComponent implements OnInit {
   error = '';
   hide = true;
   perfil: string;
+  isLoading = false;
+  isSubmitting = false;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -48,16 +50,23 @@ export class SigninComponent implements OnInit {
     }
   }
   async ngOnInit() {
-    this.authForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      perfil: [this.perfil],
-    });
+    this.isLoading = true;
+    
+    // Simular carga inicial (puedes quitar el setTimeout en producción)
+    setTimeout(() => {
+      this.authForm = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required],
+        perfil: [this.perfil],
+      });
 
-    this.authFormTrabajador = this.formBuilder.group({
-      username: ['', Validators.required],
-      perfil: [this.perfil],
-    });
+      this.authFormTrabajador = this.formBuilder.group({
+        username: ['', Validators.required],
+        perfil: [this.perfil],
+      });
+      
+      this.isLoading = false;
+    }, 800);
   }
 
   get f() {
@@ -81,12 +90,15 @@ export class SigninComponent implements OnInit {
   async loginAdmin() {
     this.submitted = true;
     this.error = '';
+    this.isSubmitting = true;
 
     if (this.authForm.invalid) {
       this.error = 'Username and Password not valid !';
+      this.isSubmitting = false;
       return;
     } else {
       try {
+        this.isLoading = true;
         const res = await this.authService.post('/authenticate', this.authForm.getRawValue(), true);
 
         if (res && res.token !== undefined) {
@@ -101,7 +113,6 @@ export class SigninComponent implements OnInit {
           } else if (role === 'C') {
             this.router.navigate(['/company/dashboard']);
           } else {
-            // Rol no reconocido (ej. 'x', null) — no navegar, mostrar error
             this.showNotificacionService.displayError(
               'El usuario no tiene un rol asignado. Contacte al administrador.'
             );
@@ -113,6 +124,9 @@ export class SigninComponent implements OnInit {
         this.showNotificacionService.displayError(
           'Se ha presentado un error o el usuario o la clave son incorrectos'
         );
+      } finally {
+        this.isLoading = false;
+        this.isSubmitting = false;
       }
     }
   }

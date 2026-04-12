@@ -1,4 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ViewChild,
+  signal,
+} from '@angular/core';
 import { ProfessorsService } from './professors.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,68 +11,95 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Professors } from './../../../core/models/professors.model';
 
 import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { map, skip, take } from 'rxjs/operators';
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatRippleModule } from '@angular/material/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { SvgIconComponent } from '../../../shared/components/svg-icon/svg-icon.component';
 
 @Component({
-    selector: 'app-all-professors',
-    templateUrl: './all-professors.component.html',
-    imports: [
-        MatButtonModule,
-        MatIconModule,
-        MatTableModule,
-        MatSortModule,
-        MatRippleModule,
-        MatMenuModule,
-        MatPaginatorModule,
-    ]
+  standalone: true,
+  selector: 'app-all-professors',
+  templateUrl: './all-professors.component.html',
+  styleUrl: './all-professors.component.scss',
+  imports: [
+    AsyncPipe,
+    SvgIconComponent,
+    MatSortModule,
+    MatPaginatorModule,
+  ],
 })
-export class AllprofessorsComponent implements OnInit {
-  displayedColumns = [
-    'numerodocumento',
-    'nombrecompleto',
-    'entrenador',
-    'supervisor',
-    'numerocelular',
-    'email',
-    'actions',
-  ];
-  exampleDatabase: ProfessorsService | null;
-  dataSource: ExampleDataSource | null;
+export class AllprofessorsComponent implements AfterViewInit {
+  readonly searchTerm = signal('');
+  readonly loading = signal(true);
+  private loadSafetyTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  id: number;
-  professors: Professors | null;
+  exampleDatabase: ProfessorsService | null = null;
+  dataSource: ExampleDataSource | null = null;
+  tableRows$: Observable<Professors[]> | null = null;
+
+  id = 0;
+  professors: Professors | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public professorsService: ProfessorsService,
     private snackBar: MatSnackBar
   ) {}
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('filter', { static: true }) filter: ElementRef;
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.loadData();
   }
-  refresh() {
+
+  isSi(v: string | undefined | null): boolean {
+    return (v ?? '').toUpperCase() === 'S';
+  }
+
+  onSearchInput(value: string): void {
+    this.searchTerm.set(value);
+    if (this.dataSource) {
+      this.dataSource.filter = value;
+    }
+  }
+
+  get filteredTotal(): number {
+    return this.dataSource?.filteredData.length ?? 0;
+  }
+
+  get pageRangeLabel(): string {
+    if (!this.dataSource || this.loading()) {
+      return '';
+    }
+    const total = this.filteredTotal;
+    if (!this.paginator || total === 0) {
+      return 'Sin instructores para mostrar';
+    }
+    const start = this.paginator.pageIndex * this.paginator.pageSize + 1;
+    const end = Math.min(
+      (this.paginator.pageIndex + 1) * this.paginator.pageSize,
+      total
+    );
+    return `Mostrando ${start}–${end} de ${total} instructores`;
+  }
+
+  refresh(): void {
+    this.searchTerm.set('');
+    if (this.dataSource) {
+      this.dataSource.filter = '';
+    }
+    this.loading.set(true);
     this.loadData();
   }
-  addNew() {
+
+  addNew(): void {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         professors: this.professors,
@@ -75,23 +107,22 @@ export class AllprofessorsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataServicex
+      if (result === 1 && this.exampleDatabase) {
         this.exampleDatabase.dataChange.value.unshift(
           this.professorsService.getDialogData()
         );
         this.refreshTable();
         this.showNotification(
           'snackbar-success',
-          'Add Record Successfully...!!!',
+          'Registro creado correctamente.',
           'bottom',
           'center'
         );
       }
     });
   }
-  editCall(row) {
+
+  editCall(row: Professors): void {
     this.id = row.id;
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
@@ -100,72 +131,84 @@ export class AllprofessorsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
+      if (result === 1 && this.exampleDatabase) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
           (x) => x.id === this.id
         );
-        // Then you update that record using data from dialogData (values you enetered)
-        this.exampleDatabase.dataChange.value[
-          foundIndex
-        ] = this.professorsService.getDialogData();
-        // And lastly refresh table
+        this.exampleDatabase.dataChange.value[foundIndex] =
+          this.professorsService.getDialogData();
         this.refreshTable();
         this.showNotification(
           'black',
-          'Edit Record Successfully...!!!',
+          'Registro actualizado correctamente.',
           'bottom',
           'center'
         );
       }
     });
   }
-  deleteItem(row) {
+
+  deleteItem(row: Professors): void {
     this.id = row.id;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: row,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
+      if (result === 1 && this.exampleDatabase) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
           (x) => x.id === this.id
         );
-        // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
         this.showNotification(
           'snackbar-danger',
-          'Delete Record Successfully...!!!',
+          'Registro eliminado correctamente.',
           'bottom',
           'center'
         );
       }
     });
   }
-  private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
+
+  private refreshTable(): void {
+    if (this.paginator) {
+      this.paginator._changePageSize(this.paginator.pageSize);
+    }
   }
 
-
-  public loadData() {
+  loadData(): void {
     this.exampleDatabase = new ProfessorsService(this.httpClient);
-
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,
       this.sort
     );
-    fromEvent(this.filter.nativeElement, 'keyup')
-      // .debounceTime(150)
-      // .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
+    this.exampleDatabase.getAllProfessorss();
+    this.tableRows$ = this.dataSource.connect();
+
+    this.exampleDatabase.dataChange
+      .pipe(skip(1), take(1))
+      .subscribe({
+        next: () => this.loading.set(false),
+        error: () => this.loading.set(false),
       });
+    if (this.loadSafetyTimeoutId) {
+      clearTimeout(this.loadSafetyTimeoutId);
+    }
+    this.loadSafetyTimeoutId = setTimeout(() => {
+      if (this.loading()) {
+        this.loading.set(false);
+      }
+      this.loadSafetyTimeoutId = null;
+    }, 12000);
   }
-  showNotification(colorName, text, placementFrom, placementAlign) {
+
+  showNotification(
+    colorName: string,
+    text: string,
+    placementFrom: 'top' | 'bottom',
+    placementAlign: 'start' | 'center' | 'end' | 'left' | 'right'
+  ): void {
     this.snackBar.open(text, '', {
       duration: 2000,
       verticalPosition: placementFrom,
@@ -173,16 +216,8 @@ export class AllprofessorsComponent implements OnInit {
       panelClass: colorName,
     });
   }
-  // context menu
-  onContextMenu(event: MouseEvent, item: Professors) {
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { item: item };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
-  }
 }
+
 export class ExampleDataSource extends DataSource<Professors> {
   _filterChange = new BehaviorSubject('');
   get filter(): string {
@@ -199,35 +234,30 @@ export class ExampleDataSource extends DataSource<Professors> {
     public _sort: MatSort
   ) {
     super();
-    // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => (this._paginator.pageIndex = 0));
   }
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
+
   connect(): Observable<Professors[]> {
-    // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
       this._sort.sortChange,
       this._filterChange,
       this._paginator.page,
     ];
-    this._exampleDatabase.getAllProfessorss();
     return merge(...displayDataChanges).pipe(
       map(() => {
-        // Filter data
         this.filteredData = this._exampleDatabase.data
           .slice()
           .filter((professors: Professors) => {
-            const searchStr = (
-              professors.nombrecompleto +
-              professors.numerocelular +
-              professors.email
+            const hay = (
+              (professors.nombrecompleto ?? '') +
+              (professors.numerodocumento ?? '') +
+              (professors.numerocelular ?? '') +
+              (professors.email ?? '')
             ).toLowerCase();
-            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+            return hay.indexOf(this.filter.toLowerCase()) !== -1;
           });
-        // Sort filtered data
         const sortedData = this.sortData(this.filteredData.slice());
-        // Grab the page's slice of the filtered sorted data.
         const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
         this.renderedData = sortedData.splice(
           startIndex,
@@ -237,8 +267,9 @@ export class ExampleDataSource extends DataSource<Professors> {
       })
     );
   }
-  disconnect() {}
-  /** Returns a sorted copy of the database data. */
+
+  disconnect(): void {}
+
   sortData(data: Professors[]): Professors[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
@@ -250,14 +281,26 @@ export class ExampleDataSource extends DataSource<Professors> {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
           break;
+        case 'numerodocumento':
+          [propertyA, propertyB] = [a.numerodocumento, b.numerodocumento];
+          break;
         case 'nombrecompleto':
           [propertyA, propertyB] = [a.nombrecompleto, b.nombrecompleto];
+          break;
+        case 'entrenador':
+          [propertyA, propertyB] = [a.entrenador, b.entrenador];
+          break;
+        case 'supervisor':
+          [propertyA, propertyB] = [a.supervisor, b.supervisor];
           break;
         case 'email':
           [propertyA, propertyB] = [a.email, b.email];
           break;
         case 'numerocelular':
           [propertyA, propertyB] = [a.numerocelular, b.numerocelular];
+          break;
+        default:
+          [propertyA, propertyB] = [a.nombrecompleto, b.nombrecompleto];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

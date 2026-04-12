@@ -1,111 +1,204 @@
-<section class="content">
+<section class="content sl-instructors-page">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="body">
-            <div class="table-responsive">
-              <!-- Header -->
-              <div class="table-header">
-                <div class="flex w-full">
-                  <div class="w-2/3">
-                    <ul class="flex items-center gap-5">
-                      <li>
-                        <h2 class="table-header-title">
-                          <strong>Instructores</strong>
-                        </h2>
-                      </li>
-                      <li class="search-input-wrapper">
-                        <i class="material-icons search-icon">search</i>
-                        <input placeholder="Buscar" type="text" #filter
-                          class="search-input"
-                          aria-label="Search box">
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="table-header-actions">
-                    <button class="btn-add" (click)="addNew()">
-                      <span class="material-icons">add</span>
-                    </button>
-                    <button class="btn-refresh" (click)="refresh()">
-                      <span class="material-icons">refresh</span>
-                    </button>
-                  </div>
-                </div>
+        <div class="card sl-instructors-card shadow-lg rounded-3xl border border-gray-100">
+          <div
+            class="header flex min-w-0 flex-col gap-4 border-b border-gray-200 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div class="min-w-0 shrink">
+              <h2 class="m-0 text-xl font-bold tracking-tight sm:text-2xl">
+                <strong>Instructores</strong>
+              </h2>
+              <p class="sl-instructors-subtitle mt-1 mb-0 text-sm sm:text-base">
+                Gestión de instructores registrados
+              </p>
+            </div>
+            <div
+              class="flex w-full min-w-0 max-w-full flex-col gap-3 sm:w-auto sm:min-w-0 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+              <div class="relative min-w-0 w-full flex-1 sm:max-w-md lg:max-w-lg">
+                <span class="sl-inv-search-icon-slot" aria-hidden="true">
+                  <app-svg-icon name="search" [size]="20" />
+                </span>
+                <input
+                  type="text"
+                  class="sl-inv-search text-base"
+                  placeholder="Buscar por nombre, documento o email..."
+                  aria-label="Buscar instructores"
+                  [value]="searchTerm()"
+                  [disabled]="!dataSource"
+                  (input)="onSearchInput($any($event.target).value)" />
               </div>
-
-              <!-- Tabla -->
-              <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
-                <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="numerodocumento">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Número de documento
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    {{row.numerodocumento}}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="nombrecompleto">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.nombrecompleto}}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="entrenador">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Entrenador
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.entrenador}}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="supervisor">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Supervisor
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.supervisor}}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="numerocelular">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Número de celular
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.numerocelular}}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="email">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Email
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.email}}
-                  </mat-cell>
-                </ng-container>
-
-                <!-- actions -->
-                <ng-container matColumnDef="actions">
-                  <mat-header-cell class="pr-0" *matHeaderCellDef>Acciones</mat-header-cell>
-                  <mat-cell *matCellDef="let row; let i=index;" class="pr-0 table-actions">
-                    <button class="btn-icon btn-icon-edit mr-2" (click)="$event.stopPropagation(); editCall(row)">
-                      <span class="material-icons text-base">edit</span>
-                    </button>
-                    <button class="btn-icon btn-icon-delete" (click)="$event.stopPropagation(); deleteItem(row)">
-                      <span class="material-icons text-base">delete</span>
-                    </button>
-                  </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns">
-                </mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
-                  [style.cursor]="'pointer'" matRipple>
-                </mat-row>
-              </mat-table>
-
-              <!-- Sin resultados -->
-              <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-                No results
+              <div class="sl-instructors-toolbar-actions flex min-w-0 flex-wrap items-center justify-end gap-3">
+                <button
+                  type="button"
+                  class="sl-tw-btn-primary inline-flex min-w-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:bg-blue-700 sm:px-6"
+                  (click)="addNew()">
+                  <app-svg-icon name="plus" [size]="20" />
+                  <span>Nuevo instructor</span>
+                </button>
+                <button
+                  type="button"
+                  class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"
+                  (click)="refresh()"
+                  aria-label="Actualizar lista de instructores"
+                  title="Actualizar lista de instructores">
+                  <app-svg-icon name="refresh" [size]="20" />
+                </button>
               </div>
+            </div>
+          </div>
 
-              <!-- Paginador -->
-              <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="20"
-                [pageSizeOptions]="[5, 10, 20, 100]">
+          <div class="body p-0">
+            <div matSort class="table-responsive sl-instructors-table-wrap min-w-0">
+              <table class="sl-instructors-table mb-0 w-full border-collapse text-left text-sm">
+                <thead class="sticky top-0 z-[1] bg-gray-100">
+                  <tr>
+                    <th
+                      mat-sort-header="numerodocumento"
+                      class="sl-inv-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      N° documento
+                    </th>
+                    <th
+                      mat-sort-header="nombrecompleto"
+                      class="sl-inv-th px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Nombre completo
+                    </th>
+                    <th
+                      mat-sort-header="entrenador"
+                      class="sl-inv-th px-1 py-3 text-center font-semibold sm:px-2 sm:py-3.5">
+                      Entrenador
+                    </th>
+                    <th
+                      mat-sort-header="supervisor"
+                      class="sl-inv-th px-1 py-3 text-center font-semibold sm:px-2 sm:py-3.5">
+                      Supervisor
+                    </th>
+                    <th
+                      mat-sort-header="numerocelular"
+                      class="sl-inv-th whitespace-nowrap px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Celular
+                    </th>
+                    <th mat-sort-header="email" class="sl-inv-th min-w-0 px-2 py-3 font-semibold sm:px-3 sm:py-3.5">
+                      Email
+                    </th>
+                    <th
+                      class="sl-inv-th sl-instructors-actions-col px-1 py-3 text-center font-semibold sm:px-2 sm:py-3.5">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @if (!dataSource || !tableRows$) {
+                    <tr>
+                      <td colspan="7" class="px-6 py-14 text-center text-gray-600">
+                        Preparando listado…
+                      </td>
+                    </tr>
+                  } @else if (loading()) {
+                    @for (s of [1, 2, 3, 4, 5, 6]; track s) {
+                      <tr>
+                        <td class="sl-inv-td px-2 py-3 sm:px-3 sm:py-3.5"><div class="sl-inv-skel w-20"></div></td>
+                        <td class="sl-inv-td px-2 py-3 sm:px-3 sm:py-3.5"><div class="sl-inv-skel w-full max-w-full"></div></td>
+                        <td class="sl-inv-td px-1 py-3 text-center sm:px-2 sm:py-3.5">
+                          <div class="sl-inv-skel mx-auto w-12"></div>
+                        </td>
+                        <td class="sl-inv-td px-1 py-3 text-center sm:px-2 sm:py-3.5">
+                          <div class="sl-inv-skel mx-auto w-12"></div>
+                        </td>
+                        <td class="sl-inv-td px-2 py-3 sm:px-3 sm:py-3.5"><div class="sl-inv-skel w-24"></div></td>
+                        <td class="sl-inv-td min-w-0 px-2 py-3 sm:px-3 sm:py-3.5"><div class="sl-inv-skel w-full"></div></td>
+                        <td class="sl-inv-td sl-instructors-actions-col px-1 py-3 sm:px-2 sm:py-3.5">
+                          <div class="sl-inv-skel mx-auto w-16"></div>
+                        </td>
+                      </tr>
+                    }
+                  } @else {
+                    @if (tableRows$ | async; as rows) {
+                      @if (rows.length === 0) {
+                        <tr>
+                          <td colspan="7" class="px-6 py-16 text-center">
+                            <div class="mx-auto mb-3 flex justify-center text-gray-300">
+                              <app-svg-icon name="user-off" [size]="48" />
+                            </div>
+                            <p class="text-base font-medium text-gray-700">No hay instructores</p>
+                            <p class="sl-instructors-subtitle mt-1 text-sm">
+                              Ajuste la búsqueda o cree un nuevo instructor.
+                            </p>
+                          </td>
+                        </tr>
+                      } @else {
+                        @for (row of rows; track row.id) {
+                          <tr class="transition-colors hover:bg-blue-50/30 group">
+                            <td class="sl-inv-td whitespace-nowrap px-2 py-3 font-medium sm:px-3 sm:py-3.5">
+                              {{ row.numerodocumento }}
+                            </td>
+                            <td class="sl-inv-td sl-inv-cell-truncate min-w-0 px-2 py-3 sm:px-3 sm:py-3.5">
+                              <div class="truncate font-medium" [title]="row.nombrecompleto">
+                                {{ row.nombrecompleto }}
+                              </div>
+                            </td>
+                            <td class="sl-inv-td px-1 py-3 text-center sm:px-2 sm:py-3.5">
+                              <span
+                                [class.sl-inv-badge-yes]="isSi(row.entrenador)"
+                                [class.sl-inv-badge-no]="!isSi(row.entrenador)">
+                                {{ isSi(row.entrenador) ? 'Sí' : 'No' }}
+                              </span>
+                            </td>
+                            <td class="sl-inv-td px-1 py-3 text-center sm:px-2 sm:py-3.5">
+                              <span
+                                [class.sl-inv-badge-yes]="isSi(row.supervisor)"
+                                [class.sl-inv-badge-no]="!isSi(row.supervisor)">
+                                {{ isSi(row.supervisor) ? 'Sí' : 'No' }}
+                              </span>
+                            </td>
+                            <td class="sl-inv-td whitespace-nowrap px-2 py-3 sm:px-3 sm:py-3.5">
+                              {{ row.numerocelular || '—' }}
+                            </td>
+                            <td
+                              class="sl-inv-td sl-inv-cell-truncate min-w-0 truncate px-2 py-3 sm:px-3 sm:py-3.5"
+                              [title]="row.email">
+                              {{ row.email }}
+                            </td>
+                            <td
+                              class="sl-inv-td sl-instructors-actions-col px-1 py-3 sm:px-2 sm:py-3.5"
+                              (click)="$event.stopPropagation()">
+                              <div
+                                class="flex justify-center gap-1 opacity-80 transition-opacity group-hover:opacity-100">
+                                <button
+                                  type="button"
+                                  class="sl-inv-btn-icon sl-inv-btn-icon--edit"
+                                  (click)="editCall(row)"
+                                  aria-label="Editar">
+                                  <app-svg-icon name="pencil" [size]="20" />
+                                </button>
+                                <button
+                                  type="button"
+                                  class="sl-inv-btn-icon sl-inv-btn-icon--delete"
+                                  (click)="deleteItem(row)"
+                                  aria-label="Eliminar">
+                                  <app-svg-icon name="trash" [size]="20" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        }
+                      }
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div
+              class="flex min-w-0 flex-col gap-2 border-t border-gray-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
+              <span class="sl-instructors-footer-meta shrink-0 text-sm">{{ pageRangeLabel }}</span>
+              <mat-paginator
+                #paginator
+                class="sl-instructors-paginator min-w-0 max-w-full"
+                [length]="dataSource?.filteredData.length ?? 0"
+                [pageSize]="20"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                showFirstLastButtons>
               </mat-paginator>
             </div>
           </div>

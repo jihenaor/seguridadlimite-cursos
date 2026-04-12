@@ -4,14 +4,24 @@
     <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
       <!-- Logo -->
       <div class="flex justify-center mb-8">
-        <img src="assets/images/logo_sticky.jpeg" alt="Logo" class="h-20">
+        <!-- Skeleton Logo -->
+        @if (isLoading) {
+          <div class="skeleton-logo" style="width: 80px; height: 80px; border-radius: 0.5rem; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"></div>
+        } @else {
+          <img src="assets/images/logo_sticky.jpeg" alt="Logo" class="h-20">
+        }
       </div>
 
-      <h1 class="text-3xl font-bold text-center text-gray-900 mb-1">Bienvenido</h1>
-      <p class="text-center text-gray-600 mb-8">Ingresa tus credenciales para continuar</p>
+      <!-- Título -->
+      @if (isLoading) {
+        <div class="skeleton-title mb-8"></div>
+      } @else {
+        <h1 class="text-3xl font-bold text-center text-gray-900 mb-1">Bienvenido</h1>
+        <p class="text-center text-gray-600 mb-8">Ingresa tus credenciales para continuar</p>
+      }
 
       <!-- Formulario -->
-      @if (perfil === 'A' || perfil === 'E') {
+      @if (!isLoading && (perfil === 'A' || perfil === 'E')) {
       <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
         
         <!-- Input Usuario -->
@@ -83,21 +93,128 @@
         }
 
         <!-- Botón -->
-        <button type="submit" [disabled]="!authForm.valid"
-          class="btn-ingresar"
-          style="width: 100%; background-color: #2577c1; color: white; font-weight: 600; font-size: 1rem; padding: 1rem; border-radius: 1.5rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 10px 15px -3px rgba(37, 119, 193, 0.3); border: none; cursor: pointer;"
-          [style.opacity]="!authForm.valid ? '0.5' : '1'"
-          [style.cursor]="!authForm.valid ? 'not-allowed' : 'pointer'">
-          <span>Ingresar</span>
-          <i class="material-icons">arrow_forward</i>
+        <button type="submit" [disabled]="!authForm.valid || isSubmitting"
+          style="width: 100%; background-color: #2577c1; color: white; font-weight: 600; font-size: 1rem; padding: 1rem; border-radius: 1.5rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 10px 15px -3px rgba(37, 119, 193, 0.3); border: none; cursor: pointer; opacity: 1;"
+          [style.opacity]="(!authForm.valid || isSubmitting) ? '0.5' : '1'"
+          [style.cursor]="(!authForm.valid || isSubmitting) ? 'not-allowed' : 'pointer'">
+          @if (isSubmitting) {
+            <i class="material-icons animate-spin">sync</i>
+            <span>Ingresando...</span>
+          } @else {
+            <span>Ingresar</span>
+            <i class="material-icons">arrow_forward</i>
+          }
         </button>
       </form>
+      }
+
+      <!-- Loading Skeleton cuando está cargando -->
+      @if (isLoading) {
+        <div class="space-y-6">
+          <!-- Skeleton Input Usuario -->
+          <div>
+            <div class="skeleton-label mb-2"></div>
+            <div class="skeleton-input"></div>
+          </div>
+          
+          <!-- Skeleton Input Contraseña -->
+          <div>
+            <div class="skeleton-label mb-2"></div>
+            <div class="skeleton-input"></div>
+          </div>
+
+          <!-- Skeleton Checkbox -->
+          <div class="skeleton-checkbox"></div>
+
+          <!-- Skeleton Botón -->
+          <div class="skeleton-button"></div>
+        </div>
       }
     </div>
 
     <!-- Footer -->
+    @if (!isLoading) {
     <p class="text-center text-gray-400 text-sm mt-6">
       © 2026 Seguridad al Límite S.A.S.
     </p>
+    } @else {
+    <div class="skeleton-footer"></div>
+    }
   </div>
 </div>
+
+<style>
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-logo {
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-title {
+  height: 80px;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-label {
+  height: 16px;
+  width: 120px;
+  border-radius: 0.25rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-input {
+  height: 56px;
+  border-radius: 1.5rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-checkbox {
+  height: 20px;
+  width: 100px;
+  border-radius: 0.25rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  margin-bottom: 2rem;
+}
+
+.skeleton-button {
+  height: 56px;
+  border-radius: 1.5rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-footer {
+  height: 20px;
+  width: 200px;
+  margin: 1.5rem auto 0;
+  border-radius: 0.25rem;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>

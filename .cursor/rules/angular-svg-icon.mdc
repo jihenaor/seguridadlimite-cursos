@@ -1,40 +1,103 @@
 ---
-description: Angular frontend — iconos SVG vía componente compartido app-svg-icon (sin SVG inline duplicado).
-globs: front/**/*.html,front/**/*.ts
-alwaysApply: false
+description: Angular Frontend — Reglas obligatorias para el uso de iconos SVG
+globs: front/**/*.html, front/**/*.ts, front/**/*.component.ts
+alwaysApply: true
+priority: high
 ---
 
-# Iconos SVG en el frontend Angular
+# Iconos SVG en el Frontend Angular (Regla Obligatoria)
 
-Al generar o refactorizar UI en `front/`, **no** incrustes bloques repetidos de `<svg xmlns="...">` en plantillas ni dupliques spinners con `@keyframes` en estilos de feature.
+**Objetivo:** Centralizar todos los iconos y spinners en un único componente compartido para evitar duplicación de código, mantener consistencia y facilitar el mantenimiento.
 
-## Regla obligatoria
+### Regla Principal (Obligatoria)
 
-1. Usa el componente **`app-svg-icon`** (`selector: app-svg-icon`) definido en  
-   [`front/src/app/shared/components/svg-icon/svg-icon.component.ts`](front/src/app/shared/components/svg-icon/svg-icon.component.ts).
+Al generar, refactorizar o modificar cualquier código UI en la carpeta `front/` **está estrictamente prohibido**:
 
-2. **Import** en el componente standalone:
-   - `import { SvgIconComponent } from '@shared/components/svg-icon/svg-icon.component';`
-   - Incluir `SvgIconComponent` en el array `imports` del `@Component`.
+- Incrustar SVGs inline (`<svg xmlns="http://www.w3.org/2000/svg">...`) directamente en las plantillas HTML.
+- Duplicar código de spinners con `@keyframes` o clases `.spinner` en componentes individuales.
+- Usar librerías de iconos que inserten SVGs inline (como `heroicons` con componentes directos) sin pasar por el wrapper compartido.
 
-3. **Uso en plantilla** (ejemplos):
-   - Icono estático: `<app-svg-icon name="eye" [size]="18" />`
-   - Carga / spinner: `<app-svg-icon name="spinner" [size]="18" [spin]="true" />`  
-     La animación de rotación vive en `SvgIconComponent` (`spin`); **no** añadas otra clase `.spinner` ni `@keyframes spin` en el componente de la feature salvo un caso excepcional documentado.
+### Uso Correcto: Componente `app-svg-icon`
 
-4. **Nuevo icono**: si el diseño requiere un trazo que no existe:
-   - Añade el literal al union type `SvgIconName`.
-   - Añade un `@case ('nombre') { ... }` en el `@switch` del template de `svg-icon.component.ts` con `viewBox="0 0 24 24"`, `stroke="currentColor"`, etc., coherente con el resto.
-   - **Un solo lugar** para el path; las pantallas solo referencian `name`.
+1. **Siempre** utiliza el componente compartido:
+   ```html
+   <app-svg-icon name="eye" [size]="20" />
+   <app-svg-icon name="trash" [size]="18" class="text-red-500" />
+   <app-svg-icon name="spinner" [size]="24" [spin]="true" />
 
-5. **Estilos globales de layout** (alineación en botones, grillas): preferir clases en `front/src/app/shared/styles/` (p. ej. contenedores que ya usan `app-svg-icon` en modales) en lugar de estilos por SVG inline.
 
-## Anti-patrones (evitar)
+---
+description: Angular Frontend — Reglas de Diseño, Tailwind y Componentes (v4.2)
+globs: front/**/*.html, front/**/*.ts, front/**/*.component.ts
+alwaysApply: true
+priority: high
+---
 
-- Varios `<svg>` idénticos o casi idénticos en el mismo HTML.
-- Spinner como `<svg class="spinner">` + CSS `animation: spin` copiado en cada `.component.ts`.
-- Sprites `<symbol>` / `<use>` locales en un solo feature si el icono puede vivir en `app-svg-icon`.
+# Reglas Obligatorias de Diseño y Tailwind CSS - Angular Frontend (V19+)
 
-## Resumen
+Estas reglas deben aplicarse **siempre** al generar o modificar código en `front/`.
 
-**Siempre** centralizar iconos outline y spinners en **`app-svg-icon`**; las features solo eligen `name`, `size` y `spin` cuando aplique.
+### 1. Uso de Iconos SVG (Obligatorio)
+
+- **Siempre** usar el componente compartido `<app-svg-icon>`.
+- No se permite ningún `<svg>` inline en las plantillas.
+- Para spinners: usar `<app-svg-icon name="spinner" [spin]="true" />`
+- Importar `SvgIconComponent` en todos los componentes standalone que usen iconos.
+
+### 2. Estándares de Tailwind CSS
+
+**Reglas generales de Tailwind:**
+
+- Usar **clases completas** (no arbitrarias con `[]` salvo casos excepcionales).
+- Preferir **mobile-first** (`sm:`, `md:`, `lg:`, `xl:`).
+- Redondeados consistentes:
+  - Cards y contenedores principales: `rounded-3xl`
+  - Inputs y botones: `rounded-3xl`
+  - Tablas y elementos pequeños: `rounded-2xl`
+- Sombras: `shadow-xl`, `shadow-2xl`, `shadow-lg shadow-blue-500/30` (para acentos).
+- Espaciado: Preferir múltiplos de 4 (`p-6`, `py-8`, `gap-6`, etc.).
+- Colores principales del proyecto:
+  - Primario: `blue-600` (hover: `blue-700`)
+  - Danger: `red-600`
+  - Success: `emerald-600`
+  - Fondo oscuro: `slate-950`
+  - Cards: `bg-white` con `dark:bg-gray-900` cuando aplique.
+
+### 3. Pantalla de Login (Reglas Específicas)
+
+Al crear o modificar el login:
+
+- Fondo: `bg-slate-950` con gradiente sutil (`bg-gradient-to-br from-slate-950 to-slate-900`).
+- Card principal: `bg-white rounded-3xl shadow-2xl`
+- Inputs: `py-4 pl-12 rounded-3xl bg-gray-50 border border-gray-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100`
+- Botón principal: `rounded-3xl py-4 font-semibold text-base`
+- Incluir: iconos dentro de inputs, toggle de contraseña, "Recordarme", link "¿Olvidaste tu contraseña?", estado de loading.
+- Usar Reactive Forms + validaciones.
+
+### 4. Tablas CRUD (Reglas Específicas)
+
+Al crear o modificar tablas (como Instructores, Usuarios, etc.):
+
+- Contenedor principal: `bg-white rounded-3xl shadow-xl overflow-hidden`
+- Header: `p-6 border-b` con título grande + buscador + botón "Nuevo"
+- Buscador: `rounded-2xl py-3 pl-10`
+- Botón Nuevo: `rounded-2xl bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/30`
+- Tabla:
+  - `thead`: `bg-gray-100`
+  - Filas: `hover:bg-blue-50 transition-colors group`
+  - Celdas de acciones: `flex gap-3 justify-center`
+  - Badges (SÍ/NO, Activo/Inactivo): usar clases `badge-success`, `badge-gray`, `badge-warning`, etc.
+- Estados: loading, empty state y error deben estar contemplados.
+- Nombres completos en una sola columna con buen truncado si es necesario.
+
+### 5. Componentes y Estructura Recomendada
+
+- Usar **standalone components**.
+- Preferir **Reactive Forms** sobre Template-Driven.
+- Modales: usar `rounded-3xl` y consistencia con el login.
+- Botones con iconos:
+  ```html
+  <button class="flex items-center gap-2 ...">
+    <app-svg-icon name="plus" [size]="18" />
+    <span>Nuevo Instructor</span>
+  </button>

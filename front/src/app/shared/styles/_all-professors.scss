@@ -1,0 +1,286 @@
+// Lista instructores: contraste legible a pesar de reglas globales (.content * { color: !important }).
+
+// No anular margin del tema en section.content (_general.scss: margin-left 260px, etc.);
+// un margin: 0 aquí hacía que el bloque quedara debajo del sidebar.
+section.content.sl-instructors-page {
+  background: rgb(249 250 251) !important;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-card {
+  color: rgb(17 24 39);
+  max-width: 100%;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-card h2,
+section.content.sl-instructors-page .sl-instructors-card h2 strong {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-instructors-subtitle {
+  color: rgb(107 114 128) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card thead th {
+  color: rgb(55 65 81) !important;
+  background-color: rgb(243 244 246) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card tbody td:not(.sl-instructors-actions-col) {
+  color: rgb(17 24 39) !important;
+  background-color: transparent !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card tbody td.sl-instructors-actions-col {
+  color: rgb(17 24 39) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-badge-yes {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  color: rgb(6 95 70) !important;
+  background-color: rgb(209 250 229) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-badge-no {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  color: rgb(71 85 105) !important;
+  background-color: rgb(241 245 249) !important;
+}
+
+/* Botones cabecera (Tailwind + contraste frente a reglas globales .content *) */
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-primary,
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-primary span {
+  color: #fff !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-primary app-svg-icon {
+  color: #fff !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-refresh,
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-refresh app-svg-icon {
+  color: rgb(55 65 81) !important;
+}
+
+/* Mismo redondeo que el login (submit: border-radius 1.5rem) */
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-primary,
+section.content.sl-instructors-page .sl-instructors-toolbar-actions .sl-tw-btn-refresh {
+  border-radius: 1.5rem !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 0;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon app-svg-icon {
+  color: inherit !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon--edit {
+  color: rgb(37 99 235) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon--edit:hover {
+  background: rgb(219 234 254);
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon--delete {
+  color: rgb(220 38 38) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-btn-icon--delete:hover {
+  background: rgb(254 226 226);
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-instructors-footer-meta {
+  color: rgb(107 114 128) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-search {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.75rem;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 1.5rem;
+  background: rgb(255 255 255);
+  font-size: 1rem;
+  color: rgb(17 24 39) !important;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-search:focus {
+  border-color: rgb(59 130 246);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-search-icon-slot {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: rgb(156 163 175) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-search-icon-slot app-svg-icon {
+  color: rgb(156 163 175) !important;
+}
+
+section.content.sl-instructors-page .sl-instructors-card .sl-inv-skel {
+  height: 0.85rem;
+  border-radius: 0.35rem;
+  background: linear-gradient(90deg, rgb(243 244 246) 25%, rgb(229 231 235) 50%, rgb(243 244 246) 75%);
+  background-size: 200% 100%;
+  animation: sl-inv-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes sl-inv-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+section.content.sl-instructors-page .mat-sort-header-container {
+  align-items: center;
+}
+
+section.content.sl-instructors-page .mat-sort-header-content {
+  text-align: inherit;
+}
+
+/* Tabla al ancho del panel: sin min-width global que obligue scroll para ver acciones */
+section.content.sl-instructors-page .sl-instructors-table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Mismo patrón que otras listas admin: scroll horizontal solo dentro de la tarjeta si hiciera falta */
+section.content.sl-instructors-page .sl-instructors-table-wrap.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+section.content.sl-instructors-page table.sl-instructors-table {
+  table-layout: fixed;
+  width: 100%;
+  max-width: 100%;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(1),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(1) {
+  width: 9%;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(2),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(2) {
+  width: 17%;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(3),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(3) {
+  width: 3.85rem;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(4),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(4) {
+  width: 3.85rem;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(5),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(5) {
+  width: 8%;
+}
+
+/* Columna email: absorbe el espacio sobrante */
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(6),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(6) {
+  width: auto;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-table th:nth-child(7),
+section.content.sl-instructors-page .sl-instructors-table td:nth-child(7) {
+  width: 5.5rem;
+  min-width: 5.5rem;
+  max-width: 5.5rem;
+}
+
+section.content.sl-instructors-page .sl-instructors-table .sl-inv-cell-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Acciones visibles aunque el contenedor fuerce scroll muy pequeño */
+section.content.sl-instructors-page .sl-instructors-table th.sl-instructors-actions-col,
+section.content.sl-instructors-page .sl-instructors-table td.sl-instructors-actions-col {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: -8px 0 12px -8px rgba(15, 23, 42, 0.14);
+}
+
+section.content.sl-instructors-page .sl-instructors-table thead th.sl-instructors-actions-col {
+  z-index: 4;
+  background: rgb(243, 244, 246);
+}
+
+section.content.sl-instructors-page .sl-instructors-table tbody tr:hover td.sl-instructors-actions-col {
+  background: rgb(239 246 255);
+}
+
+section.content.sl-instructors-page .sl-instructors-table .mat-sort-header-container {
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-table .mat-sort-header-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+section.content.sl-instructors-page .sl-instructors-paginator {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+section.content.sl-instructors-page .sl-instructors-paginator .mat-mdc-paginator-container {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 0.35rem;
+}
+
+section.content.sl-instructors-page .sl-instructors-actions-col .sl-inv-btn-icon {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 1.5rem;
+}
