@@ -3,7 +3,6 @@ package com.seguridadlimite.security.security;
 import lombok.RequiredArgsConstructor;
 
 import com.seguridadlimite.security.security.filter.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Component;
  *  - /auth/**          → público (login JWT vía AuthenticationController)
  *  - POST /api/authenticate* → público (login legacy en AuthController, usado por los front con proxy /api)
  *  - /api/aprendiz/**  → en su mayoría público (lectura + save); ver reglas abajo
- *  - /api/evaluacion/** → público GET/POST (cuestionarios de ingreso/teórica/encuesta sin JWT)
+ *  - /api/evaluacion/** → público (todos los métodos, incl. OPTIONS preflight CORS; quiz sin JWT)
  *  - POST /api/registrarevaluacion* → público (envío de respuestas del mismo flujo)
  *  - POST /api/updateFoto → público (foto en flujo de inscripción sin JWT, análogo a save)
  *  - /api/admin/**     → requiere rol ROLE_ADMIN
@@ -46,6 +45,7 @@ public class HttpSecurityConfig {
 
         http
             .csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -77,9 +77,9 @@ public class HttpSecurityConfig {
             // Los trabajadores acceden directamente con su número de documento
             authConfig.requestMatchers(HttpMethod.GET,  "/api/aprendiz/evaluacion/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/aprendiz/evaluacion/**").permitAll();
-            // Preguntas y envío bajo /api/evaluacion (p. ej. GET .../ingreso, .../teorica)
-            authConfig.requestMatchers(HttpMethod.GET,  "/api/evaluacion/**").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/api/evaluacion/**").permitAll();
+            // Preguntas y envío bajo /api/evaluacion (p. ej. GET .../ingreso, .../teorica).
+            // Sin método: incluye OPTIONS (preflight CORS); si solo GET/POST, el navegador recibe 403.
+            authConfig.requestMatchers("/api/evaluacion/**").permitAll();
             // Registro de respuestas (controladores con @RequestMapping("/api"))
             authConfig.requestMatchers(HttpMethod.POST, "/api/registrarevaluacioningreso/**").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/registrarevaluacionteorica/**").permitAll();
