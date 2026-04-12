@@ -1,0 +1,113 @@
+// Modal MatDialog: formulario personal/instructores con app-ui-outlined-field (sin cabecera grande).
+
+.mat-mdc-dialog-container:has(.sl-professor-form-dialog) {
+  .mat-mdc-dialog-surface {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+}
+
+.sl-professor-form-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: min(480px, calc(100vw - 32px));
+  max-width: min(640px, 96vw);
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.sl-professor-form-dialog__close-float {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(25, 118, 210, 0.45);
+  border-radius: 50%;
+  background: #fff;
+  color: #0d47a1 !important;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(13, 27, 42, 0.12);
+}
+
+.sl-professor-form-dialog__close-float:hover {
+  background: #e3f2fd;
+}
+
+.sl-professor-form-dialog__body[mat-dialog-content],
+.sl-professor-form-dialog .mat-mdc-dialog-content {
+  margin: 0;
+  padding: 2.75rem 1.15rem 1.15rem;
+  max-height: min(78vh, 680px);
+  overflow: auto;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #fbfcfe 0%, #f2f6fa 100%);
+}
+
+.sl-professor-form-dialog .register-form {
+  margin: 0;
+}
+
+.sl-professor-form-dialog .row {
+  margin-left: -0.45rem;
+  margin-right: -0.45rem;
+}
+
+.sl-professor-form-dialog .row > [class*='col-'] {
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+}
+
+.sl-professor-form-dialog .sl-field-stack {
+  margin-bottom: 0.65rem;
+}
+
+.sl-professor-form-dialog .sl-field-error {
+  margin: 0.2rem 0 0 2px;
+  font-size: 0.75rem;
+  color: #c62828 !important;
+}
+
+.sl-professor-form-dialog .sl-field-hint {
+  margin: 0.2rem 0 0 2px;
+  font-size: 0.75rem;
+  color: #5f6368 !important;
+}
+
+.sl-professor-form-dialog .example-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-end;
+  padding-top: 0.35rem;
+}
+
+.sl-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 576px) {
+  .sl-professor-form-dialog {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .sl-professor-form-dialog__body[mat-dialog-content],
+  .sl-professor-form-dialog .mat-mdc-dialog-content {
+    padding: 2.5rem 0.85rem 1rem;
+  }
+}

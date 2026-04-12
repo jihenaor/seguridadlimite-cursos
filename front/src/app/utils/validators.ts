@@ -12,7 +12,10 @@ export class MyValidators {
 
   static validPassword(control: AbstractControl) {
     const value = control.value;
-    if (!containsNumber(value)) {
+    if (value == null || String(value).trim() === '') {
+      return null;
+    }
+    if (!containsNumber(String(value))) {
       return {invalid_password: true};
     }
     return null;

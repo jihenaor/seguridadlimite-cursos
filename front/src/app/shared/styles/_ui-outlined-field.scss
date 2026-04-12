@@ -74,6 +74,19 @@
   color: #9e9e9e;
 }
 
+select.ui-outlined-field__select {
+  cursor: pointer;
+  appearance: none;
+  padding-right: 2.25rem;
+  background-image: none;
+}
+
+.ui-outlined-field__suffix--static {
+  pointer-events: none;
+  cursor: default;
+  color: #757575;
+}
+
 /* type="date": usamos el botón con app-svg-icon; evitar capa invisible que capture clics */
 .ui-outlined-field__input[type='date']::-webkit-calendar-picker-indicator {
   display: none;

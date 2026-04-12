@@ -6,6 +6,8 @@
 package com.seguridadlimite.models.personal.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -22,6 +24,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sl_personal")
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Personal implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -65,10 +68,13 @@ public class Personal implements Serializable {
   @Size(min = 1, max = 1)
   private String aucodestad;
 
-  @JsonIgnore
   @Basic(optional = false)
   @NotNull
+  @Size(min = 1, max = 60)
   private String email;
+
+  @Size(max = 10)
+  private String numerocelular;
 
   @Basic(optional = false)
   @NotNull
@@ -78,7 +84,15 @@ public class Personal implements Serializable {
   @JsonIgnore
   @Basic(optional = false)
   @NotNull
+  @Size(min = 1, max = 200)
   private String password;
+
+  /**
+   * Solo escritura JSON al crear/actualizar: nunca se persiste en claro; se convierte a BCrypt en {@code PersonalService}.
+   */
+  @Transient
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  private String newPassword;
 
   private String personaautoriza;
 

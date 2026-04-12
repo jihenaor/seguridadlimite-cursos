@@ -8,6 +8,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -45,16 +46,26 @@ public class PersonalRestController {
 	@PostMapping("savePersonal")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Personal create(@RequestBody Personal entity) {
-		return service.save(entity);
+		try {
+			entity.setId(null);
+			return service.mergeAndSave(entity);
+		} catch (IllegalArgumentException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
 	}
 
 	@PutMapping("updatePersonal/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	public Personal update(@RequestBody Personal entity, @PathVariable Long id) {
-		Personal t = service.findById(id);
-
-		// aprendizActual.setNombre(entity.getNombre());
-		return service.save(t);
+		if (entity.getId() != null && !entity.getId().equals(id)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El id del cuerpo no coincide con la ruta");
+		}
+		try {
+			entity.setId(id);
+			return service.mergeAndSave(entity);
+		} catch (IllegalArgumentException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
 	}
 
 	/*

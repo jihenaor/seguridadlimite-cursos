@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.btn-add {
+  background-color: #2577c1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+}
+
+.table-header {
+  background-color: #f3f4f6;
+  padding: 1rem;
+}

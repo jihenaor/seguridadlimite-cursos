@@ -8,6 +8,7 @@ export class Professors {
   personaapoyo: string;
   numerocelular: string;
   email: string;
+  role: string;
   img: string;
   aucodestad: string;
   token: string;

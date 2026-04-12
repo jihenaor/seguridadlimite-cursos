@@ -10,7 +10,6 @@ export class ProfessorsService {
   dataChange: BehaviorSubject<Professors[]> = new BehaviorSubject<Professors[]>(
     []
   );
-  // Temporarily stores data from dialogs
   dialogData: any;
   constructor(private httpClient: HttpClient) {}
   get data(): Professors[] {
@@ -19,7 +18,6 @@ export class ProfessorsService {
   getDialogData() {
     return this.dialogData;
   }
-  /** CRUD METHODS */
   getAllProfessorss(): void {
     this.httpClient.get<Professors[]>(`${environment.apiUrl}/personals`).subscribe(
       data => {
@@ -30,16 +28,17 @@ export class ProfessorsService {
       }
     );
   }
-  // DEMO ONLY, you can find working methods below
-  async addProfessors(professors: Professors) {
+
+  private authHeaders(): Record<string, string> {
+    const token = sessionStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  async addProfessors(professors: Record<string, unknown>): Promise<Professors | void> {
     this.dialogData = professors;
 
     const url = `${environment.apiUrl}/savePersonal`;
-
     const datos = JSON.stringify(professors);
-//            'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-// 'Authorization': 'my-new-auth-token'
-    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(url,
         {
@@ -47,22 +46,47 @@ export class ProfessorsService {
           body: datos,
           headers: {
             'Content-Type': 'application/json',
-            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            ...this.authHeaders(),
           }
         });
       if (!response.ok) {
-        alert('Se genero un error ' + response.statusText);
-      } else {
-        const data = await response.json();
-        return data;
+        const msg = await response.text().catch(() => response.statusText);
+        alert('Se generó un error al guardar: ' + response.status + ' ' + msg);
+        return;
       }
+      const data = await response.json() as Professors;
+      return data;
     } catch (error) {
-      alert(error);
+      alert(String(error));
     }
   }
 
-  updateProfessors(professors: Professors): void {
+  async updateProfessors(professors: Record<string, unknown>): Promise<Professors | void> {
     this.dialogData = professors;
+    const id = professors['id'];
+    if (id == null) {
+      alert('Id inválido');
+      return;
+    }
+    const url = `${environment.apiUrl}/updatePersonal/${id}`;
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(professors),
+        headers: {
+          'Content-Type': 'application/json',
+          ...this.authHeaders(),
+        },
+      });
+      if (!response.ok) {
+        const msg = await response.text().catch(() => response.statusText);
+        alert('Se generó un error al actualizar: ' + response.status + ' ' + msg);
+        return;
+      }
+      return await response.json() as Professors;
+    } catch (error) {
+      alert(String(error));
+    }
   }
 
   deleteProfessors(id: number): void {

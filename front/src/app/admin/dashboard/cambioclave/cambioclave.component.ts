@@ -41,7 +41,7 @@ export class CambioclaveComponent implements OnInit {
     this.authForm = this.formBuilder.group({
       id: [this.authService.currentUserValue.id],
       password: ['',
-        [Validators.required, Validators.minLength(6), MyValidators.validPassword]],
+        [Validators.required, Validators.minLength(8), MyValidators.validPassword]],
       cpassword: ['', Validators.required],
     }, {
       validators: MyValidators.matchPasswords

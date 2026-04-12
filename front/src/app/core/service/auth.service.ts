@@ -90,12 +90,20 @@ export class AuthService {
     const url = `${environment.apiUrl}${nombreservicio}`;
     const datos = JSON.stringify(entidad);
 
+    // Login público: no enviar JWT viejo. Si no, JwtAuthenticationFilter valida el Bearer
+    // antes del controlador y un token expirado devuelve 401 sin llegar a /authenticate.
+    const loginSinJwt =
+      nombreservicio === '/authenticate' ||
+      nombreservicio === '/authenticateempresa' ||
+      nombreservicio === '/authenticatetrabajador';
+    const token = loginSinJwt ? null : sessionStorage.getItem('token');
     const response = await fetch(url,
       {
         method: 'POST',
         body: datos,
         headers: {
           'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         }
       });
     if (response.ok) {

@@ -17,11 +17,6 @@ public interface PersonalRepository extends CrudRepository<Personal, Long>{
   
   @Query("select u"
 	  		+ " from Personal u"
-	  		+ " where (u.numerodocumento = ?1 or u.email = ?1) and u.password = ?2")
-	  Personal findBylogin(String login, String password);
-  
-  @Query("select u"
-	  		+ " from Personal u"
 	  		+ " where u.entrenador = 'S'")
   List<Personal> findInstructores();
   

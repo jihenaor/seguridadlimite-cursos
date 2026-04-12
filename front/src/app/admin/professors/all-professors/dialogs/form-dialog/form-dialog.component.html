@@ -1,144 +1,188 @@
-<div class="addContainer">
-    <div class="modalHeader">
-        <div class="editRowModal">
-            <div class="modalHeader clearfix">
-                <img [src]='professors.img' alt="avatar">
-                <div class="modal-about">
-                    <div class="font-weight-bold p-t-5 p-l-10 font-17">
-                        {{dialogTitle}}</div>
-                </div>
-            </div>
+<div class="sl-professor-form-dialog">
+  <h2 class="sl-visually-hidden">{{ dialogTitle }}</h2>
+  <button
+    type="button"
+    class="sl-professor-form-dialog__close-float"
+    (click)="dialogRef.close()"
+    aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div mat-dialog-content class="sl-professor-form-dialog__body">
+    <form class="register-form" [formGroup]="proForm" (ngSubmit)="$event.preventDefault()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="tipodocumento"
+              fieldId="pf-tipodoc"
+              label="Tipo de documento *"
+              fieldType="select"
+              [options]="docTipoOptions"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('tipodocumento')?.touched && proForm.get('tipodocumento')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
         </div>
-        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-    <div mat-dialog-content>
-        <form class="register-form m-4" [formGroup]="proForm" (ngSubmit)="submit">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>tipodocumento</mat-label>
-                        <mat-select formControlName="tipodocumento" required>
-                            <mat-option [value]="'CC'">
-                                Cédula de ciudadania
-                            </mat-option>
-                            <mat-option [value]="'PA'">
-                                Pasaporte
-                            </mat-option>
-                            <mat-option [value]="'PE'">
-                                Permiso especial de permanencia
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="proForm.get('tipodocumento').hasError('required')">
-                            El tipo de documento es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>Numero de documento</mat-label>
-                        <input matInput formControlName="numerodocumento" required>
-                        <mat-icon matSuffix>face</mat-icon>
-                        <mat-error *ngIf="proForm.get('numerodocumento').hasError('required')">
-                            El nombre es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>Nombre completo</mat-label>
-                        <input matInput formControlName="nombrecompleto" required>
-                        <mat-icon matSuffix>school</mat-icon>
-                        <mat-error *ngIf="proForm.get('nombrecompleto').hasError('required')">
-                            El nombre es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>entrenador</mat-label>
-
-                        <mat-select formControlName="entrenador" required>
-                            <mat-option [value]="'S'">
-                                SI
-                            </mat-option>
-                            <mat-option [value]="'N'">
-                                NO
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="proForm.get('entrenador').hasError('required')">
-                            Es entrenador es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>Supervisor</mat-label>
-
-                        <mat-select formControlName="supervisor" required>
-                            <mat-option [value]="'S'">
-                                SI
-                            </mat-option>
-                            <mat-option [value]="'N'">
-                                NO
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="proForm.get('supervisor').hasError('required')">
-                            Es supervisor es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>numerocelular</mat-label>
-                        <input matInput formControlName="numerocelular">
-                        <mat-icon matSuffix>phone</mat-icon>
-                        <mat-error *ngIf="proForm.get('numerocelular').hasError('required')">
-                            numero de celular es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput formControlName="email" required>
-                        <mat-icon matSuffix>email</mat-icon>
-                        <mat-error *ngIf="proForm.get('email').hasError('required') || proForm.get('email').touched">
-                            Please enter a valid email address
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <!--
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                        <mat-label>Joining date</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="date">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="proForm.get('date').hasError('required')">
-                            Please select date
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            -->
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                    <div class="example-button-row">
-                        <button mat-raised-button color="primary" [type]="submit" [disabled]="!proForm.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
-                        <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="numerodocumento"
+              fieldId="pf-numerodoc"
+              label="Número de documento *"
+              fieldType="text"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('numerodocumento')?.touched && proForm.get('numerodocumento')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="nombrecompleto"
+              fieldId="pf-nombre"
+              label="Nombre completo *"
+              fieldType="text"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('nombrecompleto')?.touched && proForm.get('nombrecompleto')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="entrenador"
+              fieldId="pf-entrenador"
+              label="Entrenador *"
+              fieldType="select"
+              [options]="siNoOptions"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('entrenador')?.touched && proForm.get('entrenador')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="supervisor"
+              fieldId="pf-supervisor"
+              label="Supervisor *"
+              fieldType="select"
+              [options]="siNoOptions"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('supervisor')?.touched && proForm.get('supervisor')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="role"
+              fieldId="pf-role"
+              label="Rol *"
+              fieldType="select"
+              [options]="roleOptions"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('role')?.touched && proForm.get('role')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="personaapoyo"
+              fieldId="pf-apoyo"
+              label="Persona apoyo *"
+              fieldType="select"
+              [options]="siNoOptions"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('personaapoyo')?.touched && proForm.get('personaapoyo')?.hasError('required')">
+              Requerido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="numerocelular"
+              fieldId="pf-cel"
+              label="Número celular"
+              fieldType="text"
+            />
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="email"
+              fieldId="pf-email"
+              label="Email *"
+              fieldType="email"
+            />
+            <p class="sl-field-error" *ngIf="proForm.get('email')?.touched && proForm.get('email')?.invalid">
+              Correo no válido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="newPassword"
+              fieldId="pf-pass1"
+              [label]="action === 'add' ? 'Contraseña inicial *' : 'Nueva contraseña (opcional)'"
+              fieldType="password"
+              [showPasswordToggle]="true"
+            />
+            <p class="sl-field-hint">Mínimo 8 caracteres y al menos un número.</p>
+            <p class="sl-field-error" *ngIf="proForm.get('newPassword')?.touched && proForm.get('newPassword')?.hasError('required')">
+              Requerida al crear
+            </p>
+            <p class="sl-field-error" *ngIf="proForm.get('newPassword')?.touched && proForm.get('newPassword')?.hasError('minlength')">
+              Muy corta
+            </p>
+            <p class="sl-field-error" *ngIf="proForm.get('newPassword')?.touched && proForm.get('newPassword')?.hasError('invalid_password')">
+              Incluya al menos un número
+            </p>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="sl-field-stack">
+            <app-ui-outlined-field
+              formControlName="confirmNewPassword"
+              fieldId="pf-pass2"
+              [label]="action === 'add' ? 'Confirmar contraseña *' : 'Confirmar contraseña'"
+              fieldType="password"
+              [showPasswordToggle]="true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" type="button" [disabled]="!proForm.valid" (click)="confirmSave()">
+              Guardar
+            </button>
+            <button mat-raised-button color="warn" type="button" (click)="onNoClick()" tabindex="-1">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

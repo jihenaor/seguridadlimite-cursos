@@ -29,7 +29,7 @@ public class AuthenticationService {
      */
     public AuthenticationResponse login(AuthenticationRequest authRequest) {
 
-        Personal personal = personalService.findByLogin(
+        Personal personal = personalService.authenticate(
                 authRequest.getUsername(), authRequest.getPassword());
 
         if (personal == null) {

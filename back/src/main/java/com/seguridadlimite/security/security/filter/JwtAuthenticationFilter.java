@@ -33,6 +33,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final PersonalService personalService;
 
+    /**
+     * Login sin sesión: no validar JWT aquí (evita 401 si el cliente envía un Bearer caducado).
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        String cp = request.getContextPath();
+        if (cp != null && !cp.isEmpty() && uri.startsWith(cp)) {
+            uri = uri.substring(cp.length());
+        }
+        return "/api/authenticate".equals(uri)
+                || "/api/authenticateempresa".equals(uri)
+                || "/api/authenticatetrabajador".equals(uri);
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -48,6 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = authHeader.split(" ")[1].trim();
 
         if (!jwtService.isTokenValid(jwt)) {
+            logger.warn("JWT rechazado (inválido o expirado) — URI: {}", request.getRequestURI());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"error\":\"Token inválido o expirado\"}");
             return;
@@ -64,7 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Subject del JWT = mismo identificador que en login (documento o email en sl_personal).
-        Personal personal = personalService.findByLogin(username, null);
+        Personal personal = personalService.findByLogin(username);
         Collection<? extends GrantedAuthority> authorities;
         if (personal != null) {
             Role role = Role.fromPersonalRoleCode(personal.getRole());
