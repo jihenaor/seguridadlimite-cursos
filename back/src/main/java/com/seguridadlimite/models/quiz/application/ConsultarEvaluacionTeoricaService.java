@@ -57,7 +57,10 @@ public class ConsultarEvaluacionTeoricaService {
 
 		if (TipoevaluacionEnum.TEORICO.getEquivalente().equals(tipoevaluacion)) {
 			if (!existeTipoEvaluacionE(preguntas)) {
-				throw new BusinessException("No existe una pregunta Teorica para el nivel: " + aprendiz.getNivel().getNombre() + " y enfasis: " + aprendiz.getEnfasis().getNombre());
+				throw new BusinessException("No existe una pregunta Teorica para:" 
+				+ " Nivel: (" + aprendiz.getIdnivel() + ") " + aprendiz.getNivel().getNombre() 
+				+ " Enfasis: (" + aprendiz.getIdenfasis() + ") " + aprendiz.getEnfasis().getNombre()
+				+ " Numero de evaluacion: " + numeroevaluacion);
 			}
 		}
 		return preguntas;
@@ -71,7 +74,7 @@ public class ConsultarEvaluacionTeoricaService {
 			String tipoevaluacion,
             String sabeleerescribir) throws BusinessException {
 		List<Pregunta> preguntas;
-        log.info(sabeleerescribir);
+
 		if (tipoevaluacion.equals(TipoevaluacionEnum.TEORICO.getEquivalente())) {
 			preguntas = preguntaDao.findPreguntasEvaluacionTeorica(
                     idnivel,

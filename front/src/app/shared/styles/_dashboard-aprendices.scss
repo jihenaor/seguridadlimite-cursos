@@ -1,0 +1,226 @@
+// Vista consulta aprendices (admin dashboard / main)
+// — Toolbar sin `.row` dentro de `.materialTableHeader` (flex del tema + Bootstrap solapaba botones).
+// — Scroll horizontal solo en la tabla; sin recortar el área útil del viewport.
+
+// Host del dashboard `app-main`: evita que el min-content de la tabla ensanche el viewport.
+app-main {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+section.content.sl-dashboard-aprendices {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  // No overflow-x aquí: el scroll horizontal queda en .sl-aprendices-table-wrap
+
+  .container-fluid {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: visible;
+  }
+
+  .card .body {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: visible;
+  }
+
+  // Barra búsqueda + acciones (reemplaza row/col)
+  .materialTableHeader.sl-aprendices-toolbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+
+    .sl-aprendices-toolbar__search {
+      flex: 1 1 16rem;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .sl-aprendices-toolbar__actions {
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
+
+    .header-buttons-left {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .materialTableHeader .search-field {
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      min-width: 14rem;
+    }
+  }
+
+  .materialTableHeader .tbl-export-btn {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0;
+    max-width: 100%;
+    float: none !important;
+  }
+
+  .sl-aprendices-table-wrap {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    padding: 0.25rem 0.35rem 0.35rem;
+    box-sizing: border-box;
+  }
+
+  // Tabla fluida: todas las columnas visibles en el ancho del card (salto de línea en textos largos).
+  .sl-aprendices-table {
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    box-sizing: border-box;
+
+    col.sl-col-idx {
+      width: 3%;
+    }
+    col.sl-col-doc {
+      width: 9%;
+    }
+    col.sl-col-nombre {
+      width: 15%;
+    }
+    col.sl-col-cod {
+      width: 8%;
+    }
+    col.sl-col-permiso {
+      width: 11%;
+    }
+    col.sl-col-nivel {
+      width: 10%;
+    }
+    col.sl-col-fecha {
+      width: 10%;
+    }
+    col.sl-col-fin {
+      width: 7%;
+    }
+    col.sl-col-pago {
+      width: 5%;
+    }
+    col.sl-col-ids {
+      width: 12%;
+    }
+    col.sl-col-acc {
+      width: 10%;
+    }
+
+    th,
+    td {
+      padding: 0.5rem 0.35rem;
+      text-align: left;
+      vertical-align: top;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    thead th {
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+      color: #374151;
+      white-space: normal;
+    }
+
+    tbody th[scope='row'] {
+      font-weight: 600;
+      color: #6b7280;
+      background: #fafafa;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    tbody td {
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .sl-cell-icon,
+    .sl-cell-actions {
+      vertical-align: middle;
+      text-align: center;
+      overflow-wrap: normal;
+    }
+
+    .sl-cell-icon .mat-icon,
+    .sl-cell-actions .mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+
+    .sl-cell-actions .mat-mdc-mini-fab,
+    .sl-cell-actions .mat-mini-fab {
+      transform: scale(0.92);
+      transform-origin: center;
+    }
+
+    tbody tr:hover td,
+    tbody tr:hover th[scope='row'] {
+      background: #f9fafb;
+    }
+
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+  }
+
+  .sl-aprendices-loading {
+    padding: 2rem 1rem;
+  }
+}

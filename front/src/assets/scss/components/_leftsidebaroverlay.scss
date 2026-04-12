@@ -35,8 +35,9 @@
   top: 60px;
   left: 0;
   border-right: 1px solid #f2f4f9;
-  -webkit-box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.2);
-  box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.2);
+  // Sin sombra: con sidebar fija, el blur queda “pintado” sobre el scroll del contenido (efecto halo).
+  -webkit-box-shadow: none;
+  box-shadow: none;
   z-index: 999 !important;
 
   .user-info {

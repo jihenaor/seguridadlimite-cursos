@@ -1,3 +1,6 @@
+@use './app/shared/styles/layout-sidebar';
+@use './app/shared/styles/dashboard-aprendices';
+
 h3 {
   color: #1976d2; // Color azul de Material Design
   margin-bottom: 1rem;
@@ -157,3 +160,4 @@ td,
 .ui-modal-header h4, .ui-modal-header h5, .ui-modal-header h6 {
   color: #ffffff !important;
 }
+

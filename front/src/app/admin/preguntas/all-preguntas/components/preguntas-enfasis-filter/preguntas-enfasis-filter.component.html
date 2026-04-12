@@ -1,0 +1,35 @@
+<div class="pef-group-toolbar">
+  <mat-slide-toggle
+    [checked]="preguntasService.groupByEnfasis()"
+    (change)="preguntasService.setGroupByEnfasis($event.checked)"
+    color="primary"
+  >
+    Agrupar por énfasis
+  </mat-slide-toggle>
+</div>
+
+<div class="pef-wrap" *ngIf="options().length > 0">
+  <span class="pef-label">Filtrar por énfasis</span>
+  <div class="pef-chips">
+    <button
+      mat-stroked-button
+      type="button"
+      class="pef-chip"
+      [class.pef-chip--active]="noneSelected()"
+      (click)="clearEnfasis()"
+    >
+      Todos
+    </button>
+    @for (e of options(); track e.id) {
+      <button
+        mat-stroked-button
+        type="button"
+        class="pef-chip"
+        [class.pef-chip--active]="isSelected(e.id)"
+        (click)="toggle(e.id)"
+      >
+        {{ e.nombre }}
+      </button>
+    }
+  </div>
+</div>

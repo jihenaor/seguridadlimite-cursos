@@ -154,13 +154,17 @@ export class HeaderComponent
     }
   }
   callSidemenuCollapse() {
-    const hasClass = this.document.body.classList.contains('side-closed');
+    const body = this.document.body;
+    this.renderer.removeClass(body, 'side-closed-hover');
+    const hasClass = body.classList.contains('side-closed');
     if (hasClass) {
-      this.renderer.removeClass(this.document.body, 'side-closed');
-      this.renderer.removeClass(this.document.body, 'submenu-closed');
+      this.renderer.removeClass(body, 'side-closed');
+      this.renderer.removeClass(body, 'submenu-closed');
+      sessionStorage.setItem('sidebar_status', 'open');
     } else {
-      this.renderer.addClass(this.document.body, 'side-closed');
-      this.renderer.addClass(this.document.body, 'submenu-closed');
+      this.renderer.addClass(body, 'side-closed');
+      this.renderer.addClass(body, 'submenu-closed');
+      sessionStorage.setItem('sidebar_status', 'close');
     }
   }
   public toggleRightSidebar(): void {

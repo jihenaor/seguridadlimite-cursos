@@ -1,48 +1,69 @@
-<section class="content">
-  <div class="container-block">
-    <app-block-header></app-block-header>
+<section class="content sl-dashboard-aprendices">
+  <div class="container-fluid">
+    <app-pagetitle [title]="pageTitle"></app-pagetitle>
 
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="row card-spacing">
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <mat-form-field class="example-full-width" appearance="fill">
-                  <input matInput [formControl]="searchField" id="searchField"
-                         placeholder="Número de documento/Nombre/Fecha inscripción (yyyy-MM-dd)" autofocus>
-                </mat-form-field>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 d-none d-sm-block">
-                <button mat-icon-button matTooltip="Buscar aprendiz" (click)="search()" class="ml-2">
-                  <mat-icon>search</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Listar inscritos hoy" (click)="searchInscritos()" class="ml-2">
-                  <mat-icon>list</mat-icon>
-                </button>
-              </div>
-            </div>
+    <div class="card">
+      <div class="body">
+        <div class="materialTableHeader sl-aprendices-toolbar">
+          <div class="sl-aprendices-toolbar__search">
+            <ul class="header-buttons-left ml-0">
+              <li class="dropdown m-l-20">
+                <label for="dashboard-aprendices-search-input">
+                  <i class="material-icons search-icon">search</i>
+                </label>
+                <input
+                  id="dashboard-aprendices-search-input"
+                  class="browser-default search-field"
+                  type="text"
+                  [formControl]="searchField"
+                  placeholder="Documento, nombre o fecha inscripción (yyyy-MM-dd)"
+                  aria-label="Filtro de búsqueda de aprendices"
+                  autofocus
+                />
+              </li>
+            </ul>
           </div>
-
-          <!-- Indicador de carga -->
-          <div *ngIf="aprendizInscritoFindService.loading(); else dataContent" class="text-center mt-4 mb-4">
-            <mat-spinner></mat-spinner>
+          <div class="sl-aprendices-toolbar__actions">
+            <ul class="header-buttons tbl-export-btn">
+              <li>
+                <button mat-mini-fab color="primary" type="button" (click)="search()" matTooltip="Buscar">
+                  <mat-icon class="col-white">search</mat-icon>
+                </button>
+              </li>
+              <li>
+                <button mat-mini-fab color="primary" type="button" (click)="searchInscritos()" matTooltip="Listar inscritos hoy">
+                  <mat-icon class="col-white">list</mat-icon>
+                </button>
+              </li>
+              <li *ngIf="hasAprendices()">
+                <button mat-raised-button color="primary" type="button" (click)="mostrarResumen()">
+                  <mat-icon>assessment</mat-icon>
+                  Ver resumen
+                </button>
+              </li>
+            </ul>
           </div>
+        </div>
 
-          <!-- Contenido principal -->
-          <ng-template #dataContent>
-            <div *ngIf="aprendizInscritoFindService.aprendizs(); else noResults">
-              <app-aprendices-table [aprendices]="aprendizInscritoFindService.aprendizs()"></app-aprendices-table>
-            </div>
-          </ng-template>
-
-          <!-- Mensaje cuando no hay resultados -->
-          <ng-template #noResults>
+        @if (aprendizInscritoFindService.loading()) {
+          <div class="text-center sl-aprendices-loading">
+            <mat-spinner diameter="40" aria-label="Cargando"></mat-spinner>
+          </div>
+        } @else {
+          @if (aprendizInscritoFindService.aprendizs(); as list) {
+            @if (list.length > 0) {
+              <app-aprendices-table [aprendices]="list"></app-aprendices-table>
+            } @else {
+              <div class="text-center mt-4 mb-4 text-muted">
+                <p>No se encontraron resultados.</p>
+              </div>
+            }
+          } @else {
             <div class="text-center mt-4 mb-4 text-muted">
               <p>No se encontraron resultados.</p>
             </div>
-          </ng-template>
-        </div>
+          }
+        }
       </div>
     </div>
   </div>

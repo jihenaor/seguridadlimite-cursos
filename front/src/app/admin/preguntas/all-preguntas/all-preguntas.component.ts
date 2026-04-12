@@ -10,6 +10,8 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { RespuestasComponent } from '../components/respuestas/respuestas.component';
+import { PreguntasEnfasisFilterComponent } from './components/preguntas-enfasis-filter/preguntas-enfasis-filter.component';
+import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
 import { NgFor, NgStyle, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
         NgStyle,
         NgIf,
         RespuestasComponent,
+        PreguntasEnfasisFilterComponent,
+        PagetitleComponent,
     ]
 })
 export class AllpreguntasComponent implements OnInit, AfterViewInit {
@@ -36,9 +40,11 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
   nombrenivel: string;
   idgrupo: string
   nombregrupo: string;
-  preguntaDetalle: number = -1;
+  /** Fila de respuestas abierta (por id de pregunta); null = ninguna. */
+  preguntaDetalleId: number | null = null;
   private isNivelInRoute = false;
-  private isGrupoInRoute = false;
+  /** Ruta `all-preguntas/grupo`: muestra filtros por énfasis. */
+  readonly isGrupoInRoute: boolean;
 
   colores = ["#FFC0CB", "#87CEEB", "#98FB98", "#E6E6FA", "#FF33A3"];
   asignacionesDeColores = new Map<string, string>();
@@ -80,7 +86,7 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
         distinctUntilChanged()
       )
       .subscribe((searchTerm: string) => {
-        this.preguntasService.filter(searchTerm);
+        this.preguntasService.setTextFilter(searchTerm);
       });
   }
   ngAfterViewInit() {
@@ -131,12 +137,35 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
   }
 
 
-  toggleDetail(index: number) {
-    if (this.preguntaDetalle === index) {
-      this.preguntaDetalle = -1; // Oculta el detalle si ya está visible
-    } else {
-      this.preguntaDetalle = index; // Muestra el detalle de la pregunta seleccionada
-    }
+  toggleDetailByRow(row: Pregunta): void {
+    const id = row.id;
+    this.preguntaDetalleId = this.preguntaDetalleId === id ? null : id;
+  }
+
+  isDetailOpen(row: Pregunta): boolean {
+    return this.mostrarRespuestas || this.preguntaDetalleId === row.id;
+  }
+
+  /** Vista tabla agrupada por énfasis (solo ruta grupo). */
+  groupedTable(): boolean {
+    return this.isGrupoInRoute && this.preguntasService.groupByEnfasis();
+  }
+
+  /** Oculta la columna énfasis cuando ya se agrupa por bloque. */
+  hideEnfasisColumn(): boolean {
+    return this.groupedTable();
+  }
+
+  colspanForTable(): number {
+    return this.hideEnfasisColumn() ? 5 : 6;
+  }
+
+  trackByPreguntaId(_: number, row: Pregunta): number {
+    return row.id;
+  }
+
+  get preguntasPageTitle(): string {
+    return `Preguntas: ${this.nombrenivel ?? ''}${this.nombregrupo ?? ''}`;
   }
 
   toggleAllDetails() {

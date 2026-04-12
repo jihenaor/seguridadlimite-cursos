@@ -1,0 +1,228 @@
+// ─── Barra lateral principal (contraste con áreas claras de contenido) ─────
+// Carga global desde `src/styles.scss`. Complementa el tema RedStar sin editar vendor.
+
+$sl-sidebar-bg-top: #0b1220;
+$sl-sidebar-bg-bottom: #111827;
+$sl-sidebar-border: rgba(148, 163, 184, 0.18);
+// Texto claro sobre fondo oscuro (gana a vendor `.sidebar a { color: #000 }`, `span { #333 }`)
+$sl-sidebar-text: #f8fafc;
+$sl-sidebar-muted: #cbd5e1;
+$sl-sidebar-hover: rgba(255, 255, 255, 0.06);
+$sl-sidebar-active: rgba(56, 189, 248, 0.14);
+$sl-sidebar-accent: #38bdf8;
+
+.sidebar,
+#leftsidebar.sidebar {
+  background: linear-gradient(175deg, $sl-sidebar-bg-top 0%, $sl-sidebar-bg-bottom 55%, #0f172a 100%) !important;
+  // Sin sombras difusas: sidebar `fixed` + sombra ancha = halo estático al hacer scroll sobre el contenido claro
+  border-right: 1px solid rgba(51, 65, 85, 0.95) !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  transition: width 0.28s ease, background 0.28s ease !important;
+  // Evita artefactos de composición entre columnas
+  backface-visibility: hidden;
+
+  .menu {
+    background: transparent;
+
+    .list {
+      padding-top: 0.25rem;
+
+      .header {
+        color: $sl-sidebar-muted !important;
+        margin-top: 1.25rem !important;
+        margin-bottom: 0.35rem !important;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+      }
+
+      li {
+        &.active > .menu-top,
+        &.active-top > .menu-top {
+          background: $sl-sidebar-active !important;
+          border-left: 3px solid $sl-sidebar-accent;
+        }
+
+        &.activeSub > a,
+        &.activeSubSub > a {
+          color: #fff !important;
+          background: rgba(255, 255, 255, 0.06) !important;
+        }
+      }
+
+      // Especificidad alta: el tema carga `color: #000` / `span #333` en `.sidebar .menu .list a`.
+      a.menu-top,
+      a.ml-menu,
+      .ml-menu li > a,
+      li > a.menu-top {
+        color: $sl-sidebar-text !important;
+        border-radius: 8px;
+        margin-left: 8px;
+        margin-right: 8px;
+        transition: background 0.18s ease, color 0.18s ease;
+      }
+
+      a.menu-top:hover,
+      a.menu-top:active,
+      .ml-menu li > a:hover,
+      .ml-menu li > a:active {
+        background: rgba(255, 255, 255, 0.12) !important;
+        color: #ffffff !important;
+      }
+
+      // Títulos dentro de los enlaces (vendor fuerza span a #333)
+      a.menu-top span,
+      a.menu-top .hide-menu,
+      .ml-menu li > a span {
+        color: $sl-sidebar-text !important;
+      }
+
+      .ml-menu {
+        background: rgba(0, 0, 0, 0.18) !important;
+        border-radius: 0 0 10px 10px;
+        margin: 0 6px 6px 6px !important;
+        padding: 4px 0 8px !important;
+
+        li > a {
+          font-size: 13px;
+          padding-left: 20px !important;
+          color: #e2e8f0 !important;
+        }
+      }
+
+      .ml-menu-2 li > a {
+        color: #e2e8f0 !important;
+      }
+
+      i.material-icons,
+      i.material-icons-outlined {
+        color: #e2e8f0 !important;
+      }
+
+      .material-icons-two-tone {
+        filter: brightness(0) invert(1) opacity(0.88) !important;
+      }
+
+      li.active .material-icons-two-tone,
+      li.active-top .material-icons-two-tone {
+        filter: brightness(0) invert(1) !important;
+      }
+    }
+  }
+
+  .menu-toggle:before,
+  .menu-toggle:after {
+    color: $sl-sidebar-muted !important;
+  }
+}
+
+// Franja superior: control de riel + marca
+.sl-sidebar-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 10px 10px 10px 12px;
+  border-bottom: 1px solid $sl-sidebar-border;
+  background: rgba(0, 0, 0, 0.2);
+  min-height: 48px;
+}
+
+.sl-sidebar-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e2e8f0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.side-closed .sidebar .sl-sidebar-brand {
+  display: none;
+}
+
+body.side-closed.side-closed-hover .sidebar .sl-sidebar-brand {
+  display: block;
+}
+
+.sl-sidebar-collapse-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid $sl-sidebar-border;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+
+  .material-icons-outlined {
+    font-size: 22px;
+    line-height: 1;
+  }
+}
+
+body.side-closed .sidebar .sl-sidebar-collapse-btn {
+  margin: 0 auto;
+}
+
+// Modo rail estrecho: iconos centrados y legibles
+body.side-closed.submenu-closed .sidebar {
+  .menu .list li a.menu-top {
+    justify-content: center;
+  }
+}
+
+// Área principal: tope de ancho = viewport − sidebar − márgenes laterales del tema (~27px × 2).
+// Evita scroll horizontal global y que la barra de scroll de la tabla quede cortada al borde.
+$sl-content-margin-x: 54px;
+$sl-main-content-max-w-rail: 1160px;
+
+body:not(.horizontal-layout):not(.ls-closed) section.content {
+  box-sizing: border-box;
+  max-width: calc(100vw - 260px - #{$sl-content-margin-x});
+}
+
+body.side-closed:not(.side-closed-hover):not(.horizontal-layout):not(.ls-closed) section.content {
+  max-width: min(
+    #{$sl-main-content-max-w-rail},
+    calc(100vw - 58px - #{$sl-content-margin-x})
+  );
+}
+
+body.side-closed.side-closed-hover:not(.horizontal-layout):not(.ls-closed) section.content {
+  max-width: calc(100vw - 276px - #{$sl-content-margin-x});
+}
+
+body.side-closed-hover .sidebar,
+body.side-closed-hover #leftsidebar.sidebar {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+// Sobrescribe hover del tema (#f0f3fb + texto oscuro → ilegible en barra oscura)
+body .sidebar .menu .list li a:hover,
+body .sidebar .menu .list li a:active,
+body .sidebar .menu .list li a:focus {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+body .sidebar .menu .list li a:hover span,
+body .sidebar .menu .list li a:hover .hide-menu,
+body .sidebar .menu .list li a:active span {
+  color: #ffffff !important;
+}

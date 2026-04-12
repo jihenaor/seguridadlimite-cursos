@@ -1,0 +1,9 @@
+// El área principal vive en un ítem flex (app.component); sin min-width: 0 el
+// min-content de tablas/cards puede forzar ancho > viewport.
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}

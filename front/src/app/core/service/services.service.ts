@@ -28,13 +28,33 @@ export class ServicesService {
         case 400:
         case 401:
         case 404:
-        case 500:
-          const errorBody = await response.json();
-          alert(errorBody.message || 'Error en el servidor');
+        case 500: {
+          const errText = await response.text();
+          let message = 'Error en el servidor';
+          if (errText.trim()) {
+            try {
+              message = JSON.parse(errText).message || message;
+            } catch {
+              message = errText.slice(0, 200);
+            }
+          }
+          alert(message);
           return undefined;
-        case 200:
-          const data = await response.json();
-          return data;
+        }
+        case 200: {
+          const text = await response.text();
+          if (!text.trim()) {
+            console.error('executeFetch: respuesta 200 con cuerpo vacío', url);
+            return undefined;
+          }
+          try {
+            return JSON.parse(text);
+          } catch {
+            console.error('executeFetch: respuesta no es JSON válido', url, text.slice(0, 200));
+            alert('La respuesta del servidor no es JSON válido. Revise la consola.');
+            return undefined;
+          }
+        }
         default:
           alert('Error consultando datos en WS ' + url + ' Error: ' + response.status);
           console.log('Error ejecutando fetch. Url ' + url + ' no existe');

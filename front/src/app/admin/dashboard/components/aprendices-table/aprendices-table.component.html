@@ -1,0 +1,65 @@
+<div class="sl-aprendices-table-wrap" role="region" aria-label="Resultados de búsqueda">
+  <table class="sl-aprendices-table">
+    <colgroup>
+      <col class="sl-col-idx" />
+      <col class="sl-col-doc" />
+      <col class="sl-col-nombre" />
+      <col class="sl-col-cod" />
+      <col class="sl-col-permiso" />
+      <col class="sl-col-nivel" />
+      <col class="sl-col-fecha" />
+      <col class="sl-col-fin" />
+      <col class="sl-col-pago" />
+      <col class="sl-col-ids" />
+      <col class="sl-col-acc" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Documento</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cód. verificación</th>
+        <th scope="col">Permiso / cód. ministerio</th>
+        <th scope="col">Nivel</th>
+        <th scope="col">Inscripción / últ. asistencia</th>
+        <th scope="col">Fin grupo</th>
+        <th scope="col">Pago</th>
+        <th scope="col">Trabajador / aprendiz</th>
+        <th scope="col" aria-label="Acciones"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (aprendiz of aprendices; track aprendiz.id) {
+        <tr>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ aprendiz.numerodocumento }}</td>
+          <td>{{ aprendiz.nombreCompletoTrabajador }}</td>
+          <td>{{ aprendiz.codigoverificacion }}</td>
+          <td>{{ aprendiz.idpermiso }} / {{ aprendiz.codigoministerio }}</td>
+          <td>{{ aprendiz.nivel?.nombre }}</td>
+          <td>{{ aprendiz.fechainscripcion }}</td>
+          <td>—</td>
+          <td class="sl-cell-icon">
+            @if (aprendiz.pagocurso === 'S') {
+              <mat-icon class="text-success" matTooltip="Pagado">check_circle</mat-icon>
+            } @else {
+              <mat-icon class="text-danger" matTooltip="Pendiente de pago">error</mat-icon>
+            }
+          </td>
+          <td>{{ aprendiz.idtrabajador }} — {{ aprendiz.id }}</td>
+          <td class="sl-cell-actions">
+            <button
+              mat-mini-fab
+              color="primary"
+              type="button"
+              (click)="irTrabajador(aprendiz.idtrabajador, aprendiz.id)"
+              matTooltip="Editar ficha"
+            >
+              <mat-icon aria-hidden="true" class="col-white">edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

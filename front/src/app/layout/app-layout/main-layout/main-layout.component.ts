@@ -7,7 +7,7 @@ import { HeaderComponent } from '../../header/header.component';
 @Component({
     selector: 'app-main-layout',
     templateUrl: './main-layout.component.html',
-    styleUrls: [],
+    styleUrls: ['./main-layout.component.scss'],
     imports: [
         HeaderComponent,
         SidebarComponent,

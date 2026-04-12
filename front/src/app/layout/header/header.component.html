@@ -3,7 +3,13 @@
     <div class="flex items-center justify-between h-full px-4">
       <!-- Logo, título y controles -->
       <div class="flex items-center gap-4">
-        <button mat-button (click)="callSidemenuCollapse()" class="sidemenu-collapse nav-notification-icons text-white">
+        <button
+          mat-button
+          type="button"
+          (click)="callSidemenuCollapse()"
+          class="sidemenu-collapse nav-notification-icons text-white"
+          title="Mostrar u ocultar menú lateral"
+        >
           <i class="material-icons-outlined">menu</i>
         </button>
         <img src="assets/images/logo_sticky.jpeg" alt="Logo Seguridad al Límite" class="w-16 h-16 rounded-full" />

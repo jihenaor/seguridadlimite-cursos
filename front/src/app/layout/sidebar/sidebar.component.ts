@@ -30,6 +30,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   userImg: string;
   userType: string;
   headerHeight = 60;
+  /** Franja superior del sidebar (botón + marca). */
+  private readonly sidebarChromeHeight = 48;
   currentRoute: string;
   routerObj = null;
   constructor(
@@ -132,12 +134,37 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   setMenuHeight() {
     this.innerHeight = window.innerHeight;
-    const height = this.innerHeight - this.headerHeight;
+    const height =
+      this.innerHeight - this.headerHeight - this.sidebarChromeHeight;
     this.listMaxHeight = height + '';
     this.listMaxWidth = '500px';
   }
   isOpen() {
     return this.bodyTag.classList.contains('overlay-open');
+  }
+
+  /** Menú lateral en modo rail (iconos, ancho reducido). */
+  isRailCollapsed(): boolean {
+    return this.document.body.classList.contains('side-closed');
+  }
+
+  /** Igual que el botón del header: alterna `side-closed` y persiste en `sessionStorage`. */
+  toggleRail(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    const body = this.document.body;
+    this.renderer.removeClass(body, 'side-closed-hover');
+    const collapsed = body.classList.contains('side-closed');
+    if (collapsed) {
+      this.renderer.removeClass(body, 'side-closed');
+      this.renderer.removeClass(body, 'submenu-closed');
+      sessionStorage.setItem('sidebar_status', 'open');
+    } else {
+      this.renderer.addClass(body, 'side-closed');
+      this.renderer.addClass(body, 'submenu-closed');
+      sessionStorage.setItem('sidebar_status', 'close');
+    }
+    this.setMenuHeight();
   }
   checkStatuForResize(firstTime) {
     if (window.innerWidth < 1170) {

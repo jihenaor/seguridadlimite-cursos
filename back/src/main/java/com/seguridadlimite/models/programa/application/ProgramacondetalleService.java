@@ -2,15 +2,11 @@ package com.seguridadlimite.models.programa.application;
 
 import lombok.RequiredArgsConstructor;
 
-import com.seguridadlimite.models.personal.infraestructure.PersonalRepository;
 import com.seguridadlimite.models.programa.infraestructure.IProgramaDao;
 import com.seguridadlimite.models.programa.model.Programa;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,30 +15,21 @@ public class ProgramacondetalleService {
 
 	private final IProgramaDao dao;
 
-	private final PersonalRepository personalDao;
-
 	@Transactional(readOnly = true)
 	public List<Programa> findAll() {
 		return (List<Programa>) dao.findAll();
 	}
 
+	/**
+	 * Programas expuestos al asistente de preinscripción (lista ligera id + nombre).
+	 * La entidad {@link Programa} no modela estado "activo"; se devuelven todos los registros de catálogo.
+	 */
 	@Transactional(readOnly = true)
 	public List<ProgramaDto> findAllCursosActivos() {
 		List<Programa> programas = (List<Programa>) dao.findAll();
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-
-		int dia = calendar.get(Calendar.DAY_OF_MONTH);
-
-		if (dia <= 15) {
-			calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)-15);
-		} else {
-			calendar.set(Calendar.DAY_OF_MONTH,1);
-		}
-
-		return null;
-
+		return programas.stream()
+				.map(p -> new ProgramaDto(p.getId(), p.getNombre()))
+				.toList();
 	}
 
 	@Transactional(readOnly = true)

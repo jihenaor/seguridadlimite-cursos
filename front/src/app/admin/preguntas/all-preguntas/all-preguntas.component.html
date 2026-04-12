@@ -1,16 +1,7 @@
+<app-pagetitle [title]="preguntasPageTitle"></app-pagetitle>
+
 <section class="content">
   <div class="container-block">
-    <div class="block-header">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <ul class="breadcrumb breadcrumb-style ">
-            <li class="breadcrumb-item">
-              <h4 class="page-title">Preguntas: {{ nombrenivel }}{{ nombregrupo }}</h4>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
     <div class="card">
       <div class="body">
         <div class="table-responsive">
@@ -55,79 +46,139 @@
               </div>
             </div>
           </div>
+          <app-preguntas-enfasis-filter *ngIf="isGrupoInRoute"></app-preguntas-enfasis-filter>
           <table class="table" #table>
             <thead>
               <tr>
                 <th>Orden</th>
                 <th>Pregunta</th>
-                <th>Enfasis</th>
+                <th *ngIf="!hideEnfasisColumn()">Enfasis</th>
                 <th>Agrupadores</th>
                 <th>Dificultad en lectura/escritura</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let row of preguntasService.preguntas; let i = index">
+              <ng-container *ngIf="!groupedTable()">
+                <ng-container *ngFor="let row of preguntasService.preguntas(); trackBy: trackByPreguntaId">
+                  <tr (click)="toggleDetailByRow(row)">
+                    <td [ngStyle]="{'background-color': getColorClass(row.agrupador1)}">
+                      <div class="detalle-container">
+                        <div class="agrupador-row">
+                          {{ row.orden }}
+                        </div>
+                        <div class="agrupador-row">
+                          <b><span>{{ row.agrupador1 }}</span></b>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ row.pregunta }}</td>
+                    <td *ngIf="!hideEnfasisColumn()">{{ row.enfasis?.nombre }}</td>
+                    <td>
+                      <div class="detalle-container">
+                        <div *ngIf="!nombregrupo" class="agrupador-row">
+                          <span class="agrupador-label">Formulario:</span>
+                          <span class="agrupador-value">{{ row.grupo.nombre }}</span>
+                        </div>
+                        <div class="agrupador-row">
+                          <span class="agrupador-label">Ag2:</span>
+                          <span class="agrupador-value">{{ row.agrupador2 }}</span>
+                        </div>
+                        <div class="agrupador-row">
+                          <span class="agrupador-label">Ag3:</span>
+                          <span class="agrupador-value">{{ row.agrupador3 }}</span>
+                        </div>
+                        <div class="agrupador-row">
+                          <span class="agrupador-label">Niv:</span>
+                          <span class="agrupador-value" *ngIf="row.nivel">{{ row.nivel?.nombre }}</span>
+                          <span class="agrupador-value" *ngIf="!row.nivel">N/A</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span *ngIf="row.diflectura !== 'S'">{{ row.diflectura === 'S' ? 'Si' : 'No' }}</span>
+                      <img *ngIf="row.diflectura === 'S' && row.base64"
+                           [src]="'data:image/jpeg;base64,' + row.base64"
+                           alt="Imagen de dificultad de lectura"
+                           class="img-thumbnail"
+                           style="max-width: 100px; max-height: 100px;">
+                      <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
+                    </td>
+                    <td class="pr-0">
+                      <button mat-mini-fab color="primary" (click)="editCall(row); $event.stopPropagation()">
+                        <mat-icon class="col-white">edit</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="isDetailOpen(row)">
+                    <td [attr.colspan]="colspanForTable()">
+                      <app-respuestas [pregunta]="row"></app-respuestas>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
 
-                <tr (click)="toggleDetail(i)" >
-                  <td [ngStyle]="{'background-color': getColorClass(row.agrupador1)}">
-                    <div class="detalle-container">
-                      <div class="agrupador-row">
-                        {{ row.orden }}
-                      </div>
-                      <div class="agrupador-row">
-                        <b><span>{{ row.agrupador1 }}</span></b>
-                      </div>
-                      </div>
-                  </td>
-                  <td>{{ row.pregunta }}</td>
-                  <td>{{ row.enfasis.nombre }}</td>
-                  <td>
-                    <div class="detalle-container">
-
-                      <div *ngIf="!nombregrupo" class="agrupador-row">
-                        <span class="agrupador-label">Formulario:</span>
-                        <span  class="agrupador-value">{{ row.grupo.nombre }}</span>
-                      </div>
-
-                      <div class="agrupador-row">
-                        <span class="agrupador-label">Ag2:</span>
-                        <span class="agrupador-value">{{ row.agrupador2 }}</span>
-                      </div>
-
-                      <div class="agrupador-row">
-                        <span class="agrupador-label">Ag3:</span>
-                        <span class="agrupador-value">{{ row.agrupador3 }}</span>
-                      </div>
-                      <div class="agrupador-row">
-                        <span class="agrupador-label">Niv:</span>
-                        <span class="agrupador-value" *ngIf="row.nivel">{{ row.nivel?.nombre }}</span>
-                        <span class="agrupador-value" *ngIf="!row.nivel">N/A</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span *ngIf="row.diflectura !== 'S'">{{ row.diflectura === 'S' ? 'Si' : 'No' }}</span>
-                    <img *ngIf="row.diflectura === 'S' && row.base64" 
-                         [src]="'data:image/jpeg;base64,' + row.base64" 
-                         alt="Imagen de dificultad de lectura"
-                         class="img-thumbnail"
-                         style="max-width: 100px; max-height: 100px;">
-                    <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
-                  </td>
-                  
-                  <td class="pr-0">
-                    <button mat-mini-fab color="primary" (click)="editCall(row)">
-                      <mat-icon class="col-white">edit</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                <!-- Fila de detalle -->
-                <tr *ngIf="mostrarRespuestas || preguntaDetalle === i">
-                  <td colspan="6">
-                    <app-respuestas [pregunta]="row"></app-respuestas>
-                  </td>
-                </tr>
+              <ng-container *ngIf="groupedTable()">
+                <ng-container *ngFor="let g of preguntasService.preguntasPorEnfasis()">
+                  <tr class="pef-group-header">
+                    <td [attr.colspan]="colspanForTable()">{{ g.nombre }} ({{ g.preguntas.length }})</td>
+                  </tr>
+                  <ng-container *ngFor="let row of g.preguntas; trackBy: trackByPreguntaId">
+                    <tr (click)="toggleDetailByRow(row)">
+                      <td [ngStyle]="{'background-color': getColorClass(row.agrupador1)}">
+                        <div class="detalle-container">
+                          <div class="agrupador-row">
+                            {{ row.orden }}
+                          </div>
+                          <div class="agrupador-row">
+                            <b><span>{{ row.agrupador1 }}</span></b>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{{ row.pregunta }}</td>
+                      <td>
+                        <div class="detalle-container">
+                          <div *ngIf="!nombregrupo" class="agrupador-row">
+                            <span class="agrupador-label">Formulario:</span>
+                            <span class="agrupador-value">{{ row.grupo.nombre }}</span>
+                          </div>
+                          <div class="agrupador-row">
+                            <span class="agrupador-label">Ag2:</span>
+                            <span class="agrupador-value">{{ row.agrupador2 }}</span>
+                          </div>
+                          <div class="agrupador-row">
+                            <span class="agrupador-label">Ag3:</span>
+                            <span class="agrupador-value">{{ row.agrupador3 }}</span>
+                          </div>
+                          <div class="agrupador-row">
+                            <span class="agrupador-label">Niv:</span>
+                            <span class="agrupador-value" *ngIf="row.nivel">{{ row.nivel?.nombre }}</span>
+                            <span class="agrupador-value" *ngIf="!row.nivel">N/A</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span *ngIf="row.diflectura !== 'S'">{{ row.diflectura === 'S' ? 'Si' : 'No' }}</span>
+                        <img *ngIf="row.diflectura === 'S' && row.base64"
+                             [src]="'data:image/jpeg;base64,' + row.base64"
+                             alt="Imagen de dificultad de lectura"
+                             class="img-thumbnail"
+                             style="max-width: 100px; max-height: 100px;">
+                        <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
+                      </td>
+                      <td class="pr-0">
+                        <button mat-mini-fab color="primary" (click)="editCall(row); $event.stopPropagation()">
+                          <mat-icon class="col-white">edit</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="isDetailOpen(row)">
+                      <td [attr.colspan]="colspanForTable()">
+                        <app-respuestas [pregunta]="row"></app-respuestas>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
               </ng-container>
             </tbody>
           </table>
