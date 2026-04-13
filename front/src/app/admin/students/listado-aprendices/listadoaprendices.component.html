@@ -41,6 +41,12 @@
                       <mat-icon>file_download</mat-icon>
                       <span>Exportar todos los aprendices</span>
                     </button>
+                    <button mat-raised-button color="accent" (click)="fileInput.click()" [disabled]="importando">
+                      <mat-icon>upload_file</mat-icon>
+                      <span>{{ importando ? 'Importando...' : 'Importar desde Excel' }}</span>
+                    </button>
+                    <input #fileInput type="file" accept=".xlsx" style="display:none"
+                           (change)="onFileSelected($event)">
                   </div>
                 </li>
 

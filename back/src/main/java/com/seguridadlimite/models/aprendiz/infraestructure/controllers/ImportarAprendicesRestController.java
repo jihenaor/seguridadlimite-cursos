@@ -1,55 +1,46 @@
 package com.seguridadlimite.models.aprendiz.infraestructure.controllers;
 
-import lombok.extern.slf4j.Slf4j;
-
-import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendices;
-import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendicesPermiso;
-import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarPermisoTrabajo;
-import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarTrabajador;
-import com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException;
+import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendicesExcelService;
+import com.seguridadlimite.models.aprendiz.application.importarAprendices.ImportarAprendicesExcelService.ImportResultado;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-public	 class ImportarAprendicesRestController {
+@Slf4j
+public class ImportarAprendicesRestController {
 
-	private ImportarAprendices importarAprendices;
+    private final ImportarAprendicesExcelService importarAprendicesExcelService;
 
-	private ImportarPermisoTrabajo importarPermisoTrabajo;
-
-	private ImportarTrabajador importarTrabajador;
-
-    private ImportarAprendicesPermiso importarAprendicesPermiso;
-
-	@PostMapping("/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-		if (file.isEmpty()) {
-			return "No se ha seleccionado un archivo para cargar";
-		}
-
-		try {
-			String content = new String(file.getBytes());
-
-//			importarPermisoTrabajo.index(content);
-//			importarTrabajador.index(content);
-//			importarAprendices.index(content);
-            importarAprendicesPermiso.index(content);
-			return "Archivo cargado con éxito: " + file.getOriginalFilename();
-		} catch (IOException e) {
-			return "Error al cargar el archivo: " + e.getMessage();
-		} catch (BusinessException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+    @PostMapping("/upload")
+    public ResponseEntity<ImportResultado> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            ImportResultado resultado = new ImportResultado();
+            resultado.setError("No se ha seleccionado ningún archivo.");
+            return ResponseEntity.badRequest().body(resultado);
         }
+
+        String filename = file.getOriginalFilename();
+        if (filename == null || !filename.toLowerCase().endsWith(".xlsx")) {
+            ImportResultado resultado = new ImportResultado();
+            resultado.setError("El archivo debe ser un Excel (.xlsx).");
+            return ResponseEntity.badRequest().body(resultado);
+        }
+
+        log.info("Iniciando importación desde archivo: {}", filename);
+        ImportResultado resultado = importarAprendicesExcelService.importar(file);
+
+        if (resultado.getError() != null) {
+            return ResponseEntity.unprocessableEntity().body(resultado);
+        }
+
+        return ResponseEntity.ok(resultado);
     }
 }

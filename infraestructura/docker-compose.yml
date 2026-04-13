@@ -132,6 +132,30 @@ services:
       start_period: 30s
 
   # ────────────────────────────────────────────────────────────
+  #  Landing — Web pública seguridadallimite.com (opcional en VPS)
+  #  Define LANDING_IMAGE en .env (p. ej. imagen del repo de la landing).
+  # ────────────────────────────────────────────────────────────
+  landing:
+    image: ${LANDING_IMAGE:-nginx:1.27-alpine}
+    container_name: seguridad-landing
+    restart: unless-stopped
+    networks:
+      - gateway_net
+
+  # ────────────────────────────────────────────────────────────
+  #  API legacy — api.seguridadlimite.com / api.seguridadallimite.com (Gunicorn)
+  #  Define API_LEGACY_IMAGE en .env; si no aplica, deja el placeholder (no expone puertos).
+  # ────────────────────────────────────────────────────────────
+  seguridad_api:
+    image: ${API_LEGACY_IMAGE:-nginx:1.27-alpine}
+    container_name: seguridad_api
+    restart: unless-stopped
+    expose:
+      - "8000"
+    networks:
+      - gateway_net
+
+  # ────────────────────────────────────────────────────────────
   #  Gateway — Nginx Reverse Proxy
   # ────────────────────────────────────────────────────────────
   gateway:
@@ -145,6 +169,10 @@ services:
         condition: service_healthy
       frontend:
         condition: service_healthy
+      landing:
+        condition: service_started
+      seguridad_api:
+        condition: service_started
     ports:
       - "80:80"
       - "443:443"
