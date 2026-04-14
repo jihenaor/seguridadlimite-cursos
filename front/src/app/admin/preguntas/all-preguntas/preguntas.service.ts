@@ -20,8 +20,20 @@ export class PreguntasService {
   /** Ids de énfasis seleccionados; vacío = no filtrar por énfasis. */
   readonly selectedEnfasisIds = signal<number[]>([]);
 
+  /** Ids de nivel seleccionados; vacío = no filtrar por nivel. */
+  readonly selectedNivelIds = signal<number[]>([]);
+
   /** Si es true, la UI puede mostrar preguntas agrupadas por énfasis (ruta por grupo). */
   readonly groupByEnfasis = signal(false);
+
+  /**
+   * Vista “como evaluación de ingreso”: solo grupo tipo I, énfasis 0 ∪ ids de los chips de énfasis,
+   * y opcionalmente dif. lectura (misma idea que INGRESO.findTipoevaluacionIngresoPorEnfasis en backend).
+   */
+  readonly ingresoEvalPreview = signal(false);
+
+  /** Si no es null, filtra diflectura exacta (S/N) como el aprendiz en ingreso. */
+  readonly ingresoDiflecturaFilter = signal<'S' | 'N' | null>(null);
 
   /** Opciones de filtro derivadas de las preguntas cargadas (ruta por grupo). */
   readonly enfasisFilterOptions = computed(() => {
@@ -29,6 +41,19 @@ export class PreguntasService {
     for (const p of this.source()) {
       if (p.enfasis?.id != null) {
         map.set(p.enfasis.id, p.enfasis.nombre ?? '');
+      }
+    }
+    return [...map.entries()]
+      .map(([id, nombre]) => ({ id, nombre }))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+  });
+
+  /** Opciones de filtro por nivel (ruta por grupo). */
+  readonly nivelFilterOptions = computed(() => {
+    const map = new Map<number, string>();
+    for (const p of this.source()) {
+      if (p.nivel?.id != null) {
+        map.set(p.nivel.id, p.nivel.nombre ?? '');
       }
     }
     return [...map.entries()]
@@ -49,9 +74,30 @@ export class PreguntasService {
       });
     }
     const enfSel = this.selectedEnfasisIds();
-    if (enfSel.length > 0) {
+    if (!this.ingresoEvalPreview() && enfSel.length > 0) {
       const set = new Set(enfSel);
       rows = rows.filter((p) => p.enfasis?.id != null && set.has(p.enfasis.id));
+    }
+    const nivSel = this.selectedNivelIds();
+    if (nivSel.length > 0) {
+      const setN = new Set(nivSel);
+      rows = rows.filter((p) => p.nivel?.id != null && setN.has(p.nivel.id));
+    }
+    if (this.ingresoEvalPreview()) {
+      const idsEnfasisIngreso = new Set<number>([0, ...this.selectedEnfasisIds()]);
+      const dif = this.ingresoDiflecturaFilter();
+      rows = rows.filter((p) => {
+        if (grupoTipoevaluacion(p) !== 'I') {
+          return false;
+        }
+        if (!idsEnfasisIngreso.has(idEnfasisEfectivo(p))) {
+          return false;
+        }
+        if (dif === 'S' || dif === 'N') {
+          return (p.diflectura || '') === dif;
+        }
+        return true;
+      });
     }
     return rows;
   });
@@ -103,6 +149,9 @@ export class PreguntasService {
     this.source.set(data ?? []);
     this.textFilter.set('');
     this.selectedEnfasisIds.set([]);
+    this.selectedNivelIds.set([]);
+    this.ingresoEvalPreview.set(false);
+    this.ingresoDiflecturaFilter.set(null);
   }
 
   setTextFilter(value: string): void {
@@ -122,12 +171,46 @@ export class PreguntasService {
     }
   }
 
+  clearNivelFilter(): void {
+    this.selectedNivelIds.set([]);
+  }
+
+  toggleNivelId(id: number): void {
+    const cur = this.selectedNivelIds();
+    if (cur.includes(id)) {
+      this.selectedNivelIds.set(cur.filter((x) => x !== id));
+    } else {
+      this.selectedNivelIds.set([...cur, id]);
+    }
+  }
+
   setGroupByEnfasis(value: boolean): void {
     this.groupByEnfasis.set(value);
+  }
+
+  setIngresoEvalPreview(value: boolean): void {
+    this.ingresoEvalPreview.set(value);
+  }
+
+  setIngresoDiflecturaFilter(value: 'S' | 'N' | null): void {
+    this.ingresoDiflecturaFilter.set(value);
   }
 
   /** Compatibilidad con la plantilla anterior que llamaba `filter(...)`. */
   filter(term: string): void {
     this.setTextFilter(term);
   }
+}
+
+function grupoTipoevaluacion(p: Pregunta): string {
+  const g = p.grupo as unknown as { tipoevaluacion?: string; tipotipoevaluacion?: string };
+  return (g?.tipoevaluacion ?? g?.tipotipoevaluacion ?? '').toString();
+}
+
+function idEnfasisEfectivo(p: Pregunta): number {
+  const raw = p.idenfasis ?? p.enfasis?.id;
+  if (raw == null || raw === undefined) {
+    return 0;
+  }
+  return Number(raw);
 }

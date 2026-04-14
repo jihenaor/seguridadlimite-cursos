@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,20 +20,39 @@ public interface IPreguntaDao extends CrudRepository<Pregunta, Long>{
             String tipoevaluacion,
             String diflectura);
 
+    /**
+     * Evaluación teórica: bloques 'T' por nivel; bloques 'E' con énfasis en {@code idsEnfasis}
+     * (p. ej. {@code 0} genérico y el del aprendiz).
+     */
     @Query("select u from Pregunta u "
-            + "where ((u.grupo.tipoevaluacion = 'T' and u.nivel.id = ?1)" +
-            " or (u.grupo.tipoevaluacion = 'E' and u.idenfasis = ?2))" +
-            " and u.diflectura = ?3"
-            + " ORDER BY RAND()")
-    List<Pregunta> findPreguntasEvaluacionTeorica(long idnivel,
-                                                  long idenfasis,
-                                                  String diflectura);
+            + "where ((u.grupo.tipoevaluacion = 'T' and u.nivel.id = :idnivel) "
+            + "or (u.grupo.tipoevaluacion = 'E' and u.idenfasis in :idsEnfasis)) "
+            + "and u.diflectura = :diflectura "
+            + "ORDER BY RAND()")
+    List<Pregunta> findPreguntasEvaluacionTeorica(
+            @Param("idnivel") long idnivel,
+            @Param("idsEnfasis") List<Long> idsEnfasis,
+            @Param("diflectura") String diflectura);
 
     @Query("select u from Pregunta u "
             + "where u.grupo.tipoevaluacion = ?1 " +
             "and u.diflectura = ?2"
             + " ORDER BY orden")
     List<Pregunta> findTipoevaluacion(String tipoEvaluacion, String diflectura);
+
+    /**
+     * Ingreso ({@code numeroevaluacion = 0}): preguntas sin énfasis definido ({@code null} o id 0)
+     * o cuyo énfasis está entre los permitidos (p. ej. el del aprendiz).
+     */
+    @Query("select u from Pregunta u "
+            + "where u.grupo.tipoevaluacion = :tipo "
+            + "and u.diflectura = :diflectura "
+            + "and (coalesce(u.idenfasis, 0) = 0 or u.idenfasis in :idsEnfasis) "
+            + "order by u.orden")
+    List<Pregunta> findTipoevaluacionIngresoPorEnfasis(
+            @Param("tipo") String tipoEvaluacion,
+            @Param("diflectura") String diflectura,
+            @Param("idsEnfasis") List<Long> idsEnfasis);
 
     @Query("select u from Pregunta u"
             + " where u.nivel.id = ?1 and u.grupo.tipoevaluacion = ?2" +

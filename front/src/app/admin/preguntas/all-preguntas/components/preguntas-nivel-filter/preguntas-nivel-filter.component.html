@@ -1,0 +1,25 @@
+<div class="pef-wrap" *ngIf="options().length > 0">
+  <span class="pef-label">Filtrar por nivel</span>
+  <div class="pef-chips">
+    <button
+      mat-stroked-button
+      type="button"
+      class="pef-chip"
+      [class.pef-chip--active]="noneSelected()"
+      (click)="clearNivel()"
+    >
+      Todos
+    </button>
+    @for (n of options(); track n.id) {
+      <button
+        mat-stroked-button
+        type="button"
+        class="pef-chip"
+        [class.pef-chip--active]="isSelected(n.id)"
+        (click)="toggle(n.id)"
+      >
+        {{ n.nombre }}
+      </button>
+    }
+  </div>
+</div>

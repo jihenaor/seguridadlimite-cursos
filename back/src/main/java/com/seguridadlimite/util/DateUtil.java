@@ -3,8 +3,10 @@ package com.seguridadlimite.util;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -12,24 +14,36 @@ import java.util.Optional;
 
 public class DateUtil {
 
+    /**
+     * Zona horaria del negocio (inscripciones, plazos, evaluaciones).
+     * Evita desfases de un día cuando el JVM del servidor está en UTC (p. ej. Docker)
+     * y la fecha límite o “hoy” deben alinearse con el calendario en Colombia.
+     */
+    public static final ZoneId ZONA_COLOMBIA = ZoneId.of("America/Bogota");
+
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static String dateToString(Date date, String formato) {
         SimpleDateFormat formatter = new SimpleDateFormat(
                 Objects.isNull(formato) ? "yyyy-MM-dd" : formato);
-
+        formatter.setTimeZone(TimeZone.getTimeZone(ZONA_COLOMBIA));
         return formatter.format(date);
     }
 
     public static String toDayInString() {
-
-        return dateToString(new Date(), null);
+        return LocalDate.now(ZONA_COLOMBIA).format(DATE_FORMATTER);
     }
 
+    /**
+     * Fecha/hora al inicio del día calendario en Colombia, desplazada {@code days} días desde hoy (Bogotá).
+     * Usado p. ej. para {@code fechalimiteinscripcion} = mañana en calendario local CO.
+     */
     public static java.util.Date dateInDate(Optional<Integer> days) {
-        return java.util.Date.from(LocalDate.now().plusDays(days.orElse(0))
-                .atStartOfDay(java.time.ZoneId.systemDefault())
-                .toInstant());
+        return java.util.Date.from(
+                LocalDate.now(ZONA_COLOMBIA)
+                        .plusDays(days.orElse(0))
+                        .atStartOfDay(ZONA_COLOMBIA)
+                        .toInstant());
     }
 
     public static int compararFechas(Date fechaActual, Date fechaComparar) {
@@ -81,7 +95,7 @@ public class DateUtil {
     }
 
     public static String getCurrentDate() {
-        return LocalDate.now().format(DATE_FORMATTER);
+        return LocalDate.now(ZONA_COLOMBIA).format(DATE_FORMATTER);
     }
 
 
@@ -95,13 +109,13 @@ public class DateUtil {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento.trim(), formatter);
             
-            // Validar que la fecha no sea futura
-            if (fechaNacimientoLocalDate.isAfter(LocalDate.now())) {
+            // Validar que la fecha no sea futura (calendario Colombia)
+            if (fechaNacimientoLocalDate.isAfter(LocalDate.now(ZONA_COLOMBIA))) {
                 throw new com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException(
                     "La fecha de nacimiento no puede ser una fecha futura: " + fechaNacimiento);
             }
             
-            return Period.between(fechaNacimientoLocalDate, LocalDate.now()).getYears();
+            return Period.between(fechaNacimientoLocalDate, LocalDate.now(ZONA_COLOMBIA)).getYears();
             
         } catch (DateTimeParseException e) {
             throw new com.seguridadlimite.springboot.backend.apirest.exceptions.BusinessException(

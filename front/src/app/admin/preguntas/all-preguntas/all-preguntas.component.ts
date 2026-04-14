@@ -11,6 +11,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { RespuestasComponent } from '../components/respuestas/respuestas.component';
 import { PreguntasEnfasisFilterComponent } from './components/preguntas-enfasis-filter/preguntas-enfasis-filter.component';
+import { PreguntasNivelFilterComponent } from './components/preguntas-nivel-filter/preguntas-nivel-filter.component';
+import { PreguntasIngresoEvalFilterComponent } from './components/preguntas-ingreso-eval-filter/preguntas-ingreso-eval-filter.component';
 import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
 import { NgFor, NgStyle, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +30,8 @@ import { MatButtonModule } from '@angular/material/button';
         NgIf,
         RespuestasComponent,
         PreguntasEnfasisFilterComponent,
+        PreguntasNivelFilterComponent,
+        PreguntasIngresoEvalFilterComponent,
         PagetitleComponent,
     ]
 })

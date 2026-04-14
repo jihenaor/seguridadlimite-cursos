@@ -1,7 +1,8 @@
-<app-pagetitle [title]="preguntasPageTitle"></app-pagetitle>
-
 <section class="content">
+  <app-pagetitle [title]="preguntasPageTitle"></app-pagetitle>
   <div class="container-block">
+    
+    
     <div class="card">
       <div class="body">
         <div class="table-responsive">
@@ -47,6 +48,10 @@
             </div>
           </div>
           <app-preguntas-enfasis-filter *ngIf="isGrupoInRoute"></app-preguntas-enfasis-filter>
+          <app-preguntas-nivel-filter *ngIf="isGrupoInRoute"></app-preguntas-nivel-filter>
+          <app-preguntas-ingreso-eval-filter *ngIf="isGrupoInRoute"></app-preguntas-ingreso-eval-filter>
+
+          
           <table class="table" #table>
             <thead>
               <tr>

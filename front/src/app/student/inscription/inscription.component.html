@@ -422,36 +422,34 @@
                           </div>
                         </div>
 
-                          <!-- Forzar nueva fila con div vacío -->
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                          <!-- Empresa - fila completa -->
-
-                          <!-- Correo electrónico - dos columnas -->
-
-                          <div>
-                            <label for="eps" class="block mb-2 text-sm font-medium text-gray-900">EPS</label>
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-select formControlName="eps" id="eps">
-                                @for (eps of epss; track $index) {
-                                <mat-option [value]="eps.nombre">
-                                  {{ eps.nombre }}
-                                </mat-option>
-                                }
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-
-                          <div>
-                            <label for="arl" class="block mb-2 text-sm font-medium text-gray-900">ARL</label>
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-select formControlName="arl" id="arl">
-                                @for (arl of arls; track $index) {
-                                <mat-option [value]="arl.nombre">
-                                  {{ arl.nombre }}
-                                </mat-option>
-                                }
-                              </mat-select>
-                            </mat-form-field>
+                          <div class="col-span-full">
+                            <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+                              <div class="min-w-0">
+                                <label for="eps" class="block mb-2 text-sm font-medium text-gray-900">EPS</label>
+                                <mat-form-field class="w-full" appearance="outline">
+                                  <mat-select formControlName="eps" id="eps">
+                                    @for (eps of epss; track $index) {
+                                    <mat-option [value]="eps.nombre">
+                                      {{ eps.nombre }}
+                                    </mat-option>
+                                    }
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="min-w-0">
+                                <label for="arl" class="block mb-2 text-sm font-medium text-gray-900">ARL</label>
+                                <mat-form-field class="w-full" appearance="outline">
+                                  <mat-select formControlName="arl" id="arl">
+                                    @for (arl of arls; track $index) {
+                                    <mat-option [value]="arl.nombre">
+                                      {{ arl.nombre }}
+                                    </mat-option>
+                                    }
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
