@@ -37,10 +37,21 @@ public class ConsultarEvaluacionTeoricaService {
 	private final InicializarImagenes inicializarImagenes;
 
 
+	/**
+	 * Transacción: mantiene la sesión abierta para lazy ({@code Pregunta.respuestas}) y permite
+	 * escrituras en {@code getEvaluacions} (p. ej. {@code saveAll}). No usar {@code readOnly=true}
+	 * aquí: marcaría la conexión JDBC de solo lectura y fallarían los inserts en {@code sl_evaluaciones}.
+	 */
+	@Transactional
 	public List<Pregunta> findPreguntasAprendiz(int idaprendiz,
 												String tipoevaluacion) throws BusinessException {
 		Aprendiz aprendiz = aprendizDao.findById(idaprendiz)
 				.orElseThrow(() -> new NoSuchElementException("No se encontró el aprendiz con el ID proporcionado"));
+
+		if (aprendiz.getIdenfasis() == null) {
+			throw new BusinessException("El aprendiz debe tener énfasis asignado para cargar la evaluación.");
+		}
+		List<Long> idsEnfasisEvaluacion = idsEnfasisParaEvaluacion(aprendiz.getIdenfasis().longValue());
 
 		int numeroevaluacion = 0;
 
@@ -51,7 +62,7 @@ public class ConsultarEvaluacionTeoricaService {
         List<Pregunta> preguntas = consultarPreguntas(idaprendiz,
 					numeroevaluacion,
 					aprendiz.getIdnivel() == null ? null : aprendiz.getIdnivel(),
-					aprendiz.getIdenfasis() == null ? null : aprendiz.getIdenfasis(),
+					idsEnfasisEvaluacion,
 					tipoevaluacion,
                     aprendiz.getSabeleerescribir() == null ? "S" : aprendiz.getSabeleerescribir());
 
@@ -66,26 +77,78 @@ public class ConsultarEvaluacionTeoricaService {
 		return preguntas;
 	}
 
+	/**
+	 * Ids de énfasis aplicables a la evaluación: siempre incluye el genérico {@code 0} y el del aprendiz
+	 * (sin duplicar si el aprendiz ya tiene énfasis 0). Se puede ampliar la lista desde reglas de negocio.
+	 */
+	private static List<Long> idsEnfasisParaEvaluacion(long idenfasisAprendiz) {
+		LinkedHashSet<Long> ids = new LinkedHashSet<>();
+		ids.add(0L);
+		ids.add(idenfasisAprendiz);
+		return new ArrayList<>(ids);
+	}
+
 	private List<Pregunta> consultarPreguntas(
 			int idaprendiz,
 		 	int numeroevaluacion,
-			int idnivel,
-			int idenfasis,
+			Integer idnivel,
+			List<Long> idsEnfasis,
 			String tipoevaluacion,
             String sabeleerescribir) throws BusinessException {
 		List<Pregunta> preguntas;
+		String caminoConsulta;
 
 		if (tipoevaluacion.equals(TipoevaluacionEnum.TEORICO.getEquivalente())) {
+			if (idnivel == null) {
+				throw new BusinessException("El aprendiz no tiene nivel asignado; no se pueden cargar preguntas teóricas.");
+			}
+			caminoConsulta = String.format(
+					"TEORICO.findPreguntasEvaluacionTeorica(idNivel=%d, idsEnfasis=%s, diflectura=%s)",
+					idnivel.longValue(),
+					idsEnfasis,
+					sabeleerescribir);
 			preguntas = preguntaDao.findPreguntasEvaluacionTeorica(
-                    idnivel,
-                    idenfasis,
+                    idnivel.longValue(),
+                    idsEnfasis,
                     sabeleerescribir);
 		} else if (tipoevaluacion.equals(INGRESO.getEquivalente())) {
-			preguntas = preguntaDao.findTipoevaluacion(
-                    "I",
-                    sabeleerescribir);
+			if (numeroevaluacion == 0) {
+				caminoConsulta = String.format(
+						"INGRESO.findTipoevaluacionIngresoPorEnfasis(tipo=%s, diflectura=%s, idsEnfasis=%s)",
+						INGRESO.getEquivalente(),
+						sabeleerescribir,
+						idsEnfasis);
+				preguntas = preguntaDao.findTipoevaluacionIngresoPorEnfasis(
+						INGRESO.getEquivalente(),
+						sabeleerescribir,
+						idsEnfasis);
+			} else {
+				caminoConsulta = String.format(
+						"INGRESO.findTipoevaluacion(tipo=%s, diflectura=%s, numeroEvaluacion=%d)",
+						INGRESO.getEquivalente(),
+						sabeleerescribir,
+						numeroevaluacion);
+				preguntas = preguntaDao.findTipoevaluacion(INGRESO.getEquivalente(), sabeleerescribir);
+			}
 		} else {
 			throw new BusinessException("El tipo de evaluacion " + tipoevaluacion + " no es valido");
+		}
+
+		if (preguntas == null || preguntas.isEmpty()) {
+			log.warn(
+					"Evaluación sin preguntas — idAprendiz={} camino={} tipoevaluacion={} numeroEvaluacion={} "
+							+ "idNivel={} idsEnfasis={} diflectura={}",
+					idaprendiz,
+					caminoConsulta,
+					tipoevaluacion,
+					numeroevaluacion,
+					idnivel,
+					idsEnfasis,
+					sabeleerescribir);
+			throw new BusinessException(
+					"No se encontraron preguntas para esta evaluación. Camino de consulta: "
+							+ caminoConsulta
+							+ ". Compruebe que existan preguntas en base de datos para el nivel, énfasis y tipo de lectura indicados.");
 		}
 
 		inicializarImagenes.inicializarImagenes(preguntas);
@@ -134,7 +197,7 @@ public class ConsultarEvaluacionTeoricaService {
 		pregunta.setRespuestas(respuestas);
 	}
 
-	@Transactional
+	/** Participa en la transacción de {@link #findPreguntasAprendiz} (anotación en método privado no aplica AOP). */
 	private List<Evaluacion> getEvaluacions(int idaprendiz,
 											int numeroevaluacion,
 											List<Pregunta> preguntas,
