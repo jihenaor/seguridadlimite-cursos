@@ -144,11 +144,12 @@ services:
 
   # ────────────────────────────────────────────────────────────
   #  API legacy — api.seguridadlimite.com / api.seguridadallimite.com (Gunicorn)
+  #  Nombre de servicio con guión (api-legacy): DNS compatible con nginx resolver en reload.
   #  Define API_LEGACY_IMAGE en .env; si no aplica, deja el placeholder (no expone puertos).
   # ────────────────────────────────────────────────────────────
-  seguridad_api:
+  api-legacy:
     image: ${API_LEGACY_IMAGE:-nginx:1.27-alpine}
-    container_name: seguridad_api
+    container_name: seguridad-api-legacy
     restart: unless-stopped
     expose:
       - "8000"
@@ -171,7 +172,7 @@ services:
         condition: service_healthy
       landing:
         condition: service_started
-      seguridad_api:
+      api-legacy:
         condition: service_started
     ports:
       - "80:80"
