@@ -8,15 +8,16 @@
 #    3. Publicar en GitHub Container Registry (ghcr.io)
 #    4. SSH al VPS → pull + restart del contenedor
 #
-#  Deploy: sincroniza en el VPS docker-compose.yml y nginx/gateway.conf (git pull en SERVER_DEPLOY_PATH).
-#  El servicio API legacy se llama «api-legacy» (antes «seguridad_api») para DNS compatible con nginx reload.
+#  Deploy: envía compose.yml, infraestructura/docker-compose.yml y nginx/gateway.conf desde este commit (tar+ssh),
+#  además de git pull en el VPS si hay repo. Así el gateway deja de usar un default.conf antiguo con «seguridad_api».
+#  El servicio API legacy se llama «api-legacy» (alias Docker «seguridad_api») para DNS compatible con nginx reload.
 #
 #  GitHub Secrets requeridos:
 #    GHCR_TOKEN         → PAT con permisos write:packages
 #    SERVER_HOST        → IP o dominio del VPS
 #    SERVER_USER        → Usuario SSH (ej: ubuntu)
 #    SERVER_SSH_KEY     → Clave privada SSH (contenido id_rsa)
-#    SERVER_DEPLOY_PATH → Ruta al docker-compose en el VPS (ej: /home/ubuntu/app)
+#    SERVER_DEPLOY_PATH → Raíz del monorepo en el VPS (donde están compose.yml e infraestructura/; ej: /home/ubuntu/seguridad)
 # ══════════════════════════════════════════════════════════════
 
 name: Frontend CI/CD
@@ -28,10 +29,16 @@ on:
     paths:
       - 'front/**'
       - '.github/workflows/ci-cd-frontend.yml'
+      - 'compose.yml'
+      - 'infraestructura/docker-compose.yml'
+      - 'infraestructura/nginx/**'
   pull_request:
     branches: [main]
     paths:
       - 'front/**'
+      - 'compose.yml'
+      - 'infraestructura/docker-compose.yml'
+      - 'infraestructura/nginx/**'
 
 env:
   REGISTRY: ghcr.io
@@ -125,6 +132,27 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
+      - name: Checkout (infra exacta del commit que despliega)
+        uses: actions/checkout@v4
+
+      - name: Enviar compose y nginx/gateway.conf al VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          DEPLOY_PATH: ${{ secrets.SERVER_DEPLOY_PATH }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 22 "$SERVER_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          tar czf - compose.yml infraestructura/docker-compose.yml infraestructura/nginx/gateway.conf | \
+            ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new -p 22 \
+              "${SERVER_USER}@${SERVER_HOST}" \
+              "set -euo pipefail; cd \"${DEPLOY_PATH}\" && tar xzf -"
+          echo "✅ Archivos de infra sincronizados en el VPS (compose + gateway.conf)."
+
       - name: Deploy vía SSH
         uses: appleboy/ssh-action@v1.2.5
         with:
