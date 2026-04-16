@@ -8,8 +8,10 @@
 #    3. Publicar en GitHub Container Registry (ghcr.io)
 #    4. SSH al VPS → pull + restart del contenedor
 #
-#  Deploy: envía compose.yml, infraestructura/docker-compose.yml y nginx/gateway.conf desde este commit (tar+ssh),
-#  además de git pull en el VPS si hay repo. Así el gateway deja de usar un default.conf antiguo con «seguridad_api».
+#  Deploy: envía compose.yml, infraestructura/docker-compose.yml y nginx/gateway.conf (tar+ssh) y alinea git al SHA del run
+#  (git reset --hard; evita fallos por «local changes would be overwritten» tras el tar o ediciones en el VPS).
+#  En el servidor: export COMPOSE_FILE=compose.yml y se renombra un docker-compose.yml duplicado en la raíz (evita warning de Compose).
+#  Si el job termina en 137 (SIGKILL), suele ser OOM del VPS al recrear varios contenedores; subir RAM/swap o revisar límites Docker.
 #  El servicio API legacy se llama «api-legacy» (alias Docker «seguridad_api») para DNS compatible con nginx reload.
 #
 #  GitHub Secrets requeridos:
@@ -165,12 +167,19 @@ jobs:
           script: |
             set -e
             cd ${{ secrets.SERVER_DEPLOY_PATH }}
+            export COMPOSE_FILE=compose.yml
 
-            echo "📥 Sincronizar definición del stack (compose + nginx) desde git..."
+            if [ -f compose.yml ] && [ -f docker-compose.yml ]; then
+              echo "📎 Raíz con compose.yml y docker-compose.yml: renombrando el legado para que Compose no avise duplicado."
+              mv -f docker-compose.yml docker-compose.yml.root-legacy.bak
+            fi
+
+            echo "📥 Alinear git al commit desplegado (${{ github.sha }}; descarta cambios locales en archivos versionados)..."
             if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-              git pull --ff-only || echo "⚠️ git pull falló; se usa el compose ya en el servidor."
+              git fetch origin
+              git reset --hard "${{ github.sha }}"
             else
-              echo "⚠️ SERVER_DEPLOY_PATH no es un repo git; el compose debe incluir los servicios esperados."
+              echo "⚠️ SERVER_DEPLOY_PATH no es un repo git; se confía en el tar del job y el estado actual del disco."
             fi
 
             echo "🔐 Login en GHCR..."
@@ -183,12 +192,15 @@ jobs:
             if docker compose config --services 2>/dev/null | grep -qx 'api-legacy'; then
               UP_SERVICES="frontend api-legacy gateway"
             else
-              echo "⚠️ Este compose no define «api-legacy» (compose antiguo). Levantando solo frontend y gateway."
+              echo "⚠️ Este compose no define «api-legacy». Levantando solo frontend y gateway."
             fi
-            echo "🔄 Levantando: $UP_SERVICES (misma red Docker cuando api-legacy existe; evita host not found en nginx reload)..."
-            docker compose up -d $UP_SERVICES
+            echo "🔄 Levantando: $UP_SERVICES (sin dejar huérfanos conocidos)..."
+            docker compose up -d --remove-orphans $UP_SERVICES
 
-            echo "🧪 Validar nginx y recargar (api-legacy = servicio compose; antes seguridad_api)..."
+            echo "⏳ Breve espera tras recrear contenedores (evita exec/nginx -t justo en arranque)..."
+            sleep 8
+
+            echo "🧪 Validar nginx y recargar..."
             docker compose exec -T gateway nginx -t
             docker compose exec -T gateway nginx -s reload
 
