@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/pregunta")
 @RequiredArgsConstructor
@@ -23,5 +25,23 @@ public class PreguntaController extends Controller {
 	public ResponseEntity<Pregunta> getById(@PathVariable Long id) {
 		Pregunta pregunta = service.findById(id);
 		return new ResponseEntity<>(pregunta, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@DeleteMapping("/{idPregunta}/respuesta/{idRespuesta}")
+	public ResponseEntity<Void> deleteRespuesta(
+			@PathVariable Long idPregunta,
+			@PathVariable Long idRespuesta) {
+		try {
+			service.deleteRespuesta(idPregunta, idRespuesta);
+			return ResponseEntity.noContent().build();
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

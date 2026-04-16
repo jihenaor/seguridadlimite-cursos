@@ -8,7 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PreguntasRoutingModule } from './preguntas-routing.module';
 import { AllpreguntasComponent } from './all-preguntas/all-preguntas.component';
-import { FormDialogComponent } from './all-preguntas/dialogs/form-dialog/form-dialog.component';
+import { PreguntaFormDialogComponent } from './all-preguntas/dialogs/pregunta-form-dialog/pregunta-form-dialog.component';
 
 import { RespuestasComponent } from './components/respuestas/respuestas.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -24,7 +24,7 @@ import { SharedModule } from '../../shared/shared.module';
         PreguntasRoutingModule,
         SharedModule,
         AllpreguntasComponent,
-        FormDialogComponent,
+        PreguntaFormDialogComponent,
         RespuestasComponent
     ]
 })

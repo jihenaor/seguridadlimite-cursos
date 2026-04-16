@@ -21,7 +21,9 @@ export type SvgIconName =
   | 'close'
   | 'file-pdf'
   | 'list'
-  | 'bar-chart';
+  | 'bar-chart'
+  | 'split-rows'
+  | 'maximize-view';
 
 @Component({
   selector: 'app-svg-icon',
@@ -134,6 +136,16 @@ export type SvgIconName =
           <line x1="12" y1="20" x2="12" y2="10" />
           <line x1="18" y1="20" x2="18" y2="4" />
           <line x1="6" y1="20" x2="6" y2="14" />
+        }
+        @case ('split-rows') {
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="3" y1="15" x2="21" y2="15" />
+        }
+        @case ('maximize-view') {
+          <polyline points="15 3 21 3 21 9" />
+          <polyline points="9 21 3 21 3 15" />
+          <polyline points="21 15 21 21 15 21" />
+          <polyline points="3 9 3 3 9 3" />
         }
       }
     </svg>

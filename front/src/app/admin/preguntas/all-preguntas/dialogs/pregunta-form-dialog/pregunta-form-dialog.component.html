@@ -1,16 +1,20 @@
-<div class="form-dialog addContainer">
-  <header class="form-dialog__header modalHeader clearfix">
-    <h2 class="form-dialog__title">{{ dialogTitle }}</h2>
-    <button type="button" mat-icon-button (click)="dialogRef.close()" aria-label="Cerrar diálogo">
+<div class="pregunta-form-dialog addContainer">
+  <div
+    class="pregunta-form-dialog__toolbar"
+    [style.height]="headerChromeHeight"
+    [style.minHeight]="headerChromeHeight"
+  >
+    <h2 mat-dialog-title class="pregunta-form-dialog__toolbar-title">{{ dialogTitle }}</h2>
+    <button type="button" mat-icon-button mat-dialog-close aria-label="Cerrar diálogo">
       <app-svg-icon name="close" [size]="22" />
     </button>
-  </header>
+  </div>
 
-  <div mat-dialog-content class="form-dialog__scroll">
-    <form [formGroup]="proForm" class="form-dialog__form register-form">
-      <div class="form-dialog__grid">
-        <div class="form-dialog__span-2">
-          <mat-form-field appearance="outline" class="form-dialog__mat">
+  <div mat-dialog-content class="pregunta-form-dialog__scroll">
+    <form [formGroup]="proForm" class="pregunta-form-dialog__form register-form">
+      <div class="pregunta-form-dialog__grid">
+        <div class="pregunta-form-dialog__span-2">
+          <mat-form-field appearance="outline" class="pregunta-form-dialog__mat">
             <mat-label>Formulario (grupo)</mat-label>
             <mat-select formControlName="idgrupo" required>
               @for (grupo of grupopreguntaService.grupopreguntas ?? []; track grupo.id) {
@@ -20,7 +24,7 @@
           </mat-form-field>
         </div>
 
-        <mat-form-field appearance="outline" class="form-dialog__mat">
+        <mat-form-field appearance="outline" class="pregunta-form-dialog__mat">
           <mat-label>Tipo de respuesta</mat-label>
           <mat-select formControlName="type" required>
             <mat-option [value]="1">Única respuesta</mat-option>
@@ -37,13 +41,13 @@
         <app-ui-outlined-field label="Agrupador 3" formControlName="agrupador3" />
 
         @if (type === 4) {
-          <div class="form-dialog__span-2">
+          <div class="pregunta-form-dialog__span-2">
             <app-ui-outlined-field
               label="Opciones de respuesta (separadas por coma)"
               formControlName="opcionesrespuesta"
             />
           </div>
-          <div class="form-dialog__span-2">
+          <div class="pregunta-form-dialog__span-2">
             <app-ui-outlined-field
               label="Nombre equivalente de cada opción (separado por coma)"
               formControlName="nombreopcion"
@@ -60,7 +64,7 @@
         }
 
         @if (type === 3) {
-          <mat-form-field appearance="outline" class="form-dialog__mat">
+          <mat-form-field appearance="outline" class="pregunta-form-dialog__mat">
             <mat-label>Respuesta correcta</mat-label>
             <mat-select formControlName="numerorespuestacorrecta" required>
               <mat-option [value]="1">Falso</mat-option>
@@ -69,7 +73,7 @@
           </mat-form-field>
         }
 
-        <mat-form-field appearance="outline" class="form-dialog__mat">
+        <mat-form-field appearance="outline" class="pregunta-form-dialog__mat">
           <mat-label>Énfasis</mat-label>
           <mat-select formControlName="idenfasis" required>
             @for (enfasis of enfasisService.enfasis ?? []; track enfasis.id) {
@@ -78,7 +82,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-dialog__mat">
+        <mat-form-field appearance="outline" class="pregunta-form-dialog__mat">
           <mat-label>Nivel</mat-label>
           <mat-select formControlName="idnivel">
             <mat-option [value]="">NO APLICA</mat-option>
@@ -102,7 +106,7 @@
           formControlName="diflectura"
         />
 
-        <div class="form-dialog__span-2">
+        <div class="pregunta-form-dialog__span-2">
           <app-ui-outlined-field
             label="Texto de la pregunta"
             fieldType="textarea"
@@ -113,17 +117,17 @@
       </div>
 
       @if (type === 1) {
-        <section class="form-dialog__respuestas" aria-labelledby="form-dialog-respuestas-title">
-          <div class="form-dialog__respuestas-head">
-            <h3 id="form-dialog-respuestas-title" class="form-dialog__respuestas-title">Respuestas</h3>
+        <section class="pregunta-form-dialog__respuestas" aria-labelledby="pregunta-form-dialog-respuestas-title">
+          <div class="pregunta-form-dialog__respuestas-head">
+            <h3 id="pregunta-form-dialog-respuestas-title" class="pregunta-form-dialog__respuestas-title">Respuestas</h3>
           </div>
-          <div class="form-dialog__respuestas-body">
-            <div class="form-dialog__respuesta-list">
+          <div class="pregunta-form-dialog__respuestas-body">
+            <div class="pregunta-form-dialog__respuesta-list">
             @for (respuestaForm of respuestas.controls; track $index) {
-              <article class="form-dialog__respuesta-card" [formGroup]="$any(respuestaForm)">
-                <h4 class="form-dialog__respuesta-card-title">Respuesta {{ $index + 1 }}</h4>
-                <div class="form-dialog__respuesta-row">
-                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--texto">
+              <article class="pregunta-form-dialog__respuesta-card" [formGroup]="$any(respuestaForm)">
+                <h4 class="pregunta-form-dialog__respuesta-card-title">Respuesta {{ $index + 1 }}</h4>
+                <div class="pregunta-form-dialog__respuesta-row">
+                  <div class="pregunta-form-dialog__respuesta-col pregunta-form-dialog__respuesta-col--texto">
                     <app-ui-outlined-field
                       label="Texto de la respuesta"
                       fieldType="textarea"
@@ -131,18 +135,18 @@
                       formControlName="respuesta"
                     />
                   </div>
-                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--acciones">
+                  <div class="pregunta-form-dialog__respuesta-col pregunta-form-dialog__respuesta-col--acciones">
                     <button
                       type="button"
                       mat-icon-button
                       color="warn"
                       (click)="eliminarRespuesta($index)"
-                      aria-label="Quitar respuesta"
+                      aria-label="Eliminar respuesta"
                     >
-                      <app-svg-icon name="minus" [size]="22" />
+                      <app-svg-icon name="trash" [size]="22" />
                     </button>
                   </div>
-                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--flags">
+                  <div class="pregunta-form-dialog__respuesta-col pregunta-form-dialog__respuesta-col--flags">
                     <app-ui-outlined-field
                       label="Tiene imagen"
                       fieldType="select"
@@ -150,16 +154,16 @@
                       formControlName="tieneimagen"
                     />
                   </div>
-                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--archivo">
+                  <div class="pregunta-form-dialog__respuesta-col pregunta-form-dialog__respuesta-col--archivo">
                     <app-ui-outlined-field
                       label="Nombre imagen"
                       placeholder="ej. p8 (sin extension .png)"
                       formControlName="nombreimagen"
                     />
                   </div>
-                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--preview">
+                  <div class="pregunta-form-dialog__respuesta-col pregunta-form-dialog__respuesta-col--preview">
                     <img
-                      class="form-dialog__preview-img"
+                      class="pregunta-form-dialog__preview-img"
                       [src]="transformImagen($any(respuestaForm))"
                       alt=""
                     />
@@ -172,7 +176,7 @@
               type="button"
               mat-stroked-button
               color="primary"
-              class="form-dialog__btn-add"
+              class="pregunta-form-dialog__btn-add"
               (click)="agregarRespuesta()"
             >
               <app-svg-icon name="plus" [size]="18" />
@@ -182,7 +186,7 @@
         </section>
       }
 
-      <footer class="form-dialog__actions example-button-row">
+      <footer class="pregunta-form-dialog__actions example-button-row">
         <button type="button" mat-raised-button color="primary" (click)="confirmAdd(false)">Guardar</button>
         @if (data?.pregunta?.id) {
           <button type="button" mat-raised-button color="primary" (click)="confirmAdd(true)">Guardar nuevo</button>

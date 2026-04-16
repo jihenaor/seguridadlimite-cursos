@@ -82,4 +82,14 @@ public interface IEvaluacionDao extends CrudRepository<Evaluacion, Long>{
 			+ " where u.idpregunta in (select p.id from Pregunta p where p.grupo.tipoevaluacion = ?1)"
 			+ " and u.idaprendiz = ?2")
 	int deleteEvaluacionAprendizTipo(String tipoevaluacion, Long idaprendiz);
+
+	@Modifying(clearAutomatically = true)
+	@Query("delete from Evaluacion e where e.idpregunta = :idPregunta")
+	int deleteByIdpregunta(@Param("idPregunta") Long idPregunta);
+
+	@Modifying(clearAutomatically = true)
+	@Query("delete from Evaluacion e where e.idpregunta = :idPregunta and e.numerorespuesta = :numeroRespuesta")
+	int deleteByIdpreguntaAndNumerorespuesta(
+			@Param("idPregunta") Long idPregunta,
+			@Param("numeroRespuesta") Integer numeroRespuesta);
 }

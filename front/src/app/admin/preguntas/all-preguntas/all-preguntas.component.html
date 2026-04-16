@@ -2,7 +2,6 @@
   <app-pagetitle [title]="preguntasPageTitle"></app-pagetitle>
   <div class="container-block">
     
-    
     <div class="card">
       <div class="body">
         <div class="table-responsive">
@@ -12,14 +11,25 @@
                 <ul class="header-buttons-left ml-0">
 
                   <li class="dropdown m-l-20">
-                    <button mat-mini-fab color="primary" (click)="toggleAllDetails()">
-                      <mat-icon class="col-white">{{ mostrarRespuestas ? 'maximize' : 'horizontal_split' }}
-                      </mat-icon>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      color="primary"
+                      class="all-preguntas__icon-btn"
+                      (click)="toggleAllDetails()"
+                      [attr.aria-label]="mostrarRespuestas ? 'Vista compacta' : 'Expandir detalle de filas'">
+                      @if (mostrarRespuestas) {
+                        <app-svg-icon name="maximize-view" [size]="22" />
+                      } @else {
+                        <app-svg-icon name="split-rows" [size]="22" />
+                      }
                     </button>
                   </li>
 
                   <li class="dropdown m-l-20">
-                    <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                    <label for="search-input" class="search-icon">
+                      <app-svg-icon name="search" [size]="20" />
+                    </label>
                     <input placeholder="Buscar" type="text" #filter class="browser-default search-field"
                       aria-label="Search box">
                   </li>
@@ -29,16 +39,17 @@
                 <ul class="tbl-export-btn ms-0">
                   <li>
                     <div class="icon-button-demo">
-                      <button mat-mini-fab color="primary" (click)="addNew()">
-                        <mat-icon class="col-white">add</mat-icon>
+                      <button mat-icon-button type="button" color="primary" class="all-preguntas__icon-btn" (click)="addNew()"
+                        aria-label="Nueva pregunta">
+                        <app-svg-icon name="plus" [size]="22" />
                       </button>
                     </div>
                   </li>
                   <li>
                     <div class="icon-button-demo">
-                      <button mat-mini-fab color="primary" (click)="refresh()">
-                        <mat-icon class="col-white">refresh
-                        </mat-icon>
+                      <button mat-icon-button type="button" color="primary" class="all-preguntas__icon-btn" (click)="refresh()"
+                        aria-label="Actualizar listado">
+                        <app-svg-icon name="refresh" [size]="22" />
                       </button>
                     </div>
                   </li>
@@ -110,14 +121,21 @@
                       <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
                     </td>
                     <td class="pr-0">
-                      <button mat-mini-fab color="primary" (click)="editCall(row); $event.stopPropagation()">
-                        <mat-icon class="col-white">edit</mat-icon>
-                      </button>
+                      <div class="all-preguntas__acciones" (click)="$event.stopPropagation()">
+                        <button mat-icon-button type="button" color="primary" class="all-preguntas__icon-btn"
+                          (click)="editCall(row)" aria-label="Editar pregunta">
+                          <app-svg-icon name="pencil" [size]="20" />
+                        </button>
+                        <button mat-icon-button type="button" color="warn" class="all-preguntas__icon-btn"
+                          (click)="deleteCall(row)" aria-label="Eliminar pregunta">
+                          <app-svg-icon name="trash" [size]="20" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   <tr *ngIf="isDetailOpen(row)">
                     <td [attr.colspan]="colspanForTable()">
-                      <app-respuestas [pregunta]="row"></app-respuestas>
+                      <app-respuestas [pregunta]="row" (respuestaDeleted)="loadData()"></app-respuestas>
                     </td>
                   </tr>
                 </ng-container>
@@ -172,14 +190,21 @@
                         <span *ngIf="row.diflectura === 'S' && !row.base64">Si</span>
                       </td>
                       <td class="pr-0">
-                        <button mat-mini-fab color="primary" (click)="editCall(row); $event.stopPropagation()">
-                          <mat-icon class="col-white">edit</mat-icon>
-                        </button>
+                        <div class="all-preguntas__acciones" (click)="$event.stopPropagation()">
+                          <button mat-icon-button type="button" color="primary" class="all-preguntas__icon-btn"
+                            (click)="editCall(row)" aria-label="Editar pregunta">
+                            <app-svg-icon name="pencil" [size]="20" />
+                          </button>
+                          <button mat-icon-button type="button" color="warn" class="all-preguntas__icon-btn"
+                            (click)="deleteCall(row)" aria-label="Eliminar pregunta">
+                            <app-svg-icon name="trash" [size]="20" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                     <tr *ngIf="isDetailOpen(row)">
                       <td [attr.colspan]="colspanForTable()">
-                        <app-respuestas [pregunta]="row"></app-respuestas>
+                        <app-respuestas [pregunta]="row" (respuestaDeleted)="loadData()"></app-respuestas>
                       </td>
                     </tr>
                   </ng-container>

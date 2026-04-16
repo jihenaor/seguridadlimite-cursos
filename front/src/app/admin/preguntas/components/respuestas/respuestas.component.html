@@ -15,6 +15,7 @@
               <th scope="col">Tiene imagen</th>
               <th scope="col">Nombre imagen</th>
               <th scope="col">Imagen</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -56,6 +57,18 @@
                       <small>Sin imagen</small>
                     </div>
                   </td>
+              <td>
+                <button
+                  *ngIf="respuesta.id"
+                  mat-icon-button
+                  type="button"
+                  color="warn"
+                  class="respuestas__btn-icon"
+                  (click)="eliminarRespuesta(respuesta, $event)"
+                  aria-label="Eliminar respuesta">
+                  <app-svg-icon name="trash" [size]="20" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

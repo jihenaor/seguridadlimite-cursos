@@ -2,7 +2,10 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { PreguntasService } from './preguntas.service';
 import { HttpClient } from '@angular/common/http';
 
-import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
+import {
+  PreguntaFormDialogComponent,
+  PreguntaFormDialogData,
+} from './dialogs/pregunta-form-dialog/pregunta-form-dialog.component';
 import { Pregunta } from '../../../core/models/pregunta.model';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,8 +18,10 @@ import { PreguntasNivelFilterComponent } from './components/preguntas-nivel-filt
 import { PreguntasIngresoEvalFilterComponent } from './components/preguntas-ingreso-eval-filter/preguntas-ingreso-eval-filter.component';
 import { PagetitleComponent } from '../../../shared/components/page-title/pagetitle.component';
 import { NgFor, NgStyle, NgIf } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SvgIconComponent } from '../../../shared/components/svg-icon/svg-icon.component';
+import { PreguntasRegistrarService } from './preguntaregistrar.service';
+import { ShowNotificacionService } from '../../../core/service/show-notificacion.service';
 
 @Component({
     selector: 'app-all-preguntas',
@@ -24,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./all-preguntas.component.scss'],
     imports: [
         MatButtonModule,
-        MatIconModule,
+        SvgIconComponent,
         NgFor,
         NgStyle,
         NgIf,
@@ -59,7 +64,9 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public preguntasService: PreguntasService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private preguntasRegistrarService: PreguntasRegistrarService,
+    private notificacionService: ShowNotificacionService
   ) {
     const urlSegments = this.route.snapshot.url.map(segment => segment.path);
     this.isNivelInRoute = urlSegments.includes('nivel');
@@ -101,13 +108,13 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
     this.loadData();
   }
   addNew() {
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        action: 'add',
-        idgrupo: this.idgrupo,
-        pregunta: new Pregunta()
-      },
-    });
+    const data: PreguntaFormDialogData = {
+      action: 'add',
+      idgrupo: this.idgrupo,
+      // Opcional: alto del toolbar (título + cerrar), p. ej. '3rem' o '52px'. Por defecto 48px en el diálogo.
+      // headerChromeHeight: '3rem',
+    };
+    const dialogRef = this.dialog.open(PreguntaFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
         this.loadData();
@@ -117,16 +124,30 @@ export class AllpreguntasComponent implements OnInit, AfterViewInit {
 
   editCall(row) {
     this.id = row.id;
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        pregunta: row,
-        action: 'edit',
-      },
-    });
+    const data: PreguntaFormDialogData = {
+      action: 'edit',
+      pregunta: row,
+      // headerChromeHeight: '44px',
+    };
+    const dialogRef = this.dialog.open(PreguntaFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
         this.loadData()
       }
+    });
+  }
+
+  deleteCall(row: Pregunta): void {
+    const msg =
+      '¿Eliminar esta pregunta? Se borrarán sus respuestas y las evaluaciones registradas para esa pregunta.';
+    if (!globalThis.confirm(msg)) {
+      return;
+    }
+    this.preguntasRegistrarService.deletePregunta(row.id).subscribe({
+      next: () => {
+        this.notificacionService.displaySuccess('Pregunta eliminada');
+        this.loadData();
+      },
     });
   }
 

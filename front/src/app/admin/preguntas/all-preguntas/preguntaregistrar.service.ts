@@ -20,5 +20,14 @@ export class PreguntasRegistrarService {
     );
   }
 
+  deletePregunta(id: number): Observable<void> {
+    const url = `${environment.apiUrl}/pregunta/${id}`;
+    return this.httpClient.delete<void>(url);
+  }
+
+  deleteRespuesta(idPregunta: number, idRespuesta: number): Observable<void> {
+    const url = `${environment.apiUrl}/pregunta/${idPregunta}/respuesta/${idRespuesta}`;
+    return this.httpClient.delete<void>(url);
+  }
 
 }

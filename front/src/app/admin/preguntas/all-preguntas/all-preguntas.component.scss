@@ -1,5 +1,23 @@
 @use '../../../shared/styles/preguntas-enfasis-filters';
 
+.all-preguntas__icon-btn {
+  border-radius: 1rem;
+}
+
+.all-preguntas__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.materialTableHeader .header-buttons-left label.search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .detalle-container {
   font-size: small;
   display: flex;
