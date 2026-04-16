@@ -71,6 +71,8 @@ services:
       - "8180:80"
     networks:
       - backend_net
+      # Misma red que gateway: Nginx debe resolver el nombre «phpmyadmin» (subdominio HTTPS vía gateway).
+      - gateway_net
 
   # ────────────────────────────────────────────────────────────
   #  Backend — Spring Boot API
