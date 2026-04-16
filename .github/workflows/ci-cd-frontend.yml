@@ -138,14 +138,27 @@ jobs:
             set -e
             cd ${{ secrets.SERVER_DEPLOY_PATH }}
 
+            echo "📥 Sincronizar definición del stack (compose + nginx) desde git..."
+            if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+              git pull --ff-only || echo "⚠️ git pull falló; se usa el compose ya en el servidor."
+            else
+              echo "⚠️ SERVER_DEPLOY_PATH no es un repo git; el compose debe incluir los servicios esperados."
+            fi
+
             echo "🔐 Login en GHCR..."
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u jihenaor --password-stdin
 
             echo "📦 Pulling nueva imagen del frontend..."
             docker compose pull frontend
 
-            echo "🔄 Frontend + api-legacy + gateway (misma red Docker; evita host not found en nginx reload)..."
-            docker compose up -d frontend api-legacy gateway
+            UP_SERVICES="frontend gateway"
+            if docker compose config --services 2>/dev/null | grep -qx 'api-legacy'; then
+              UP_SERVICES="frontend api-legacy gateway"
+            else
+              echo "⚠️ Este compose no define «api-legacy» (compose antiguo). Levantando solo frontend y gateway."
+            fi
+            echo "🔄 Levantando: $UP_SERVICES (misma red Docker cuando api-legacy existe; evita host not found en nginx reload)..."
+            docker compose up -d $UP_SERVICES
 
             echo "🧪 Validar nginx y recargar (api-legacy = servicio compose; antes seguridad_api)..."
             docker compose exec -T gateway nginx -t
