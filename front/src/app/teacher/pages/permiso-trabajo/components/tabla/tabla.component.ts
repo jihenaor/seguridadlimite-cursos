@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { SvgIconComponent } from '../../../../../shared/components/svg-icon/svg-icon.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -36,6 +37,7 @@ export interface PermisoTrabajo {
         MatPaginatorModule,
         MatCheckboxModule,
         MatTooltipModule,
+        MatButtonModule,
         SvgIconComponent
     ]
 })

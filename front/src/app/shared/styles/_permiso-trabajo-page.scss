@@ -112,10 +112,11 @@ section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-cell {
   color: rgb(17 24 39) !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-column-acciones {
-  width: 11rem;
-  min-width: 11rem;
-  max-width: 11rem;
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-column-acciones,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .mat-column-acciones {
+  width: 12.5rem;
+  min-width: 12.5rem;
+  max-width: 12.5rem;
   text-align: center;
 }
 
@@ -139,7 +140,8 @@ section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .mat-row:hover td.mat-
   background: rgb(239 246 255) !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -152,32 +154,50 @@ section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon {
   transition: background 0.15s ease;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon app-svg-icon {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon.mat-mdc-icon-button,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon.mat-mdc-icon-button {
+  padding: 0;
+  line-height: 1;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon.mat-mdc-icon-button .mat-mdc-button-touch-target,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon.mat-mdc-icon-button .mat-mdc-button-touch-target {
+  width: 2.65rem;
+  height: 2.65rem;
+}
+
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon app-svg-icon,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon app-svg-icon {
   color: inherit !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--edit {
   color: rgb(37 99 235) !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit:hover {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--edit:hover,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--edit:hover {
   background: rgb(219 234 254);
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--pdf {
   color: rgb(220 38 38) !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf:hover {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--pdf:hover,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--pdf:hover {
   background: rgb(254 226 226);
 }
 
-
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--clear {
   color: rgb(107 114 128) !important;
 }
 
-section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear:hover {
+section.content.sl-permiso-trabajo-page .sl-pt-tabla-root .sl-pt-btn-icon--clear:hover,
+app-permiso-trabajo-tabla .sl-pt-tabla-root .sl-pt-btn-icon--clear:hover {
   background: rgb(243 244 246);
 }
 

@@ -15,6 +15,7 @@
             <span>Consultar ministerio</span>
           </button>
           <button
+            mat-icon-button
             type="button"
             class="sl-pt-btn-icon sl-pt-btn-icon--clear"
             (click)="clearSelection()"
@@ -97,30 +98,33 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let element" class="action-column">
-          <div class="flex flex-wrap items-center justify-center gap-1">
+          <div class="sl-pt-acciones flex flex-wrap items-center justify-center gap-2">
             <button
+              mat-icon-button
               type="button"
               class="sl-pt-btn-icon sl-pt-btn-icon--edit"
               (click)="editarPermiso(element.id)"
-              matTooltip="Editar"
+              matTooltip="Editar permiso"
               aria-label="Editar permiso">
               <app-svg-icon name="pencil" [size]="20" />
             </button>
             <button
+              mat-icon-button
               type="button"
               class="sl-pt-btn-icon sl-pt-btn-icon--pdf"
               (click)="showPdf(element.id, 1)"
               matTooltip="Descargar PDF grupo 1"
-              aria-label="Descargar PDF grupo 1">
+              aria-label="Descargar PDF del permiso, grupo 1">
               <app-svg-icon name="file-pdf" [size]="20" />
             </button>
             @if (element.numerogrupos === 2) {
               <button
+                mat-icon-button
                 type="button"
                 class="sl-pt-btn-icon sl-pt-btn-icon--pdf"
                 (click)="showPdf(element.id, 2)"
                 matTooltip="Descargar PDF grupo 2"
-                aria-label="Descargar PDF grupo 2">
+                aria-label="Descargar PDF del permiso, grupo 2">
                 <app-svg-icon name="file-pdf" [size]="20" />
               </button>
             }

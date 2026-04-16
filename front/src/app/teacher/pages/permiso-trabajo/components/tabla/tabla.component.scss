@@ -28,7 +28,7 @@
 }
 
 .action-column {
-  width: 150px;
+  min-width: 12.5rem;
   text-align: center;
 }
 
@@ -66,5 +66,6 @@ table {
 }
 
 .mat-column-acciones {
-  width: 150px;
+  width: 12.5rem;
+  min-width: 12.5rem;
 }
