@@ -1,0 +1,13 @@
+# Permite ejecutar docker compose desde la raíz del monorepo (~/seguridad).
+# Mismo nombre de proyecto que si trabajas dentro de infraestructura/ (volúmenes y red coherentes).
+#
+# Ejemplos:
+#   docker compose --env-file infraestructura/.env exec -T gateway nginx -t
+#   docker compose --env-file infraestructura/.env up -d gateway
+#
+# Si no pasas --env-file, Compose busca .env en el directorio del primer fichero (esta raíz).
+
+name: infraestructura
+
+include:
+  - path: infraestructura/docker-compose.yml

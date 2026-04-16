@@ -13,6 +13,11 @@
 #  Uso en el servidor VPS:
 #    cp .env.example .env && nano .env
 #    docker compose up -d
+#
+#  Desde la raíz del repo (~/seguridad) sin entrar a esta carpeta:
+#    export COMPOSE_FILE=infraestructura/docker-compose.yml
+#    docker compose exec -T gateway nginx -t
+#  O usa el compose.yml de la raíz del monorepo (include + name: infraestructura).
 # ══════════════════════════════════════════════════════════════
 
 services:
@@ -154,7 +159,10 @@ services:
     expose:
       - "8000"
     networks:
-      - gateway_net
+      gateway_net:
+        aliases:
+          # Nginx antiguo apuntaba a «seguridad_api»; el DNS Docker resuelve también con este nombre.
+          - seguridad_api
 
   # ────────────────────────────────────────────────────────────
   #  Gateway — Nginx Reverse Proxy
