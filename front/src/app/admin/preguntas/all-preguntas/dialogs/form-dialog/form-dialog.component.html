@@ -1,252 +1,194 @@
-<div class="addContainer">
-  <div class="modalHeader">
-    <div class="editRowModal">
-      <div class="modalHeader clearfix">
-        <div class="modal-about">
-          <div class="font-weight-bold p-t-5 p-l-10 font-17">
-            {{dialogTitle}}</div>
-        </div>
-      </div>
-    </div>
-    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
-      <mat-icon>close</mat-icon>
+<div class="form-dialog addContainer">
+  <header class="form-dialog__header modalHeader clearfix">
+    <h2 class="form-dialog__title">{{ dialogTitle }}</h2>
+    <button type="button" mat-icon-button (click)="dialogRef.close()" aria-label="Cerrar diálogo">
+      <app-svg-icon name="close" [size]="22" />
     </button>
-  </div>
-  <div mat-dialog-content>
-    <form class="register-form m-4" [formGroup]="proForm">
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <mat-label>Formulario</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
+  </header>
+
+  <div mat-dialog-content class="form-dialog__scroll">
+    <form [formGroup]="proForm" class="form-dialog__form register-form">
+      <div class="form-dialog__grid">
+        <div class="form-dialog__span-2">
+          <mat-form-field appearance="outline" class="form-dialog__mat">
+            <mat-label>Formulario (grupo)</mat-label>
             <mat-select formControlName="idgrupo" required>
-              <mat-option *ngFor="let grupo of grupopreguntaService.grupopreguntas" [value]="grupo.id">
-                {{ grupo.nombre }}
-              </mat-option>
+              @for (grupo of grupopreguntaService.grupopreguntas ?? []; track grupo.id) {
+                <mat-option [value]="grupo.id">{{ grupo.nombre }}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+        <mat-form-field appearance="outline" class="form-dialog__mat">
           <mat-label>Tipo de respuesta</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-select formControlName="type" required>
-              <mat-option [value]="1">
-                Única respuesta
-              </mat-option>
-              <mat-option [value]="2">
-                Cumple / no cumple
-              </mat-option>
-              <mat-option [value]="3">
-                Verdadero/Falso
-              </mat-option>
-              <mat-option [value]="4">
-                Lista de valores
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+          <mat-select formControlName="type" required>
+            <mat-option [value]="1">Única respuesta</mat-option>
+            <mat-option [value]="2">Cumple / no cumple</mat-option>
+            <mat-option [value]="3">Verdadero / Falso</mat-option>
+            <mat-option [value]="4">Lista de valores</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Orden</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="orden">
-          </mat-form-field>
-        </div>
-      </div>
+        <app-ui-outlined-field label="Orden" fieldType="number" formControlName="orden" />
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Agrupador 1</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="agrupador1">
-          </mat-form-field>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Agrupador 2</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="agrupador2">
-          </mat-form-field>
-        </div>
+        <app-ui-outlined-field label="Agrupador 1" formControlName="agrupador1" />
+        <app-ui-outlined-field label="Agrupador 2" formControlName="agrupador2" />
+        <app-ui-outlined-field label="Agrupador 3" formControlName="agrupador3" />
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Agrupador 3</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="agrupador3">
-          </mat-form-field>
-        </div>
+        @if (type === 4) {
+          <div class="form-dialog__span-2">
+            <app-ui-outlined-field
+              label="Opciones de respuesta (separadas por coma)"
+              formControlName="opcionesrespuesta"
+            />
+          </div>
+          <div class="form-dialog__span-2">
+            <app-ui-outlined-field
+              label="Nombre equivalente de cada opción (separado por coma)"
+              formControlName="nombreopcion"
+            />
+          </div>
+        }
 
-        <div *ngIf="type === 4" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <mat-label>Opciones de respuesta separado por comas (,)</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="opcionesrespuesta">
-          </mat-form-field>
-        </div>
+        @if (type === 1) {
+          <app-ui-outlined-field
+            label="Número de respuesta correcta"
+            formControlName="numerorespuestacorrecta"
+            [maxLen]="2"
+          />
+        }
 
-        <div *ngIf="type === 4" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <mat-label>Nombre del valor quivalente de la opción (,)</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="nombreopcion">
-          </mat-form-field>
-        </div>
-
-        <div *ngIf="type === 1" class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Numero de respuesta correcta</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <input matInput formControlName="numerorespuestacorrecta" required maxlength="2">
-          </mat-form-field>
-        </div>
-
-        <div *ngIf="type === 3" class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Numero de respuesta correcta</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
+        @if (type === 3) {
+          <mat-form-field appearance="outline" class="form-dialog__mat">
+            <mat-label>Respuesta correcta</mat-label>
             <mat-select formControlName="numerorespuestacorrecta" required>
-              <mat-option [value]="1">
-                Falso
-              </mat-option>
-              <mat-option [value]="2">
-                verdadero
-              </mat-option>
+              <mat-option [value]="1">Falso</mat-option>
+              <mat-option [value]="2">Verdadero</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-      </div>
+        }
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+        <mat-form-field appearance="outline" class="form-dialog__mat">
           <mat-label>Énfasis</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-select formControlName="idenfasis" required>
-              <mat-option *ngFor="let enfasis of enfasisService.enfasis" [value]="enfasis.id">
-                {{ enfasis.nombre }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-select formControlName="idenfasis" required>
+            @for (enfasis of enfasisService.enfasis ?? []; track enfasis.id) {
+              <mat-option [value]="enfasis.id">{{ enfasis.nombre }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-dialog__mat">
           <mat-label>Nivel</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-select formControlName="idnivel">
-              <mat-option [value]="">
-                NO APLICA
-              </mat-option>
-              <mat-option *ngFor="let nivel of nivels" [value]="nivel.id">
-                {{ nivel.nombre }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mat-select formControlName="idnivel">
+            <mat-option [value]="">NO APLICA</mat-option>
+            @for (nivel of nivels; track nivel.id) {
+              <mat-option [value]="nivel.id">{{ nivel.nombre }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <app-ui-outlined-field
+          label="Estado"
+          fieldType="select"
+          [options]="estadoOptions"
+          formControlName="estado"
+        />
+
+        <app-ui-outlined-field
+          label="Dificultad en lectura / escritura"
+          fieldType="select"
+          [options]="diflecturaOptions"
+          formControlName="diflectura"
+        />
+
+        <div class="form-dialog__span-2">
+          <app-ui-outlined-field
+            label="Texto de la pregunta"
+            fieldType="textarea"
+            [rows]="4"
+            formControlName="pregunta"
+          />
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>Estado</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-
-            <mat-select formControlName="estado" required>
-              <mat-option [value]="'A'">
-                ACTIVO
-              </mat-option>
-              <mat-option [value]="'I'">
-                INACTIVO
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <mat-label>EstadoDificultad en lectura/escritura	</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-
-            <mat-select formControlName="diflectura" required>
-              <mat-option [value]="'S'">
-                Si
-              </mat-option>
-              <mat-option [value]="'N'">
-                No
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <mat-label>Pregunta</mat-label>
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <textarea matInput formControlName="pregunta" required rows="3"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row" [hidden]="type !== 1">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="card">
-                <div class="header">
-                  <h2>
-                    <strong>Respuestas</strong>
-                  </h2>
-                </div>
-
-                <div class="body">
-                  <div  *ngFor="let respuestaForm of respuestas.controls; let i = index "  [formGroup]="respuestaForm">
-                    <div class="card respuestas">
-                      <h5>Respuesta {{ i + 1 }}</h5>
-                      <div class="row">
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mb-2">
-                          <mat-form-field class="example-full-width mb-3 input-white" appearance="outline">
-                            <mat-label></mat-label>
-                            <textarea matInput formControlName="respuesta" required></textarea>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2">
-                          <button mat-mini-fab color="primary" type="button" (click)="eliminarRespuesta(i)">
-                            <mat-icon class="col-white">remove</mat-icon>
-                          </button>
-                        </div>
-
-                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
-                          <mat-form-field class="example-full-width mb-3" appearance="outline">
-                            <mat-label>Tiene imagen</mat-label>
-                            <input matInput formControlName="tieneimagen" required>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
-                          <mat-form-field class="example-full-width mb-3" appearance="outline">
-                            <mat-label>Nombre imagen</mat-label>
-                            <input matInput formControlName="nombreimagen" required>
-                          </mat-form-field>
-                        </div>
-
-                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
-                          <img style="width: 150px; height: 150px;" [src]="transformImagen(respuestaForm)">
-
-                        </div>
-                      </div>
-
-                    </div>
+      @if (type === 1) {
+        <section class="form-dialog__respuestas" aria-labelledby="form-dialog-respuestas-title">
+          <div class="form-dialog__respuestas-head">
+            <h3 id="form-dialog-respuestas-title" class="form-dialog__respuestas-title">Respuestas</h3>
+          </div>
+          <div class="form-dialog__respuestas-body">
+            <div class="form-dialog__respuesta-list">
+            @for (respuestaForm of respuestas.controls; track $index) {
+              <article class="form-dialog__respuesta-card" [formGroup]="$any(respuestaForm)">
+                <h4 class="form-dialog__respuesta-card-title">Respuesta {{ $index + 1 }}</h4>
+                <div class="form-dialog__respuesta-row">
+                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--texto">
+                    <app-ui-outlined-field
+                      label="Texto de la respuesta"
+                      fieldType="textarea"
+                      [rows]="4"
+                      formControlName="respuesta"
+                    />
                   </div>
-                  <button type="button" (click)="agregarRespuesta()">Agregar Respuesta</button>
+                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--acciones">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      color="warn"
+                      (click)="eliminarRespuesta($index)"
+                      aria-label="Quitar respuesta"
+                    >
+                      <app-svg-icon name="minus" [size]="22" />
+                    </button>
+                  </div>
+                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--flags">
+                    <app-ui-outlined-field
+                      label="Tiene imagen"
+                      fieldType="select"
+                      [options]="tieneImagenOptions"
+                      formControlName="tieneimagen"
+                    />
+                  </div>
+                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--archivo">
+                    <app-ui-outlined-field
+                      label="Nombre imagen"
+                      placeholder="ej. p8 (sin extension .png)"
+                      formControlName="nombreimagen"
+                    />
+                  </div>
+                  <div class="form-dialog__respuesta-col form-dialog__respuesta-col--preview">
+                    <img
+                      class="form-dialog__preview-img"
+                      [src]="transformImagen($any(respuestaForm))"
+                      alt=""
+                    />
+                  </div>
                 </div>
-
-              </div>
+              </article>
+            }
             </div>
+            <button
+              type="button"
+              mat-stroked-button
+              color="primary"
+              class="form-dialog__btn-add"
+              (click)="agregarRespuesta()"
+            >
+              <app-svg-icon name="plus" [size]="18" />
+              Agregar respuesta
+            </button>
           </div>
-        </div>
-      </div>
+        </section>
+      }
 
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <div class="example-button-row">
-            <button mat-raised-button color="primary"
-              (click)="confirmAdd(false)">Guardar</button>
-              <button mat-raised-button color="primary"
-              (click)="confirmAdd(true)"
-              *ngIf="data.pregunta.id">Guardar nuevo</button>
-            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
-          </div>
-        </div>
-      </div>
+      <footer class="form-dialog__actions example-button-row">
+        <button type="button" mat-raised-button color="primary" (click)="confirmAdd(false)">Guardar</button>
+        @if (data?.pregunta?.id) {
+          <button type="button" mat-raised-button color="primary" (click)="confirmAdd(true)">Guardar nuevo</button>
+        }
+        <button type="button" mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
+      </footer>
     </form>
   </div>
 </div>

@@ -38,6 +38,19 @@
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+.ui-outlined-field__control--textarea {
+  align-items: flex-start;
+  min-height: auto;
+}
+
+textarea.ui-outlined-field__textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+  line-height: 1.45;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
 .ui-outlined-field:not(.ui-outlined-field--disabled):focus-within .ui-outlined-field__control {
   border-color: #1976d2;
   box-shadow: 0 0 0 1px rgba(25, 118, 210, 0.2);

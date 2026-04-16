@@ -20,19 +20,28 @@ import { ShowNotificacionService } from '../../../../../core/service/show-notifi
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent } from '@angular/material/dialog';
 import { PreguntasRegistrarService } from '../../preguntaregistrar.service';
 import { tap } from 'rxjs';
-import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
-import { NgFor, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UiOutlinedFieldComponent } from 'src/app/shared/components/ui-outlined-field/ui-outlined-field.component';
+import { SvgIconComponent } from 'src/app/shared/components/svg-icon/svg-icon.component';
 
 @Component({
     selector: 'app-form-dialog',
     templateUrl: './form-dialog.component.html',
     styleUrls: ['./form-dialog.component.scss'],
-    imports: [MatButtonModule, MatIconModule, MatDialogContent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, NgFor, MatOptionModule, MatInputModule, NgIf]
+    imports: [
+        MatButtonModule,
+        MatDialogContent,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
+        UiOutlinedFieldComponent,
+        SvgIconComponent,
+    ],
 })
 export class FormDialogComponent implements OnInit {
   action: string;
@@ -44,6 +53,22 @@ export class FormDialogComponent implements OnInit {
   x: Respuesta
   public nivels: Nivel[] = [];
   public enfasiss: Enfasis[] = [];
+
+  /** Opciones Sí / No para selects nativos del outlined field. */
+  readonly tieneImagenOptions = [
+    { value: 'S', label: 'Sí' },
+    { value: 'N', label: 'No' },
+  ];
+
+  readonly diflecturaOptions = [
+    { value: 'S', label: 'Sí' },
+    { value: 'N', label: 'No' },
+  ];
+
+  readonly estadoOptions = [
+    { value: 'A', label: 'ACTIVO' },
+    { value: 'I', label: 'INACTIVO' },
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,

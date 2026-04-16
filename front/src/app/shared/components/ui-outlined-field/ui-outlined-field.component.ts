@@ -14,7 +14,8 @@ export type UiOutlinedFieldType =
   | 'date'
   | 'email'
   | 'password'
-  | 'select';
+  | 'select'
+  | 'textarea';
 
 @Component({
   selector: 'app-ui-outlined-field',
@@ -27,7 +28,10 @@ export type UiOutlinedFieldType =
       [class.ui-outlined-field--disabled]="disabled"
     >
       <label class="ui-outlined-field__label" [attr.for]="resolvedId">{{ label() }}</label>
-      <div class="ui-outlined-field__control">
+      <div
+        class="ui-outlined-field__control"
+        [class.ui-outlined-field__control--textarea]="fieldType() === 'textarea'"
+      >
         @if (fieldType() === 'date') {
           <input
             #dateInput
@@ -68,6 +72,19 @@ export type UiOutlinedFieldType =
           <span class="ui-outlined-field__suffix ui-outlined-field__suffix--static" aria-hidden="true">
             <app-svg-icon name="chevron-down" [size]="18" />
           </span>
+        } @else if (fieldType() === 'textarea') {
+          <textarea
+            [id]="resolvedId"
+            class="ui-outlined-field__input ui-outlined-field__textarea"
+            [attr.rows]="rows()"
+            [readOnly]="readOnly()"
+            [disabled]="disabled"
+            [attr.placeholder]="placeholder() || null"
+            [attr.maxlength]="maxLen() ?? null"
+            [value]="value"
+            (input)="onInput($event)"
+            (blur)="onBlur()"
+          ></textarea>
         } @else if (fieldType() === 'password' && showPasswordToggle()) {
           <input
             [id]="resolvedId"
@@ -102,6 +119,7 @@ export type UiOutlinedFieldType =
             [attr.min]="min() ?? null"
             [attr.max]="max() ?? null"
             [attr.step]="step() ?? null"
+            [attr.maxlength]="maxLen() ?? null"
             [value]="value"
             (input)="onInput($event)"
             (blur)="onBlur()"
@@ -132,6 +150,10 @@ export class UiOutlinedFieldComponent implements ControlValueAccessor {
   readonly options = input<{ value: string; label: string }[]>([]);
   /** Solo aplica si {@code fieldType === 'password'} */
   readonly showPasswordToggle = input(false);
+  /** Solo aplica si {@code fieldType === 'textarea'} */
+  readonly rows = input(3);
+  /** Solo aplica si {@code fieldType === 'textarea'} o texto */
+  readonly maxLen = input<number | undefined>(undefined);
   readonly fieldId = input<string | undefined>(undefined);
 
   private readonly autoId = `ui-field-${Math.random().toString(36).slice(2, 11)}`;
@@ -183,7 +205,7 @@ export class UiOutlinedFieldComponent implements ControlValueAccessor {
   }
 
   protected onInput(ev: Event): void {
-    const t = ev.target as HTMLInputElement;
+    const t = ev.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = t.value;
     this.onChange(this.value);
   }

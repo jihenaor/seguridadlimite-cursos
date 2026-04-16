@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import com.seguridadlimite.models.pregunta.infraestructure.IPreguntaDao;
 import com.seguridadlimite.models.pregunta.application.inicializarimagenes.InicializarImagenes;
 import com.seguridadlimite.models.pregunta.domain.Pregunta;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
