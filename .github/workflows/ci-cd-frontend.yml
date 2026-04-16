@@ -197,8 +197,39 @@ jobs:
             echo "🔄 Levantando: $UP_SERVICES (sin dejar huérfanos conocidos)..."
             docker compose up -d --remove-orphans $UP_SERVICES
 
-            echo "⏳ Breve espera tras recrear contenedores (evita exec/nginx -t justo en arranque)..."
-            sleep 8
+            echo "⏳ Esperando a que gateway quede en running (nginx arrancado; máx. ~90s)..."
+            gw_ok=0
+            i=0
+            max=45
+            while [ "$i" -lt "$max" ]; do
+              cid=$(docker compose ps -q gateway 2>/dev/null || true)
+              if [ -z "$cid" ]; then
+                echo "❌ No hay contenedor gateway."
+                docker compose ps -a
+                exit 1
+              fi
+              st=$(docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || echo unknown)
+              if [ "$st" = "running" ]; then
+                gw_ok=1
+                echo "✅ Gateway en running."
+                break
+              fi
+              if [ "$st" = "exited" ] || [ "$st" = "dead" ]; then
+                echo "❌ Gateway detenido (estado: $st). Revisa certificados/montajes y default.conf."
+                docker compose logs --tail=120 gateway
+                exit 1
+              fi
+              echo "⏳ gateway=$st ($((i+1))/${max})..."
+              sleep 2
+              i=$((i+1))
+            done
+            if [ "$gw_ok" != "1" ]; then
+              echo "❌ Timeout: gateway sigue sin running (p. ej. reinicios por error de nginx). Estado:"
+              cid=$(docker compose ps -q gateway 2>/dev/null || true)
+              [ -n "$cid" ] && docker inspect -f '{{json .State}}' "$cid" || true
+              docker compose logs --tail=120 gateway
+              exit 1
+            fi
 
             echo "🧪 Validar nginx y recargar..."
             docker compose exec -T gateway nginx -t
