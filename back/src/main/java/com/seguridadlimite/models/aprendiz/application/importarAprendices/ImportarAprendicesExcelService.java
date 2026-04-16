@@ -6,6 +6,7 @@ import com.seguridadlimite.models.permiso.application.port.in.ConsultarPermisoTr
 import com.seguridadlimite.models.permiso.domain.PermisoTrabajoAlturas;
 import com.seguridadlimite.models.permiso.domain.port.PermisoTrabajoAlturasPort;
 import com.seguridadlimite.models.trabajador.application.TrabajadorFindByDocumentoCu;
+import com.seguridadlimite.models.trabajador.application.TrabajadorSaveCu;
 import com.seguridadlimite.models.trabajador.dominio.Trabajador;
 import com.seguridadlimite.springboot.backend.apirest.services.AprendizServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,7 @@ public class ImportarAprendicesExcelService {
 
     private final AprendizServiceImpl aprendizService;
     private final TrabajadorFindByDocumentoCu trabajadorFindByDocumento;
+    private final TrabajadorSaveCu trabajadorSaveCu;
     private final IAprendizDao aprendizDao;
     private final PermisoTrabajoAlturasPort permisoTrabajoAlturasPort;
     private final ConsultarPermisoTrabajoAlturasUseCase consultarPermisoTrabajoAlturasUseCase;
@@ -109,9 +111,10 @@ public class ImportarAprendicesExcelService {
                         continue;
                     }
 
-                    String cedula = registro.getCedula().length() > 16
-                            ? registro.getCedula().substring(0, 15)
-                            : registro.getCedula();
+                    String cedula = normalizarNumeroDocumento(registro.getCedula());
+                    if (cedula.length() < 3) {
+                        continue;
+                    }
 
                     // Verificar si ya existe aprendiz con misma cédula, nivel y código
                     boolean yaExiste = aprendicesExistentes.stream()
@@ -133,8 +136,11 @@ public class ImportarAprendicesExcelService {
                                 .findFirst();
                     }
 
-                    crearAprendiz(registro, idNivel, permiso);
-                    creados++;
+                    if (crearAprendiz(registro, idNivel, permiso)) {
+                        creados++;
+                    } else {
+                        omitidos++;
+                    }
 
                 } catch (Exception e) {
                     log.error("Error procesando fila {}: {}", i + 1, e.getMessage());
@@ -227,11 +233,23 @@ public class ImportarAprendicesExcelService {
         return valor.replace(".", "").replace(",", "").trim();
     }
 
-    private void crearAprendiz(Registro registro, long idNivel, Optional<PermisoTrabajoAlturas> permiso) {
-        Trabajador trabajador = trabajadorFindByDocumento.findByNumerodocumento(registro.getCedula());
+    /**
+     * Crea el aprendiz asociado al trabajador. Si no existe trabajador por número de documento, crea uno mínimo
+     * desde los datos de la fila (nombre, contacto) usando {@link TrabajadorSaveCu}.
+     *
+     * @return {@code true} si se persistió el aprendiz; {@code false} si no hubo documento válido para buscar/crear.
+     */
+    private boolean crearAprendiz(Registro registro, long idNivel, Optional<PermisoTrabajoAlturas> permiso) {
+        String numeroDocumento = normalizarNumeroDocumento(registro.getCedula());
+        if (numeroDocumento.isEmpty()) {
+            log.warn("Cédula vacía tras normalizar; fila omitida.");
+            return false;
+        }
+
+        Trabajador trabajador = trabajadorFindByDocumento.findByNumerodocumento(numeroDocumento);
         if (trabajador == null) {
-            log.info("Trabajador no encontrado con cédula: {}", registro.getCedula());
-            return;
+            log.info("Trabajador no encontrado con documento {}; se crea desde Excel.", numeroDocumento);
+            trabajador = trabajadorSaveCu.save(construirTrabajadorParaImportacion(registro, numeroDocumento));
         }
 
         Aprendiz aprendiz = new Aprendiz();
@@ -260,6 +278,73 @@ public class ImportarAprendicesExcelService {
 
         // Los demás campos NOT NULL son completados por AprendizServiceImpl.save()
         aprendizService.save(aprendiz);
+        return true;
+    }
+
+    private static String normalizarNumeroDocumento(String cedula) {
+        if (cedula == null) {
+            return "";
+        }
+        String d = cedula.trim();
+        if (d.length() > 16) {
+            return d.substring(0, 16);
+        }
+        return d;
+    }
+
+    /**
+     * Trabajador nuevo para importación: documento, tipo CC, nombre desde columna NOMBRE (o marcador IMPORTADO),
+     * celular desde contacto si cabe en 10 caracteres. El resto lo completa {@link TrabajadorSaveCu}.
+     */
+    private Trabajador construirTrabajadorParaImportacion(Registro registro, String numeroDocumento) {
+        Trabajador t = new Trabajador();
+        t.setTipodocumento("CC");
+        t.setNumerodocumento(numeroDocumento);
+        rellenarNombreTrabajadorDesdeRegistro(t, registro.getNombre());
+        if (registro.getContacto() != null && !registro.getContacto().isBlank()) {
+            String c = registro.getContacto().replaceAll("\\D", "");
+            t.setCelular(c.length() <= 10 ? c : c.substring(0, 10));
+        }
+        return t;
+    }
+
+    private void rellenarNombreTrabajadorDesdeRegistro(Trabajador t, String nombreCompleto) {
+        if (nombreCompleto == null || nombreCompleto.isBlank()) {
+            t.setPrimernombre("IMPORTADO");
+            t.setSegundonombre("");
+            t.setPrimerapellido("");
+            t.setSegundoapellido("");
+            return;
+        }
+        String[] p = nombreCompleto.trim().split("\\s+");
+        if (p.length == 1) {
+            t.setPrimernombre(truncarCampoNombre(p[0], 60));
+            t.setSegundonombre("");
+            t.setPrimerapellido("");
+            t.setSegundoapellido("");
+        } else if (p.length == 2) {
+            t.setPrimernombre(truncarCampoNombre(p[0], 60));
+            t.setSegundonombre("");
+            t.setPrimerapellido(truncarCampoNombre(p[1], 20));
+            t.setSegundoapellido("");
+        } else if (p.length == 3) {
+            t.setPrimernombre(truncarCampoNombre(p[0], 60));
+            t.setSegundonombre("");
+            t.setPrimerapellido(truncarCampoNombre(p[1], 20));
+            t.setSegundoapellido(truncarCampoNombre(p[2], 20));
+        } else {
+            t.setPrimernombre(truncarCampoNombre(p[0], 60));
+            t.setSegundonombre(truncarCampoNombre(p[1], 20));
+            t.setPrimerapellido(truncarCampoNombre(p[p.length - 2], 20));
+            t.setSegundoapellido(truncarCampoNombre(p[p.length - 1], 20));
+        }
+    }
+
+    private static String truncarCampoNombre(String parte, int maxLen) {
+        if (parte == null || parte.isEmpty()) {
+            return parte;
+        }
+        return parte.length() <= maxLen ? parte : parte.substring(0, maxLen);
     }
 
     private String resolverPago(String pagado) {
