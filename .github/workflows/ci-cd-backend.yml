@@ -16,6 +16,14 @@
 #    SERVER_USER        → Usuario SSH (ej: ubuntu)
 #    SERVER_SSH_KEY     → Clave privada SSH (contenido id_rsa)
 #    SERVER_DEPLOY_PATH → Ruta al docker-compose en el VPS (ej: /home/ubuntu/app)
+#    SERVER_SSH_PORT    → (opcional) Puerto SSH si no es 22; si no existe el secret, usar port: 22 abajo
+#
+#  Si el deploy falla con: dial tcp …:22: i/o timeout
+#    - El runner de GitHub no llega al puerto SSH (no es un fallo del script remoto).
+#    - Revisa: IP/dominio en SERVER_HOST, VPS encendido, sshd activo, UFW/iptables/nube (SG) abren 22
+#      desde Internet (o desde rangos de GitHub Actions si usas allowlist:
+#      https://api.github.com/meta → campo actions_machines).
+#    - Si SSH escucha en otro puerto, define SERVER_SSH_PORT y descomenta "port:" en el paso SSH.
 # ══════════════════════════════════════════════════════════════
 
 name: Backend CI/CD
@@ -146,11 +154,16 @@ jobs:
 
     steps:
       - name: Deploy vía SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          # Puerto SSH (22 por defecto). Si tu VPS usa otro, crea el secret SERVER_SSH_PORT y sustituye la línea:
+          port: 22
+          # Conexión TCP + handshake SSH (sube a 60s si la ruta es lenta; no corrige firewall cerrado).
+          timeout: 60s
+          command_timeout: 15m
           script: |
             set -e
             cd ${{ secrets.SERVER_DEPLOY_PATH }}
