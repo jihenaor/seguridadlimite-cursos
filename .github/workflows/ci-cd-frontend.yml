@@ -210,9 +210,23 @@ jobs:
               fi
               st=$(docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || echo unknown)
               if [ "$st" = "running" ]; then
-                gw_ok=1
-                echo "✅ Gateway en running."
-                break
+                # Evita carrera: nginx puede fallar al poco y el contenedor pasa a restarting justo antes de nginx -t.
+                st2=""; st3=""
+                echo "⏳ Gateway running; comprobando que se mantenga estable unos segundos..."
+                sleep 5
+                cid=$(docker compose ps -q gateway 2>/dev/null || true)
+                st2=$(docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || echo unknown)
+                if [ "$st2" = "running" ]; then
+                  sleep 4
+                  cid=$(docker compose ps -q gateway 2>/dev/null || true)
+                  st3=$(docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || echo unknown)
+                  if [ "$st3" = "running" ]; then
+                    gw_ok=1
+                    echo "✅ Gateway estable en running."
+                    break
+                  fi
+                fi
+                echo "⏳ Gateway inestable (running → ${st2:-?} / ${st3:-n/a}); sigo esperando..."
               fi
               if [ "$st" = "exited" ] || [ "$st" = "dead" ]; then
                 echo "❌ Gateway detenido (estado: $st). Revisa certificados/montajes y default.conf."
@@ -231,8 +245,28 @@ jobs:
               exit 1
             fi
 
-            echo "🧪 Validar nginx y recargar..."
-            docker compose exec -T gateway nginx -t
+            echo "🧪 Validar nginx y recargar (reintentos si el contenedor aún reinicia)..."
+            nt_ok=0
+            for n in $(seq 1 30); do
+              cidg=$(docker compose ps -q gateway 2>/dev/null || true)
+              stg=$(docker inspect -f '{{.State.Status}}' "$cidg" 2>/dev/null || echo unknown)
+              if [ "$stg" = "running" ]; then
+                if docker compose exec -T gateway nginx -t; then
+                  nt_ok=1
+                  break
+                fi
+                echo "⏳ nginx -t falló (intento ${n}/30); logs recientes:"
+                docker compose logs --tail=25 gateway 2>/dev/null || true
+              else
+                echo "⏳ gateway=$stg (intento ${n}/30), esperando running..."
+              fi
+              sleep 2
+            done
+            if [ "$nt_ok" != "1" ]; then
+              echo "❌ nginx -t no pudo ejecutarse con gateway estable."
+              docker compose logs --tail=120 gateway
+              exit 1
+            fi
             docker compose exec -T gateway nginx -s reload
 
             echo "🧹 Limpiando imágenes antiguas..."

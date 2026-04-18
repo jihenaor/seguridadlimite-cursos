@@ -77,10 +77,6 @@
                 id="inscription-photo-section"
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2"
                 *ngIf="trabajador?.existeinscripcionabierta && (trabajador?.aprendizContinuaAprendizaje)">
-                <p class="student-inscription-photo-hint">
-                  Foto para el formulario de inscripción: si el sistema ya tiene su foto registrada, puede verla; si no,
-                  tómela con la cámara.
-                </p>
                 <div class="student-inscription-photo-actions">
                   @if (tieneFotoRegistrada) {
                     <button mat-stroked-button color="primary" class="w-100 mb-1" type="button" (click)="verMiFoto()">
@@ -92,6 +88,10 @@
                     {{ tieneFotoRegistrada ? 'Tomar nueva foto' : 'Tomar foto' }}
                   </button>
                 </div>
+                <p class="student-inscription-photo-hint">
+                  Foto para el formulario de inscripción: si el sistema ya tiene su foto registrada, puede verla; si no,
+                  tómela con la cámara.
+                </p>
               </div>
 
               @if (trabajador.idaprendiz && trabajador?.aprendizContinuaAprendizaje) {
