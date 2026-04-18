@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.Base64;
 import java.util.regex.Pattern;
@@ -67,9 +68,18 @@ public class UpdateSignatureServiceImpl implements IUpdateSignatureService {
         } catch (IllegalArgumentException e) {
             log.error("Error al decodificar base64 para aprendiz ID: {}", f.getId(), e);
             throw new BusinessException("Error al procesar base64: " + e.getMessage());
+        } catch (AccessDeniedException e) {
+            log.error(
+                    "Sin permiso de escritura en firmas (ruta base={}): {}",
+                    getPathFiles.getSignaturesPath(),
+                    e.getMessage());
+            throw new BusinessException(
+                    "No se puede guardar la firma: el directorio de almacenamiento no permite escritura. "
+                            + "En Docker, el volumen bajo /app/storage debe pertenecer al usuario del proceso (p. ej. "
+                            + "appuser) o ejecutar el entrypoint que crea y hace chown de /app/storage.");
         } catch (IOException e) {
             log.error("Error al escribir archivo de firma para aprendiz ID: {}", f.getId(), e);
-            throw e;
+            throw new BusinessException("No se pudo guardar el archivo de firma: " + e.getMessage());
         }
     }
 
