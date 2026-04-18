@@ -90,6 +90,18 @@
   color: #5d4037;
   font-size: 0.875rem;
   text-align: center;
+
+  /* Mensajes multilínea (instrucciones por navegador) */
+  p {
+    margin: 0;
+    white-space: pre-line;
+    text-align: left;
+    line-height: 1.45;
+  }
+
+  .pcm__error-retry {
+    margin-top: 0.75rem;
+  }
 }
 
 .pcm__actions {

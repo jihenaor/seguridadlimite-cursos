@@ -1,0 +1,24 @@
+// Botón «Guardar firma»: fondo azul y texto/icono blancos.
+// Gana a `styles.scss` → `.content, .content * { color: #333 !important }` cuando el componente está dentro de `.content`.
+.content app-firma-canvas-capture .sl-firma-canvas-btn-guardar,
+app-firma-canvas-capture .sl-firma-canvas-btn-guardar {
+  background-color: rgb(37 99 235) !important;
+  color: #fff !important;
+  border: none !important;
+
+  &:hover:not(:disabled) {
+    background-color: rgb(29 78 216) !important;
+    color: #fff !important;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.55;
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  .svg-icon,
+  span {
+    color: #fff !important;
+  }
+}

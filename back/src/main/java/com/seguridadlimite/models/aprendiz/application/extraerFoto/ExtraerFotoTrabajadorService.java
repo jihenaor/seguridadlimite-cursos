@@ -28,7 +28,7 @@ public class ExtraerFotoTrabajadorService {
 
             return base64.get();
         } else {
-            throw new BusinessException("No se encontro la foto del trabajador");
+            throw new BusinessException("No se encontro la foto del trabajador, Solicita al aprendiz que se tome una foto.");
         }
     }
 }

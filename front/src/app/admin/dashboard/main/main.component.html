@@ -13,10 +13,10 @@
                 {{ pageSubtitle }}
               </p>
             </div>
-            <!-- Fila propia: el buscador usa todo el ancho disponible (nombres largos) y los botones no se solapan -->
+            <!-- Una sola fila: el input crece (flex-1) y los botones quedan a la derecha sin envolver -->
             <div
-              class="sl-dash-main-search-row flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
-              <div class="relative min-w-0 w-full flex-1">
+              class="sl-dash-main-search-row flex w-full min-w-0 flex-row flex-nowrap items-center gap-2 sm:gap-3">
+              <div class="relative min-w-0 flex-1 basis-0">
                 <span class="sl-dash-main-search-icon-slot" aria-hidden="true">
                   <app-svg-icon name="search" [size]="20" />
                 </span>
@@ -30,7 +30,7 @@
                   autofocus />
               </div>
               <div
-                class="sl-dash-main-toolbar-actions flex w-full shrink-0 flex-wrap items-center justify-end gap-3 sm:w-auto">
+                class="sl-dash-main-toolbar-actions flex shrink-0 flex-nowrap items-center justify-end gap-2 sm:gap-3">
                 <button
                   type="button"
                   class="sl-tw-btn-refresh flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-gray-200 bg-white transition-all hover:border-gray-300 hover:bg-gray-50"

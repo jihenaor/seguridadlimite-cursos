@@ -40,7 +40,7 @@ section.content.sl-dashboard-aprendices {
     color: rgb(107 114 128) !important;
   }
 
-  /* Buscador + acciones: fila bajo el título para máximo ancho del input */
+  /* Buscador + acciones: una fila; el input (flex-1) ocupa el hueco entre título y botones */
   .sl-dash-main-search-row {
     max-width: 100%;
     box-sizing: border-box;

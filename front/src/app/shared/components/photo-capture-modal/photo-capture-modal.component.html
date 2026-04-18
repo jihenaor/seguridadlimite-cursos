@@ -10,8 +10,10 @@
 
     @if (error) {
       <div class="pcm__error" role="alert">
-        <p class="mb-2">{{ error }}</p>
-        <button type="button" class="ui-btn ui-btn--secondary" (click)="reintentarCamara()">Reintentar cámara</button>
+        <p>{{ error }}</p>
+        <button type="button" class="ui-btn ui-btn--secondary pcm__error-retry" (click)="reintentarCamara()">
+          Reintentar cámara
+        </button>
       </div>
     }
 
@@ -19,13 +21,15 @@
       <div class="pcm__stage">
         <div class="pcm__ratio">
           @if (step === 'live') {
-            <video
-              #video
-              class="pcm__video"
-              playsinline
-              autoplay
-              muted
-            ></video>
+            @for (camId of [cameraSessionKey]; track camId) {
+              <video
+                #video
+                class="pcm__video"
+                playsinline
+                autoplay
+                muted
+              ></video>
+            }
           } @else {
             <img class="pcm__preview" [src]="previewDataUrl" alt="Vista previa de la foto capturada" />
           }

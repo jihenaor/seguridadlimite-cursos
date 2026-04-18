@@ -50,7 +50,7 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
         </button>
         <button
           type="button"
-          class="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-colors hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50"
+          class="sl-firma-canvas-btn-guardar inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold shadow-lg shadow-blue-500/30 transition-colors disabled:pointer-events-none"
           [disabled]="!hasInk()"
           (click)="guardar()"
         >
