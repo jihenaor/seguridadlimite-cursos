@@ -201,6 +201,7 @@ jobs:
             gw_ok=0
             i=0
             max=45
+            r_streak=0
             while [ "$i" -lt "$max" ]; do
               cid=$(docker compose ps -q gateway 2>/dev/null || true)
               if [ -z "$cid" ]; then
@@ -210,6 +211,7 @@ jobs:
               fi
               st=$(docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || echo unknown)
               if [ "$st" = "running" ]; then
+                r_streak=0
                 # Evita carrera: nginx puede fallar al poco y el contenedor pasa a restarting justo antes de nginx -t.
                 st2=""; st3=""
                 echo "⏳ Gateway running; comprobando que se mantenga estable unos segundos..."
@@ -232,6 +234,21 @@ jobs:
                 echo "❌ Gateway detenido (estado: $st). Revisa certificados/montajes y default.conf."
                 docker compose logs --tail=120 gateway
                 exit 1
+              fi
+              if [ "$st" = "restarting" ]; then
+                r_streak=$((r_streak + 1))
+                case "$r_streak" in 1|5|10|15)
+                  echo "📋 Logs gateway (restarting consecutivo #${r_streak}):"
+                  docker compose logs --tail=80 gateway 2>/dev/null || true
+                  ;;
+                esac
+                if [ "$r_streak" -ge 20 ]; then
+                  echo "❌ Gateway en bucle de reinicio (nginx emite [emerg] y Docker reinicia el contenedor). Revise gateway.conf, certificados y redes en el VPS."
+                  docker compose logs --tail=200 gateway 2>/dev/null || true
+                  exit 1
+                fi
+              else
+                r_streak=0
               fi
               echo "⏳ gateway=$st ($((i+1))/${max})..."
               sleep 2
